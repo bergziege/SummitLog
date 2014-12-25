@@ -3,7 +3,7 @@ using System.Reflection;
 
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
-namespace De.BerndNet2000.SummitLog.Ui.About.ViewModel {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewModel {
     /// <summary>
     ///     View Model für den About Dialog
     /// </summary>

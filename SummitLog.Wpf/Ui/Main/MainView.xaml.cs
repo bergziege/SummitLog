@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace De.BerndNet2000.SummitLog.Ui.Main {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
     /// <summary>
     ///   Interaktionslogik für MainView.xaml
     /// </summary>

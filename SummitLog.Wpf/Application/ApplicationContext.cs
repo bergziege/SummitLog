@@ -1,4 +1,4 @@
-﻿namespace De.BerndNet2000.SummitLog.Application {
+﻿namespace De.BerndNet2000.SummitLog.Wpf.Application {
     /// <summary>
     ///     Anwendungskontext.
     ///     Enthällt verschiedene, programmweit gültige Daten.

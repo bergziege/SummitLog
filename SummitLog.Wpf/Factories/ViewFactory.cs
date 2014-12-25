@@ -3,7 +3,7 @@
 using Spring.Context;
 using Spring.Context.Support;
 
-namespace De.BerndNet2000.SummitLog.Factories {
+namespace De.BerndNet2000.SummitLog.Wpf.Factories {
     /// <summary>
     ///   Factory zur Erzeugung der Views.
     /// </summary>

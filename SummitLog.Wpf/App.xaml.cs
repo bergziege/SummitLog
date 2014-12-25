@@ -6,11 +6,11 @@ using System.Windows.Threading;
 using Com.QueoFlow.Commons.MVVM;
 using Com.QueoFlow.Commons.MVVM.Events;
 
-using De.BerndNet2000.SummitLog.Factories;
-using De.BerndNet2000.SummitLog.Ui.Main;
-using De.BerndNet2000.SummitLog.Ui.Main.ViewModel;
+using De.BerndNet2000.SummitLog.Wpf.Factories;
+using De.BerndNet2000.SummitLog.Wpf.Ui.Main;
+using De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel;
 
-namespace De.BerndNet2000.SummitLog {
+namespace De.BerndNet2000.SummitLog.Wpf {
     /// <summary>
     ///     Interaktionslogik für "App.xaml"
     /// </summary>

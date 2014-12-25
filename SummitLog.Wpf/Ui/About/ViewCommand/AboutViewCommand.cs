@@ -1,9 +1,9 @@
 ﻿using Com.QueoFlow.Commons.MVVM.Commands.ViewCommands;
 
-using De.BerndNet2000.SummitLog.Factories;
-using De.BerndNet2000.SummitLog.Ui.About.ViewModel;
+using De.BerndNet2000.SummitLog.Wpf.Factories;
+using De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewModel;
 
-namespace De.BerndNet2000.SummitLog.Ui.About.ViewCommand {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewCommand {
     /// <summary>
     /// View Command um die <see cref="AboutView"/> anzuzeigen.
     /// </summary>

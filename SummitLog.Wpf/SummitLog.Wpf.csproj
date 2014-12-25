@@ -8,7 +8,7 @@
     <ProjectGuid>{3535976B-C838-4355-BA41-BC28B8777C9A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>De.BerndNet2000.SummitLog</RootNamespace>
+    <RootNamespace>De.BerndNet2000.SummitLog.Wpf</RootNamespace>
     <AssemblyName>SummitLog.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>

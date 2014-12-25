@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace De.BerndNet2000.SummitLog.Ui.About {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.About {
     /// <summary>
     ///   Interaktionslogik für HelpView.xaml
     /// </summary>

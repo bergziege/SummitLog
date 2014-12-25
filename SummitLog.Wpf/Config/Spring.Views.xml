@@ -8,11 +8,11 @@
   <!--View Definitions-->
 
   <object id="MainView"
-          type="Com.QueoFlow.TrackingtoolLogistik.WPF.Ui.Main.MainView, TrackingtoolLogistik.WPF">
+          type="De.BerndNet2000.SummitLog.WPF.Ui.Main.MainView, SummitLog.WPF">
   </object>
 
   <object id="AboutView"
-          type="Com.QueoFlow.TrackingtoolLogistik.WPF.Ui.About.AboutView, TrackingtoolLogistik.WPF">
+          type="De.BerndNet2000.SummitLog.WPF.Ui.About.AboutView, SummitLog.WPF">
   </object>
   
 </objects>

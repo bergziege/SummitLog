@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace De.BerndNet2000.SummitLog.Properties {
+namespace De.BerndNet2000.SummitLog.Wpf.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

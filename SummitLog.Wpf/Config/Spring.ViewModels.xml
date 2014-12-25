@@ -7,7 +7,7 @@
              http://www.springframework.net/xsd/spring-objects.xsd">
 
   <object id="MainViewModel"
-          type="De.BerndNet2000.SummitLog.WPF.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF">
+          type="De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF">
   </object>
 
   <object id="AboutViewModel"

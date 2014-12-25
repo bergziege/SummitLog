@@ -1,9 +1,9 @@
 ﻿using Com.QueoFlow.Commons.MVVM.Commands;
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
-using De.BerndNet2000.SummitLog.Properties;
+using De.BerndNet2000.SummitLog.Wpf.Properties;
 
-namespace De.BerndNet2000.SummitLog.Ui.Main.ViewModel {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
     /// <summary>
     ///     View Model eines Hauptfensters.
     /// </summary>
@@ -31,7 +31,6 @@ namespace De.BerndNet2000.SummitLog.Ui.Main.ViewModel {
         }
 
         private void ApplicationExit() {
-
             /* Speichert die Fenstereinstellungen */
             Settings.Default.Save();
 

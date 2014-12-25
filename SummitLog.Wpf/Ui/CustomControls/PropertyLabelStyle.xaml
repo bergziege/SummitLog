@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:customControls="clr-namespace:De.BerndNet2000.SummitLog.Ui.CustomControls">
+                    xmlns:customControls="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Ui.CustomControls">
     <Style x:Key="{x:Type customControls:PropertyLabelControl}"
            TargetType="{x:Type customControls:PropertyLabelControl}">
             <Setter Property="Template">

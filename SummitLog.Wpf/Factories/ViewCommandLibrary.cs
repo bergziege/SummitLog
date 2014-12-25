@@ -1,6 +1,6 @@
-﻿using De.BerndNet2000.SummitLog.Ui.About.ViewCommand;
+﻿using De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewCommand;
 
-namespace De.BerndNet2000.SummitLog.Factories {
+namespace De.BerndNet2000.SummitLog.Wpf.Factories {
     /// <summary>
     ///     Library für View Commands.
     /// </summary>

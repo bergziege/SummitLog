@@ -1,6 +1,6 @@
 ﻿using Com.QueoFlow.Commons.MVVM.ViewModels;
 
-namespace De.BerndNet2000.SummitLog.Ui.About {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.About {
     /// <summary>
     /// Schnitstelle für ein View Model zur Anzeige eines About Dialogs.
     /// </summary>

@@ -3,7 +3,7 @@ using Com.QueoFlow.Commons.MVVM.ViewModels;
 using Spring.Context;
 using Spring.Context.Support;
 
-namespace De.BerndNet2000.SummitLog.Factories {
+namespace De.BerndNet2000.SummitLog.Wpf.Factories {
     /// <summary>
     /// Factory Klasse zur Erzegung der View Models.
     /// </summary>

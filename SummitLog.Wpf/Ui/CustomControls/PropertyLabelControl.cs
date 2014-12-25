@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace De.BerndNet2000.SummitLog.Ui.CustomControls {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.CustomControls {
     /// <summary>
     ///     Label Control zur Darstellung eines Proprties.
     /// </summary>

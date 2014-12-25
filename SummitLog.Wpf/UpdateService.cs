@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace De.BerndNet2000.SummitLog {
+namespace De.BerndNet2000.SummitLog.Wpf {
     internal static class UpdateService {
         #region Public Methods
 
