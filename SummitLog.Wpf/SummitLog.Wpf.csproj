@@ -316,7 +316,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Ui\Library\DesignViewModels\" />
+    <Folder Include="Ui\Library\ViewModels\" />
+    <Folder Include="Ui\Reporting\DesignViewModels\" />
+    <Folder Include="Ui\Reporting\ViewModels\" />
+    <Folder Include="Ui\Settings\DesignViewModels\" />
+    <Folder Include="Ui\Settings\ViewModels\" />
+  </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>

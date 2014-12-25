@@ -12,7 +12,7 @@ namespace De.BerndNet2000.SummitLog.Persistence {
         private CreatorUtil _creatorUtil;
 
         public PersistenceBaseTest()
-            : base("trackingtoolLogistikTransactionManager") {
+            : base("summitLogTransactionManager") {
         }
 
         protected CreatorUtil DomainObjectCreatorUtil {
@@ -21,9 +21,9 @@ namespace De.BerndNet2000.SummitLog.Persistence {
 
         protected override ApplicationContextResources GetApplicationContextResources() {
             ApplicationContextResources applicationContextRessources = base.GetApplicationContextResources();
-            applicationContextRessources.AddContextLocation("file://Spring.Database.Sqlite.Test.config.xml");
-            applicationContextRessources.AddContextLocation("file://Spring.Persistence.xml");
-            applicationContextRessources.AddContextLocation("file://Spring.Test.xml");
+            applicationContextRessources.AddContextLocation("file://~/Config/Spring.Database.Sqlite.Test.config.xml");
+            applicationContextRessources.AddContextLocation("file://~/Config/Spring.Persistence.xml");
+            applicationContextRessources.AddContextLocation("file://~/Config/Spring.Test.xml");
 
             return applicationContextRessources;
         }

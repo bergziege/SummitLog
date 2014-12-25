@@ -7,6 +7,6 @@
          default-autowire="constructor">
 
   <!-- Test Utils -->
-  <object id="creatorUtil" type="De.BerndNet2000.SummitLog.Helper.CreatorUtil, TrackingtoolLogistik.Test"/>
+  <object id="creatorUtil" type="De.BerndNet2000.SummitLog.Helper.CreatorUtil, SummitLog.Test" autowire="autodetect"/>
 
 </objects>

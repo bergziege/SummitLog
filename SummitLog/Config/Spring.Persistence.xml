@@ -8,9 +8,9 @@
 
   <!--DAO Definitions-->
 
-  <!--<object id="craftingUnitDao"
-          type="Com.QueoFlow.TrackingtoolLogistik.Persistence.Impl.CraftingUnitDao, TrackingtoolLogistik">
+  <object id="difficultyCategoryDao"
+          type="De.BerndNet2000.SummitLog.Persistence.Impl.DifficultyCategoryDao, SummitLog">
     <property name="SessionFactory"
               ref="sessionFactory" />
-  </object>-->
+  </object>
 </objects>

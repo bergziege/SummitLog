@@ -38,7 +38,7 @@
     </property>
     <property name="MappingAssemblies">
       <list>
-        <value>TrackingtoolLogistik</value>
+        <value>SummitLog</value>
       </list>
     </property>
   </object>

@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel;
-using System.Windows;
+
+using MahApps.Metro.Controls;
 
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
     /// <summary>
-    ///   Interaktionslogik für MainView.xaml
+    ///     Interaktionslogik für MainView.xaml
     /// </summary>
-    public partial class MainView : Window {
+    public partial class MainView : MetroWindow {
         /// <summary>
-        /// 
         /// </summary>
         public MainView() {
             InitializeComponent();
