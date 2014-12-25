@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestSettings name="Lokal" id="038bef76-d3e9-41b0-8a32-9b2013cfd2e2" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Description>Dies sind die standardmäßigen Testeinstellungen für einen lokalen Testlauf.</Description>
+  <Deployment>
+    <DeploymentItem filename="TrackingtoolLogistik.Test\Config\Spring.Database.Access.Test.config.xml" />
+    <DeploymentItem filename="TrackingtoolLogistik\Config\Spring.Services.xml" />
+    <DeploymentItem filename="TrackingtoolLogistik.Test\Config\Spring.Test.xml" />
+    <DeploymentItem filename="TrackingtoolLogistik.Test\Resources\EA_import_short.csv" />
+    <DeploymentItem filename="TrackingtoolLogistik\Config\Spring.Persistence.xml" />
+    <DeploymentItem filename="TrackingtoolLogistik.Test\Config\Spring.Database.Sqlite.Test.config.xml" />
+    <DeploymentItem filename="TrackingtoolLogistik.Test\Libs\JetBrains\JetBrains.Annotations.dll" />
+    <DeploymentItem filename="TrackingtoolLogistik\Config\Spring.Database.config.xml" />
+  </Deployment>
+  <Execution>
+    <TestTypeSpecific>
+      <UnitTestRunConfig testTypeId="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b">
+        <AssemblyResolution>
+          <TestDirectory useLoadContext="true" />
+        </AssemblyResolution>
+      </UnitTestRunConfig>
+    </TestTypeSpecific>
+    <AgentRule name="Execution Agents">
+    </AgentRule>
+  </Execution>
+</TestSettings>

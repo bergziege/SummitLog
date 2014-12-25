@@ -1,0 +1,36 @@
+﻿<Window Closing="WindowClosing"
+        Height="{Binding Source={x:Static Properties1:Settings.Default}, Path=Height, Mode=TwoWay}"
+        Icon="/Resources\Icons\tool.ico"
+        Left="{Binding Source={x:Static Properties1:Settings.Default}, Path=Left, Mode=TwoWay}"
+        Title="Trackingtool Logistik"
+        Top="{Binding Source={x:Static Properties1:Settings.Default}, Path=Top, Mode=TwoWay}"
+        Width="{Binding Source={x:Static Properties1:Settings.Default}, Path=Width, Mode=TwoWay}"
+        WindowState="{Binding Source={x:Static Properties1:Settings.Default}, Path=WindowState, Mode=TwoWay}"
+        mc:Ignorable="d"
+        x:Class="De.BerndNet2000.SummitLog.Ui.Main.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Properties1="clr-namespace:De.BerndNet2000.SummitLog.Properties"
+        xmlns:Factories="clr-namespace:De.BerndNet2000.SummitLog.Factories">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+            <RowDefinition Height="32" />
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Datei">
+                <MenuItem Command="{Binding Path=ApplicationExitCommand}"
+                          Header="Anwendung beenden" />
+            </MenuItem>
+
+            <MenuItem Header="Hilfe">
+
+                <MenuItem Command="Factories:ViewCommandLibrary.ShowAboutView"
+                          Header="Über ..." />
+            </MenuItem>
+        </Menu>
+    </Grid>
+</Window>

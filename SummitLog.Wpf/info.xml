@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<LocalInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UpdateServerUrl>P:\000196_Volkswagen_AG\2013\P13-0124 Beratung EVZ 2013 (1. Teil)\UpdaterRoot\TrackingtoolLogistikTest</UpdateServerUrl>
+  <ServerUser>
+    <Name />
+    <Pwd />
+  </ServerUser>
+  <CurrentVersion>
+    <Major>0</Major>
+    <Minor>0</Minor>
+    <Build>0</Build>
+    <Revision>0</Revision>
+  </CurrentVersion>
+  <Proxy>
+    <Url />
+    <ProxyUser>
+      <Name />
+      <Pwd />
+    </ProxyUser>
+    <HttpsPort />
+  </Proxy>
+  <ProductName>TrackingtoolLogistikTest</ProductName>
+  <ProgramExecutable>TrackingtoolLogistik.Wpf.exe</ProgramExecutable>
+</LocalInformation>

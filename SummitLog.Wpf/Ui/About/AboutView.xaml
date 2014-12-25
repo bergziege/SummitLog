@@ -1,0 +1,71 @@
+﻿<Window x:Class="De.BerndNet2000.SummitLog.Ui.About.AboutView"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                  xmlns:ViewModel="clr-namespace:De.BerndNet2000.SummitLog.Ui.About.ViewModel"
+                  xmlns:CustomControls="clr-namespace:De.BerndNet2000.SummitLog.Ui.CustomControls"
+                  Title="{Binding DisplayName}"
+                  Width="400"
+                  SizeToContent="Height"
+                  Icon="/Resources\Icons\tool.ico"
+        WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <ViewModel:AboutViewModel></ViewModel:AboutViewModel>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding Path=ApplicationName}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Grid.Row="0"
+                   TextWrapping="Wrap"
+                   TextAlignment="Center" 
+                   Margin="0,10,0,0"/>
+        <CustomControls:PropertyLabelControl PropertyName="Version:"
+                                     PropertyValue="{Binding Path=Version}"
+                                     Grid.Row="1"
+                                     HorizontalAlignment="Center"
+                                     FontSize="12"
+                                     FontStretch="Normal" />
+        <Image Grid.Row="2"
+               Height="150"
+               Margin="10"
+               Source="/TrackingtoolLogistik.Wpf;component/Resources/Images/queoflow.png" />
+        <TextBlock Text="{Binding Path=Address}"
+                   Grid.Row="3"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center" />
+        <CustomControls:PropertyLabelControl PropertyName="Mail:"
+                                     HorizontalAlignment="Center"
+                                     PropertyValue="{Binding Path=EMail}"
+                                     Grid.Row="4" />
+        <CustomControls:PropertyLabelControl PropertyName="Tel.:"
+                                     HorizontalAlignment="Center"
+                                     PropertyValue="{Binding Path=Phone}"
+                                     Grid.Row="5" />
+        <CustomControls:PropertyLabelControl PropertyName="Web:"
+                                     HorizontalAlignment="Center"
+                                     PropertyValue="{Binding Path=Web}"
+                                     Grid.Row="6" />
+        <Button Grid.Row="7"
+                Content="Schließen"
+                IsCancel="True"
+                Command="{Binding CloseCommand}"
+                Width="100"
+                Margin="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+
+        </Button>
+    </Grid>
+</Window>
