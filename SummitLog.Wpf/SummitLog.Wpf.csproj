@@ -212,11 +212,20 @@
     <Compile Include="Ui\About\ViewCommand\AboutViewCommand.cs" />
     <Compile Include="Ui\About\ViewModel\AboutViewModel.cs" />
     <Compile Include="Ui\CustomControls\PropertyLabelControl.cs" />
+    <Compile Include="Ui\IPageViewModel.cs" />
+    <Compile Include="Ui\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="Ui\Main\IMainViewModel.cs" />
     <Compile Include="Ui\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ui\Main\TemplateSelector\PageContentTemplateSelector.cs" />
     <Compile Include="Ui\Main\ViewModel\MainViewModel.cs" />
+    <Compile Include="Ui\Settings\DesignViewModels\SettingsDesignViewModel.cs" />
+    <Compile Include="Ui\Settings\ISettingsViewModel.cs" />
+    <Compile Include="Ui\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ui\Settings\ViewModels\SettingsViewModel.cs" />
     <Compile Include="UpdateService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +287,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Ui\Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\Icons\tool.ico" />
     <Page Include="Ui\About\AboutView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -321,8 +334,6 @@
     <Folder Include="Ui\Library\ViewModels\" />
     <Folder Include="Ui\Reporting\DesignViewModels\" />
     <Folder Include="Ui\Reporting\ViewModels\" />
-    <Folder Include="Ui\Settings\DesignViewModels\" />
-    <Folder Include="Ui\Settings\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

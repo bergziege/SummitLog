@@ -10,5 +10,15 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
         ///     Command um die Anwendung zu beenden.
         /// </summary>
         RelayCommand ApplicationExitCommand { get; }
+
+        /// <summary>
+        ///     Liefert oder setzt das aktuelle View Model
+        /// </summary>
+        IPageViewModel CurrentViewModel { get; set; }
+
+        /// <summary>
+        ///     Liefert das Command um die Einstellungen anzuzeigen
+        /// </summary>
+        RelayCommand ShowSettingsCommand { get; }
     }
 }

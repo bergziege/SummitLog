@@ -6,11 +6,15 @@
          xsi:schemaLocation="http://www.springframework.net
              http://www.springframework.net/xsd/spring-objects.xsd">
 
-  <object id="MainViewModel"
+  <object id="mainViewModel"
           type="De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF">
   </object>
 
-  <object id="AboutViewModel"
+  <object id="settingsViewModel"
+          type="De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels.SettingsViewModel, SummitLog.WPF">
+  </object>
+
+  <object id="aboutViewModel"
           type="De.BerndNet2000.SummitLog.WPF.Ui.About.ViewModel.AboutViewModel, SummitLog.WPF">
   </object>
 

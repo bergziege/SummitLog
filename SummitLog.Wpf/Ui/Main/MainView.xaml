@@ -14,18 +14,35 @@
                       xmlns:Properties1="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Properties"
                       xmlns:Factories="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Factories"
                       xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:TemplateSelector="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Ui.Main.TemplateSelector"
+                      xmlns:Settings="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Ui.Settings"
+                      xmlns:DesignViewModels="clr-namespace:De.BerndNet2000.SummitLog.Wpf.Ui.Main.DesignViewModels"
                       BorderThickness="1"
                       BorderBrush="{StaticResource AccentColorBrush}"
                       EnableDWMDropShadow="True">
+    <d:DesignProperties.DataContext>
+        <DesignViewModels:MainDesignViewModel />
+    </d:DesignProperties.DataContext>
+    <Controls:MetroWindow.Resources>
+        <TemplateSelector:PageContentTemplateSelector x:Key="_pageContentTemplateSelector">
+            <TemplateSelector:PageContentTemplateSelector.SettingsPageTemplate>
+                <DataTemplate>
+                    <Settings:SettingsView />
+                </DataTemplate>
+            </TemplateSelector:PageContentTemplateSelector.SettingsPageTemplate>
+        </TemplateSelector:PageContentTemplateSelector>
+    </Controls:MetroWindow.Resources>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Bibliothek" />
             <Button Content="Auswertung" />
-            <Button Content="Einstellungen" />
+            <Button Content="Einstellungen" Command="{Binding Path=ShowSettingsCommand}"/>
             <Button Content="Über ..."
                     Command="Factories:ViewCommandLibrary.ShowAboutView" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-
-    <Grid />
+    
+    <Grid>
+        <ContentPresenter ContentTemplateSelector="{StaticResource _pageContentTemplateSelector}" Content="{Binding Path=CurrentViewModel}"/>
+    </Grid>
 </Controls:MetroWindow>

@@ -1,5 +1,7 @@
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
+using DocumentFormat.OpenXml.Bibliography;
+
 using Spring.Context;
 using Spring.Context.Support;
 
@@ -28,7 +30,13 @@ namespace De.BerndNet2000.SummitLog.Wpf.Factories {
         /// <returns> Eine Instanz des ViewModelTyps </returns>
         public static T Get<T>(params object[] arguments) where T : ViewModelBase {
             IApplicationContext context = ContextRegistry.GetContext();
-            T vm = context.GetObject(typeof(T).Name, arguments) as T;
+            string typeName = typeof(T).Name;
+            if (typeName.Length > 0) {
+                string firstLetter = typeName[0].ToString().ToLower();
+                typeName = typeName.Remove(0, 1);
+                typeName = typeName.Insert(0, firstLetter);
+            }
+            T vm = context.GetObject(typeName, arguments) as T;
             return vm;
         }
 

@@ -14,7 +14,7 @@ namespace De.BerndNet2000.SummitLog.Service {
         
         protected override ApplicationContextResources GetApplicationContextResources() {
             ApplicationContextResources applicationContextRessources = base.GetApplicationContextResources();
-            applicationContextRessources.AddContextLocation("file://Spring.Services.xml");
+            applicationContextRessources.AddContextLocation("file://~/Config/Spring.Services.xml");
             return applicationContextRessources;
         }
     }
