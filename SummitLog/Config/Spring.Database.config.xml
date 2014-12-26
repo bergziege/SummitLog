@@ -13,11 +13,11 @@
   <db:provider id="summitLogDbProvider"
                provider="SQLite-1.0.79"
                connectionString="Data Source=SummitLog.db3;Version=3;"></db:provider>
-  
+
   <db:additionalProviders resource="assembly://SummitLog/De.BerndNet2000.SummitLog.Config/SqLiteProvider_1.0.79.xml"/>
-  
+
   <object id="sessionFactory"
-          type="Spring.Data.NHibernate.LocalSessionFactoryObject, Spring.Data.NHibernate32">
+          type="De.BerndNet2000.SummitLog.Factories.FluentSessionFactory, SummitLog">
     <property name="DbProvider"
               ref="summitLogDbProvider" />
     <property name="HibernateProperties">
@@ -37,6 +37,11 @@
       </dictionary>
     </property>
     <property name="MappingAssemblies">
+      <list>
+        <value>SummitLog</value>
+      </list>
+    </property>
+    <property name="FluentMappingAssemblies">
       <list>
         <value>SummitLog</value>
       </list>

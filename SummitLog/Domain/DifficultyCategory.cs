@@ -2,11 +2,17 @@
 
 namespace De.BerndNet2000.SummitLog.Domain {
     /// <summary>
-    /// Eine Schwierigkeitsgradkategorie
+    ///     Eine Schwierigkeitsgradkategorie
     /// </summary>
-    public class DifficultyCategory:DomainEntityWithIdAndName {
+    public class DifficultyCategory : DomainEntityWithIdAndName {
         /// <summary>
-        /// Erstellt eine neue Schwierigkeitsgradkategorie
+        ///     Ctor für NHibernate
+        /// </summary>
+        public DifficultyCategory() {
+        }
+
+        /// <summary>
+        ///     Erstellt eine neue Schwierigkeitsgradkategorie
         /// </summary>
         /// <param name="name"></param>
         public DifficultyCategory(string name)

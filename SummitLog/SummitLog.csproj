@@ -52,6 +52,9 @@
       <Private>True</Private>
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.3.0.717\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\Iesi.Collections.3.2.0.4000\lib\Net35\Iesi.Collections.dll</HintPath>
     </Reference>
@@ -107,12 +110,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\DifficultyCategory.cs" />
+    <Compile Include="Factories\FluentSessionFactory.cs" />
     <Compile Include="Persistence\IDifficultyCategoryDao.cs" />
     <Compile Include="Persistence\Impl\DifficultyCategoryDao.cs" />
+    <Compile Include="Persistence\Mappings\DifficultyCategoryMap.cs" />
+    <Compile Include="Persistence\Mappings\DomainEntityMap.cs" />
+    <Compile Include="Persistence\Mappings\DomainEntityWithIdAndNameMap.cs" />
+    <Compile Include="Persistence\Mappings\DomainEntityWithIdMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Persistence\Mappings\" />
     <Folder Include="Services\Impl\" />
   </ItemGroup>
   <ItemGroup>
