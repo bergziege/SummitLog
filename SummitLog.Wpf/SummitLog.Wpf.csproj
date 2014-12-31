@@ -202,6 +202,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Application\ApplicationContext.cs" />
+    <Compile Include="Factories\IViewModelFactory.cs" />
     <Compile Include="Factories\ViewCommandLibrary.cs" />
     <Compile Include="Factories\ViewFactory.cs" />
     <Compile Include="Factories\ViewModelFactory.cs" />
@@ -310,6 +311,9 @@
     <Content Include="Config\Spring.ViewModels.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Config\Spring.Commons.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="info.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 using Com.QueoFlow.Commons.MVVM.Commands;
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
+using De.BerndNet2000.SummitLog.Wpf.Factories;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Settings.DesignViewModels;
 
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.DesignViewModels {
@@ -41,12 +43,24 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.DesignViewModels {
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         public RelayCommand ShowSettingsCommand { get; private set; }
+        /// <summary>
+        ///     Setzt eine <see cref="IViewModelFactory" />
+        /// </summary>
+        public IViewModelFactory ViewModelFactory { set; get; }
 
         /// <summary>
         ///     Die Methode in welcher alle wichtigen Daten für das ViewModel geladen werden sollten.
         ///     Diese Methode wird aufgerufen wenn eine View über einen Create/EditCommand angefordert wird.
         /// </summary>
         public void LoadData() {
+        }
+
+        /// <summary>
+        ///     Lädt asynchron die VM relevanten Daten.
+        /// </summary>
+        /// <returns></returns>
+        public Task LoadDataAsync() {
+            return null;
         }
     }
 }

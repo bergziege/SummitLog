@@ -8,6 +8,8 @@
 
   <object id="mainViewModel"
           type="De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF" singleton="true">
+    <property name="ViewModelFactory" ref="viewModelFactory" />
+  
   </object>
 
   <object id="settingsViewModel"

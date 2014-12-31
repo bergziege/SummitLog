@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 using Com.QueoFlow.Commons;
 using Com.QueoFlow.Commons.MVVM.Commands;
@@ -36,14 +37,9 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         public IPageViewModel CurrentViewModel {
             get { return _currentViewModel; }
             set {
-                SetAndWaitForLoading(value);
+                _currentViewModel = value;
+                OnPropertyChanged(this.GetPropertyName(x => x.CurrentViewModel));
             }
-        }
-
-        private async void SetAndWaitForLoading(IPageViewModel value) {
-            _currentViewModel = value;
-            await _currentViewModel.LoadData();
-            OnPropertyChanged(this.GetPropertyName(x => x.CurrentViewModel));
         }
 
         /// <summary>
@@ -71,13 +67,21 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
                 return _showSettingsCommand;
             }
         }
+        /// <summary>
+        ///     Setzt eine <see cref="IViewModelFactory" />
+        /// </summary>
+        public IViewModelFactory ViewModelFactory { set; get; }
+
+        public override void LoadData() {
+            throw new InvalidOperationException("use LoadDataAsync");
+        }
 
         /// <summary>
         ///     Die Methode in welcher alle wichtigen Daten für das ViewModel geladen werden sollten. Diese Methode wird aufgerufen
         ///     wenn eine View über einen Create/EditCommand angefordert wird.
         /// </summary>
-        public override void LoadData() {
-            ShowLibrary();
+        public async Task LoadDataAsync() {
+            await ShowLibraryAsync();
         }
 
         private void ApplicationExit() {
@@ -91,12 +95,23 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
             return true;
         }
 
-        private void ShowLibrary() {
-            CurrentViewModel = ViewModelFactory.Get<LibraryViewModel>();
+        private async Task SetCurrentAndLoad(IPageViewModel page) {
+            IsLoading = true;
+            CurrentViewModel = page;
+            await CurrentViewModel.LoadData();
+            IsLoading = false;
         }
 
-        private void ShowSettings() {
-            CurrentViewModel = ViewModelFactory.Get<SettingsViewModel>();
+        private async void ShowLibrary() {
+            await ShowLibraryAsync();
+        }
+
+        private async Task ShowLibraryAsync() {
+            await SetCurrentAndLoad(ViewModelFactory.Get<LibraryViewModel>());
+        }
+
+        private async void ShowSettings() {
+            await SetCurrentAndLoad(ViewModelFactory.Get<SettingsViewModel>());
         }
     }
 }

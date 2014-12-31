@@ -10,11 +10,22 @@ using De.BerndNet2000.SummitLog.Wpf.Factories;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Main;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel;
 
+using Spring.Context.Support;
+
 namespace De.BerndNet2000.SummitLog.Wpf {
     /// <summary>
     ///     Interaktionslogik für "App.xaml"
     /// </summary>
     public partial class App {
+        /// <summary>
+        ///     Wird für die Anzeige von Fehlermeldungen verwendet. TODO: Fehlermeldungen in einem geeigneten Fenster anzeigen.
+        /// </summary>
+        /// <param name="message"> </param>
+        /// <param name="exception"> </param>
+        private static void ShowError(string message, Exception exception) {
+            //ViewCommandLibrary.ShowMessageBox.Execute(message, exception);
+        }
+
         private void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
 #if DEBUG
 #else
@@ -22,7 +33,7 @@ namespace De.BerndNet2000.SummitLog.Wpf {
 #endif
         }
 
-        private void ApplicationStartup(object sender, StartupEventArgs e) {
+        private async void ApplicationStartup(object sender, StartupEventArgs e) {
             try {
                 if (ConfigurationManager.AppSettings["AutoUpdate"] == "1") {
                     if (UpdateService.Update()) {
@@ -44,21 +55,23 @@ namespace De.BerndNet2000.SummitLog.Wpf {
             try {
 #endif
 
-                MainView mainView = ViewFactory.Get<MainView>();
-                MainViewModel mainViewModel = ViewModelFactory.Get<MainViewModel>();
+            MainView mainView = ViewFactory.Get<MainView>();
+            IViewModelFactory viewModelFactory =
+                    (IViewModelFactory)ContextRegistry.GetContext().GetObject("viewModelFactory");
+            MainViewModel mainViewModel = viewModelFactory.Get<MainViewModel>();
 
-                mainView.DataContext = mainViewModel;
+            mainView.DataContext = mainViewModel;
 
-                mainViewModel.RequestClose += delegate {
-                    Environment.Exit(0);
-                };
+            mainViewModel.RequestClose += delegate {
+                Environment.Exit(0);
+            };
 
-                MainWindow = mainView;
-                MainWindow.Show();
+            MainWindow = mainView;
+            MainWindow.Show();
 
-                mainViewModel.LoadData();
+            await mainViewModel.LoadDataAsync();
 
-                MainWindow.Show();
+            MainWindow.Show();
 
 #if !DEBUG
             } catch (Exception ex) {
@@ -69,15 +82,6 @@ namespace De.BerndNet2000.SummitLog.Wpf {
 
         private void OnExceptionEvent(ExceptionEvent exceptionEvent) {
             ShowError(exceptionEvent.Exception);
-        }
-
-        /// <summary>
-        ///     Wird für die Anzeige von Fehlermeldungen verwendet. TODO: Fehlermeldungen in einem geeigneten Fenster anzeigen.
-        /// </summary>
-        /// <param name="message"> </param>
-        /// <param name="exception"> </param>
-        private static void ShowError(string message, Exception exception) {
-            //ViewCommandLibrary.ShowMessageBox.Execute(message, exception);
         }
 
         private void ShowError(Exception exception) {

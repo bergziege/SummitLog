@@ -3,6 +3,8 @@
 using De.BerndNet2000.SummitLog.Wpf.Factories;
 using De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewModel;
 
+using Spring.Context.Support;
+
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewCommand {
     /// <summary>
     /// View Command um die <see cref="AboutView"/> anzuzeigen.
@@ -13,7 +15,7 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.About.ViewCommand {
         /// </summary>
         /// <param name="parameter">Daten, die vom Befehl verwendet werden.Wenn der Befehl keine Datenübergabe erfordert, kann das Objekt auf null festgelegt werden.</param>
         public override void Execute(object parameter) {
-            AboutViewModel viewModel = ViewModelFactory.Get<AboutViewModel>();
+            AboutViewModel viewModel = ((IViewModelFactory)ContextRegistry.GetContext().GetObject("viewModelFactory")).Get<AboutViewModel>();
             AboutView view = ViewFactory.Get<AboutView>();
 
             view.DataContext = viewModel;

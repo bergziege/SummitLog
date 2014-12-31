@@ -1,5 +1,9 @@
-﻿using Com.QueoFlow.Commons.MVVM.Commands;
+﻿using System.Threading.Tasks;
+
+using Com.QueoFlow.Commons.MVVM.Commands;
 using Com.QueoFlow.Commons.MVVM.ViewModels;
+
+using De.BerndNet2000.SummitLog.Wpf.Factories;
 
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
     /// <summary>
@@ -24,5 +28,16 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         RelayCommand ShowSettingsCommand { get; }
+
+        /// <summary>
+        ///     Setzt eine <see cref="IViewModelFactory" />
+        /// </summary>
+        IViewModelFactory ViewModelFactory { set; get; }
+
+        /// <summary>
+        ///     Lädt asynchron die VM relevanten Daten.
+        /// </summary>
+        /// <returns></returns>
+        Task LoadDataAsync();
     }
 }
