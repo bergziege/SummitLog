@@ -17,6 +17,10 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
         IPageViewModel CurrentViewModel { get; set; }
 
         /// <summary>
+        ///     Liefert das Command um die Bibliotheksansicht anzuzeigen
+        /// </summary>
+        RelayCommand ShowLibraryCommand { get; }
+        /// <summary>
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         RelayCommand ShowSettingsCommand { get; }

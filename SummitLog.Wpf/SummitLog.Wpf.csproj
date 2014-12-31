@@ -213,6 +213,8 @@
     <Compile Include="Ui\About\ViewModel\AboutViewModel.cs" />
     <Compile Include="Ui\CustomControls\PropertyLabelControl.cs" />
     <Compile Include="Ui\IPageViewModel.cs" />
+    <Compile Include="Ui\Library\ILibraryViewModel.cs" />
+    <Compile Include="Ui\Library\ViewModels\LibraryViewModel.cs" />
     <Compile Include="Ui\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="Ui\Main\IMainViewModel.cs" />
     <Compile Include="Ui\Main\MainView.xaml.cs">
@@ -331,7 +333,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ui\Library\DesignViewModels\" />
-    <Folder Include="Ui\Library\ViewModels\" />
     <Folder Include="Ui\Reporting\DesignViewModels\" />
     <Folder Include="Ui\Reporting\ViewModels\" />
   </ItemGroup>

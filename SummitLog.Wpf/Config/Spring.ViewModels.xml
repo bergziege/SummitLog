@@ -7,15 +7,19 @@
              http://www.springframework.net/xsd/spring-objects.xsd">
 
   <object id="mainViewModel"
-          type="De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF">
+          type="De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel.MainViewModel, SummitLog.WPF" singleton="true">
   </object>
 
   <object id="settingsViewModel"
-          type="De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels.SettingsViewModel, SummitLog.WPF">
+          type="De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels.SettingsViewModel, SummitLog.WPF" singleton="true">
+  </object>
+
+<object id="libraryViewModel"
+          type="De.BerndNet2000.SummitLog.Wpf.Ui.Library.ViewModels.LibraryViewModel, SummitLog.WPF" singleton="true">
   </object>
 
   <object id="aboutViewModel"
-          type="De.BerndNet2000.SummitLog.WPF.Ui.About.ViewModel.AboutViewModel, SummitLog.WPF">
+          type="De.BerndNet2000.SummitLog.WPF.Ui.About.ViewModel.AboutViewModel, SummitLog.WPF" singleton="true">
   </object>
 
 </objects>

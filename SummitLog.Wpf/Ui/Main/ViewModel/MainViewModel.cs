@@ -1,8 +1,11 @@
-﻿using Com.QueoFlow.Commons;
+﻿using System.Threading.Tasks;
+
+using Com.QueoFlow.Commons;
 using Com.QueoFlow.Commons.MVVM.Commands;
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
 using De.BerndNet2000.SummitLog.Wpf.Factories;
+using De.BerndNet2000.SummitLog.Wpf.Ui.Library.ViewModels;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels;
 
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
@@ -12,6 +15,7 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
     public class MainViewModel : WindowViewModelBase, IMainViewModel {
         private RelayCommand _applicationExitCommand;
         private IPageViewModel _currentViewModel;
+        private RelayCommand _showLibraryCommand;
         private RelayCommand _showSettingsCommand;
 
         /// <summary>
@@ -32,8 +36,26 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         public IPageViewModel CurrentViewModel {
             get { return _currentViewModel; }
             set {
-                _currentViewModel = value;
-                OnPropertyChanged(this.GetPropertyName(x => x.CurrentViewModel));
+                SetAndWaitForLoading(value);
+            }
+        }
+
+        private async void SetAndWaitForLoading(IPageViewModel value) {
+            _currentViewModel = value;
+            await _currentViewModel.LoadData();
+            OnPropertyChanged(this.GetPropertyName(x => x.CurrentViewModel));
+        }
+
+        /// <summary>
+        ///     Liefert das Command um die Bibliotheksansicht anzuzeigen
+        /// </summary>
+        public RelayCommand ShowLibraryCommand {
+            get {
+                if (_showLibraryCommand == null) {
+                    _showLibraryCommand = new RelayCommand(ShowLibrary);
+                }
+
+                return _showLibraryCommand;
             }
         }
 
@@ -55,6 +77,7 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         ///     wenn eine View über einen Create/EditCommand angefordert wird.
         /// </summary>
         public override void LoadData() {
+            ShowLibrary();
         }
 
         private void ApplicationExit() {
@@ -66,6 +89,10 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
 
         private bool CanShowSettings() {
             return true;
+        }
+
+        private void ShowLibrary() {
+            CurrentViewModel = ViewModelFactory.Get<LibraryViewModel>();
         }
 
         private void ShowSettings() {
