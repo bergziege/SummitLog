@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\DifficultyLevelGroup.cs" />
+    <Compile Include="Exceptions\EmptyNameException.cs" />
     <Compile Include="Factories\FluentSessionFactory.cs" />
     <Compile Include="Persistence\IDifficultyLevelGroupDao.cs" />
     <Compile Include="Persistence\Impl\DifficultyLevelGroupDao.cs" />

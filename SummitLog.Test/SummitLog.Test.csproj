@@ -112,6 +112,8 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\DifficultyLevelTest.cs" />
+    <Compile Include="Domain\DifficultyLevelGroupTest.cs" />
     <Compile Include="Helper\CreatorUtil.cs" />
     <Compile Include="Persistence\PersistenceBaseTest.cs" />
     <Compile Include="Persistence\DifficultyLevelGroupDaoTest.cs" />
@@ -133,9 +135,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SummitLog\SummitLog.csproj">
       <Project>{DB345F31-49B6-4C1E-8B2C-2FEEA18AC6AF}</Project>

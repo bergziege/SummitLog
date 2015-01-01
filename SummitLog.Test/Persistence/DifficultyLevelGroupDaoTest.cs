@@ -17,7 +17,7 @@ namespace De.BerndNet2000.SummitLog.Persistence {
         [TestMethod]
         public void TestSaveGet() {
             // Given: Eine Schwierigkeitskategorie über das Creator Util in der DB
-            DifficultyLevelGroup difficultyLevelGroup = DomainObjectCreatorUtil.GetRandomDifficultyCategory();
+            DifficultyLevelGroup difficultyLevelGroup = DomainObjectCreatorUtil.GetRandomDifficultyLevelGroup();
 
             // When: anhand der ID abgerufen wird
             DifficultyLevelGroup reloaded = _difficultyLevelGroupDao.Get(difficultyLevelGroup.Id);

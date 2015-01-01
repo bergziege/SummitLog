@@ -26,7 +26,7 @@ namespace De.BerndNet2000.SummitLog.Helper {
         /// Erstellt eine Schwierigkeitsgradkategory mit einem zufälligen Namen
         /// </summary>
         /// <returns></returns>
-        public DifficultyLevelGroup GetRandomDifficultyCategory(bool persist = true) {
+        public DifficultyLevelGroup GetRandomDifficultyLevelGroup(bool persist = true) {
             string name = "diffCat_" + _rand.Next();
             
             DifficultyLevelGroup cat = new DifficultyLevelGroup(name);
