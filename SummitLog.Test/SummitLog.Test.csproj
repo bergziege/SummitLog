@@ -114,7 +114,7 @@
   <ItemGroup>
     <Compile Include="Helper\CreatorUtil.cs" />
     <Compile Include="Persistence\PersistenceBaseTest.cs" />
-    <Compile Include="Persistence\DifficultyCategoryDaoTest.cs" />
+    <Compile Include="Persistence\DifficultyLevelGroupDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ServiceTestBase.cs" />
   </ItemGroup>

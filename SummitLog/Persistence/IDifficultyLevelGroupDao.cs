@@ -4,8 +4,8 @@ using De.BerndNet2000.SummitLog.Domain;
 
 namespace De.BerndNet2000.SummitLog.Persistence {
     /// <summary>
-    ///     Schnittstelle für Daos für <see cref="DifficultyCategory" />
+    ///     Schnittstelle für Daos für <see cref="DifficultyLevelGroup" />
     /// </summary>
-    public interface IDifficultyCategoryDao : IDomainEntityWithIdAndNameDao<DifficultyCategory> {
+    public interface IDifficultyLevelGroupDao : IDomainEntityWithIdAndNameDao<DifficultyLevelGroup> {
     }
 }

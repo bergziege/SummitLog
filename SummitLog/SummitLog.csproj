@@ -109,11 +109,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Domain\DifficultyCategory.cs" />
+    <Compile Include="Domain\DifficultyLevelGroup.cs" />
     <Compile Include="Factories\FluentSessionFactory.cs" />
-    <Compile Include="Persistence\IDifficultyCategoryDao.cs" />
-    <Compile Include="Persistence\Impl\DifficultyCategoryDao.cs" />
-    <Compile Include="Persistence\Mappings\DifficultyCategoryMap.cs" />
+    <Compile Include="Persistence\IDifficultyLevelGroupDao.cs" />
+    <Compile Include="Persistence\Impl\DifficultyLevelGroupDao.cs" />
+    <Compile Include="Persistence\Mappings\DifficultyLevelGroupMap.cs" />
     <Compile Include="Persistence\Mappings\DomainEntityMap.cs" />
     <Compile Include="Persistence\Mappings\DomainEntityWithIdAndNameMap.cs" />
     <Compile Include="Persistence\Mappings\DomainEntityWithIdMap.cs" />

@@ -6,10 +6,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace De.BerndNet2000.SummitLog.Persistence {
     [TestClass]
-    public class DifficultyCategoryDaoTest:PersistenceBaseTest {
+    public class DifficultyLevelGroupDaoTest:PersistenceBaseTest {
 
         [Resource]
-        private IDifficultyCategoryDao _difficultyCategoryDao;
+        private IDifficultyLevelGroupDao _difficultyLevelGroupDao;
 
         /// <summary>
         ///     Grundlegendes Speichern/Abrufen einer Schwierigkeitskategorie
@@ -17,13 +17,13 @@ namespace De.BerndNet2000.SummitLog.Persistence {
         [TestMethod]
         public void TestSaveGet() {
             // Given: Eine Schwierigkeitskategorie über das Creator Util in der DB
-            DifficultyCategory category = DomainObjectCreatorUtil.GetRandomDifficultyCategory();
+            DifficultyLevelGroup difficultyLevelGroup = DomainObjectCreatorUtil.GetRandomDifficultyCategory();
 
             // When: anhand der ID abgerufen wird
-            DifficultyCategory reloaded = _difficultyCategoryDao.Get(category.Id);
+            DifficultyLevelGroup reloaded = _difficultyLevelGroupDao.Get(difficultyLevelGroup.Id);
 
             // Then: muss obige Schwierigkeitskategorie geliefert werden.
-            Assert.AreEqual(category, reloaded);
+            Assert.AreEqual(difficultyLevelGroup, reloaded);
         }
     }
 }

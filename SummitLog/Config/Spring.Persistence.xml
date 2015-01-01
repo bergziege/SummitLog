@@ -8,8 +8,8 @@
 
   <!--DAO Definitions-->
 
-  <object id="difficultyCategoryDao"
-          type="De.BerndNet2000.SummitLog.Persistence.Impl.DifficultyCategoryDao, SummitLog">
+  <object id="difficultyLevelGroupDao"
+          type="De.BerndNet2000.SummitLog.Persistence.Impl.DifficultyLevelGroupDao, SummitLog">
     <property name="SessionFactory"
               ref="sessionFactory" />
   </object>

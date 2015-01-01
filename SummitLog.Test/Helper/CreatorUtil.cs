@@ -10,9 +10,9 @@ namespace De.BerndNet2000.SummitLog.Helper {
     public class CreatorUtil {
 
         /// <summary>
-        /// Liefert oder setzt einen <see cref="IDifficultyCategoryDao"/>
+        /// Liefert oder setzt einen <see cref="IDifficultyLevelGroupDao"/>
         /// </summary>
-        public IDifficultyCategoryDao DifficultyCategoryDao { private get; set; }
+        public IDifficultyLevelGroupDao DifficultyLevelGroupDao { private get; set; }
 
         private Random _rand;
         /// <summary>
@@ -26,13 +26,13 @@ namespace De.BerndNet2000.SummitLog.Helper {
         /// Erstellt eine Schwierigkeitsgradkategory mit einem zufälligen Namen
         /// </summary>
         /// <returns></returns>
-        public DifficultyCategory GetRandomDifficultyCategory(bool persist = true) {
+        public DifficultyLevelGroup GetRandomDifficultyCategory(bool persist = true) {
             string name = "diffCat_" + _rand.Next();
             
-            DifficultyCategory cat = new DifficultyCategory(name);
+            DifficultyLevelGroup cat = new DifficultyLevelGroup(name);
             if (persist) {
-                DifficultyCategoryDao.Save(cat);
-                DifficultyCategoryDao.FlushAndClear();
+                DifficultyLevelGroupDao.Save(cat);
+                DifficultyLevelGroupDao.FlushAndClear();
             }
             return cat;
         }
