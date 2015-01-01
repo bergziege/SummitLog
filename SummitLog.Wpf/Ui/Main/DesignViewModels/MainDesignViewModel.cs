@@ -40,6 +40,10 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.DesignViewModels {
         /// </summary>
         public RelayCommand ShowLibraryCommand { get; private set; }
         /// <summary>
+        ///     Liefert ein Command um die Reports anzuzeigen
+        /// </summary>
+        public RelayCommand ShowReportsCommand { get; private set; }
+        /// <summary>
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         public RelayCommand ShowSettingsCommand { get; private set; }

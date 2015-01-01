@@ -11,7 +11,7 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Library.ViewModels {
         ///     Lädt die Daten des View Models asynchron
         /// </summary>
         /// <returns></returns>
-        public async Task LoadData() {
+        public virtual async Task LoadData() {
             
         }
     }

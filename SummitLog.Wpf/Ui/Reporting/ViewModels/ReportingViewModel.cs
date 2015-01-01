@@ -2,11 +2,11 @@
 
 using Com.QueoFlow.Commons.MVVM.ViewModels;
 
-namespace De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels {
+namespace De.BerndNet2000.SummitLog.Wpf.Ui.Reporting.ViewModels {
     /// <summary>
-    ///     View Model für die Einstellungsansicht
+    ///     ViewModel der Reportingansicht
     /// </summary>
-    public class SettingsViewModel : ViewModelBase, ISettingsViewModel {
+    public class ReportingViewModel : ViewModelBase, IReportingViewModel {
         /// <summary>
         ///     Lädt die Daten des View Models asynchron
         /// </summary>

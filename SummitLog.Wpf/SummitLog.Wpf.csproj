@@ -102,6 +102,9 @@
     <Reference Include="Microsoft.Office.Interop.Outlook, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate, Version=3.2.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
       <HintPath>..\packages\NHibernate.3.2.0.4000\lib\Net35\NHibernate.dll</HintPath>
     </Reference>
@@ -223,6 +226,8 @@
     </Compile>
     <Compile Include="Ui\Main\TemplateSelector\PageContentTemplateSelector.cs" />
     <Compile Include="Ui\Main\ViewModel\MainViewModel.cs" />
+    <Compile Include="Ui\Reporting\IReportingViewModel.cs" />
+    <Compile Include="Ui\Reporting\ViewModels\ReportingViewModel.cs" />
     <Compile Include="Ui\Settings\DesignViewModels\SettingsDesignViewModel.cs" />
     <Compile Include="Ui\Settings\ISettingsViewModel.cs" />
     <Compile Include="Ui\Settings\SettingsView.xaml.cs">
@@ -338,7 +343,6 @@
   <ItemGroup>
     <Folder Include="Ui\Library\DesignViewModels\" />
     <Folder Include="Ui\Reporting\DesignViewModels\" />
-    <Folder Include="Ui\Reporting\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

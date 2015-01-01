@@ -25,6 +25,10 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main {
         /// </summary>
         RelayCommand ShowLibraryCommand { get; }
         /// <summary>
+        ///     Liefert ein Command um die Reports anzuzeigen
+        /// </summary>
+        RelayCommand ShowReportsCommand { get; }
+        /// <summary>
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         RelayCommand ShowSettingsCommand { get; }

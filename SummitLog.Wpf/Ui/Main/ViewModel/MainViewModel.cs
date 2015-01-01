@@ -7,6 +7,7 @@ using Com.QueoFlow.Commons.MVVM.ViewModels;
 
 using De.BerndNet2000.SummitLog.Wpf.Factories;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Library.ViewModels;
+using De.BerndNet2000.SummitLog.Wpf.Ui.Reporting.ViewModels;
 using De.BerndNet2000.SummitLog.Wpf.Ui.Settings.ViewModels;
 
 namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
@@ -17,6 +18,7 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         private RelayCommand _applicationExitCommand;
         private IPageViewModel _currentViewModel;
         private RelayCommand _showLibraryCommand;
+        private RelayCommand _showReportsCommand;
         private RelayCommand _showSettingsCommand;
 
         /// <summary>
@@ -56,6 +58,19 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         }
 
         /// <summary>
+        ///     Liefert ein Command um die Reports anzuzeigen
+        /// </summary>
+        public RelayCommand ShowReportsCommand {
+            get {
+                if (_showReportsCommand == null) {
+                    _showReportsCommand = new RelayCommand(ShowReports, CanShowReports);
+                }
+
+                return _showReportsCommand;
+            }
+        }
+
+        /// <summary>
         ///     Liefert das Command um die Einstellungen anzuzeigen
         /// </summary>
         public RelayCommand ShowSettingsCommand {
@@ -91,6 +106,10 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
             RequestClosing();
         }
 
+        private bool CanShowReports() {
+            return true;
+        }
+
         private bool CanShowSettings() {
             return true;
         }
@@ -107,11 +126,15 @@ namespace De.BerndNet2000.SummitLog.Wpf.Ui.Main.ViewModel {
         }
 
         private async Task ShowLibraryAsync() {
-            await SetCurrentAndLoad(ViewModelFactory.Get<LibraryViewModel>());
+            await SetCurrentAndLoad(ViewModelFactory.Get<LibraryViewModel>(null));
+        }
+
+        private async void ShowReports() {
+            await SetCurrentAndLoad(ViewModelFactory.Get<ReportingViewModel>(null));
         }
 
         private async void ShowSettings() {
-            await SetCurrentAndLoad(ViewModelFactory.Get<SettingsViewModel>());
+            await SetCurrentAndLoad(ViewModelFactory.Get<SettingsViewModel>(null));
         }
     }
 }
