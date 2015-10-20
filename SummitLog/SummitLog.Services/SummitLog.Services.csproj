@@ -56,11 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Summit.cs" />
+    <Compile Include="Model\SummitGroup.cs" />
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Route.cs" />
+    <Compile Include="Persistence\Impl\SummitDao.cs" />
+    <Compile Include="Persistence\ISummitDao.cs" />
+    <Compile Include="Persistence\ISummitGroupDao.cs" />
     <Compile Include="Persistence\IAreaDao.cs" />
     <Compile Include="Persistence\ICountryDao.cs" />
+    <Compile Include="Persistence\Impl\SummitGroupDao.cs" />
     <Compile Include="Persistence\Impl\AreaDao.cs" />
     <Compile Include="Persistence\Impl\CountryDao.cs" />
     <Compile Include="Persistence\Impl\RouteDao.cs" />
