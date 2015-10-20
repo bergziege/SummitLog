@@ -40,7 +40,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="country"></param>
         public void Create(Country country)
         {
-            _graphClient.Cypher.Create("(n:Country {Name:'" + country.Name +"'})").ExecuteWithoutResults();
+            _graphClient.Cypher.Create("(n:Country {country})").WithParam("country", country).ExecuteWithoutResults();
         }
     }
 }

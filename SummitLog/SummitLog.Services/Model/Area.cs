@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SummitLog.Services.Model
 {
-    public class Country
+    public class Area
     {
         private Guid _id = Guid.NewGuid();
         private string _name;

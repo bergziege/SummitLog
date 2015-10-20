@@ -38,10 +38,27 @@ namespace SummitLog.Services.Test
 
             RouteDao routeDao = new RouteDao(_graphClient);
             routeDao.CreateIn(country, new Route() {Name = "Jakobsweg"});
-
+            
             IList<Route> routesInCountry = routeDao.GetRoutesIn(country);
             Assert.AreEqual(1, routesInCountry.Count);
             Assert.AreEqual("Jakobsweg", routesInCountry.First().Name);
+        }
+
+        [TestMethod]
+        public void TestCreate()
+        {
+            CountryDao countryDao = new CountryDao(_graphClient);
+            countryDao.Create(new Country() { Name = "Deutschland" });
+            Country country = countryDao.GetAll().First();
+            Assert.AreEqual("Deutschland", country.Name);
+
+            RouteDao routeDao = new RouteDao(_graphClient);
+            routeDao.CreateIn(country, new Route() { Name = "Jakobsweg" });
+
+            IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
+                    .Return(route => route.As<Route>())
+                    .Results.ToList();
+            Assert.AreEqual(1, allRoutes.Count);
         }
     }
 }

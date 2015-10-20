@@ -26,6 +26,8 @@ namespace SummitLog.Services
             container.RegisterInstance(client);
 
             container.Register<ICountryDao,CountryDao>();
+            container.Register<IAreaDao,AreaDao>();
+            container.Register<IRoutesDao,RouteDao>();
 
             return container;
         }

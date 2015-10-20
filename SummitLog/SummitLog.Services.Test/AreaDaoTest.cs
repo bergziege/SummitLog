@@ -10,7 +10,7 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test
 {
     [TestClass]
-    public class CountryDaoTest
+    public class AreaDaoTest
     {
         private GraphClient _graphClient;
 
@@ -31,13 +31,18 @@ namespace SummitLog.Services.Test
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            CountryDao dao = new CountryDao(_graphClient);
-            Country newCountry = new Country() {Name = "Deutschland"};
-            dao.Create(newCountry);
-            IList<Country> allCountries = dao.GetAll();
-            Assert.AreEqual(1, allCountries.Count);
-            Assert.AreEqual(newCountry.Name, allCountries.First().Name);
-            Assert.AreEqual(newCountry.Id, allCountries.First().Id);
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country() { Name = "Deutschland" };
+            countryDao.Create(newCountry);
+
+            IAreaDao dao = new AreaDao(_graphClient);
+            Area newArea = new Area() {Name = "Sächsiche Schweiz"};
+            dao.Create(newCountry, newArea);
+
+            IList<Area> areasInCountry = dao.GetAllIn(newCountry);
+            Assert.AreEqual(1, areasInCountry.Count);
+            Assert.AreEqual(newArea.Name, areasInCountry.First().Name);
+            Assert.AreEqual(newArea.Id, areasInCountry.First().Id);
         }
     }
 }
