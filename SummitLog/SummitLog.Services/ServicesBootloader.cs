@@ -1,4 +1,9 @@
-﻿using DryIoc;
+﻿using System;
+using DryIoc;
+using Neo4jClient;
+using SummitLog.Services.Model;
+using SummitLog.Services.Persistence;
+using SummitLog.Services.Persistence.Impl;
 
 namespace SummitLog.Services
 {
@@ -14,6 +19,14 @@ namespace SummitLog.Services
         /// <returns></returns>
         public static Container Init(Container container)
         {
+
+            GraphClient client = new GraphClient(new Uri("http://localhost:7474/db/data"));
+            client.Connect();
+
+            container.RegisterInstance(client);
+
+            container.Register<ICountryDao,CountryDao>();
+
             return container;
         }
     }
