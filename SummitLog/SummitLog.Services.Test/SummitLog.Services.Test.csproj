@@ -62,6 +62,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="LogEntryDaoTest.cs" />
+    <Compile Include="VariationDaoTest.cs" />
     <Compile Include="DifficultyLevelDaoTest.cs" />
     <Compile Include="DifficultyLevelScaleDaoTest.cs" />
     <Compile Include="SummitDao.cs" />

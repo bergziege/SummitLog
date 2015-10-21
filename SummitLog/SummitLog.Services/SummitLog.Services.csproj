@@ -38,7 +38,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Neo4jClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Neo4jClient.1.1.0.9\lib\net45\Neo4jClient.dll</HintPath>
+      <HintPath>..\packages\Neo4jClient.1.1.0.10\lib\net45\Neo4jClient.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -56,6 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\LogEntry.cs" />
+    <Compile Include="Model\Variation.cs" />
     <Compile Include="Model\DifficultyLevel.cs" />
     <Compile Include="Model\DifficultyLevelScale.cs" />
     <Compile Include="Model\Summit.cs" />
@@ -63,8 +65,12 @@
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Route.cs" />
+    <Compile Include="Persistence\ILogEntryDao.cs" />
+    <Compile Include="Persistence\Impl\LogEntryDao.cs" />
+    <Compile Include="Persistence\IVariationDao.cs" />
     <Compile Include="Persistence\IDifficultyLevelDao.cs" />
     <Compile Include="Persistence\IDifficultyLevelScaleDao.cs" />
+    <Compile Include="Persistence\Impl\VariationDao.cs" />
     <Compile Include="Persistence\Impl\DifficultyLevelDao.cs" />
     <Compile Include="Persistence\Impl\DifficultyLevelScaleDao.cs" />
     <Compile Include="Persistence\Impl\SummitDao.cs" />
