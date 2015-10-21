@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
     /// <summary>
     ///     Ein einzelner Gipfel
     /// </summary>
-    public class Summit
+    public class Summit : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
     }
 }

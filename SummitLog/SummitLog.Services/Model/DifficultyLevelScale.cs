@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
     /// <summary>
     ///     Schwierigkeitsgradskala
     /// </summary>
-    public class DifficultyLevelScale
+    public class DifficultyLevelScale : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
     }
 }

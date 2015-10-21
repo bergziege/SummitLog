@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
-    public class Area
+    /// <summary>
+    ///     Gebiet in einem Land
+    /// </summary>
+    public class Area : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
     }
 }

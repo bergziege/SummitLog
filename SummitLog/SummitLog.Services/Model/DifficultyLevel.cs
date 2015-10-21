@@ -1,16 +1,14 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
     /// <summary>
     ///     Schwierigkeitsgrad
     /// </summary>
-    public class DifficultyLevel
+    public class DifficultyLevel : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
-
+        /// <summary>
+        ///     Liefert oder setzt die Punktezahl, mit der dieser Schwierigkeitsgrad mit anderen Graden anderer Skalen verglichen
+        ///     werden kann
+        /// </summary>
         public int Score { get; set; }
     }
 }

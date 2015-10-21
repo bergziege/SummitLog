@@ -56,6 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\EntityWithId.cs" />
+    <Compile Include="Model\EntityWithIdAndName.cs" />
     <Compile Include="Model\LogEntry.cs" />
     <Compile Include="Model\Variation.cs" />
     <Compile Include="Model\DifficultyLevel.cs" />

@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
-    public class Country
+    /// <summary>
+    ///     Land
+    /// </summary>
+    public class Country : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
     }
 }

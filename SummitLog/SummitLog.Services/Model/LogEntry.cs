@@ -1,19 +1,12 @@
 ﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace SummitLog.Services.Model
 {
     /// <summary>
     ///     Logeintrag
     /// </summary>
-    public class LogEntry
+    public class LogEntry : EntityWithId
     {
-        /// <summary>
-        ///     Liefert oder setzt die ID
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
         /// <summary>
         ///     Liefert oder setzt das Datum
         /// </summary>

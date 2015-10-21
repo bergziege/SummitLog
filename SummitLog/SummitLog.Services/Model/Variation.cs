@@ -1,14 +1,9 @@
-﻿using System;
-
-namespace SummitLog.Services.Model
+﻿namespace SummitLog.Services.Model
 {
     /// <summary>
-    /// Variation eines Weges. Bzw. Verbindung von Weg und Schwierigkeitsgrad
+    ///     Variation eines Weges. Bzw. Verbindung von Weg und Schwierigkeitsgrad
     /// </summary>
-    public class Variation
+    public class Variation : EntityWithIdAndName
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public string Name { get; set; }
     }
 }
