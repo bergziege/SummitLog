@@ -3,9 +3,9 @@
 namespace SummitLog.Services.Model
 {
     /// <summary>
-    ///     Eine Gipfelgruppe
+    ///     Schwierigkeitsgradskala
     /// </summary>
-    public class SummitGroup
+    public class DifficultyLevelScale
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

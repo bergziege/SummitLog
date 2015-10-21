@@ -7,16 +7,10 @@ namespace SummitLog.Services.Model
     /// </summary>
     public class Route
     {
-        private Guid _id = Guid.NewGuid();
-
         /// <summary>
         ///     Liefert die ID des Weges
         /// </summary>
-        public Guid Id
-        {
-            get { return _id; }
-            set { _id = value; }
-        }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         /// <summary>
         ///     Liefert den Namen des Weges

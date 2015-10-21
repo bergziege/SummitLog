@@ -27,7 +27,11 @@ namespace SummitLog.Services
 
             container.Register<ICountryDao,CountryDao>();
             container.Register<IAreaDao,AreaDao>();
+            container.Register<ISummitGroupDao,SummitGroupDao>();
+            container.Register<ISummitDao,SummitDao>();
             container.Register<IRoutesDao,RouteDao>();
+
+            container.Register<IDifficultyLevelScaleDao, DifficultyLevelScaleDao>();
 
             return container;
         }
