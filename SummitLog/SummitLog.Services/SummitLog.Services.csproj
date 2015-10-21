@@ -89,7 +89,9 @@
     <Compile Include="Properties\InternalsVisibleToDryIocFactoryCompilerDynamicAssembly.cs" />
     <Compile Include="ServicesBootloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IAreaService.cs" />
     <Compile Include="Services\ICountryService.cs" />
+    <Compile Include="Services\Impl\AreaService.cs" />
     <Compile Include="Services\Impl\CountryService.cs" />
   </ItemGroup>
   <ItemGroup>
