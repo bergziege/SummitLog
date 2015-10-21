@@ -7,7 +7,7 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 
-namespace SummitLog.Services.Test
+namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
     public class SummitGroupDaoTest

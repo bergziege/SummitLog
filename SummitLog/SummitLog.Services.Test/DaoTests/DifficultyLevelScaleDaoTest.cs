@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 
-namespace SummitLog.Services.Test
+namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class CountryDaoTest
+    public class DifficultyLevelScaleDaoTest
     {
         private GraphClient _graphClient;
 
@@ -32,13 +31,13 @@ namespace SummitLog.Services.Test
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            CountryDao dao = new CountryDao(_graphClient);
-            Country newCountry = new Country() {Name = "Deutschland"};
-            dao.Create(newCountry);
-            IEnumerable<Country> allCountries = dao.GetAll();
-            Assert.AreEqual(1, allCountries.Count());
-            Assert.AreEqual(newCountry.Name, allCountries.First().Name);
-            Assert.AreEqual(newCountry.Id, allCountries.First().Id);
+            IDifficultyLevelScaleDao dao = new DifficultyLevelScaleDao(_graphClient);
+            DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale() {Name = "sächsisch"};
+            dao.Create(difficultyLevelScale);
+            IList<DifficultyLevelScale> allDifficultyLevelScales = dao.GetAll();
+            Assert.AreEqual(1, allDifficultyLevelScales.Count);
+            Assert.AreEqual(difficultyLevelScale.Name, allDifficultyLevelScales.First().Name);
+            Assert.AreEqual(difficultyLevelScale.Id, allDifficultyLevelScales.First().Id);
         }
     }
 }

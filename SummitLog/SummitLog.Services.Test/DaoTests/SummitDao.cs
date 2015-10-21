@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 
-namespace SummitLog.Services.Test
+namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class AreaDaoTest
+    public class SummitDaoTest
     {
         private GraphClient _graphClient;
 
@@ -40,10 +39,18 @@ namespace SummitLog.Services.Test
             Area newArea = new Area() {Name = "Sächsiche Schweiz"};
             dao.Create(newCountry, newArea);
 
-            IEnumerable<Area> areasInCountry = dao.GetAllIn(newCountry);
-            Assert.AreEqual(1, areasInCountry.Count());
-            Assert.AreEqual(newArea.Name, areasInCountry.First().Name);
-            Assert.AreEqual(newArea.Id, areasInCountry.First().Id);
+            ISummitGroupDao groupDao = new SummitGroupDao(_graphClient);
+            SummitGroup newGroup = new SummitGroup() {Name = "Gipfelgruppe"};
+            groupDao.Create(newArea, newGroup);
+
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            Summit newSummit = new Summit() {Name = "Gipfel"};
+            summitDao.Create(newGroup, newSummit);
+
+            IList<Summit> summitsInGroup = summitDao.GetAllIn(newGroup);
+            Assert.AreEqual(1, summitsInGroup.Count);
+            Assert.AreEqual(newSummit.Name, summitsInGroup.First().Name);
+            Assert.AreEqual(newSummit.Id, summitsInGroup.First().Id);
         }
     }
 }

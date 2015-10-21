@@ -7,10 +7,10 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 
-namespace SummitLog.Services.Test
+namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class DifficultyLevelScaleDaoTest
+    public class AreaDaoTest
     {
         private GraphClient _graphClient;
 
@@ -31,13 +31,18 @@ namespace SummitLog.Services.Test
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            IDifficultyLevelScaleDao dao = new DifficultyLevelScaleDao(_graphClient);
-            DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale() {Name = "sächsisch"};
-            dao.Create(difficultyLevelScale);
-            IList<DifficultyLevelScale> allDifficultyLevelScales = dao.GetAll();
-            Assert.AreEqual(1, allDifficultyLevelScales.Count);
-            Assert.AreEqual(difficultyLevelScale.Name, allDifficultyLevelScales.First().Name);
-            Assert.AreEqual(difficultyLevelScale.Id, allDifficultyLevelScales.First().Id);
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country() { Name = "Deutschland" };
+            countryDao.Create(newCountry);
+
+            IAreaDao dao = new AreaDao(_graphClient);
+            Area newArea = new Area() {Name = "Sächsiche Schweiz"};
+            dao.Create(newCountry, newArea);
+
+            IEnumerable<Area> areasInCountry = dao.GetAllIn(newCountry);
+            Assert.AreEqual(1, areasInCountry.Count());
+            Assert.AreEqual(newArea.Name, areasInCountry.First().Name);
+            Assert.AreEqual(newArea.Id, areasInCountry.First().Id);
         }
     }
 }
