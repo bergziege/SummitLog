@@ -8,17 +8,14 @@ namespace SummitLog.Services.Persistence.Impl
     /// <summary>
     ///     DAO für Routen
     /// </summary>
-    public class RouteDao : IRoutesDao
+    public class RouteDao :BaseDao, IRoutesDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
         ///     Erstellt eine neue Instanz des Daos
         /// </summary>
         /// <param name="graphClient"></param>
-        public RouteDao(GraphClient graphClient)
+        public RouteDao(GraphClient graphClient): base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -29,7 +26,7 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Route> GetRoutesIn(Country country)
         {
             return
-                _graphClient.Cypher.Match("(c:Country)-[:HAS]->(route:Route)")
+                GraphClient.Cypher.Match("(c:Country)-[:HAS]->(route:Route)")
                     .Where((Country c) => c.Id == country.Id)
                     .Return(route => route.As<Route>())
                     .Results.ToList();
@@ -43,15 +40,20 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Route> GetRoutesIn(Area area)
         {
             return
-                _graphClient.Cypher.Match("(a:Area)-[:HAS]->(route:Route)")
+                GraphClient.Cypher.Match("(a:Area)-[:HAS]->(route:Route)")
                     .Where((Area a) => a.Id == area.Id)
                     .Return(route => route.As<Route>())
                     .Results.ToList();
         }
 
+        /// <summary>
+        ///     Erstellt eine neue Route in einem Land
+        /// </summary>
+        /// <param name="country"></param>
+        /// <param name="route"></param>
         public void CreateIn(Country country, Route route)
         {
-            var query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(c:Country)")
                 .Where((Country c) => c.Id == country.Id)
                 .Create("c-[:HAS]->(route:Route {route})")
@@ -67,7 +69,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="route"></param>
         public void CreateIn(Area area, Route route)
         {
-            var query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(a:Area)")
                 .Where((Area a) => a.Id == area.Id)
                 .Create("a-[:HAS]->(route:Route {route})")
@@ -83,7 +85,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="route"></param>
         public void CreateIn(SummitGroup summitGroup, Route route)
         {
-            var query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(sg:SummitGroup)")
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
                 .Create("sg-[:HAS]->(route:Route {route})")
@@ -92,10 +94,15 @@ namespace SummitLog.Services.Persistence.Impl
             query.ExecuteWithoutResults();
         }
 
+        /// <summary>
+        ///     Liefert alle Routen direkt in der Gipfelgruppe, nicht jedoch die der Einzelnen Gipfel
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        /// <returns></returns>
         public IList<Route> GetRoutesIn(SummitGroup summitGroup)
         {
             return
-                _graphClient.Cypher.Match("(sg:SummitGroup)-[:HAS]->(route:Route)")
+                GraphClient.Cypher.Match("(sg:SummitGroup)-[:HAS]->(route:Route)")
                     .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
                     .Return(route => route.As<Route>())
                     .Results.ToList();
@@ -108,7 +115,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="route"></param>
         public void CreateIn(Summit summit, Route route)
         {
-            var query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(s:Summit)")
                 .Where((Summit s) => s.Id == summit.Id)
                 .Create("s-[:HAS]->(route:Route {route})")
@@ -117,10 +124,15 @@ namespace SummitLog.Services.Persistence.Impl
             query.ExecuteWithoutResults();
         }
 
+        /// <summary>
+        ///     Liefert alle Routen eines Gipfels
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <returns></returns>
         public IList<Route> GetRoutesIn(Summit summit)
         {
             return
-                _graphClient.Cypher.Match("(s:Summit)-[:HAS]->(route:Route)")
+                GraphClient.Cypher.Match("(s:Summit)-[:HAS]->(route:Route)")
                     .Where((Summit s) => s.Id == summit.Id)
                     .Return(route => route.As<Route>())
                     .Results.ToList();

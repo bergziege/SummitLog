@@ -1,25 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Neo4jClient;
-using Neo4jClient.Cypher;
 using SummitLog.Services.Model;
 
 namespace SummitLog.Services.Persistence.Impl
 {
     /// <summary>
-    /// DAO für Gegendem in einem Land
+    ///     DAO für Gegendem in einem Land
     /// </summary>
-    public class AreaDao: IAreaDao
+    public class AreaDao : BaseDao, IAreaDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
-        /// Erstellt eine neue Instanz des DAOs
+        ///     Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public AreaDao(GraphClient graphClient)
+        public AreaDao(GraphClient graphClient) : base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Area> GetAllIn(Country country)
         {
-            return _graphClient.Cypher.Match("(c:Country)-[:HAS]->(a:Area)")
+            return GraphClient.Cypher.Match("(c:Country)-[:HAS]->(a:Area)")
                 .Where((Country c) => c.Id == country.Id).Return(a => a.As<Area>()).Results.ToList();
         }
 
@@ -39,13 +36,13 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="area"></param>
         public void Create(Country country, Area area)
         {
-            ICypherFluentQuery query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(c:Country)")
                 .Where((Country c) => c.Id == country.Id)
                 .Create("c-[:HAS]->(area:Area {area})")
                 .WithParam("area", area);
 
-            query.ExecuteWithoutResults();
+            query.ExecuteWithoutResultsAsync();
         }
     }
 }

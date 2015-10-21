@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
@@ -39,8 +40,8 @@ namespace SummitLog.Services.Test
             Area newArea = new Area() {Name = "Sächsiche Schweiz"};
             dao.Create(newCountry, newArea);
 
-            IList<Area> areasInCountry = dao.GetAllIn(newCountry);
-            Assert.AreEqual(1, areasInCountry.Count);
+            IEnumerable<Area> areasInCountry = dao.GetAllIn(newCountry);
+            Assert.AreEqual(1, areasInCountry.Count());
             Assert.AreEqual(newArea.Name, areasInCountry.First().Name);
             Assert.AreEqual(newArea.Id, areasInCountry.First().Id);
         }

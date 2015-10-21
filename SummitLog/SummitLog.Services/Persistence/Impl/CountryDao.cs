@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Neo4jClient;
 using SummitLog.Services.Model;
 
@@ -8,18 +9,14 @@ namespace SummitLog.Services.Persistence.Impl
     /// <summary>
     ///     DAO für Länder
     /// </summary>
-    public class CountryDao : ICountryDao
+    public class CountryDao : BaseDao, ICountryDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
         ///     Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        /// <param name="nodeLabels"></param>
-        public CountryDao(GraphClient graphClient)
+        public CountryDao(GraphClient graphClient) : base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -29,7 +26,7 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Country> GetAll()
         {
             return
-                _graphClient.Cypher.Match("(country:Country)")
+                GraphClient.Cypher.Match("(country:Country)")
                     .Return(country => country.As<Country>())
                     .Results.ToList();
         }
@@ -40,7 +37,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="country"></param>
         public void Create(Country country)
         {
-            _graphClient.Cypher.Create("(n:Country {country})").WithParam("country", country).ExecuteWithoutResults();
+            GraphClient.Cypher.Create("(n:Country {country})").WithParam("country", country).ExecuteWithoutResults();
         }
     }
 }

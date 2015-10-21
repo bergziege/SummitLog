@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
@@ -34,8 +35,8 @@ namespace SummitLog.Services.Test
             CountryDao dao = new CountryDao(_graphClient);
             Country newCountry = new Country() {Name = "Deutschland"};
             dao.Create(newCountry);
-            IList<Country> allCountries = dao.GetAll();
-            Assert.AreEqual(1, allCountries.Count);
+            IEnumerable<Country> allCountries = dao.GetAll();
+            Assert.AreEqual(1, allCountries.Count());
             Assert.AreEqual(newCountry.Name, allCountries.First().Name);
             Assert.AreEqual(newCountry.Id, allCountries.First().Id);
         }

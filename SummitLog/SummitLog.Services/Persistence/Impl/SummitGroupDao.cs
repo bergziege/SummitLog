@@ -7,19 +7,16 @@ using SummitLog.Services.Model;
 namespace SummitLog.Services.Persistence.Impl
 {
     /// <summary>
-    /// DAO für Gegendem in einem Land
+    ///     DAO für Gegendem in einem Land
     /// </summary>
-    public class SummitGroupDao: ISummitGroupDao
+    public class SummitGroupDao : BaseDao, ISummitGroupDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
-        /// Erstellt eine neue Instanz des DAOs
+        ///     Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public SummitGroupDao(GraphClient graphClient)
+        public SummitGroupDao(GraphClient graphClient) : base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<SummitGroup> GetAllIn(Area area)
         {
-            return _graphClient.Cypher.Match("(a:Area)-[:HAS]->(sg:SummitGroup)")
+            return GraphClient.Cypher.Match("(a:Area)-[:HAS]->(sg:SummitGroup)")
                 .Where((Area a) => a.Id == area.Id).Return(sg => sg.As<SummitGroup>()).Results.ToList();
         }
 
@@ -39,7 +36,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="summitGroup"></param>
         public void Create(Area area, SummitGroup summitGroup)
         {
-            ICypherFluentQuery query = _graphClient.Cypher
+            ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(a:Area)")
                 .Where((Area a) => a.Id == area.Id)
                 .Create("a-[:HAS]->(summitGroup:SummitGroup {summitGroup})")

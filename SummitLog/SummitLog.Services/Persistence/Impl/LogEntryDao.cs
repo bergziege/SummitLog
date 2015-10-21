@@ -9,17 +9,14 @@ namespace SummitLog.Services.Persistence.Impl
     /// <summary>
     /// DAO für Logeinträge an Variationen
     /// </summary>
-    public class LogEntryDao: ILogEntryDao
+    public class LogEntryDao:BaseDao, ILogEntryDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
         /// Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public LogEntryDao(GraphClient graphClient)
+        public LogEntryDao(GraphClient graphClient): base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<LogEntry> GetAllIn(Variation variation)
         {
-            return _graphClient.Cypher.Match("(v:Variation)-[:HAS]->(le:LogEntry)")
+            return GraphClient.Cypher.Match("(v:Variation)-[:HAS]->(le:LogEntry)")
                 .Where((Variation v) => v.Id == variation.Id).Return(le => le.As<LogEntry>()).Results.ToList();
         }
 
@@ -37,7 +34,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         public void Create(Variation variation, LogEntry logEntry)
         {
-            ICypherFluentQuery query = _graphClient.Cypher
+            ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(v:Variation)")
                 .Where((Variation v) => v.Id == variation.Id)
                 .Create("v-[:HAS]->(logEntry:LogEntry {logEntry})")

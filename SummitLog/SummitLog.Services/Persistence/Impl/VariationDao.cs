@@ -1,25 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
-using Neo4jClient.Cypher;
 using SummitLog.Services.Model;
 
 namespace SummitLog.Services.Persistence.Impl
 {
     /// <summary>
-    /// DAO für Gegendem in einem Land
+    ///     DAO für Gegendem in einem Land
     /// </summary>
-    public class VariationDao: IVariationDao
+    public class VariationDao : BaseDao, IVariationDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
-        /// Erstellt eine neue Instanz des DAOs
+        ///     Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public VariationDao(GraphClient graphClient)
+        public VariationDao(GraphClient graphClient) : base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -28,7 +24,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Variation> GetAllOn(Route route)
         {
-            return _graphClient.Cypher.Match("(r:Route)-[:HAS]->(v:Variation)")
+            return GraphClient.Cypher.Match("(r:Route)-[:HAS]->(v:Variation)")
                 .Where((Route r) => r.Id == route.Id).Return(v => v.As<Variation>()).Results.ToList();
         }
 
@@ -37,7 +33,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         public void Create(Variation variation, Route route, DifficultyLevel difficultyLevel)
         {
-            ICypherFluentQuery query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(r:Route),(dl:DifficultyLevel)")
                 .Where((Route r, DifficultyLevel dl) => r.Id == route.Id && dl.Id == difficultyLevel.Id)
                 .Create("r-[:HAS]->(variation:Variation {variation})-[:HAS]->dl")

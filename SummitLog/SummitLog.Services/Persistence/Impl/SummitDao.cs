@@ -8,17 +8,14 @@ namespace SummitLog.Services.Persistence.Impl
     /// <summary>
     ///     DAO für Gegendem in einem Land
     /// </summary>
-    public class SummitDao : ISummitDao
+    public class SummitDao :BaseDao, ISummitDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
         ///     Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public SummitDao(GraphClient graphClient)
+        public SummitDao(GraphClient graphClient):base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -27,7 +24,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Summit> GetAllIn(SummitGroup summitGroup)
         {
-            return _graphClient.Cypher.Match("(sg:SummitGroup)-[:HAS]->(s:Summit)")
+            return GraphClient.Cypher.Match("(sg:SummitGroup)-[:HAS]->(s:Summit)")
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id).Return(s => s.As<Summit>()).Results.ToList();
         }
 
@@ -36,7 +33,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         public void Create(SummitGroup summitGroup, Summit summit)
         {
-            var query = _graphClient.Cypher
+            var query = GraphClient.Cypher
                 .Match("(sg:SummitGroup)")
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
                 .Create("sg-[:HAS]->(summit:Summit {summit})")

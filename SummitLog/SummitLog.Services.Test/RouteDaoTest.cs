@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
@@ -31,14 +32,14 @@ namespace SummitLog.Services.Test
         [TestMethod]
         public void TestGetRoutesInCountry()
         {
-            var countryDao = new CountryDao(_graphClient);
-            countryDao.Create(new Country {Name = "Deutschland"});
-            var country = countryDao.GetAll().First();
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country country = new Country {Name = "Deutschland"};
+            countryDao.Create(country);
 
-            var routeDao = new RouteDao(_graphClient);
+            IRoutesDao routeDao = new RouteDao(_graphClient);
             routeDao.CreateIn(country, new Route {Name = "Jakobsweg"});
 
-            var routesInCountry = routeDao.GetRoutesIn(country);
+            IList<Route> routesInCountry = routeDao.GetRoutesIn(country);
             Assert.AreEqual(1, routesInCountry.Count);
             Assert.AreEqual("Jakobsweg", routesInCountry.First().Name);
         }

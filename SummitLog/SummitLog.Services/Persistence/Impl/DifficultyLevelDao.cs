@@ -9,17 +9,14 @@ namespace SummitLog.Services.Persistence.Impl
     /// <summary>
     /// DAO für Schwierigkeitsgrade einer Skala
     /// </summary>
-    public class DifficultyLevelDao: IDifficultyLevelDao
+    public class DifficultyLevelDao:BaseDao, IDifficultyLevelDao
     {
-        private readonly GraphClient _graphClient;
-
         /// <summary>
         /// Erstellt eine neue Instanz des DAOs
         /// </summary>
         /// <param name="graphClient"></param>
-        public DifficultyLevelDao(GraphClient graphClient)
+        public DifficultyLevelDao(GraphClient graphClient): base(graphClient)
         {
-            _graphClient = graphClient;
         }
 
         /// <summary>
@@ -28,7 +25,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<DifficultyLevel> GetAllIn(DifficultyLevelScale difficultyLevelScale)
         {
-            return _graphClient.Cypher.Match("(dls:DifficultyLevelScale)-[:HAS]->(dl:DifficultyLevel)")
+            return GraphClient.Cypher.Match("(dls:DifficultyLevelScale)-[:HAS]->(dl:DifficultyLevel)")
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id).Return(dl => dl.As<DifficultyLevel>()).Results.ToList();
         }
 
@@ -37,7 +34,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         public void Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel)
         {
-            ICypherFluentQuery query = _graphClient.Cypher
+            ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(dls:DifficultyLevelScale)")
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
                 .Create("dls-[:HAS]->(difficultyLevel:DifficultyLevel {difficultyLevel})")
