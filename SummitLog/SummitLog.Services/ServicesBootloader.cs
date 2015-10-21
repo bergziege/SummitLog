@@ -32,6 +32,7 @@ namespace SummitLog.Services
             container.Register<IRoutesDao,RouteDao>();
 
             container.Register<IDifficultyLevelScaleDao, DifficultyLevelScaleDao>();
+            container.Register<IDifficultyLevelDao, DifficultyLevelDao>();
 
             return container;
         }
