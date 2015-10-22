@@ -89,6 +89,10 @@
     <Compile Include="Properties\InternalsVisibleToDryIocFactoryCompilerDynamicAssembly.cs" />
     <Compile Include="ServicesBootloader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IDifficultyLevelService.cs" />
+    <Compile Include="Services\IDifficultyLevelScaleService.cs" />
+    <Compile Include="Services\Impl\DifficultyLevelService.cs" />
+    <Compile Include="Services\Impl\DifficultyLevelScaleService.cs" />
     <Compile Include="Services\Impl\SummitService.cs" />
     <Compile Include="Services\Impl\SummitGroupService.cs" />
     <Compile Include="Services\ISummitService.cs" />
