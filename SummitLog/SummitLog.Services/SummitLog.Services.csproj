@@ -93,8 +93,10 @@
     <Compile Include="Services\IDifficultyLevelScaleService.cs" />
     <Compile Include="Services\Impl\DifficultyLevelService.cs" />
     <Compile Include="Services\Impl\DifficultyLevelScaleService.cs" />
+    <Compile Include="Services\Impl\RouteService.cs" />
     <Compile Include="Services\Impl\SummitService.cs" />
     <Compile Include="Services\Impl\SummitGroupService.cs" />
+    <Compile Include="Services\IRouteService.cs" />
     <Compile Include="Services\ISummitService.cs" />
     <Compile Include="Services\ISummitGroupService.cs" />
     <Compile Include="Services\IAreaService.cs" />
