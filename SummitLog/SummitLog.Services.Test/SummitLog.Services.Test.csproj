@@ -94,6 +94,7 @@
     <Compile Include="DaoTests\SummitGroupDaoTest.cs" />
     <Compile Include="DaoTests\VariationDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceTests\SummitServiceTest.cs" />
     <Compile Include="ServiceTests\SummitGroupServiceTest.cs" />
     <Compile Include="ServiceTests\AreaServiceTest.cs" />
     <Compile Include="ServiceTests\CountryServiceTest.cs" />
