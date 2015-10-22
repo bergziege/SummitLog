@@ -46,18 +46,18 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestGetRoutesInArea()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var country = new Country {Name = "Deutschland"};
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country country = new Country {Name = "Deutschland"};
             countryDao.Create(country);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(country, area);
 
-            var routeDao = new RouteDao(_graphClient);
+            IRoutesDao routeDao = new RouteDao(_graphClient);
             routeDao.CreateIn(area, new Route {Name = "Jakobsweg"});
 
-            var routesInArea = routeDao.GetRoutesIn(area);
+            IList<Route> routesInArea = routeDao.GetRoutesIn(area);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
         }
@@ -65,22 +65,22 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestGetRoutesInSummitGroup()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var country = new Country {Name = "Deutschland"};
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country country = new Country {Name = "Deutschland"};
             countryDao.Create(country);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(country, area);
 
             ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
-            var summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
+            SummitGroup summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
             summitGroupDao.Create(area, summitGroup);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
             routeDao.CreateIn(summitGroup, new Route {Name = "Jakobsweg"});
 
-            var routesInArea = routeDao.GetRoutesIn(summitGroup);
+            IList<Route> routesInArea = routeDao.GetRoutesIn(summitGroup);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
         }
@@ -88,26 +88,26 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestGetRoutesInSummit()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var country = new Country { Name = "Deutschland" };
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country country = new Country {Name = "Deutschland"};
             countryDao.Create(country);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(country, area);
 
             ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
-            var summitGroup = new SummitGroup { Name = "Gipfelgruppe" };
+            SummitGroup summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
             summitGroupDao.Create(area, summitGroup);
 
             ISummitDao summitDao = new SummitDao(_graphClient);
-            Summit summit = new Summit() { Name = "Gipfel" };
+            Summit summit = new Summit {Name = "Gipfel"};
             summitDao.Create(summitGroup, summit);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            routeDao.CreateIn(summit, new Route { Name = "Jakobsweg" });
+            routeDao.CreateIn(summit, new Route {Name = "Jakobsweg"});
 
-            var routesInArea = routeDao.GetRoutesIn(summit);
+            IList<Route> routesInArea = routeDao.GetRoutesIn(summit);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
         }
@@ -115,12 +115,12 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateRouteInCountry()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var newCountry = new Country {Name = "Deutschland"};
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country {Name = "Deutschland"};
             countryDao.Create(newCountry);
 
-            var routeDao = new RouteDao(_graphClient);
-            var newRoute = new Route {Name = "Jakobsweg"};
+            IRoutesDao routeDao = new RouteDao(_graphClient);
+            Route newRoute = new Route {Name = "Jakobsweg"};
             routeDao.CreateIn(newCountry, newRoute);
 
             IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
@@ -132,16 +132,16 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateRouteInArea()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var newCountry = new Country {Name = "Deutschland"};
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country {Name = "Deutschland"};
             countryDao.Create(newCountry);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(newCountry, area);
 
-            var routeDao = new RouteDao(_graphClient);
-            var newRoute = new Route {Name = "Jakobsweg"};
+            IRoutesDao routeDao = new RouteDao(_graphClient);
+            Route newRoute = new Route {Name = "Jakobsweg"};
             routeDao.CreateIn(area, newRoute);
 
             IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
@@ -153,20 +153,20 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateRouteInSummitGroup()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var newCountry = new Country {Name = "Deutschland"};
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country {Name = "Deutschland"};
             countryDao.Create(newCountry);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(newCountry, area);
 
             ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
-            var summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
+            SummitGroup summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
             summitGroupDao.Create(area, summitGroup);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            var newRoute = new Route {Name = "Jakobsweg"};
+            Route newRoute = new Route {Name = "Jakobsweg"};
             routeDao.CreateIn(summitGroup, newRoute);
 
             IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
@@ -178,24 +178,24 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateRouteInSummit()
         {
-            var countryDao = new CountryDao(_graphClient);
-            var newCountry = new Country { Name = "Deutschland" };
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            Country newCountry = new Country {Name = "Deutschland"};
             countryDao.Create(newCountry);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
-            var area = new Area();
+            Area area = new Area();
             areaDao.Create(newCountry, area);
 
             ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
-            var summitGroup = new SummitGroup { Name = "Gipfelgruppe" };
+            SummitGroup summitGroup = new SummitGroup {Name = "Gipfelgruppe"};
             summitGroupDao.Create(area, summitGroup);
 
             ISummitDao summitDao = new SummitDao(_graphClient);
-            Summit summit = new Summit() {Name = "Gipfel"};
+            Summit summit = new Summit {Name = "Gipfel"};
             summitDao.Create(summitGroup, summit);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            var newRoute = new Route { Name = "Jakobsweg" };
+            Route newRoute = new Route {Name = "Jakobsweg"};
             routeDao.CreateIn(summit, newRoute);
 
             IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
