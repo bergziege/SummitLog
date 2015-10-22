@@ -40,7 +40,7 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestCreateRouteInCountryMissingCountry()
         {
-            Action act = () => new RouteService(null).CreateIn(null, "route name");
+            Action act = () => new RouteService(null).CreateIn((Country) null, "route name");
             act.ShouldThrow<ArgumentNullException>();
         }
 
@@ -62,7 +62,7 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestGetRoutesInNullCountry()
         {
-            Action act = () => new RouteService(null).GetRoutesIn(null);
+            Action act = () => new RouteService(null).GetRoutesIn((Country) null);
             act.ShouldThrow<ArgumentNullException>();
         }
     }

@@ -43,5 +43,51 @@ namespace SummitLog.Services.Services.Impl
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
             _routesDao.CreateIn(country, new Route {Name = routeName});
         }
+
+        /// <summary>
+        ///     Erstellt eine neue Route in einem Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        /// <param name="routeName"></param>
+        public void CreateIn(Area area, string routeName)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
+            _routesDao.CreateIn(area, new Route {Name = routeName});
+        }
+
+        /// <summary>
+        ///     LIefert alle Routen in einem Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public IList<Route> GetRoutesIn(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            return _routesDao.GetRoutesIn(area);
+        }
+
+        /// <summary>
+        ///     Erstellt eine Route in einer Gipfelgruppe
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        /// <param name="routeName"></param>
+        public void CreateIn(SummitGroup summitGroup, string routeName)
+        {
+            if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
+            if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
+            _routesDao.CreateIn(summitGroup, new Route() {Name = routeName});
+        }
+
+        /// <summary>
+        ///     Liefert alle Routen einer Gipfelgruppe
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        /// <returns></returns>
+        public IList<Route> GetRoutesIn(SummitGroup summitGroup)
+        {
+            if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
+            return _routesDao.GetRoutesIn(summitGroup);
+        }
     }
 }
