@@ -49,5 +49,19 @@ namespace SummitLog.Services.Services
         /// <param name="summitGroup"></param>
         /// <returns></returns>
         IList<Route> GetRoutesIn(SummitGroup summitGroup);
+
+        /// <summary>
+        ///     Erstellt eine Route auf einem Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <param name="routeName"></param>
+        void CreateIn(Summit summit, string routeName);
+
+        /// <summary>
+        ///     Liefert alle Routen eines Gipfels
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <returns></returns>
+        IList<Route> GetRoutesIn(Summit summit);
     }
 }

@@ -96,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceTests\DifficultyLevelServiceTest.cs" />
     <Compile Include="ServiceTests\DifficultyLevelScaleServiceTest.cs" />
+    <Compile Include="ServiceTests\RouteServiceTestSummit.cs" />
     <Compile Include="ServiceTests\RouteServiceTestSummitGroup.cs" />
     <Compile Include="ServiceTests\RouteServiceTestArea.cs" />
     <Compile Include="ServiceTests\RouteServiceTestCountry.cs" />

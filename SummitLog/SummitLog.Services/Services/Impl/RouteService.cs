@@ -6,14 +6,14 @@ using SummitLog.Services.Persistence;
 namespace SummitLog.Services.Services.Impl
 {
     /// <summary>
-    /// Service für Routen
+    ///     Service für Routen
     /// </summary>
-    public class RouteService: IRouteService
+    public class RouteService : IRouteService
     {
         private readonly IRoutesDao _routesDao;
 
         /// <summary>
-        /// Liefert eine neue Instanz des Services
+        ///     Liefert eine neue Instanz des Services
         /// </summary>
         /// <param name="routesDao"></param>
         public RouteService(IRoutesDao routesDao)
@@ -76,7 +76,7 @@ namespace SummitLog.Services.Services.Impl
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(summitGroup, new Route() {Name = routeName});
+            _routesDao.CreateIn(summitGroup, new Route {Name = routeName});
         }
 
         /// <summary>
@@ -88,6 +88,29 @@ namespace SummitLog.Services.Services.Impl
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
             return _routesDao.GetRoutesIn(summitGroup);
+        }
+
+        /// <summary>
+        ///     Erstellt eine Route auf einem Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <param name="routeName"></param>
+        public void CreateIn(Summit summit, string routeName)
+        {
+            if (summit == null) throw new ArgumentNullException(nameof(summit));
+            if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
+            _routesDao.CreateIn(summit, new Route {Name = routeName});
+        }
+
+        /// <summary>
+        ///     Liefert alle Routen eines Gipfels
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <returns></returns>
+        public IList<Route> GetRoutesIn(Summit summit)
+        {
+            if (summit == null) throw new ArgumentNullException(nameof(summit));
+            return _routesDao.GetRoutesIn(summit);
         }
     }
 }
