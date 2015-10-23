@@ -5,6 +5,7 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
+using SummitLog.Services.Services.Impl;
 
 namespace SummitLog.Services
 {
@@ -34,7 +35,15 @@ namespace SummitLog.Services
 
         private static void RegisterServices(Container container)
         {
-            container.Register<ICountryService, ICountryService>();
+            container.Register<ICountryService, CountryService>();
+            container.Register<IAreaService, AreaService>();
+            container.Register<ISummitGroupService, SummitGroupService>();
+            container.Register<ISummitService, SummitService>();
+            container.Register<IRouteService, RouteService>();
+            container.Register<IVariationService, VariationService>();
+            container.Register<ILogEntryService, LogEntryService>();
+            container.Register<IDifficultyLevelScaleService, DifficultyLevelScaleService>();
+            container.Register<IDifficultyLevelService, DifficultyLevelService>();
         }
 
         private static void RegisterDaos(Container container)
