@@ -96,6 +96,7 @@
     <Compile Include="Services\Impl\RouteService.cs" />
     <Compile Include="Services\Impl\SummitService.cs" />
     <Compile Include="Services\Impl\SummitGroupService.cs" />
+    <Compile Include="Services\Impl\VariationService.cs" />
     <Compile Include="Services\IRouteService.cs" />
     <Compile Include="Services\ISummitService.cs" />
     <Compile Include="Services\ISummitGroupService.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Services\ICountryService.cs" />
     <Compile Include="Services\Impl\AreaService.cs" />
     <Compile Include="Services\Impl\CountryService.cs" />
+    <Compile Include="Services\IVariationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
