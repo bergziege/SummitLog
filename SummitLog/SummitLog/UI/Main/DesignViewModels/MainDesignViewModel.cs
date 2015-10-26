@@ -15,7 +15,7 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         /// Erstellt eine neue Instanz des Design View Models
         /// </summary>
-        protected MainDesignViewModel()
+        public MainDesignViewModel()
         {
             Countries = new ObservableCollection<Country>();
             Countries.Add(new Country() {Name = "Land A"});

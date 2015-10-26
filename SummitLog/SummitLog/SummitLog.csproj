@@ -96,6 +96,9 @@
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
+    <Compile Include="UI\Main\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -134,6 +137,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\Main\ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\Main\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
