@@ -1,4 +1,7 @@
+using System;
 using DryIoc;
+using SummitLog.UI.Main;
+using SummitLog.UI.Main.DesignViewModels;
 
 namespace SummitLog
 {
@@ -14,7 +17,19 @@ namespace SummitLog
         /// <returns></returns>
         public static Container Init(Container container)
         {
+            SetupViews(container);
+            SetupViewModels(container);
             return container;
+        }
+
+        private static void SetupViewModels(Container container)
+        {
+            container.Register<IMainViewModel, MainDesignViewModel>();
+        }
+
+        private static void SetupViews(Container container)
+        {
+            container.Register<MainView>();
         }
     }
 }

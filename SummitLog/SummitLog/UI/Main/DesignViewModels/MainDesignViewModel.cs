@@ -226,5 +226,10 @@ namespace SummitLog.UI.Main.DesignViewModels
         ///     Liefert ein Command für die Verwaltung der Schwierigkeitsgrad und Skalen
         /// </summary>
         public RelayCommand ManageDifficultiesCommand { get; }
+
+        public void LoadData()
+        {
+            
+        }
     }
 }

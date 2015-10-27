@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using DryIoc;
 using SummitLog.Services;
+using SummitLog.UI.Main;
 
 namespace SummitLog
 {
@@ -18,6 +19,13 @@ namespace SummitLog
             SetupContainer();
 
             base.OnStartup(e);
+
+            MainView mainView = AppContext.Container.Resolve<MainView>();
+            IMainViewModel mainViewModel = AppContext.Container.Resolve<IMainViewModel>();
+            mainView.DataContext = mainViewModel;
+            mainViewModel.LoadData();
+            MainWindow = mainView;
+            MainWindow.Show();
         }
 
         private static void SetupContainer()
