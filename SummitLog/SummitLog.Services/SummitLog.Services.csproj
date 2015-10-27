@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A43CC9F7-0671-41E0-8314-7244D6B0ADDA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SummitLog.Services</RootNamespace>
+    <AssemblyName>SummitLog.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\SummitLog.Services.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DryIoc, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DryIoc.dll.1.4.1\lib\net40\DryIoc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Neo4jClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Neo4jClient.1.1.0.10\lib\net45\Neo4jClient.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\EntityWithId.cs" />
+    <Compile Include="Model\EntityWithIdAndName.cs" />
+    <Compile Include="Model\LogEntry.cs" />
+    <Compile Include="Model\Variation.cs" />
+    <Compile Include="Model\DifficultyLevel.cs" />
+    <Compile Include="Model\DifficultyLevelScale.cs" />
+    <Compile Include="Model\Summit.cs" />
+    <Compile Include="Model\SummitGroup.cs" />
+    <Compile Include="Model\Area.cs" />
+    <Compile Include="Model\Country.cs" />
+    <Compile Include="Model\Route.cs" />
+    <Compile Include="Persistence\ILogEntryDao.cs" />
+    <Compile Include="Persistence\Impl\BaseDao.cs" />
+    <Compile Include="Persistence\Impl\LogEntryDao.cs" />
+    <Compile Include="Persistence\IVariationDao.cs" />
+    <Compile Include="Persistence\IDifficultyLevelDao.cs" />
+    <Compile Include="Persistence\IDifficultyLevelScaleDao.cs" />
+    <Compile Include="Persistence\Impl\VariationDao.cs" />
+    <Compile Include="Persistence\Impl\DifficultyLevelDao.cs" />
+    <Compile Include="Persistence\Impl\DifficultyLevelScaleDao.cs" />
+    <Compile Include="Persistence\Impl\SummitDao.cs" />
+    <Compile Include="Persistence\ISummitDao.cs" />
+    <Compile Include="Persistence\ISummitGroupDao.cs" />
+    <Compile Include="Persistence\IAreaDao.cs" />
+    <Compile Include="Persistence\ICountryDao.cs" />
+    <Compile Include="Persistence\Impl\SummitGroupDao.cs" />
+    <Compile Include="Persistence\Impl\AreaDao.cs" />
+    <Compile Include="Persistence\Impl\CountryDao.cs" />
+    <Compile Include="Persistence\Impl\RouteDao.cs" />
+    <Compile Include="Persistence\IRoutesDao.cs" />
+    <Compile Include="Properties\InternalsVisibleToDryIocFactoryCompilerDynamicAssembly.cs" />
+    <Compile Include="ServicesBootloader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IDifficultyLevelService.cs" />
+    <Compile Include="Services\IDifficultyLevelScaleService.cs" />
+    <Compile Include="Services\ILogEntryService.cs" />
+    <Compile Include="Services\Impl\DifficultyLevelService.cs" />
+    <Compile Include="Services\Impl\DifficultyLevelScaleService.cs" />
+    <Compile Include="Services\Impl\LogEntryService.cs" />
+    <Compile Include="Services\Impl\RouteService.cs" />
+    <Compile Include="Services\Impl\SummitService.cs" />
+    <Compile Include="Services\Impl\SummitGroupService.cs" />
+    <Compile Include="Services\Impl\VariationService.cs" />
+    <Compile Include="Services\IRouteService.cs" />
+    <Compile Include="Services\ISummitService.cs" />
+    <Compile Include="Services\ISummitGroupService.cs" />
+    <Compile Include="Services\IAreaService.cs" />
+    <Compile Include="Services\ICountryService.cs" />
+    <Compile Include="Services\Impl\AreaService.cs" />
+    <Compile Include="Services\Impl\CountryService.cs" />
+    <Compile Include="Services\IVariationService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

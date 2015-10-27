@@ -1,0 +1,136 @@
+﻿<Window x:Class="SummitLog.UI.Main.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:designViewModels="clr-namespace:SummitLog.UI.Main.DesignViewModels"
+        mc:Ignorable="d"
+        Title="SummitLog" Height="300" Width="500">
+    <d:DesignProperties.DataContext>
+        <designViewModels:MainDesignViewModel />
+    </d:DesignProperties.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--Länder-->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddCountryCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
+                      SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Gebiete-->
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddAreaInSelectedCountryCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=AreasInSelectedCountry}"
+                      SelectedItem="{Binding Path=SelectedArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Gipfelgruppen-->
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitGroupsInSelectedArea}"
+                      SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Gipfel-->
+        <Grid Grid.Row="0" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddSummitInSelectedSummitGroupCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
+                      SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Routen im Land-->
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddRouteInSelectedCountryCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedCountry}"
+                      SelectedItem="{Binding Path=SelectedRouteInCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Routen im Gebiet-->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddRouteInSelectedAreaCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedArea}"
+                      SelectedItem="{Binding Path=SelectedRouteInArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Routen in Gipfelgruppe-->
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummitGroup}"
+                      SelectedItem="{Binding Path=SelectedRouteInSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Routen am Gipfel-->
+        <Grid Grid.Row="1" Grid.Column="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddRouteInSelectedSummitCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummit}"
+                      SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Variationen-->
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddVariationToSelectedRouteCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=VariationsOnSelectedRoute}"
+                      SelectedItem="{Binding Path=SelectedVariation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+
+        <!--Logeinträge-->
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button Content="+" Command="{Binding Path=AddLogEntryToSelectedVariationCommand}" />
+            <ListView Grid.Column="1" ItemsSource="{Binding Path=LogEntriesOnSelectedVariation}"
+                      SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+    </Grid>
+</Window>
