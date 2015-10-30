@@ -17,7 +17,7 @@ namespace SummitLog.UI.Common
         public bool CanExecute(object parameter)
         {
             bool canExecute = _canExecuteAction.Invoke();
-            OnCanExecuteChanged();
+            //OnCanExecuteChanged();
             return canExecute;
         }
 

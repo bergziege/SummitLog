@@ -9,6 +9,16 @@
     <d:DesignProperties.DataContext>
         <designViewModels:MainDesignViewModel />
     </d:DesignProperties.DataContext>
+    <Window.Resources>
+
+        <DataTemplate x:Key="ItemWithNameTemplate">
+            <Label Content="{Binding Path=Name}"></Label>
+        </DataTemplate>
+        
+        <Style TargetType="ListView">
+            <Setter Property="ItemTemplate" Value="{StaticResource ItemWithNameTemplate}"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -130,7 +140,16 @@
             </Grid.ColumnDefinitions>
             <Button Content="+" Command="{Binding Path=AddLogEntryToSelectedVariationCommand}" />
             <ListView Grid.Column="1" ItemsSource="{Binding Path=LogEntriesOnSelectedVariation}"
-                      SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                      SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path=DateTime}"></Label>
+                            <Label Content="{Binding Path=Memo}"></Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Window>

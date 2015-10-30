@@ -17,45 +17,65 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public MainDesignViewModel()
         {
-            Countries = new ObservableCollection<Country>();
-            Countries.Add(new Country() {Name = "Land A"});
-            Countries.Add(new Country() {Name = "Land B"});
+            Countries = new ObservableCollection<Country>
+            {
+                new Country() {Name = "Land A"},
+                new Country() {Name = "Land B"}
+            };
 
-            AreasInSelectedCountry = new ObservableCollection<Area>();
-            AreasInSelectedCountry.Add(new Area() {Name = "Gebiet A"});
-            AreasInSelectedCountry.Add(new Area() {Name = "Gebiet B"});
+            AreasInSelectedCountry = new ObservableCollection<Area>
+            {
+                new Area() {Name = "Gebiet A"},
+                new Area() {Name = "Gebiet B"}
+            };
 
-            SummitGroupsInSelectedArea = new ObservableCollection<SummitGroup>();
-            SummitGroupsInSelectedArea.Add(new SummitGroup() {Name = "Gruppe A"});
-            SummitGroupsInSelectedArea.Add(new SummitGroup() {Name = "Gruppe B"});
+            SummitGroupsInSelectedArea = new ObservableCollection<SummitGroup>
+            {
+                new SummitGroup() {Name = "Gruppe A"},
+                new SummitGroup() {Name = "Gruppe B"}
+            };
 
-            SummitsInSelectedSummitGroup = new ObservableCollection<Summit>();
-            SummitsInSelectedSummitGroup.Add(new Summit() {Name = "Gipfel A"});
-            SummitsInSelectedSummitGroup.Add(new Summit() {Name = "Gipfel B"});
+            SummitsInSelectedSummitGroup = new ObservableCollection<Summit>
+            {
+                new Summit() {Name = "Gipfel A"},
+                new Summit() {Name = "Gipfel B"}
+            };
 
-            RoutesInSelectedCountry = new ObservableCollection<Route>();
-            RoutesInSelectedCountry.Add(new Route() {Name = "Land A Route A"});
-            RoutesInSelectedCountry.Add(new Route() {Name = "Land A Route B"});
+            RoutesInSelectedCountry = new ObservableCollection<Route>
+            {
+                new Route() {Name = "Land A Route A"},
+                new Route() {Name = "Land A Route B"}
+            };
 
-            RoutesInSelectedArea = new ObservableCollection<Route>();
-            RoutesInSelectedArea.Add(new Route() {Name = "Gebiet A Route A"});
-            RoutesInSelectedArea.Add(new Route() {Name = "Gebiet A Route B"});
+            RoutesInSelectedArea = new ObservableCollection<Route>
+            {
+                new Route() {Name = "Gebiet A Route A"},
+                new Route() {Name = "Gebiet A Route B"}
+            };
 
-            RoutesInSelectedSummitGroup = new ObservableCollection<Route>();
-            RoutesInSelectedSummitGroup.Add(new Route() {Name = "Gruppe A Route A"});
-            RoutesInSelectedSummitGroup.Add(new Route() {Name = "Gruppe A Route B"});
+            RoutesInSelectedSummitGroup = new ObservableCollection<Route>
+            {
+                new Route() {Name = "Gruppe A Route A"},
+                new Route() {Name = "Gruppe A Route B"}
+            };
 
-            RoutesInSelectedSummit = new ObservableCollection<Route>();
-            RoutesInSelectedSummit.Add(new Route() {Name = "Gipfel A Route A"});
-            RoutesInSelectedSummit.Add(new Route() {Name = "Gipfel A Route B"});
+            RoutesInSelectedSummit = new ObservableCollection<Route>
+            {
+                new Route() {Name = "Gipfel A Route A"},
+                new Route() {Name = "Gipfel A Route B"}
+            };
 
-            VariationsOnSelectedRoute = new ObservableCollection<Variation>();
-            VariationsOnSelectedRoute.Add(new Variation() {Name = "Var A"});
-            VariationsOnSelectedRoute.Add(new Variation() {Name = "Var B"});
+            VariationsOnSelectedRoute = new ObservableCollection<Variation>
+            {
+                new Variation() {Name = "Var A"},
+                new Variation() {Name = "Var B"}
+            };
 
-            LogEntriesOnSelectedVariation = new ObservableCollection<LogEntry>();
-            LogEntriesOnSelectedVariation.Add(new LogEntry() {DateTime = DateTime.Today, Memo = "freeclimb"});
-            LogEntriesOnSelectedVariation.Add(new LogEntry() {DateTime = DateTime.Today.AddDays(1), Memo = "freeclimb 2"});
+            LogEntriesOnSelectedVariation = new ObservableCollection<LogEntry>
+            {
+                new LogEntry() {DateTime = DateTime.Today, Memo = "freeclimb"},
+                new LogEntry() {DateTime = DateTime.Today.AddDays(1), Memo = "freeclimb 2"}
+            };
 
             SelectedCountry = Countries.First();
             SelectedArea = AreasInSelectedCountry.First();
