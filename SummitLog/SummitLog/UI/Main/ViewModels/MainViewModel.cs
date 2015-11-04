@@ -1,20 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
+using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.Main.ViewModels
 {
     /// <summary>
     ///     View Model des Hauptfensters
     /// </summary>
-    public class MainViewModel : ReactiveObject, IMainViewModel
+    public class MainViewModel : ReactiveObject, IMainViewModel, IWeakEventListener
     {
         private readonly IAreaService _areaService;
         private readonly ICountryService _countryService;
         private readonly ILogEntryService _logEntryService;
+        private readonly NameInputViewCommand _nameInputViewCommand;
         private readonly IRouteService _routeService;
         private readonly ISummitGroupService _summitGroupService;
         private readonly ISummitService _summitService;
@@ -42,7 +47,6 @@ namespace SummitLog.UI.Main.ViewModels
         private SummitGroup _selectedSummitGroup;
         private Variation _selectedVariation;
 
-
         /// <summary>
         ///     Ctor.
         /// </summary>
@@ -53,9 +57,11 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="routeService"></param>
         /// <param name="variationService"></param>
         /// <param name="logEntryService"></param>
-        protected MainViewModel(ICountryService countryService, IAreaService areaService,
+        /// <param name="nameInputViewCommand"></param>
+        public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
-            IVariationService variationService, ILogEntryService logEntryService)
+            IVariationService variationService, ILogEntryService logEntryService,
+            NameInputViewCommand nameInputViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -64,6 +70,7 @@ namespace SummitLog.UI.Main.ViewModels
             _routeService = routeService;
             _variationService = variationService;
             _logEntryService = logEntryService;
+            _nameInputViewCommand = nameInputViewCommand;
         }
 
         /// <summary>
@@ -77,7 +84,12 @@ namespace SummitLog.UI.Main.ViewModels
         public Country SelectedCountry
         {
             get { return _selectedCountry; }
-            set { this.RaiseAndSetIfChanged(ref _selectedCountry, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedCountry, value);
+                RefreshAreas();
+                RefreshRoutesInSelectedCountry();
+            }
         }
 
         /// <summary>
@@ -91,7 +103,12 @@ namespace SummitLog.UI.Main.ViewModels
         public Area SelectedArea
         {
             get { return _selectedArea; }
-            set { this.RaiseAndSetIfChanged(ref _selectedArea, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedArea, value);
+                RefreshSummitGroups();
+                RefreshRoutesInSelectedArea();
+            }
         }
 
         /// <summary>
@@ -106,7 +123,12 @@ namespace SummitLog.UI.Main.ViewModels
         public SummitGroup SelectedSummitGroup
         {
             get { return _selectedSummitGroup; }
-            set { this.RaiseAndSetIfChanged(ref _selectedSummitGroup, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedSummitGroup, value);
+                RefreshSummits();
+                RefreshRoutesInSelectedSummitGroup();
+            }
         }
 
         /// <summary>
@@ -120,7 +142,11 @@ namespace SummitLog.UI.Main.ViewModels
         public Summit SelectedSummit
         {
             get { return _selectedSummit; }
-            set { this.RaiseAndSetIfChanged(ref _selectedSummit, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedSummit, value);
+                RefreshRoutesInSelectedSummit();
+            }
         }
 
         /// <summary>
@@ -134,7 +160,20 @@ namespace SummitLog.UI.Main.ViewModels
         public Route SelectedRouteInCountry
         {
             get { return _selectedRouteInCountry; }
-            set { this.RaiseAndSetIfChanged(ref _selectedRouteInCountry, value); }
+            set
+            {
+                if (!IsLoadingRoutesInCountry)
+                {
+                    this.RaiseAndSetIfChanged(ref _selectedRouteInCountry, value);
+                    RefreshVariationsOnCountryRoute();
+
+                    IsLoadingRoutesInCountry = true;
+                    SelectedRouteInArea = null;
+                    SelectedRouteInSummitGroup = null;
+                    SelectedRouteInSummit = null;
+                    IsLoadingRoutesInCountry = false;
+                }
+            }
         }
 
         /// <summary>
@@ -148,7 +187,20 @@ namespace SummitLog.UI.Main.ViewModels
         public Route SelectedRouteInArea
         {
             get { return _selectedRouteInArea; }
-            set { this.RaiseAndSetIfChanged(ref _selectedRouteInArea, value); }
+            set
+            {
+                if (!IsLoadingRoutesInArea)
+                {
+                    this.RaiseAndSetIfChanged(ref _selectedRouteInArea, value);
+                    RefreshVariationsOnAreaRoute();
+
+                    IsLoadingRoutesInArea = true;
+                    SelectedRouteInCountry = null;
+                    SelectedRouteInSummitGroup = null;
+                    SelectedRouteInSummit = null;
+                    IsLoadingRoutesInArea = false;
+                }
+            }
         }
 
         /// <summary>
@@ -162,7 +214,20 @@ namespace SummitLog.UI.Main.ViewModels
         public Route SelectedRouteInSummitGroup
         {
             get { return _selectedRouteInSummitGroup; }
-            set { this.RaiseAndSetIfChanged(ref _selectedRouteInSummitGroup, value); }
+            set
+            {
+                if (!IsLoadingRoutesInSummitGroup)
+                {
+                    this.RaiseAndSetIfChanged(ref _selectedRouteInSummitGroup, value);
+                    RefreshVariationsOnSummitGroupRoute();
+
+                    IsLoadingRoutesInSummitGroup = true;
+                    SelectedRouteInCountry = null;
+                    SelectedRouteInArea = null;
+                    SelectedRouteInSummit = null;
+                    IsLoadingRoutesInSummitGroup = false;
+                }
+            }
         }
 
         /// <summary>
@@ -176,7 +241,20 @@ namespace SummitLog.UI.Main.ViewModels
         public Route SelectedRouteInSummit
         {
             get { return _selectedRouteInSummit; }
-            set { this.RaiseAndSetIfChanged(ref _selectedRouteInSummit, value); }
+            set
+            {
+                if (!IsLoadingRoutesInSummit)
+                {
+                    this.RaiseAndSetIfChanged(ref _selectedRouteInSummit, value);
+                    RefreshVariationsOnSummitRoute();
+
+                    IsLoadingRoutesInSummit = true;
+                    SelectedRouteInCountry = null;
+                    SelectedRouteInArea = null;
+                    SelectedRouteInSummitGroup = null;
+                    IsLoadingRoutesInSummit = false;
+                }
+            }
         }
 
         /// <summary>
@@ -387,6 +465,223 @@ namespace SummitLog.UI.Main.ViewModels
         /// </summary>
         public void LoadData()
         {
+            RefreshCountries();
+        }
+
+        /// <summary>
+        /// Liefert ob Länder geladen werden
+        /// </summary>
+        public bool IsLoadingCountries { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Gegenden geladen werden
+        /// </summary>
+        public bool IsLoadingAreas { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Gipfelgruppen geladen werden
+        /// </summary>
+        public bool IsLoadingSummitGroups { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Gipfel geladen werden
+        /// </summary>
+        public bool IsLoadingSummits { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Wege im Land geladen werden
+        /// </summary>
+        public bool IsLoadingRoutesInCountry { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gegend geladen werden
+        /// </summary>
+        public bool IsLoadingRoutesInArea { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gipfelgruppe geladen werden
+        /// </summary>
+        public bool IsLoadingRoutesInSummitGroup { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gipfel geladen werden
+        /// </summary>
+        public bool IsLoadingRoutesInSummit { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Variationen geladen werden
+        /// </summary>
+        public bool IsLoadingVariations { get; private set; }
+
+        /// <summary>
+        /// Liefert ob Logeinträge geladen werden
+        /// </summary>
+        public bool IsLoadingLogs { get; private set; }
+
+        /// <summary>
+        ///     Receives events from the centralized event manager.
+        /// </summary>
+        /// <returns>
+        ///     true if the listener handled the event. It is considered an error by the
+        ///     <see cref="T:System.Windows.WeakEventManager" /> handling in WPF to register a listener for an event that the
+        ///     listener does not handle. Regardless, the method should return false if it receives an event that it does not
+        ///     recognize or handle.
+        /// </returns>
+        /// <param name="managerType">The type of the <see cref="T:System.Windows.WeakEventManager" /> calling this method.</param>
+        /// <param name="sender">Object that originated the event.</param>
+        /// <param name="e">Event data.</param>
+        public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        {
+            return true;
+        }
+
+        private void RefreshAreas()
+        {
+            AreasInSelectedCountry.Clear();
+            if (SelectedCountry != null)
+            {
+                foreach (var area in _areaService.GetAllIn(SelectedCountry))
+                {
+                    AreasInSelectedCountry.Add(area);
+                }
+            }
+            RefreshSummitGroups();
+            RefreshRoutesInSelectedArea();
+        }
+
+        private void RefreshRoutesInSelectedArea()
+        {
+            RoutesInSelectedArea.Clear();
+            if (SelectedArea != null)
+            {
+                foreach (var route in _routeService.GetRoutesIn(SelectedArea))
+                {
+                    RoutesInSelectedArea.Add(route);
+                }
+            }
+        }
+
+        private void RefreshSummitGroups()
+        {
+            SummitGroupsInSelectedArea.Clear();
+            if (SelectedArea != null)
+            {
+                foreach (var summitGroup in _summitGroupService.GetAllIn(SelectedArea))
+                {
+                    SummitGroupsInSelectedArea.Add(summitGroup);
+                }
+            }
+            RefreshSummits();
+            RefreshRoutesInSelectedSummitGroup();
+        }
+
+        private void RefreshRoutesInSelectedSummitGroup()
+        {
+            RoutesInSelectedSummitGroup.Clear();
+            if (SelectedSummitGroup != null)
+            {
+                foreach (var route in _routeService.GetRoutesIn(SelectedSummitGroup))
+                {
+                    RoutesInSelectedSummitGroup.Add(route);
+                }
+            }
+        }
+
+        private void RefreshSummits()
+        {
+            SummitsInSelectedSummitGroup.Clear();
+            if (SelectedSummitGroup != null)
+            {
+                foreach (var summit in _summitService.GetAllIn(SelectedSummitGroup))
+                {
+                    SummitsInSelectedSummitGroup.Add(summit);
+                }
+            }
+
+            RefreshRoutesInSelectedSummit();
+        }
+
+        private void RefreshRoutesInSelectedSummit()
+        {
+            RoutesInSelectedSummit.Clear();
+            if (SelectedSummit != null)
+            {
+                foreach (var route in _routeService.GetRoutesIn(SelectedSummit))
+                {
+                    RoutesInSelectedSummit.Add(route);
+                }
+            }
+        }
+
+        private void RefreshVariationsOnCountryRoute()
+        {
+            VariationsOnSelectedRoute.Clear();
+            if (SelectedRouteInCountry != null)
+            {
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInCountry))
+                {
+                    VariationsOnSelectedRoute.Add(variation);
+                }
+            }
+        }
+
+        private void RefreshVariationsOnAreaRoute()
+        {
+            VariationsOnSelectedRoute.Clear();
+            if (SelectedRouteInArea != null)
+            {
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInArea))
+                {
+                    VariationsOnSelectedRoute.Add(variation);
+                }
+            }
+        }
+
+        private void RefreshVariationsOnSummitGroupRoute()
+        {
+            VariationsOnSelectedRoute.Clear();
+            if (SelectedRouteInSummitGroup != null)
+            {
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInSummitGroup))
+                {
+                    VariationsOnSelectedRoute.Add(variation);
+                }
+            }
+        }
+
+        private void RefreshVariationsOnSummitRoute()
+        {
+            VariationsOnSelectedRoute.Clear();
+            if (SelectedRouteInSummit != null)
+            {
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInSummit))
+                {
+                    VariationsOnSelectedRoute.Add(variation);
+                }
+            }
+        }
+
+        private void RefreshCountries()
+        {
+            Countries.Clear();
+            foreach (var country in _countryService.GetAll())
+            {
+                Countries.Add(country);
+            }
+            RefreshAreas();
+            RefreshRoutesInSelectedCountry();
+        }
+
+        private void RefreshRoutesInSelectedCountry()
+        {
+            RoutesInSelectedCountry.Clear();
+            if (SelectedCountry != null)
+            {
+                foreach (var route in _routeService.GetRoutesIn(SelectedCountry))
+                {
+                    RoutesInSelectedCountry.Add(route);
+                }
+            }
         }
 
         private bool CanAddCountry()
@@ -396,7 +691,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddCountry()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _countryService.Create(_nameInputViewCommand.Name);
+            }
+            RefreshCountries();
         }
 
         private bool CanAddAreaInSelectedCountry()
@@ -406,12 +706,22 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddAreaInSelectedCountry()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _areaService.Create(SelectedCountry, _nameInputViewCommand.Name);
+            }
+            RefreshAreas();
         }
 
         private void AddSummitGroupInSelectedArea()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _summitGroupService.Create(SelectedArea, _nameInputViewCommand.Name);
+            }
+            RefreshSummitGroups();
         }
 
         private bool CanAddSummitGroupInSelectedArea()
@@ -426,7 +736,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddSummitInSelectedSummitGroup()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _summitService.Create(SelectedSummitGroup, _nameInputViewCommand.Name);
+            }
+            RefreshSummits();
         }
 
         private bool CanAddRouteInSelectedCountry()
@@ -436,7 +751,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddRouteInSelectedCountry()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _routeService.CreateIn(SelectedCountry, _nameInputViewCommand.Name);
+            }
+            RefreshRoutesInSelectedCountry();
         }
 
         private bool CanAddRouteInSelectedArea()
@@ -446,7 +766,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddRouteInSelctedArea()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _routeService.CreateIn(SelectedArea, _nameInputViewCommand.Name);
+            }
+            RefreshRoutesInSelectedArea();
         }
 
         private bool CanAddRouteInSelectedSummmitGroup()
@@ -456,7 +781,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddRouteInSlectedSummitGroup()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _routeService.CreateIn(SelectedSummitGroup, _nameInputViewCommand.Name);
+            }
+            RefreshRoutesInSelectedSummitGroup();
         }
 
         private bool CanAddRouteInSelectedSummit()
@@ -466,7 +796,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddRouteInSelectedSummit()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                _routeService.CreateIn(SelectedSummit, _nameInputViewCommand.Name);
+            }
+            RefreshRoutesInSelectedSummit();
         }
 
         private bool CanAddVariationToSelectedRoute()
@@ -477,7 +812,25 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddVariationToSelectedRoute()
         {
-            throw new NotImplementedException();
+            _nameInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                //_variationService.Create(_nameInputViewCommand.Name, _lastRouteSelection);
+            }
+            RefreshVariationsOnLastSelectedRoute();
+        }
+
+        private void RefreshVariationsOnLastSelectedRoute()
+        {
+            VariationsOnSelectedRoute.Clear();
+            Route selectedRoute = new List<Route>() { SelectedRouteInCountry, SelectedRouteInArea, SelectedRouteInSummitGroup, SelectedRouteInSummit }.FirstOrDefault(x => x != null);
+            if (selectedRoute != null)
+            {
+                foreach (Variation variation in _variationService.GetAllOn(selectedRoute))
+                {
+                    VariationsOnSelectedRoute.Add(variation);
+                }
+            }
         }
 
         private bool CanAddLogEntryToSelectedVariation()

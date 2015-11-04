@@ -100,7 +100,13 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\NameInput\DesignViewModels\NameInputDesignViewModel.cs" />
     <Compile Include="UI\NameInput\INameInputViewModel.cs" />
+    <Compile Include="UI\NameInput\NameInputView.xaml.cs">
+      <DependentUpon>NameInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NameInput\ViewCommands\NameInputViewCommand.cs" />
+    <Compile Include="UI\NameInput\ViewModels\NameInputViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -137,13 +143,13 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\NameInput\DesignViewModels\" />
-    <Folder Include="UI\NameInput\ViewCommands\" />
-    <Folder Include="UI\NameInput\ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="UI\Main\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NameInput\NameInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
