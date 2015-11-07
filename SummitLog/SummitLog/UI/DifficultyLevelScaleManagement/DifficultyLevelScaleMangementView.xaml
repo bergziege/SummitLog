@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="SummitLog.UI.DifficultyLevelScaleManagement.DifficultyLevelScaleMangementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement"
+             xmlns:designViewModels="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels"
+             xmlns:model="clr-namespace:SummitLog.Services.Model;assembly=SummitLog.Services"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <d:DesignProperties.DataContext>
+        <designViewModels:DifficultyLevelScaleManagementDesignViewModel />
+    </d:DesignProperties.DataContext>
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+        
+        <Button Content="+" Command="{Binding Path=AddDifficultyLevelScaleCommand}"></Button>
+        
+        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="model:DifficultyLevelScale">
+                    <Label Content="{Binding Path=Name}"></Label>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

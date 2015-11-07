@@ -94,6 +94,21 @@
     <Compile Include="AppContext.cs" />
     <Compile Include="UiBootloader.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
+      <DependentUpon>DifficultyLevelManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyLevelManagement\IDifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml.cs">
+      <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyLevelScaleManagement\IDifficultyLevelScaleManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\DesignViewModels\DifficultyManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\DifficultyManagementView.xaml.cs">
+      <DependentUpon>DifficultyManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyManagement\IDifficultyManagementViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
@@ -143,8 +158,25 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="UI\DifficultyLevelManagement\ViewModels\" />
+    <Folder Include="UI\DifficultyLevelScaleManagement\ViewModels\" />
+    <Folder Include="UI\DifficultyManagement\ViewCommands\" />
+    <Folder Include="UI\DifficultyManagement\ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DifficultyManagement\DifficultyManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Main\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
