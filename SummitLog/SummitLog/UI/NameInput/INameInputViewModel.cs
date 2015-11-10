@@ -1,4 +1,5 @@
 ﻿using System;
+using ReactiveUI;
 using SummitLog.UI.Common;
 
 namespace SummitLog.UI.NameInput
@@ -6,7 +7,7 @@ namespace SummitLog.UI.NameInput
     /// <summary>
     ///     Schnittstelle für View Models für die Ansicht zur Namenseingabe
     /// </summary>
-    public interface INameInputViewModel
+    public interface INameInputViewModel: IReactiveObject
     {
         /// <summary>
         ///     Líefert oder setzt den Namen
@@ -32,5 +33,11 @@ namespace SummitLog.UI.NameInput
         ///     Wenn die Ansicht nach Cancel geschlossen werden soll
         /// </summary>
         event EventHandler RequestCloseAfterCancel;
+
+        /// <summary>
+        /// Weitere Kriterien, die zur Prüfung herangezogen werden ob das OK Command ausgeführt werden darf.
+        /// </summary>
+        /// <returns></returns>
+        bool MoreCanOkCriterias();
     }
 }

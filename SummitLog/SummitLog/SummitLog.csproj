@@ -143,6 +143,13 @@
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\INameAndLevelInputViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\NameAndLevelInputView.xaml.cs">
+      <DependentUpon>NameAndLevelInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NameAndLevelInput\ViewCommands\NameAndLevelInputViewCommand.cs" />
+    <Compile Include="UI\NameAndLevelInput\ViewModels\NameAndLevelInputViewModel.cs" />
     <Compile Include="UI\NameAndScoreInput\DesignViewModels\NameAndScoreInputDesignViewModel.cs" />
     <Compile Include="UI\NameAndScoreInput\INameAndScoreInputViewModel.cs" />
     <Compile Include="UI\NameAndScoreInput\NameAndScoreInputView.xaml.cs">
@@ -208,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Main\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NameAndLevelInput\NameAndLevelInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

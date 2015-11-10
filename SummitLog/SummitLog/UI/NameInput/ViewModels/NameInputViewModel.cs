@@ -64,7 +64,16 @@ namespace SummitLog.UI.NameInput.ViewModels
 
         private bool CanOk()
         {
-            return !string.IsNullOrWhiteSpace(Name);
+            return !string.IsNullOrWhiteSpace(Name) && MoreCanOkCriterias();
+        }
+
+        /// <summary>
+        /// Weitere Kriterien, die zur Prüfung herangezogen werden ob das OK Command ausgeführt werden darf.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool MoreCanOkCriterias()
+        {
+            return true;
         }
 
         private void Ok()
