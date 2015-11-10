@@ -4,6 +4,8 @@ using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
+using SummitLog.UI.NameAndScoreInput.ViewCommands;
+using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
 {
@@ -12,6 +14,7 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
     /// </summary>
     public class DifficultyLevelManagementViewModel: ReactiveObject, IDifficultyLevelManagementViewModel
     {
+        private readonly NameAndScoreInputViewCommand _nameAndScoreInputViewCommand;
         private readonly IDifficultyLevelService _difficultyLevelService;
         private DifficultyLevelScale _difficultyLevelScale;
         private RelayCommand _addDifficultyLevelCommand;
@@ -19,9 +22,11 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
         /// <summary>
         /// Liefert eine neue Instanz des View Models
         /// </summary>
+        /// <param name="nameAndScoreInputViewCommand"></param>
         /// <param name="difficultyLevelService"></param>
-        protected DifficultyLevelManagementViewModel(IDifficultyLevelService difficultyLevelService)
+        protected DifficultyLevelManagementViewModel(NameAndScoreInputViewCommand nameAndScoreInputViewCommand, IDifficultyLevelService difficultyLevelService)
         {
+            _nameAndScoreInputViewCommand = nameAndScoreInputViewCommand;
             _difficultyLevelService = difficultyLevelService;
         }
 
@@ -42,6 +47,12 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
 
         private void AddDifficultyLevel()
         {
+            _nameAndScoreInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameAndScoreInputViewCommand.Name))
+            {
+                _difficultyLevelService.Create(_difficultyLevelScale, _nameAndScoreInputViewCommand.Name,_nameAndScoreInputViewCommand.Score);
+            }
+            LoadData(_difficultyLevelScale);
         }
 
         /// <summary>
