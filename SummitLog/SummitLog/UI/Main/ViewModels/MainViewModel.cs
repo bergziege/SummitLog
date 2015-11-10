@@ -8,6 +8,7 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
+using SummitLog.UI.NameAndLevelInput.ViewCommands;
 using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.Main.ViewModels
@@ -22,6 +23,7 @@ namespace SummitLog.UI.Main.ViewModels
         private readonly ILogEntryService _logEntryService;
         private readonly NameInputViewCommand _nameInputViewCommand;
         private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
+        private readonly NameAndLevelInputViewCommand _nameAndLevelInputViewCommand;
         private readonly IRouteService _routeService;
         private readonly ISummitGroupService _summitGroupService;
         private readonly ISummitService _summitService;
@@ -61,10 +63,11 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="logEntryService"></param>
         /// <param name="nameInputViewCommand"></param>
         /// <param name="difficultyManagementViewCommand"></param>
+        /// <param name="nameAndLevelInputViewCommand"></param>
         public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
             IVariationService variationService, ILogEntryService logEntryService,
-            NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand)
+            NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand, NameAndLevelInputViewCommand nameAndLevelInputViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -75,6 +78,7 @@ namespace SummitLog.UI.Main.ViewModels
             _logEntryService = logEntryService;
             _nameInputViewCommand = nameInputViewCommand;
             _difficultyManagementViewCommand = difficultyManagementViewCommand;
+            _nameAndLevelInputViewCommand = nameAndLevelInputViewCommand;
         }
 
         /// <summary>
@@ -816,10 +820,14 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddVariationToSelectedRoute()
         {
-            _nameInputViewCommand.Execute();
-            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            _nameAndLevelInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameAndLevelInputViewCommand.Name) && _nameAndLevelInputViewCommand.DifficultyLevel != null)
             {
-                //_variationService.Create(_nameInputViewCommand.Name, _lastRouteSelection);
+                Route selectedRoute = GetSelectedRoute();
+                if (selectedRoute != null)
+                {
+                    _variationService.Create(_nameAndLevelInputViewCommand.Name,selectedRoute, _nameAndLevelInputViewCommand.DifficultyLevel); 
+                }
             }
             RefreshVariationsOnLastSelectedRoute();
         }
@@ -827,7 +835,7 @@ namespace SummitLog.UI.Main.ViewModels
         private void RefreshVariationsOnLastSelectedRoute()
         {
             VariationsOnSelectedRoute.Clear();
-            Route selectedRoute = new List<Route>() { SelectedRouteInCountry, SelectedRouteInArea, SelectedRouteInSummitGroup, SelectedRouteInSummit }.FirstOrDefault(x => x != null);
+            Route selectedRoute = GetSelectedRoute();
             if (selectedRoute != null)
             {
                 foreach (Variation variation in _variationService.GetAllOn(selectedRoute))
@@ -835,6 +843,18 @@ namespace SummitLog.UI.Main.ViewModels
                     VariationsOnSelectedRoute.Add(variation);
                 }
             }
+        }
+
+        private Route GetSelectedRoute()
+        {
+            return
+                new List<Route>()
+                {
+                    SelectedRouteInCountry,
+                    SelectedRouteInArea,
+                    SelectedRouteInSummitGroup,
+                    SelectedRouteInSummit
+                }.FirstOrDefault(x => x != null);
         }
 
         private bool CanAddLogEntryToSelectedVariation()
