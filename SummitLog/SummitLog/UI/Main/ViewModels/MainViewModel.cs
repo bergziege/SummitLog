@@ -173,13 +173,14 @@ namespace SummitLog.UI.Main.ViewModels
                 if (!IsLoadingRoutesInCountry)
                 {
                     this.RaiseAndSetIfChanged(ref _selectedRouteInCountry, value);
-                    RefreshVariationsOnCountryRoute();
 
                     IsLoadingRoutesInCountry = true;
                     SelectedRouteInArea = null;
                     SelectedRouteInSummitGroup = null;
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInCountry = false;
+
+                    RefreshVariationsOnCountryRoute();
                 }
             }
         }
@@ -200,13 +201,14 @@ namespace SummitLog.UI.Main.ViewModels
                 if (!IsLoadingRoutesInArea)
                 {
                     this.RaiseAndSetIfChanged(ref _selectedRouteInArea, value);
-                    RefreshVariationsOnAreaRoute();
 
                     IsLoadingRoutesInArea = true;
                     SelectedRouteInCountry = null;
                     SelectedRouteInSummitGroup = null;
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInArea = false;
+
+                    RefreshVariationsOnAreaRoute();
                 }
             }
         }
@@ -227,13 +229,14 @@ namespace SummitLog.UI.Main.ViewModels
                 if (!IsLoadingRoutesInSummitGroup)
                 {
                     this.RaiseAndSetIfChanged(ref _selectedRouteInSummitGroup, value);
-                    RefreshVariationsOnSummitGroupRoute();
 
                     IsLoadingRoutesInSummitGroup = true;
                     SelectedRouteInCountry = null;
                     SelectedRouteInArea = null;
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInSummitGroup = false;
+
+                    RefreshVariationsOnSummitGroupRoute();
                 }
             }
         }
@@ -254,13 +257,14 @@ namespace SummitLog.UI.Main.ViewModels
                 if (!IsLoadingRoutesInSummit)
                 {
                     this.RaiseAndSetIfChanged(ref _selectedRouteInSummit, value);
-                    RefreshVariationsOnSummitRoute();
 
                     IsLoadingRoutesInSummit = true;
                     SelectedRouteInCountry = null;
                     SelectedRouteInArea = null;
                     SelectedRouteInSummitGroup = null;
                     IsLoadingRoutesInSummit = false;
+
+                    RefreshVariationsOnSummitRoute();
                 }
             }
         }
