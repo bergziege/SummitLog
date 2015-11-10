@@ -104,6 +104,7 @@
       <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DifficultyLevelScaleManagement\IDifficultyLevelScaleManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\ViewModels\DifficultyLevelScaleManagementViewModel.cs" />
     <Compile Include="UI\DifficultyManagement\DesignViewModels\DifficultyManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyManagement\DifficultyManagementView.xaml.cs">
       <DependentUpon>DifficultyManagementView.xaml</DependentUpon>
@@ -160,7 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UI\DifficultyLevelManagement\ViewModels\" />
-    <Folder Include="UI\DifficultyLevelScaleManagement\ViewModels\" />
     <Folder Include="UI\DifficultyManagement\ViewCommands\" />
     <Folder Include="UI\DifficultyManagement\ViewModels\" />
   </ItemGroup>

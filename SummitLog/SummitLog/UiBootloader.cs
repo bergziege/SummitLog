@@ -1,5 +1,7 @@
 using System;
 using DryIoc;
+using SummitLog.UI.DifficultyLevelScaleManagement;
+using SummitLog.UI.DifficultyLevelScaleManagement.ViewModels;
 using SummitLog.UI.Main;
 using SummitLog.UI.Main.DesignViewModels;
 using SummitLog.UI.Main.ViewModels;
@@ -35,6 +37,7 @@ namespace SummitLog
         {
             container.Register<IMainViewModel, MainViewModel>();
             container.Register<INameInputViewModel, NameInputViewModel>();
+            container.Register<IDifficultyLevelScaleManagementViewModel, DifficultyLevelScaleManagementViewModel>();
         }
 
         private static void SetupViews(Container container)
