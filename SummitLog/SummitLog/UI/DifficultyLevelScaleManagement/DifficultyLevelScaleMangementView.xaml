@@ -19,7 +19,7 @@
         
         <Button Content="+" Command="{Binding Path=AddDifficultyLevelScaleCommand}"></Button>
         
-        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1">
+        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1" SelectedItem="{Binding Path=SelectedDifficultyLevelScale}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="model:DifficultyLevelScale">
                     <Label Content="{Binding Path=Name}"></Label>

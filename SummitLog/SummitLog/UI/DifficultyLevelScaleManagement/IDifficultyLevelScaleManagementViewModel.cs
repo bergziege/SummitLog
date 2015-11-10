@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.UI.Common;
 
@@ -7,7 +8,7 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement
     /// <summary>
     ///     Schnittstelle für View Models zur Verwaltung von Schwierigkeitsgradskalen
     /// </summary>
-    public interface IDifficultyLevelScaleManagementViewModel
+    public interface IDifficultyLevelScaleManagementViewModel: IReactiveObject
     {
         /// <summary>
         ///     LIefert ein Command um eine neue Schwierigkeitsgradskala hinzuzufügen

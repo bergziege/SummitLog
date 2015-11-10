@@ -23,7 +23,7 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
         {
             Name = string.Empty;
             Score = 0;
-            NameInputView view = AppContext.Container.Resolve<NameInputView>();
+            NameAndScoreInputView view = AppContext.Container.Resolve<NameAndScoreInputView>();
             INameAndScoreInputViewModel vm = AppContext.Container.Resolve<INameAndScoreInputViewModel>();
             view.DataContext = vm;
 

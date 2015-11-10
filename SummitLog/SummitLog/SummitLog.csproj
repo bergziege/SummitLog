@@ -135,6 +135,8 @@
       <DependentUpon>DifficultyManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DifficultyManagement\IDifficultyManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\ViewCommands\DifficultyManagementViewCommand.cs" />
+    <Compile Include="UI\DifficultyManagement\ViewModels\DifficultyManagementViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
@@ -191,10 +193,7 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\DifficultyManagement\ViewCommands\" />
-    <Folder Include="UI\DifficultyManagement\ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>

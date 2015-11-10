@@ -42,5 +42,12 @@ namespace SummitLog.UI.DifficultyManagement.DesignViewModels
         ///     Liefert ein View Model zu Schwierigkeitsgradskalenverwaltung
         /// </summary>
         public IDifficultyLevelScaleManagementViewModel DifficultyLevelScaleManagementViewModel { get; }
+
+        /// <summary>
+        /// Lädt die VM relevanten Daten
+        /// </summary>
+        public void LoadData()
+        {
+        }
     }
 }

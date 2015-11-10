@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
@@ -24,10 +25,11 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
         /// </summary>
         /// <param name="nameAndScoreInputViewCommand"></param>
         /// <param name="difficultyLevelService"></param>
-        protected DifficultyLevelManagementViewModel(NameAndScoreInputViewCommand nameAndScoreInputViewCommand, IDifficultyLevelService difficultyLevelService)
+        public DifficultyLevelManagementViewModel(NameAndScoreInputViewCommand nameAndScoreInputViewCommand, IDifficultyLevelService difficultyLevelService)
         {
             _nameAndScoreInputViewCommand = nameAndScoreInputViewCommand;
             _difficultyLevelService = difficultyLevelService;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         /// <summary>
@@ -39,10 +41,15 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             {
                 if (_addDifficultyLevelCommand == null)
                 {
-                    _addDifficultyLevelCommand = new RelayCommand(AddDifficultyLevel, null);
+                    _addDifficultyLevelCommand = new RelayCommand(AddDifficultyLevel, CanAddDifficultyLevel);
                 }
                 return _addDifficultyLevelCommand;
             }
+        }
+
+        private bool CanAddDifficultyLevel()
+        {
+            return _difficultyLevelScale != null;
         }
 
         private void AddDifficultyLevel()
@@ -74,6 +81,7 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             {
                 DifficultyLevels.Add(difficultyLevel);
             }
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

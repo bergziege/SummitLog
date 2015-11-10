@@ -28,14 +28,14 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <!--Menü-->
-        <Menu>
+        <Menu Grid.ColumnSpan="4">
             <MenuItem Header="Verwalten">
                 <MenuItem Header="Schwierigkeitsgrade" Command="{Binding Path=ManageDifficultiesCommand}"></MenuItem>
             </MenuItem>

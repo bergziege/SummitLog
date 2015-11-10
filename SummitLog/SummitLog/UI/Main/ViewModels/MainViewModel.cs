@@ -7,6 +7,7 @@ using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
+using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.Main.ViewModels
@@ -20,6 +21,7 @@ namespace SummitLog.UI.Main.ViewModels
         private readonly ICountryService _countryService;
         private readonly ILogEntryService _logEntryService;
         private readonly NameInputViewCommand _nameInputViewCommand;
+        private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
         private readonly IRouteService _routeService;
         private readonly ISummitGroupService _summitGroupService;
         private readonly ISummitService _summitService;
@@ -58,10 +60,11 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="variationService"></param>
         /// <param name="logEntryService"></param>
         /// <param name="nameInputViewCommand"></param>
+        /// <param name="difficultyManagementViewCommand"></param>
         public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
             IVariationService variationService, ILogEntryService logEntryService,
-            NameInputViewCommand nameInputViewCommand)
+            NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -71,6 +74,7 @@ namespace SummitLog.UI.Main.ViewModels
             _variationService = variationService;
             _logEntryService = logEntryService;
             _nameInputViewCommand = nameInputViewCommand;
+            _difficultyManagementViewCommand = difficultyManagementViewCommand;
         }
 
         /// <summary>
@@ -850,7 +854,7 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void ManageDifficulties()
         {
-            throw new NotImplementedException();
+            _difficultyManagementViewCommand.Execute();
         }
     }
 }

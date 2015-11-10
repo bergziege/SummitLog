@@ -22,7 +22,7 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
         /// </summary>
         /// <param name="nameInputViewCommand"></param>
         /// <param name="difficultyLevelScaleService"></param>
-        protected DifficultyLevelScaleManagementViewModel(NameInputViewCommand nameInputViewCommand, IDifficultyLevelScaleService difficultyLevelScaleService)
+        public DifficultyLevelScaleManagementViewModel(NameInputViewCommand nameInputViewCommand, IDifficultyLevelScaleService difficultyLevelScaleService)
         {
             _nameInputViewCommand = nameInputViewCommand;
             _difficultyLevelScaleService = difficultyLevelScaleService;
