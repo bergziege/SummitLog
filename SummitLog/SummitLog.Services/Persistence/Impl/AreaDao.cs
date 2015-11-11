@@ -42,7 +42,7 @@ namespace SummitLog.Services.Persistence.Impl
                 .Create("c-[:HAS]->(area:Area {area})")
                 .WithParam("area", area);
 
-            query.ExecuteWithoutResultsAsync();
+            query.ExecuteWithoutResults();
         }
     }
 }

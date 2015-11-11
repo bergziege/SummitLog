@@ -81,6 +81,30 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -94,11 +118,59 @@
     <Compile Include="AppContext.cs" />
     <Compile Include="UiBootloader.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
+      <DependentUpon>DifficultyLevelManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyLevelManagement\IDifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\ViewModels\DifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml.cs">
+      <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyLevelScaleManagement\IDifficultyLevelScaleManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\ViewModels\DifficultyLevelScaleManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\DesignViewModels\DifficultyManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\DifficultyManagementView.xaml.cs">
+      <DependentUpon>DifficultyManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DifficultyManagement\IDifficultyManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyManagement\ViewCommands\DifficultyManagementViewCommand.cs" />
+    <Compile Include="UI\DifficultyManagement\ViewModels\DifficultyManagementViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\DesignViewModels\LogEntryInputDesignViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\ILogEntryInputViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\LogEntryInputView.xaml.cs">
+      <DependentUpon>LogEntryInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
+    <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\INameAndLevelInputViewModel.cs" />
+    <Compile Include="UI\NameAndLevelInput\NameAndLevelInputView.xaml.cs">
+      <DependentUpon>NameAndLevelInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NameAndLevelInput\ViewCommands\NameAndLevelInputViewCommand.cs" />
+    <Compile Include="UI\NameAndLevelInput\ViewModels\NameAndLevelInputViewModel.cs" />
+    <Compile Include="UI\NameAndScoreInput\DesignViewModels\NameAndScoreInputDesignViewModel.cs" />
+    <Compile Include="UI\NameAndScoreInput\INameAndScoreInputViewModel.cs" />
+    <Compile Include="UI\NameAndScoreInput\NameAndScoreInputView.xaml.cs">
+      <DependentUpon>NameAndScoreInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NameAndScoreInput\ViewCommands\NameAndScoreInputViewCommand.cs" />
+    <Compile Include="UI\NameAndScoreInput\ViewModels\NameAndScoreInputViewModel.cs" />
+    <Compile Include="UI\NameInput\DesignViewModels\NameInputDesignViewModel.cs" />
+    <Compile Include="UI\NameInput\INameInputViewModel.cs" />
+    <Compile Include="UI\NameInput\NameInputView.xaml.cs">
+      <DependentUpon>NameInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\NameInput\ViewCommands\NameInputViewCommand.cs" />
+    <Compile Include="UI\NameInput\ViewModels\NameInputViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -135,11 +207,37 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="UI\Main\ViewModels\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\DifficultyManagement\DifficultyManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\LogEntryInput\LogEntryInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Main\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NameAndLevelInput\NameAndLevelInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NameAndScoreInput\NameAndScoreInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\NameInput\NameInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

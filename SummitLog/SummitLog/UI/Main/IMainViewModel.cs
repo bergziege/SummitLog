@@ -168,5 +168,55 @@ namespace SummitLog.UI.Main
         /// Lädt die relevanten Daten des View Models
         /// </summary>
         void LoadData();
+
+        /// <summary>
+        /// Liefert ob Länder geladen werden
+        /// </summary>
+        bool IsLoadingCountries { get; }
+
+        /// <summary>
+        /// Liefert ob Gegenden geladen werden
+        /// </summary>
+        bool IsLoadingAreas { get; }
+
+        /// <summary>
+        /// Liefert ob Gipfelgruppen geladen werden
+        /// </summary>
+        bool IsLoadingSummitGroups { get; }
+
+        /// <summary>
+        /// Liefert ob Gipfel geladen werden
+        /// </summary>
+        bool IsLoadingSummits { get; }
+
+        /// <summary>
+        /// Liefert ob Wege im Land geladen werden
+        /// </summary>
+        bool IsLoadingRoutesInCountry { get; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gegend geladen werden
+        /// </summary>
+        bool IsLoadingRoutesInArea { get; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gipfelgruppe geladen werden
+        /// </summary>
+        bool IsLoadingRoutesInSummitGroup { get; }
+
+        /// <summary>
+        /// Liefert ob Wege in Gipfel geladen werden
+        /// </summary>
+        bool IsLoadingRoutesInSummit { get; }
+
+        /// <summary>
+        /// Liefert ob Variationen geladen werden
+        /// </summary>
+        bool IsLoadingVariations { get; }
+
+        /// <summary>
+        /// Liefert ob Logeinträge geladen werden
+        /// </summary>
+        bool IsLoadingLogs { get; }
     }
 }

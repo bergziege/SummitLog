@@ -9,6 +9,16 @@
     <d:DesignProperties.DataContext>
         <designViewModels:MainDesignViewModel />
     </d:DesignProperties.DataContext>
+    <Window.Resources>
+
+        <DataTemplate x:Key="ItemWithNameTemplate">
+            <Label Content="{Binding Path=Name}"></Label>
+        </DataTemplate>
+        
+        <Style TargetType="ListView">
+            <Setter Property="ItemTemplate" Value="{StaticResource ItemWithNameTemplate}"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -18,13 +28,21 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
 
+        <!--Menü-->
+        <Menu Grid.ColumnSpan="4">
+            <MenuItem Header="Verwalten">
+                <MenuItem Header="Schwierigkeitsgrade" Command="{Binding Path=ManageDifficultiesCommand}"></MenuItem>
+            </MenuItem>
+        </Menu>
+        
         <!--Länder-->
-        <Grid Grid.Row="0" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -35,7 +53,7 @@
         </Grid>
 
         <!--Gebiete-->
-        <Grid Grid.Row="0" Grid.Column="1">
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -46,7 +64,7 @@
         </Grid>
 
         <!--Gipfelgruppen-->
-        <Grid Grid.Row="0" Grid.Column="2">
+        <Grid Grid.Row="1" Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -57,7 +75,7 @@
         </Grid>
 
         <!--Gipfel-->
-        <Grid Grid.Row="0" Grid.Column="3">
+        <Grid Grid.Row="1" Grid.Column="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -68,7 +86,7 @@
         </Grid>
 
         <!--Routen im Land-->
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="2" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -79,7 +97,7 @@
         </Grid>
 
         <!--Routen im Gebiet-->
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="2" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -90,7 +108,7 @@
         </Grid>
 
         <!--Routen in Gipfelgruppe-->
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Grid.Row="2" Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -101,7 +119,7 @@
         </Grid>
 
         <!--Routen am Gipfel-->
-        <Grid Grid.Row="1" Grid.Column="3">
+        <Grid Grid.Row="2" Grid.Column="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -112,7 +130,7 @@
         </Grid>
 
         <!--Variationen-->
-        <Grid Grid.Row="2" Grid.Column="0">
+        <Grid Grid.Row="3" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
@@ -123,14 +141,23 @@
         </Grid>
 
         <!--Logeinträge-->
-        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+        <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Button Content="+" Command="{Binding Path=AddLogEntryToSelectedVariationCommand}" />
             <ListView Grid.Column="1" ItemsSource="{Binding Path=LogEntriesOnSelectedVariation}"
-                      SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                      SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Path=DateTime}"></Label>
+                            <Label Content="{Binding Path=Memo}"></Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Grid>
 </Window>

@@ -1,7 +1,24 @@
-using System;
 using DryIoc;
+using SummitLog.UI.DifficultyLevelManagement;
+using SummitLog.UI.DifficultyLevelManagement.ViewModels;
+using SummitLog.UI.DifficultyLevelScaleManagement;
+using SummitLog.UI.DifficultyLevelScaleManagement.ViewModels;
+using SummitLog.UI.DifficultyManagement;
+using SummitLog.UI.DifficultyManagement.ViewCommands;
+using SummitLog.UI.DifficultyManagement.ViewModels;
+using SummitLog.UI.LogEntryInput;
+using SummitLog.UI.LogEntryInput.ViewCommands;
+using SummitLog.UI.LogEntryInput.ViewModels;
 using SummitLog.UI.Main;
-using SummitLog.UI.Main.DesignViewModels;
+using SummitLog.UI.Main.ViewModels;
+using SummitLog.UI.NameAndLevelInput;
+using SummitLog.UI.NameAndLevelInput.ViewCommands;
+using SummitLog.UI.NameAndLevelInput.ViewModels;
+using SummitLog.UI.NameAndScoreInput;
+using SummitLog.UI.NameAndScoreInput.ViewCommands;
+using SummitLog.UI.NameAndScoreInput.ViewModels;
+using SummitLog.UI.NameInput;
+using SummitLog.UI.NameInput.ViewModels;
 
 namespace SummitLog
 {
@@ -19,17 +36,39 @@ namespace SummitLog
         {
             SetupViews(container);
             SetupViewModels(container);
+            SetupViewCommands(container);
             return container;
+        }
+
+        private static void SetupViewCommands(Container container)
+        {
+            container.Register<NameInputViewCommand>();
+            container.Register<NameAndScoreInputViewCommand>();
+            container.Register<DifficultyManagementViewCommand>();
+            container.Register<NameAndLevelInputViewCommand>();
+            container.Register<LogEntryInputViewCommand>();
         }
 
         private static void SetupViewModels(Container container)
         {
-            container.Register<IMainViewModel, MainDesignViewModel>();
+            container.Register<IMainViewModel, MainViewModel>();
+            container.Register<INameInputViewModel, NameInputViewModel>();
+            container.Register<IDifficultyLevelScaleManagementViewModel, DifficultyLevelScaleManagementViewModel>();
+            container.Register<IDifficultyLevelManagementViewModel, DifficultyLevelManagementViewModel>();
+            container.Register<INameAndScoreInputViewModel, NameAndScoreInputViewModel>();
+            container.Register<IDifficultyManagementViewModel, DifficultyManagementViewModel>();
+            container.Register<INameAndLevelInputViewModel, NameAndLevelInputViewModel>();
+            container.Register<ILogEntryInputViewModel, LogEntryInputViewModel>();
         }
 
         private static void SetupViews(Container container)
         {
             container.Register<MainView>();
+            container.Register<NameInputView>();
+            container.Register<NameAndScoreInputView>();
+            container.Register<DifficultyManagementView>();
+            container.Register<NameAndLevelInputView>();
+            container.Register<LogEntryInputView>();
         }
     }
 }

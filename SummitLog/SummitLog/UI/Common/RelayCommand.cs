@@ -16,9 +16,11 @@ namespace SummitLog.UI.Common
 
         public bool CanExecute(object parameter)
         {
-            bool canExecute = _canExecuteAction.Invoke();
-            OnCanExecuteChanged();
-            return canExecute;
+            if (_canExecuteAction != null)
+            {
+                return _canExecuteAction.Invoke(); 
+            }
+            return true;
         }
 
         public void Execute(object parameter)
@@ -26,12 +28,10 @@ namespace SummitLog.UI.Common
             _executeAction.Invoke();
         }
 
-        public event EventHandler CanExecuteChanged;
-
-
-        private void OnCanExecuteChanged()
+        public event EventHandler CanExecuteChanged
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
     }
 }

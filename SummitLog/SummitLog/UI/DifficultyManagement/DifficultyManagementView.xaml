@@ -1,0 +1,24 @@
+﻿<Window x:Class="SummitLog.UI.DifficultyManagement.DifficultyManagementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SummitLog.UI.DifficultyManagement"
+        xmlns:designViewModels="clr-namespace:SummitLog.UI.DifficultyManagement.DesignViewModels"
+        xmlns:difficultyLevelScaleManagement="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement"
+        xmlns:difficultyLevelManagement="clr-namespace:SummitLog.UI.DifficultyLevelManagement"
+        mc:Ignorable="d"
+        Title="DifficultyManagementView" Height="300" Width="600">
+    <d:DesignProperties.DataContext>
+        <designViewModels:DifficultyManagementDesignViewModel />
+    </d:DesignProperties.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <difficultyLevelScaleManagement:DifficultyLevelScaleMangementView DataContext="{Binding Path=DifficultyLevelScaleManagementViewModel}"/>
+        <difficultyLevelManagement:DifficultyLevelManagementView Grid.Column="1" DataContext="{Binding Path=DifficultyLevelManagementViewModel}"/>
+    </Grid>
+</Window>
