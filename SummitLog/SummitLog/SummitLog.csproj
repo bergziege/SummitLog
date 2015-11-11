@@ -137,6 +137,13 @@
     <Compile Include="UI\DifficultyManagement\IDifficultyManagementViewModel.cs" />
     <Compile Include="UI\DifficultyManagement\ViewCommands\DifficultyManagementViewCommand.cs" />
     <Compile Include="UI\DifficultyManagement\ViewModels\DifficultyManagementViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\DesignViewModels\LogEntryInputDesignViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\ILogEntryInputViewModel.cs" />
+    <Compile Include="UI\LogEntryInput\LogEntryInputView.xaml.cs">
+      <DependentUpon>LogEntryInputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
+    <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
@@ -211,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\DifficultyManagement\DifficultyManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\LogEntryInput\LogEntryInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

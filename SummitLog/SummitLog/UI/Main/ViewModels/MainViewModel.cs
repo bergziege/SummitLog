@@ -8,6 +8,7 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
+using SummitLog.UI.LogEntryInput.ViewCommands;
 using SummitLog.UI.NameAndLevelInput.ViewCommands;
 using SummitLog.UI.NameInput;
 
@@ -24,6 +25,7 @@ namespace SummitLog.UI.Main.ViewModels
         private readonly NameInputViewCommand _nameInputViewCommand;
         private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
         private readonly NameAndLevelInputViewCommand _nameAndLevelInputViewCommand;
+        private readonly LogEntryInputViewCommand _logEntryInputViewCommand;
         private readonly IRouteService _routeService;
         private readonly ISummitGroupService _summitGroupService;
         private readonly ISummitService _summitService;
@@ -64,10 +66,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="nameInputViewCommand"></param>
         /// <param name="difficultyManagementViewCommand"></param>
         /// <param name="nameAndLevelInputViewCommand"></param>
+        /// <param name="logEntryInputViewCommand"></param>
         public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
             IVariationService variationService, ILogEntryService logEntryService,
-            NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand, NameAndLevelInputViewCommand nameAndLevelInputViewCommand)
+            NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand, NameAndLevelInputViewCommand nameAndLevelInputViewCommand
+            , LogEntryInputViewCommand logEntryInputViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -79,6 +83,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand = nameInputViewCommand;
             _difficultyManagementViewCommand = difficultyManagementViewCommand;
             _nameAndLevelInputViewCommand = nameAndLevelInputViewCommand;
+            _logEntryInputViewCommand = logEntryInputViewCommand;
         }
 
         /// <summary>
@@ -181,6 +186,7 @@ namespace SummitLog.UI.Main.ViewModels
                     IsLoadingRoutesInCountry = false;
 
                     RefreshVariationsOnCountryRoute();
+                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -209,6 +215,7 @@ namespace SummitLog.UI.Main.ViewModels
                     IsLoadingRoutesInArea = false;
 
                     RefreshVariationsOnAreaRoute();
+                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -237,6 +244,7 @@ namespace SummitLog.UI.Main.ViewModels
                     IsLoadingRoutesInSummitGroup = false;
 
                     RefreshVariationsOnSummitGroupRoute();
+                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -265,6 +273,7 @@ namespace SummitLog.UI.Main.ViewModels
                     IsLoadingRoutesInSummit = false;
 
                     RefreshVariationsOnSummitRoute();
+                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -281,7 +290,23 @@ namespace SummitLog.UI.Main.ViewModels
         public Variation SelectedVariation
         {
             get { return _selectedVariation; }
-            set { this.RaiseAndSetIfChanged(ref _selectedVariation, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selectedVariation, value);
+                RefreshLogEntriesOnSelectedVariation();
+            }
+        }
+
+        private void RefreshLogEntriesOnSelectedVariation()
+        {
+            if (SelectedVariation != null)
+            {
+                LogEntriesOnSelectedVariation.Clear();
+                foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation))
+                {
+                    LogEntriesOnSelectedVariation.Add(logEntry);
+                }
+            }
         }
 
         /// <summary>
@@ -868,7 +893,11 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddLogEntryToSelectedVariation()
         {
-            throw new NotImplementedException();
+            if (_logEntryInputViewCommand.Execute())
+            {
+                _logEntryService.Create(_logEntryInputViewCommand.Memo, _logEntryInputViewCommand.Date, SelectedVariation);
+                RefreshLogEntriesOnSelectedVariation();
+            }
         }
 
         private bool CanManageDifficulties()

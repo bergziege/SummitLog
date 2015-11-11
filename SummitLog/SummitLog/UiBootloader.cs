@@ -6,6 +6,9 @@ using SummitLog.UI.DifficultyLevelScaleManagement.ViewModels;
 using SummitLog.UI.DifficultyManagement;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.DifficultyManagement.ViewModels;
+using SummitLog.UI.LogEntryInput;
+using SummitLog.UI.LogEntryInput.ViewCommands;
+using SummitLog.UI.LogEntryInput.ViewModels;
 using SummitLog.UI.Main;
 using SummitLog.UI.Main.ViewModels;
 using SummitLog.UI.NameAndLevelInput;
@@ -43,6 +46,7 @@ namespace SummitLog
             container.Register<NameAndScoreInputViewCommand>();
             container.Register<DifficultyManagementViewCommand>();
             container.Register<NameAndLevelInputViewCommand>();
+            container.Register<LogEntryInputViewCommand>();
         }
 
         private static void SetupViewModels(Container container)
@@ -54,6 +58,7 @@ namespace SummitLog
             container.Register<INameAndScoreInputViewModel, NameAndScoreInputViewModel>();
             container.Register<IDifficultyManagementViewModel, DifficultyManagementViewModel>();
             container.Register<INameAndLevelInputViewModel, NameAndLevelInputViewModel>();
+            container.Register<ILogEntryInputViewModel, LogEntryInputViewModel>();
         }
 
         private static void SetupViews(Container container)
@@ -63,6 +68,7 @@ namespace SummitLog
             container.Register<NameAndScoreInputView>();
             container.Register<DifficultyManagementView>();
             container.Register<NameAndLevelInputView>();
+            container.Register<LogEntryInputView>();
         }
     }
 }
