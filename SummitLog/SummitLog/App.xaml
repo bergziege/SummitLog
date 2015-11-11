@@ -2,6 +2,36 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
-         
+        <Style TargetType="Button" x:Key="ButtonBaseStyle">
+            <Setter Property="FontFamily" Value="/Resources/fontawesome-webfont.ttf#FontAwesome"></Setter>
+        </Style>
+        <Style x:Key="AddButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
+            <Setter Property="Content" Value="&#xf067;" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Width" Value="25" />
+            <Setter Property="Foreground" Value="Green" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="HeaderedContentControl" x:Key="StretchedHeaderedContentControl">
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HeaderedContentControl">
+                        <DockPanel Background="{TemplateBinding Background}">
+                            <ContentPresenter DockPanel.Dock="Top" ContentSource="Header" Margin="{TemplateBinding Padding}"/>
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"/>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="MainViewHeaderedContentControl" TargetType="HeaderedContentControl" BasedOn="{StaticResource StretchedHeaderedContentControl}">
+            <Setter Property="Margin" Value="3"></Setter>
+            <Setter Property="Padding" Value="3"></Setter>
+            <Setter Property="Background" Value="#F0F0F0"></Setter>
+        </Style>
     </Application.Resources>
 </Application>
