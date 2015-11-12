@@ -16,7 +16,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Button Content="+" Command="{Binding Path=AddDifficultyLevelCommand}"></Button>
+        <Button Command="{Binding Path=AddDifficultyLevelCommand}" Style="{StaticResource AddButtonStyle}" HorizontalAlignment="Left"/>
 
         <ListView ItemsSource="{Binding Path=DifficultyLevels}" Grid.Row="1">
             <ListView.ItemTemplate>

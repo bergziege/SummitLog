@@ -7,11 +7,11 @@
         xmlns:designViewModels="clr-namespace:SummitLog.UI.NameAndLevelInput.DesignViewModels"
         xmlns:model="clr-namespace:SummitLog.Services.Model;assembly=SummitLog.Services"
         mc:Ignorable="d"
-        Title="NameAndLevelInputView" Height="300" Width="300">
+        Title="Variation" SizeToContent="WidthAndHeight">
     <d:DesignProperties.DataContext>
         <designViewModels:NameAndLevelInputDesignViewModel />
     </d:DesignProperties.DataContext>
-    <Grid>
+    <Grid Margin="3">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition />
@@ -24,32 +24,32 @@
         </Grid.RowDefinitions>
 
         <Label Content="Name:"></Label>
-        <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3"></TextBox>
+        <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="200"></TextBox>
 
         <Label Content="Skala:" Grid.Row="1"/>
-        <ComboBox ItemsSource="{Binding Path=DifficultyLevelScales}" SelectedItem="{Binding Path=SelectedDifficultyLevelScale}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+        <ComboBox Margin="3" ItemsSource="{Binding Path=DifficultyLevelScales}" SelectedItem="{Binding Path=SelectedDifficultyLevelScale}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
             <ComboBox.ItemTemplate>
                 <DataTemplate DataType="model:DifficultyLevelScale">
-                    <Label Content="{Binding Path=Name}"></Label>
+                    <TextBlock Text="{Binding Path=Name}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
 
         <Label Content="Schwierigkeit:" Grid.Row="2"/>
-        <ComboBox ItemsSource="{Binding Path=DifficultyLevels}" SelectedItem="{Binding Path=SelectedDifficultyLevel}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
+        <ComboBox Margin="3" ItemsSource="{Binding Path=DifficultyLevels}" SelectedItem="{Binding Path=SelectedDifficultyLevel}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center">
             <ComboBox.ItemTemplate>
                 <DataTemplate DataType="model:DifficultyLevel">
                     <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Path=Name}"></Label>
-                        <Label Content="{Binding Path=Score}"></Label>
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                        <TextBlock Text="{Binding Path=Score}"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3"></Button>
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3"></Button>
+            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Width="70"></Button>
+            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Width="70"></Button>
         </StackPanel>
     </Grid>
 </Window>

@@ -23,6 +23,9 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
         /// </summary>
         public void Execute()
         {
+            Name = null;
+            DifficultyLevel = null;
+
             NameAndLevelInputView view = AppContext.Container.Resolve<NameAndLevelInputView>();
             INameAndLevelInputViewModel vm = AppContext.Container.Resolve<INameAndLevelInputViewModel>();
             view.DataContext = vm;

@@ -18,7 +18,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <difficultyLevelScaleManagement:DifficultyLevelScaleMangementView DataContext="{Binding Path=DifficultyLevelScaleManagementViewModel}"/>
-        <difficultyLevelManagement:DifficultyLevelManagementView Grid.Column="1" DataContext="{Binding Path=DifficultyLevelManagementViewModel}"/>
+        <HeaderedContentControl Header="Skalen" Style="{StaticResource StretchedHeaderedContentControl}" Margin="3" Padding="3">
+            <difficultyLevelScaleManagement:DifficultyLevelScaleMangementView
+                DataContext="{Binding Path=DifficultyLevelScaleManagementViewModel}" />
+        </HeaderedContentControl>
+        <HeaderedContentControl Header="Schwierigkeitsgrade" Grid.Column="1" Style="{StaticResource StretchedHeaderedContentControl}" Margin="3" Padding="3">
+            <difficultyLevelManagement:DifficultyLevelManagementView
+                DataContext="{Binding Path=DifficultyLevelManagementViewModel}" /></HeaderedContentControl>
     </Grid>
 </Window>
