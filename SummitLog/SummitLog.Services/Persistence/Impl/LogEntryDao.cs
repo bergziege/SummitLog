@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
 using Neo4jClient.Cypher;
@@ -41,6 +42,19 @@ namespace SummitLog.Services.Persistence.Impl
                 .WithParam("logEntry", logEntry);
 
             query.ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        /// Löscht den übergebenen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        public void Delete(LogEntry logEntry)
+        {
+            if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
+
+            GraphClient.Cypher
+                .Match("(l:LogEntry)")
+                .Where((LogEntry l) => l.Id == logEntry.Id).Delete("l").ExecuteWithoutResults();
         }
     }
 }

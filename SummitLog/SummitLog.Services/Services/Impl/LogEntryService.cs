@@ -44,5 +44,16 @@ namespace SummitLog.Services.Services.Impl
             if (string.IsNullOrWhiteSpace(memo)) throw new ArgumentNullException(nameof(memo));
             _logEntryDao.Create(variation, new LogEntry() {Memo = memo, DateTime = date});
         }
+
+        /// <summary>
+        /// Löscht den übergebenen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        public void Delete(LogEntry logEntry)
+        {
+            if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
+            
+            _logEntryDao.Delete(logEntry);
+        }
     }
 }

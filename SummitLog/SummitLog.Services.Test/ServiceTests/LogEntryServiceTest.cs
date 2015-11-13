@@ -66,5 +66,27 @@ namespace SummitLog.Services.Test.ServiceTests
             Action act = ()=> new LogEntryService(null).GetAllIn(null);
             act.ShouldThrow<ArgumentNullException>();
         }
+
+        [Test]
+        public void TestDeleteNull()
+        {
+            Action act = ()=> new LogEntryService(null).Delete(null);
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestDelete()
+        {
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            logEntryDaoMock.Setup(x => x.Delete(It.IsAny<LogEntry>()));
+
+            LogEntry logEntry = new LogEntry();
+
+            ILogEntryService logEntryService = new LogEntryService(logEntryDaoMock.Object);
+
+            logEntryService.Delete(logEntry);
+            
+            logEntryDaoMock.Verify(x=>x.Delete(logEntry), Times.Once);
+        }
     }
 }
