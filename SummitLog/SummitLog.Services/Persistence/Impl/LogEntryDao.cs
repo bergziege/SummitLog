@@ -53,8 +53,8 @@ namespace SummitLog.Services.Persistence.Impl
             if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
 
             GraphClient.Cypher
-                .Match("(l:LogEntry)")
-                .Where((LogEntry l) => l.Id == logEntry.Id).Delete("l").ExecuteWithoutResults();
+                .Match("(l:LogEntry)<-[r]-()")
+                .Where((LogEntry l) => l.Id == logEntry.Id).Delete("l, r").ExecuteWithoutResults();
         }
     }
 }

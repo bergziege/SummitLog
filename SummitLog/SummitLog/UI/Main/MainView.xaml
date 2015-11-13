@@ -172,8 +172,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddLogEntryToSelectedVariationCommand}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddLogEntryToSelectedVariationCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSelectedLogEntryCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=LogEntriesOnSelectedVariation}"
                           SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.ItemTemplate>

@@ -10,15 +10,24 @@
         <Style TargetType="Button" x:Key="ButtonBaseStyle">
             <Setter Property="FontFamily" Value="/Resources/fontawesome-webfont.ttf#FontAwesome"></Setter>
         </Style>
-        <Style x:Key="AddButtonStyle" TargetType="Button" BasedOn="{StaticResource ButtonBaseStyle}">
-            <Setter Property="Content" Value="&#xf067;" />
+        
+        <Style TargetType="Button" x:Key="IconButtonBaseStyle" BasedOn="{StaticResource ButtonBaseStyle}">
             <Setter Property="Height" Value="25" />
             <Setter Property="Width" Value="25" />
-            <Setter Property="Foreground" Value="Green" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
         </Style>
+        
+        <Style x:Key="AddButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonBaseStyle}">
+            <Setter Property="Content" Value="&#xf067;" />
+            <Setter Property="Foreground" Value="Green" />
+        </Style>
 
+        <Style x:Key="RemoveButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonBaseStyle}">
+            <Setter Property="Content" Value="&#xf068;" />
+            <Setter Property="Foreground" Value="Red" />
+        </Style>
+        
         <Style TargetType="HeaderedContentControl" x:Key="StretchedHeaderedContentControl">
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="Template">

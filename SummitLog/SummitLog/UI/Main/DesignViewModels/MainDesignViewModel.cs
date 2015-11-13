@@ -301,5 +301,10 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// Liefert ob Logeinträge geladen werden
         /// </summary>
         public bool IsLoadingLogs { get; }
+
+        /// <summary>
+        /// Liefert ein Command um den gewählten Logeintrag zu löschen.
+        /// </summary>
+        public RelayCommand RemoveSelectedLogEntryCommand { get; }
     }
 }
