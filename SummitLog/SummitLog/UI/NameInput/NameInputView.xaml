@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:SummitLog.UI.NameInput"
         xmlns:designViewModels="clr-namespace:SummitLog.UI.NameInput.DesignViewModels"
         mc:Ignorable="d"
-        Title=""
-        SizeToContent="WidthAndHeight">
+        Title="Name"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
     <d:DesignProperties.DataContext>
         <designViewModels:NameInputDesignViewModel />
     </d:DesignProperties.DataContext>
@@ -25,8 +26,8 @@
         <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="150"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Width="70"></Button>
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Width="70"></Button>
+            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
+            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}" />
         </StackPanel>
     </Grid>
 </Window>

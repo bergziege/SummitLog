@@ -7,7 +7,8 @@
         xmlns:designViewModels="clr-namespace:SummitLog.UI.LogEntryInput.DesignViewModels"
         mc:Ignorable="d"
         Title="LogEntryInputView" Width="300"
-        SizeToContent="Height">
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner">
     <d:DesignProperties.DataContext>
         <designViewModels:LogEntryInputDesignViewModel/>
     </d:DesignProperties.DataContext>
@@ -23,14 +24,14 @@
         </Grid.RowDefinitions>
         
         <Label Content="Memo:"></Label>
-        <TextBox Text="{Binding Path=Memo}" Grid.Column="1"></TextBox>
+        <TextBox Text="{Binding Path=Memo}" Grid.Column="1" Margin="3"></TextBox>
         
         <Label Content="Datum:" Grid.Row="1"/>
-        <DatePicker SelectedDate="{Binding Path=Date}" Grid.Column="1" Grid.Row="1"></DatePicker>
+        <DatePicker SelectedDate="{Binding Path=Date}" SelectedDateFormat="Short" Grid.Column="1" Grid.Row="1" Margin="3"></DatePicker>
         
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}"></Button>
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}"></Button>
+            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
+            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
         </StackPanel>
     </Grid>
 </Window>

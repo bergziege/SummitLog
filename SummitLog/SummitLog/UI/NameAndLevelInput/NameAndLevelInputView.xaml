@@ -7,7 +7,8 @@
         xmlns:designViewModels="clr-namespace:SummitLog.UI.NameAndLevelInput.DesignViewModels"
         xmlns:model="clr-namespace:SummitLog.Services.Model;assembly=SummitLog.Services"
         mc:Ignorable="d"
-        Title="Variation" SizeToContent="WidthAndHeight">
+        Title="Name und Schwierigkeitsgrad" SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner">
     <d:DesignProperties.DataContext>
         <designViewModels:NameAndLevelInputDesignViewModel />
     </d:DesignProperties.DataContext>
@@ -48,8 +49,8 @@
         </ComboBox>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Width="70"></Button>
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Width="70"></Button>
+            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
+            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
         </StackPanel>
     </Grid>
 </Window>

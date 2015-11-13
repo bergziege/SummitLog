@@ -1,4 +1,6 @@
-﻿using DryIoc;
+﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
+using DryIoc;
+using SummitLog.UI.Main;
 using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.NameAndScoreInput.ViewCommands
@@ -34,6 +36,9 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
                 Name = vm.Name;
                 Score = vm.Score;
             };
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
             view.ShowDialog();
         }
     }

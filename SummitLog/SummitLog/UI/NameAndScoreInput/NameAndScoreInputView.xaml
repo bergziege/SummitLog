@@ -8,31 +8,33 @@
         xmlns:designViewModels="clr-namespace:SummitLog.UI.NameAndScoreInput.DesignViewModels"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="NameAndScoreInputView" Height="300" Width="300">
+        Title="Name und Punktezahl" Width="300" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner">
     <d:DesignProperties.DataContext>
         <designViewModels:NameAndScoreInputDesignViewModel />
     </d:DesignProperties.DataContext>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <Label Content="Name:"></Label>
-            <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3"></TextBox>
+            <Label Content="Name:" />
+            <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"
+                     VerticalAlignment="Center" Margin="3" />
 
-            <Label Content="Punktezahl:" Grid.Row="1"></Label>
-            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Value="{Binding Path=Score}"></xctk:IntegerUpDown>
-            
+            <Label Content="Punktezahl:" Grid.Row="1" />
+            <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Value="{Binding Path=Score}" Margin="3"/>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
-                <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3"></Button>
-                <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3"></Button>
+                <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
+                <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
             </StackPanel>
         </Grid>
     </Grid>
