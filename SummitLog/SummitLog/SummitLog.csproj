@@ -116,6 +116,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppContext.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />

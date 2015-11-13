@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +30,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Area> GetAllIn(Country country)
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
-            return _areaDao.GetAllIn(country);
+            return _areaDao.GetAllIn(country).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>

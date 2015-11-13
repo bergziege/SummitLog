@@ -183,7 +183,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Label Content="{Binding Path=DateTime}"></Label>
+                                <TextBlock Text="{Binding Path=DateTime, StringFormat={}{0:dd.MM.yyyy}}" Padding="5"></TextBlock>
                                 <Label Content="{Binding Path=Memo}"></Label>
                             </StackPanel>
                         </DataTemplate>

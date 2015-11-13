@@ -1,5 +1,6 @@
 ﻿using System;
 using ReactiveUI;
+using SummitLog.Extensions;
 using SummitLog.UI.Common;
 
 namespace SummitLog.UI.LogEntryInput.ViewModels
@@ -23,10 +24,15 @@ namespace SummitLog.UI.LogEntryInput.ViewModels
             {
                 if (_okCommand == null)
                 {
-                    _okCommand = new RelayCommand(Ok, null);
+                    _okCommand = new RelayCommand(Ok, CanOk);
                 }
                 return _okCommand;
             }
+        }
+
+        private bool CanOk()
+        {
+            return Memo.IsNotNullOrWhitespace();
         }
 
         private void Ok()

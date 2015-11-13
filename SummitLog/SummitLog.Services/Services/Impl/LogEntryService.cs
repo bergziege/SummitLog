@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +30,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<LogEntry> GetAllIn(Variation variation)
         {
             if (variation == null) throw new ArgumentNullException(nameof(variation));
-            return _logEntryDao.GetAllIn(variation);
+            return _logEntryDao.GetAllIn(variation).OrderByDescending(x=>x.DateTime).ToList();
         }
 
         /// <summary>

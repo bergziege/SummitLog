@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -27,7 +28,7 @@ namespace SummitLog.Services.Services.Impl
         /// <returns></returns>
         public IList<Country> GetAll()
         {
-            return _countryDao.GetAll();
+            return _countryDao.GetAll().OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>

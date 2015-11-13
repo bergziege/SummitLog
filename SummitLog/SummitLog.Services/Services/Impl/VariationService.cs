@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +30,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Variation> GetAllOn(Route route)
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
-            return _variationDao.GetAllOn(route);
+            return _variationDao.GetAllOn(route).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>

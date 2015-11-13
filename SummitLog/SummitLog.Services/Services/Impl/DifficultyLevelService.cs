@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -30,7 +31,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<DifficultyLevel> GetAllIn(DifficultyLevelScale scale)
         {
             if (scale == null) throw new ArgumentNullException(nameof(scale));
-            return _difficultyLevelDao.GetAllIn(scale);
+            return _difficultyLevelDao.GetAllIn(scale).OrderBy(x=>x.Score).ToList();
         }
 
         /// <summary>
