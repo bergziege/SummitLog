@@ -36,11 +36,12 @@ namespace SummitLog.Services.Test.DaoTests
             countryDao.Create(country);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            routeDao.CreateIn(country, new Route {Name = "Jakobsweg"});
+            Route created = routeDao.CreateIn(country, new Route {Name = "Jakobsweg"});
 
             IList<Route> routesInCountry = routeDao.GetRoutesIn(country);
             Assert.AreEqual(1, routesInCountry.Count);
             Assert.AreEqual("Jakobsweg", routesInCountry.First().Name);
+            Assert.AreEqual(created.Name, routesInCountry.First().Name);
         }
 
         [TestMethod]
@@ -55,11 +56,12 @@ namespace SummitLog.Services.Test.DaoTests
             areaDao.Create(country, area);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            routeDao.CreateIn(area, new Route {Name = "Jakobsweg"});
+            Route created = routeDao.CreateIn(area, new Route {Name = "Jakobsweg"});
 
             IList<Route> routesInArea = routeDao.GetRoutesIn(area);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
+            Assert.AreEqual(created.Name, routesInArea.First().Name);
         }
 
         [TestMethod]
@@ -78,11 +80,12 @@ namespace SummitLog.Services.Test.DaoTests
             summitGroupDao.Create(area, summitGroup);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            routeDao.CreateIn(summitGroup, new Route {Name = "Jakobsweg"});
+            Route created = routeDao.CreateIn(summitGroup, new Route {Name = "Jakobsweg"});
 
             IList<Route> routesInArea = routeDao.GetRoutesIn(summitGroup);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
+            Assert.AreEqual(created.Name, routesInArea.First().Name);
         }
 
         [TestMethod]
@@ -105,11 +108,12 @@ namespace SummitLog.Services.Test.DaoTests
             summitDao.Create(summitGroup, summit);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            routeDao.CreateIn(summit, new Route {Name = "Jakobsweg"});
+            Route created = routeDao.CreateIn(summit, new Route {Name = "Jakobsweg"});
 
             IList<Route> routesInArea = routeDao.GetRoutesIn(summit);
             Assert.AreEqual(1, routesInArea.Count);
             Assert.AreEqual("Jakobsweg", routesInArea.First().Name);
+            Assert.AreEqual(created.Name, routesInArea.First().Name);
         }
 
         [TestMethod]

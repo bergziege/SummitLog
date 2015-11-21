@@ -31,15 +31,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// <summary>
         ///     Erstellt einen neuen Gipfel in einer Gipfelgruppe
         /// </summary>
-        public void Create(SummitGroup summitGroup, Summit summit)
+        public Summit Create(SummitGroup summitGroup, Summit summit)
         {
             var query = GraphClient.Cypher
                 .Match("(sg:SummitGroup)")
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
-                .Create("sg-[:HAS]->(summit:Summit {summit})")
+                .Create("sg-[:HAS]->(s:Summit {summit})")
                 .WithParam("summit", summit);
 
-            query.ExecuteWithoutResults();
+            return query.Return(s=>s.As<Summit>()).Results.First();
         }
     }
 }

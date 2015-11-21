@@ -20,6 +20,6 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="country"></param>
         /// <param name="area"></param>
-        void Create(Country country, Area area);
+        Area Create(Country country, Area area);
     }
 }

@@ -34,15 +34,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="area"></param>
         /// <param name="summitGroup"></param>
-        public void Create(Area area, SummitGroup summitGroup)
+        public SummitGroup Create(Area area, SummitGroup summitGroup)
         {
             ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(a:Area)")
                 .Where((Area a) => a.Id == area.Id)
-                .Create("a-[:HAS]->(summitGroup:SummitGroup {summitGroup})")
+                .Create("a-[:HAS]->(s:SummitGroup {summitGroup})")
                 .WithParam("summitGroup", summitGroup);
 
-            query.ExecuteWithoutResults();
+            return query.Return(s => s.As<SummitGroup>()).Results.First();
         }
     }
 }

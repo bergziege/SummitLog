@@ -34,9 +34,32 @@ namespace SummitLog.Services.Persistence.Impl
         ///     Erstellt eine neue DifficultyLevelScale
         /// </summary>
         /// <param name="difficultyLevelScale"></param>
-        public void Create(DifficultyLevelScale difficultyLevelScale)
+        public DifficultyLevelScale Create(DifficultyLevelScale difficultyLevelScale)
         {
-            GraphClient.Cypher.Create("(n:DifficultyLevelScale {difficultyLevelScale})").WithParam("difficultyLevelScale", difficultyLevelScale).ExecuteWithoutResults();
+            return GraphClient.Cypher.Create("(n:DifficultyLevelScale {difficultyLevelScale})").WithParam("difficultyLevelScale", difficultyLevelScale).Return( n=>n.As<DifficultyLevelScale>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob eine Scale aktuell in Verwendung ist.
+        ///     d.h. ob es Schwierigkeitsgrade zu dieser Skala gibt.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        public bool IsInUse(DifficultyLevelScale scale)
+        {
+            return
+                GraphClient.Cypher.Match("(dls:DifficultyLevelScale)-[usage]->(dl:DifficultyLevel)")
+                    .Return(usage => usage.Count())
+                    .Results.First() > 0;
+        }
+
+        /// <summary>
+        ///     Löscht die übergebene Schwierigkeitsgradskala
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        public void Delete(DifficultyLevelScale difficultyLevelScale)
+        {
+            GraphClient.Cypher.Match("(dls:DifficultyLevelScale)").Where((DifficultyLevelScale dls)=>dls.Id == difficultyLevelScale.Id).Delete("dls").ExecuteWithoutResults();
         }
     }
 }

@@ -67,6 +67,8 @@
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Route.cs" />
+    <Compile Include="Persistence\Enums\NodeLabels.cs" />
+    <Compile Include="Persistence\Extensions\StringExtensions.cs" />
     <Compile Include="Persistence\ILogEntryDao.cs" />
     <Compile Include="Persistence\Impl\BaseDao.cs" />
     <Compile Include="Persistence\Impl\LogEntryDao.cs" />

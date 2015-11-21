@@ -32,15 +32,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// <summary>
         ///     Erstellt einen neuen Schwierigkeitsgrad in einer Skala
         /// </summary>
-        public void Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel)
+        public DifficultyLevel Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel)
         {
             ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(dls:DifficultyLevelScale)")
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
-                .Create("dls-[:HAS]->(difficultyLevel:DifficultyLevel {difficultyLevel})")
+                .Create("dls-[:HAS]->(d:DifficultyLevel {difficultyLevel})")
                 .WithParam("difficultyLevel", difficultyLevel);
 
-            query.ExecuteWithoutResults();
+            return query.Return(d=>d.As<DifficultyLevel>()).Results.First();
         }
     }
 }

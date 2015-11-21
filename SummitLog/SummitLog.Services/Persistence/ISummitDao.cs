@@ -17,6 +17,6 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt einen neuen Gipfel in einer Gipfelgruppe
         /// </summary>
-        void Create(SummitGroup summitGroup, Summit summit);
+        Summit Create(SummitGroup summitGroup, Summit summit);
     }
 }

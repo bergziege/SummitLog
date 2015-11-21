@@ -17,7 +17,7 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt einen neuen Logeintrag einer Variation
         /// </summary>
-        void Create(Variation variation, LogEntry logEntry);
+        LogEntry Create(Variation variation, LogEntry logEntry);
 
         /// <summary>
         /// Löscht den übergebenen Logeintrag

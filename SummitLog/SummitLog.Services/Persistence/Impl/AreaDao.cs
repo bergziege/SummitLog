@@ -34,15 +34,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="country"></param>
         /// <param name="area"></param>
-        public void Create(Country country, Area area)
+        public Area Create(Country country, Area area)
         {
             var query = GraphClient.Cypher
                 .Match("(c:Country)")
                 .Where((Country c) => c.Id == country.Id)
-                .Create("c-[:HAS]->(area:Area {area})")
+                .Create("c-[:HAS]->(a:Area {area})")
                 .WithParam("area", area);
 
-            query.ExecuteWithoutResults();
+            return query.Return(a=>a.As<Area>()).Results.First();
         }
     }
 }

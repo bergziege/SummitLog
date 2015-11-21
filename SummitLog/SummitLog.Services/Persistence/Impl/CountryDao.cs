@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -26,7 +27,7 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Country> GetAll()
         {
             return
-                GraphClient.Cypher.Match("(country:Country)")
+                GraphClient.Cypher.Match("".Country("country"))
                     .Return(country => country.As<Country>())
                     .Results.ToList();
         }
@@ -35,9 +36,9 @@ namespace SummitLog.Services.Persistence.Impl
         ///     Erstellt ein neues Land
         /// </summary>
         /// <param name="country"></param>
-        public void Create(Country country)
+        public Country Create(Country country)
         {
-            GraphClient.Cypher.Create("(n:Country {country})").WithParam("country", country).ExecuteWithoutResults();
+            return GraphClient.Cypher.Create("".CountryWithParam("n","country")).WithParam("country", country).Return(n => n.As<Country>()).Results.First();
         }
     }
 }

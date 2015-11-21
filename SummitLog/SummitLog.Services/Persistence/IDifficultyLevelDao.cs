@@ -17,6 +17,6 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt einen neuen Schwierigkeitsgrad in einer Skala
         /// </summary>
-        void Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel);
+        DifficultyLevel Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel);
     }
 }

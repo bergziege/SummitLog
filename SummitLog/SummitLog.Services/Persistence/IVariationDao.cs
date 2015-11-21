@@ -17,6 +17,6 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt eine neue Variation einer Route zu einer bestimmen Schwierigkeit
         /// </summary>
-        void Create(Variation variation, Route route, DifficultyLevel difficultyLevel);
+        Variation Create(Variation variation, Route route, DifficultyLevel difficultyLevel);
     }
 }

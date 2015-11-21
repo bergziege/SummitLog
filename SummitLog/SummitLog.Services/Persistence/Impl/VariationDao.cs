@@ -31,15 +31,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// <summary>
         ///     Erstellt eine neue Variation einer Route zu einer bestimmen Schwierigkeit
         /// </summary>
-        public void Create(Variation variation, Route route, DifficultyLevel difficultyLevel)
+        public Variation Create(Variation variation, Route route, DifficultyLevel difficultyLevel)
         {
             var query = GraphClient.Cypher
                 .Match("(r:Route),(dl:DifficultyLevel)")
                 .Where((Route r, DifficultyLevel dl) => r.Id == route.Id && dl.Id == difficultyLevel.Id)
-                .Create("r-[:HAS]->(variation:Variation {variation})-[:HAS]->dl")
+                .Create("r-[:HAS]->(v:Variation {variation})-[:HAS]->dl")
                 .WithParam("variation", variation);
 
-            query.ExecuteWithoutResults();
+            return query.Return(v=>v.As<Variation>()).Results.First();
         }
     }
 }

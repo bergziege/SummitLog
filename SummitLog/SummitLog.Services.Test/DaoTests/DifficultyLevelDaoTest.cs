@@ -13,6 +13,7 @@ namespace SummitLog.Services.Test.DaoTests
     public class DifficultyLevelDaoTest
     {
         private GraphClient _graphClient;
+        private DbTestDataGenerator _dataGenerator;
 
         [TestInitialize]
         public void Init()
@@ -20,6 +21,7 @@ namespace SummitLog.Services.Test.DaoTests
             _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
             _graphClient.Connect();
             _graphClient.BeginTransaction();
+            _dataGenerator = new DbTestDataGenerator(_graphClient);
         }
 
         [TestCleanup]
@@ -31,19 +33,17 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            IDifficultyLevelScaleDao difficultyLevelScaleDao = new DifficultyLevelScaleDao(_graphClient);
-            DifficultyLevelScale scale = new DifficultyLevelScale() {Name = "sächsisch"};
-            difficultyLevelScaleDao.Create(scale);
-
-            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
-            DifficultyLevel level = new DifficultyLevel() {Name = "7b", Score = 2000};
-            difficultyLevelDao.Create(scale,level);
+            
+            DifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            DifficultyLevelScale scale = _dataGenerator.CreateDifficultyLevelScale();
+            DifficultyLevel created = _dataGenerator.CreateDifficultyLevel(difficultyLevelScale:scale);
             
             IList<DifficultyLevel> levelsInScale = difficultyLevelDao.GetAllIn(scale);
             Assert.AreEqual(1, levelsInScale.Count);
-            Assert.AreEqual(level.Name, levelsInScale.First().Name);
-            Assert.AreEqual(level.Id, levelsInScale.First().Id);
-            Assert.AreEqual(level.Score, levelsInScale.First().Score);
+            Assert.AreEqual(created.Name, levelsInScale.First().Name);
+            Assert.AreEqual(created.Id, levelsInScale.First().Id);
+            Assert.AreEqual(created.Id, levelsInScale.First().Id);
+            Assert.AreEqual(created.Score, levelsInScale.First().Score);
         }
     }
 }

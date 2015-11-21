@@ -86,6 +86,7 @@
   <ItemGroup>
     <Compile Include="DaoTests\AreaDaoTest.cs" />
     <Compile Include="DaoTests\CountryDaoTest.cs" />
+    <Compile Include="DaoTests\DbTestDataGenerator.cs" />
     <Compile Include="DaoTests\DifficultyLevelDaoTest.cs" />
     <Compile Include="DaoTests\DifficultyLevelScaleDaoTest.cs" />
     <Compile Include="DaoTests\LogEntryDaoTest.cs" />

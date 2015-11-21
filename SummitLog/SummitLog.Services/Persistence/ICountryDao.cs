@@ -19,6 +19,6 @@ namespace SummitLog.Services.Persistence
         ///     Erstellt ein neues Land
         /// </summary>
         /// <param name="country"></param>
-        void Create(Country country);
+        Country Create(Country country);
     }
 }

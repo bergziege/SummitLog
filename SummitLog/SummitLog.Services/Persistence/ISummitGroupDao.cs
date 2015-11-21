@@ -17,6 +17,6 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt eine neue Gipfelgruppe in einer Gegend
         /// </summary>
-        void Create(Area area, SummitGroup summitGroup);
+        SummitGroup Create(Area area, SummitGroup summitGroup);
     }
 }

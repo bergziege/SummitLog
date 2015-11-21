@@ -51,15 +51,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="country"></param>
         /// <param name="route"></param>
-        public void CreateIn(Country country, Route route)
+        public Route CreateIn(Country country, Route route)
         {
             var query = GraphClient.Cypher
                 .Match("(c:Country)")
                 .Where((Country c) => c.Id == country.Id)
-                .Create("c-[:HAS]->(route:Route {route})")
+                .Create("c-[:HAS]->(r:Route {route})")
                 .WithParam("route", route);
 
-            query.ExecuteWithoutResults();
+            return query.Return(r=>r.As<Route>()).Results.First();
         }
 
         /// <summary>
@@ -67,15 +67,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="area"></param>
         /// <param name="route"></param>
-        public void CreateIn(Area area, Route route)
+        public Route CreateIn(Area area, Route route)
         {
             var query = GraphClient.Cypher
                 .Match("(a:Area)")
                 .Where((Area a) => a.Id == area.Id)
-                .Create("a-[:HAS]->(route:Route {route})")
+                .Create("a-[:HAS]->(r:Route {route})")
                 .WithParam("route", route);
 
-            query.ExecuteWithoutResults();
+            return query.Return(r=>r.As<Route>()).Results.First();
         }
 
         /// <summary>
@@ -83,15 +83,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="summitGroup"></param>
         /// <param name="route"></param>
-        public void CreateIn(SummitGroup summitGroup, Route route)
+        public Route CreateIn(SummitGroup summitGroup, Route route)
         {
             var query = GraphClient.Cypher
                 .Match("(sg:SummitGroup)")
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
-                .Create("sg-[:HAS]->(route:Route {route})")
+                .Create("sg-[:HAS]->(r:Route {route})")
                 .WithParam("route", route);
 
-            query.ExecuteWithoutResults();
+            return query.Return(r=>r.As<Route>()).Results.First();
         }
 
         /// <summary>
@@ -113,15 +113,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="summit"></param>
         /// <param name="route"></param>
-        public void CreateIn(Summit summit, Route route)
+        public Route CreateIn(Summit summit, Route route)
         {
             var query = GraphClient.Cypher
                 .Match("(s:Summit)")
                 .Where((Summit s) => s.Id == summit.Id)
-                .Create("s-[:HAS]->(route:Route {route})")
+                .Create("s-[:HAS]->(r:Route {route})")
                 .WithParam("route", route);
 
-            query.ExecuteWithoutResults();
+            return query.Return(r=>r.As<Route>()).Results.First();
         }
 
         /// <summary>

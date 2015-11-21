@@ -33,15 +33,15 @@ namespace SummitLog.Services.Persistence.Impl
         /// <summary>
         ///     Erstellt einen neuen Logeintrag einer Variation
         /// </summary>
-        public void Create(Variation variation, LogEntry logEntry)
+        public LogEntry Create(Variation variation, LogEntry logEntry)
         {
             ICypherFluentQuery query = GraphClient.Cypher
                 .Match("(v:Variation)")
                 .Where((Variation v) => v.Id == variation.Id)
-                .Create("v-[:HAS]->(logEntry:LogEntry {logEntry})")
+                .Create("v-[:HAS]->(l:LogEntry {logEntry})")
                 .WithParam("logEntry", logEntry);
 
-            query.ExecuteWithoutResults();
+            return query.Return(l=>l.As<LogEntry>()).Results.First();
         }
 
         /// <summary>

@@ -12,6 +12,7 @@ namespace SummitLog.Services.Test.DaoTests
     public class CountryDaoTest
     {
         private GraphClient _graphClient;
+        private DbTestDataGenerator _dataGenerator;
 
         [TestInitialize]
         public void Init()
@@ -19,6 +20,7 @@ namespace SummitLog.Services.Test.DaoTests
             _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
             _graphClient.Connect();
             _graphClient.BeginTransaction();
+            _dataGenerator = new DbTestDataGenerator(_graphClient);
         }
 
         [TestCleanup]
@@ -28,15 +30,25 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        public void TestCreateAndGetAll()
+        public void TestGetAll()
         {
             CountryDao dao = new CountryDao(_graphClient);
-            Country newCountry = new Country() {Name = "Deutschland"};
-            dao.Create(newCountry);
+            Country created = _dataGenerator.CreateCountry();
             IEnumerable<Country> allCountries = dao.GetAll();
             Assert.AreEqual(1, allCountries.Count());
-            Assert.AreEqual(newCountry.Name, allCountries.First().Name);
-            Assert.AreEqual(newCountry.Id, allCountries.First().Id);
+            Assert.AreEqual(created.Name, allCountries.First().Name);
+            Assert.AreEqual(created.Id, allCountries.First().Id);
+        }
+
+        [TestMethod]
+        public void TestCreateAndReturn()
+        {
+            CountryDao dao = new CountryDao(_graphClient);
+            Country newCountry = new Country() { Name = "Deutschland" };
+            Country created = dao.Create(newCountry);
+            IEnumerable<Country> allCountries = dao.GetAll();
+            Assert.AreEqual(1, allCountries.Count());
+            Assert.AreEqual(created.Id, allCountries.First().Id);
         }
     }
 }
