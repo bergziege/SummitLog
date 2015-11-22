@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -25,7 +26,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Area> GetAllIn(Country country)
         {
-            return GraphClient.Cypher.Match("(c:Country)-[:HAS]->(a:Area)")
+            return GraphClient.Cypher.Match("".Country("c").Has().Area("a"))
                 .Where((Country c) => c.Id == country.Id).Return(a => a.As<Area>()).Results.ToList();
         }
 
@@ -37,9 +38,9 @@ namespace SummitLog.Services.Persistence.Impl
         public Area Create(Country country, Area area)
         {
             var query = GraphClient.Cypher
-                .Match("(c:Country)")
+                .Match("".Country("c"))
                 .Where((Country c) => c.Id == country.Id)
-                .Create("c-[:HAS]->(a:Area {area})")
+                .Create("c".Has().AreaWithParam())
                 .WithParam("area", area);
 
             return query.Return(a=>a.As<Area>()).Results.First();

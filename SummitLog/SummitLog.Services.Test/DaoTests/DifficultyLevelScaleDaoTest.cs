@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -59,6 +60,16 @@ namespace SummitLog.Services.Test.DaoTests
             IDifficultyLevelScaleDao difficultyLevelScaleDao = new DifficultyLevelScaleDao(_graphClient);
             difficultyLevelScaleDao.Delete(scale);
             Assert.AreEqual(0, difficultyLevelScaleDao.GetAll().Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteScaleInUse()
+        {
+            DifficultyLevelScale scale = _dataGenerator.CreateDifficultyLevelScale();
+            DifficultyLevel levelWithScale = _dataGenerator.CreateDifficultyLevel(difficultyLevelScale: scale);
+            IDifficultyLevelScaleDao difficultyLevelScaleDao = new DifficultyLevelScaleDao(_graphClient);
+            difficultyLevelScaleDao.Delete(scale);
         }
     }
 }

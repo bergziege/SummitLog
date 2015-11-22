@@ -104,7 +104,7 @@ namespace SummitLog.Services.Test.DaoTests
             return new DifficultyLevelScaleDao(_graphClient).Create(new DifficultyLevelScale() { Name = name });
         }
 
-        public DifficultyLevel CreateDifficultyLevel(string name = "I", int score = 10, DifficultyLevelScale difficultyLevelScale = null)
+        public DifficultyLevel CreateDifficultyLevel(string name = "Schwierigkeitsgrad", int score = 10, DifficultyLevelScale difficultyLevelScale = null)
         {
             if (difficultyLevelScale == null)
             {

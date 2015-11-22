@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\NodeInUseException.cs" />
     <Compile Include="Model\EntityWithId.cs" />
     <Compile Include="Model\EntityWithIdAndName.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -68,7 +69,7 @@
     <Compile Include="Model\Country.cs" />
     <Compile Include="Model\Route.cs" />
     <Compile Include="Persistence\Enums\NodeLabels.cs" />
-    <Compile Include="Persistence\Extensions\StringExtensions.cs" />
+    <Compile Include="Persistence\Extensions\DbHelper.cs" />
     <Compile Include="Persistence\ILogEntryDao.cs" />
     <Compile Include="Persistence\Impl\BaseDao.cs" />
     <Compile Include="Persistence\Impl\LogEntryDao.cs" />

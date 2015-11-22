@@ -27,8 +27,8 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Country> GetAll()
         {
             return
-                GraphClient.Cypher.Match("".Country("country"))
-                    .Return(country => country.As<Country>())
+                GraphClient.Cypher.Match("".Country("c"))
+                    .Return(c => c.As<Country>())
                     .Results.ToList();
         }
 
@@ -38,7 +38,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="country"></param>
         public Country Create(Country country)
         {
-            return GraphClient.Cypher.Create("".CountryWithParam("n","country")).WithParam("country", country).Return(n => n.As<Country>()).Results.First();
+            return GraphClient.Cypher.Create("".CountryWithParam()).WithParam("country", country).Return(c => c.As<Country>()).Results.First();
         }
     }
 }

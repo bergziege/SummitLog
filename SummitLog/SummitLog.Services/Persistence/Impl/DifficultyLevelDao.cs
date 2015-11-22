@@ -3,6 +3,7 @@ using System.Linq;
 using Neo4jClient;
 using Neo4jClient.Cypher;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -25,7 +26,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<DifficultyLevel> GetAllIn(DifficultyLevelScale difficultyLevelScale)
         {
-            return GraphClient.Cypher.Match("(dls:DifficultyLevelScale)-[:HAS]->(dl:DifficultyLevel)")
+            return GraphClient.Cypher.Match("".DifficultyLevelScale("dls").Has().DifficultyLevel("dl"))
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id).Return(dl => dl.As<DifficultyLevel>()).Results.ToList();
         }
 
@@ -35,12 +36,40 @@ namespace SummitLog.Services.Persistence.Impl
         public DifficultyLevel Create(DifficultyLevelScale difficultyLevelScale, DifficultyLevel difficultyLevel)
         {
             ICypherFluentQuery query = GraphClient.Cypher
-                .Match("(dls:DifficultyLevelScale)")
+                .Match("".DifficultyLevelScale("dls"))
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
-                .Create("dls-[:HAS]->(d:DifficultyLevel {difficultyLevel})")
+                .Create("dls".Has().DifficultyLevelWithParam())
                 .WithParam("difficultyLevel", difficultyLevel);
 
-            return query.Return(d=>d.As<DifficultyLevel>()).Results.First();
+            return query.Return(dl=>dl.As<DifficultyLevel>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob ein Schwierigkeitsgrad aktuell verwendet wird
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        /// <returns></returns>
+        public bool IsInUse(DifficultyLevel difficultyLevel)
+        {
+            long usages = GraphClient.Cypher.Match("".DifficultyLevel("dl").AnyOutboundRelationAs("usage").Variation())
+                .Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id)
+                .Return(usage => usage.Count())
+                .Results.First();
+            return usages >0;
+        }
+
+        /// <summary>
+        ///     Liefert das verwendete <see cref="DifficultyLevel" /> an einer <see cref="Variation" />
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        public DifficultyLevel GetLevelOnVariation(Variation variation)
+        {
+            return
+                GraphClient.Cypher.Match("".DifficultyLevel("dl").Has().Variation("v"))
+                    .Where((Variation v) => v.Id == variation.Id)
+                    .Return(dl => dl.As<DifficultyLevel>())
+                    .Results.First();
         }
     }
 }

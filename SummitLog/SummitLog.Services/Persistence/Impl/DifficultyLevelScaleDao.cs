@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -25,8 +27,8 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<DifficultyLevelScale> GetAll()
         {
             return
-                GraphClient.Cypher.Match("(difficultyLevelScale:DifficultyLevelScale)")
-                    .Return(difficultyLevelScale => difficultyLevelScale.As<DifficultyLevelScale>())
+                GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
+                    .Return(dls => dls.As<DifficultyLevelScale>())
                     .Results.ToList();
         }
 
@@ -36,7 +38,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="difficultyLevelScale"></param>
         public DifficultyLevelScale Create(DifficultyLevelScale difficultyLevelScale)
         {
-            return GraphClient.Cypher.Create("(n:DifficultyLevelScale {difficultyLevelScale})").WithParam("difficultyLevelScale", difficultyLevelScale).Return( n=>n.As<DifficultyLevelScale>()).Results.First();
+            return GraphClient.Cypher.Create("".DifficultyLevelScaleWithParam()).WithParam("difficultyLevelScale", difficultyLevelScale).Return( dls=>dls.As<DifficultyLevelScale>()).Results.First();
         }
 
         /// <summary>
@@ -48,7 +50,8 @@ namespace SummitLog.Services.Persistence.Impl
         public bool IsInUse(DifficultyLevelScale scale)
         {
             return
-                GraphClient.Cypher.Match("(dls:DifficultyLevelScale)-[usage]->(dl:DifficultyLevel)")
+                GraphClient.Cypher.Match("".DifficultyLevelScale("dls").AnyOutboundRelationAs("usage").DifficultyLevel())
+                .Where((DifficultyLevelScale dls)=>dls.Id == scale.Id)
                     .Return(usage => usage.Count())
                     .Results.First() > 0;
         }
@@ -59,7 +62,11 @@ namespace SummitLog.Services.Persistence.Impl
         /// <param name="difficultyLevelScale"></param>
         public void Delete(DifficultyLevelScale difficultyLevelScale)
         {
-            GraphClient.Cypher.Match("(dls:DifficultyLevelScale)").Where((DifficultyLevelScale dls)=>dls.Id == difficultyLevelScale.Id).Delete("dls").ExecuteWithoutResults();
+            if (IsInUse(difficultyLevelScale))
+            {
+                throw new NodeInUseException();
+            }
+            GraphClient.Cypher.Match("".DifficultyLevelScale("dls")).Where((DifficultyLevelScale dls)=>dls.Id == difficultyLevelScale.Id).Delete("dls").ExecuteWithoutResults();
         }
     }
 }
