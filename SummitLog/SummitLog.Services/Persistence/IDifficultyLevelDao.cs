@@ -32,5 +32,11 @@ namespace SummitLog.Services.Persistence
         /// <param name="variation"></param>
         /// <returns></returns>
         DifficultyLevel GetLevelOnVariation(Variation variation);
+
+        /// <summary>
+        ///     Löscht den Schwierigkeitsgrad, wenn dieser nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        void Delete(DifficultyLevel difficultyLevel);
     }
 }

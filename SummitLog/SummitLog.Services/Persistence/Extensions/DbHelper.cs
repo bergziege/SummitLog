@@ -127,5 +127,10 @@ namespace SummitLog.Services.Persistence.Extensions
         {
             return $"{input}-[{relationIdentifier}]->";
         }
+
+        public static string AnyInboundRelationsAs(this string input, string relationIdentifier)
+        {
+            return $"{input}<-[{relationIdentifier}]-";
+        }
     }
 }

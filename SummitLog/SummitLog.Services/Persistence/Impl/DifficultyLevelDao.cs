@@ -2,6 +2,7 @@
 using System.Linq;
 using Neo4jClient;
 using Neo4jClient.Cypher;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence.Extensions;
 
@@ -51,7 +52,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public bool IsInUse(DifficultyLevel difficultyLevel)
         {
-            long usages = GraphClient.Cypher.Match("".DifficultyLevel("dl").AnyOutboundRelationAs("usage").Variation())
+            long usages = GraphClient.Cypher.Match("".DifficultyLevel("dl").AnyInboundRelationsAs("usage").Variation())
                 .Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id)
                 .Return(usage => usage.Count())
                 .Results.First();
@@ -65,11 +66,25 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public DifficultyLevel GetLevelOnVariation(Variation variation)
         {
+            string match = "".Variation("v").Has().DifficultyLevel("dl");
             return
-                GraphClient.Cypher.Match("".DifficultyLevel("dl").Has().Variation("v"))
+                GraphClient.Cypher.Match(match)
                     .Where((Variation v) => v.Id == variation.Id)
                     .Return(dl => dl.As<DifficultyLevel>())
                     .Results.First();
+        }
+
+        /// <summary>
+        ///     Löscht den Schwierigkeitsgrad, wenn dieser nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        public void Delete(DifficultyLevel difficultyLevel)
+        {
+            if (IsInUse(difficultyLevel))
+            {
+                throw new NodeInUseException();
+            }
+            GraphClient.Cypher.Match("".DifficultyLevel("dl")).Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id).Delete("dl").ExecuteWithoutResults();
         }
     }
 }

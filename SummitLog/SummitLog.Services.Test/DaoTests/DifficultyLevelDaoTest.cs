@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
@@ -51,30 +52,35 @@ namespace SummitLog.Services.Test.DaoTests
         [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteInUse()
         {
-            Assert.Fail();
+            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
+            Variation variation = _dataGenerator.CreateVariation(difficultyLevel: level);
+
+            IDifficultyLevelDao dao = new DifficultyLevelDao(_graphClient);
+            dao.Delete(level);
         }
 
         [TestMethod]
         public void TestDeleteNotInUse()
         {
-            Assert.Fail();
+            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
+            IDifficultyLevelDao dao = new DifficultyLevelDao(_graphClient);
+            dao.Delete(level);
         }
 
         [TestMethod]
         public void TestGetLevelOnVariation()
         {
-            Route route = _dataGenerator.CreateRouteInCountry();
-            DifficultyLevel levelInUse = _dataGenerator.CreateDifficultyLevel();
-            Variation variation = _dataGenerator.CreateVariation(levelInUse, route);
+            Country country = new CountryDao(_graphClient).Create(new Country() {Name = "var test"});
+            Route route = new RouteDao(_graphClient).CreateIn(country,new Route() {Name = "r var test"});
+            DifficultyLevelScale scale = new DifficultyLevelScaleDao(_graphClient).Create(new DifficultyLevelScale());
+            DifficultyLevel level = new DifficultyLevelDao(_graphClient).Create(scale, new DifficultyLevel() {Name = "dl var test"});
+            Variation variation = new VariationDao(_graphClient).Create(new Variation() {Name = "v var test"}, route,level);
+            
+            Variation variationOnRoute = new VariationDao(_graphClient).GetAllOn(route).First();
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
-            IList<Variation> variationsOnRoute = variationDao.GetAllOn(route);
-            Assert.AreEqual(1, variationsOnRoute.Count);
+            DifficultyLevel levelOnVariation = new DifficultyLevelDao(_graphClient).GetLevelOnVariation(variationOnRoute);
 
-            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
-            DifficultyLevel levelOnVariation = difficultyLevelDao.GetLevelOnVariation(variation);
-
-            Assert.AreEqual(levelInUse.Id, levelOnVariation.Id);
+            Assert.AreEqual(level.Id, levelOnVariation.Id);
         }
 
         [TestMethod]
