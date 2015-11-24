@@ -84,7 +84,7 @@ namespace SummitLog.Services.Persistence.Impl
             {
                 throw new NodeInUseException();
             }
-            GraphClient.Cypher.Match("".DifficultyLevel("dl")).Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id).Delete("dl").ExecuteWithoutResults();
+            GraphClient.Cypher.Match("".DifficultyLevel("dl").AnyInboundRelationsAs("usage").DifficultyLevelScale()).Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id).Delete("dl, usage").ExecuteWithoutResults();
         }
     }
 }
