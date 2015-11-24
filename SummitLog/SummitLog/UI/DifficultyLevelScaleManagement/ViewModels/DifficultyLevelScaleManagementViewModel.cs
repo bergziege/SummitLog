@@ -16,6 +16,7 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
         private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
         private RelayCommand _addDifficultyLevelScaleCommand;
         private DifficultyLevelScale _selectedDifficultyLevelScale;
+        private RelayCommand _deleteSelectedDifficultyLevelScaleCommand;
 
         /// <summary>
         /// Liefert eine neue Instanz des View Models
@@ -65,6 +66,32 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
         {
             get { return _selectedDifficultyLevelScale; }
             set { this.RaiseAndSetIfChanged(ref _selectedDifficultyLevelScale, value); }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        public RelayCommand DeleteSelectedDifficultyLevelScaleCommand
+        {
+            get
+            {
+                if (_deleteSelectedDifficultyLevelScaleCommand == null)
+                {
+                    _deleteSelectedDifficultyLevelScaleCommand = new RelayCommand(DeleteSelected, CanDeleteSelected);
+                }
+                return _deleteSelectedDifficultyLevelScaleCommand;
+            }
+        }
+
+        private void DeleteSelected()
+        {
+            _difficultyLevelScaleService.Delete(SelectedDifficultyLevelScale);
+            LoadData();
+        }
+
+        private bool CanDeleteSelected()
+        {
+            return SelectedDifficultyLevelScale != null && !_difficultyLevelScaleService.IsInUse(SelectedDifficultyLevelScale);
         }
 
         /// <summary>

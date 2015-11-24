@@ -16,10 +16,13 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Command="{Binding Path=AddDifficultyLevelScaleCommand}" Style="{StaticResource AddButtonStyle}"></Button>
+            <Button Command="{Binding Path=DeleteSelectedDifficultyLevelScaleCommand}" Style="{StaticResource RemoveButtonStyle}"></Button>
+            </StackPanel>
         
-        <Button Command="{Binding Path=AddDifficultyLevelScaleCommand}" Style="{StaticResource AddButtonStyle}" HorizontalAlignment="Left"></Button>
-        
-        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1" SelectedItem="{Binding Path=SelectedDifficultyLevelScale}">
+        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1" SelectedItem="{Binding Path=SelectedDifficultyLevelScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="model:DifficultyLevelScale">
                     <Label Content="{Binding Path=Name}"></Label>

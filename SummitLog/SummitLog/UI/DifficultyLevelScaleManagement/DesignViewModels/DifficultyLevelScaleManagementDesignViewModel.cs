@@ -35,6 +35,11 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         public DifficultyLevelScale SelectedDifficultyLevelScale { get; set; }
 
         /// <summary>
+        ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        public RelayCommand DeleteSelectedDifficultyLevelScaleCommand { get; }
+
+        /// <summary>
         ///     Lädt die VM relevanten Daten
         /// </summary>
         public void LoadData()
