@@ -19,5 +19,18 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="scaleName"></param>
         void Create(string scaleName);
+
+        /// <summary>
+        ///     Liefert ob eine Skale verwendet wird
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        /// <returns></returns>
+        bool IsInUse(DifficultyLevelScale difficultyLevelScale);
+
+        /// <summary>
+        ///     Löscht die Skale, wenn nicht mehr verwendet
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        void Delete(DifficultyLevelScale difficultyLevelScale);
     }
 }

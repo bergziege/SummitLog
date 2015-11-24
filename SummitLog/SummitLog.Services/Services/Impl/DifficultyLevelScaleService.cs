@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -40,6 +41,29 @@ namespace SummitLog.Services.Services.Impl
             if (string.IsNullOrWhiteSpace(scaleName))
                 throw new ArgumentNullException(nameof(scaleName));
             _difficultyLevelScaleDao.Create(new DifficultyLevelScale{Name = scaleName});
+        }
+
+        /// <summary>
+        ///     Liefert ob eine Skale verwendet wird
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        /// <returns></returns>
+        public bool IsInUse(DifficultyLevelScale difficultyLevelScale)
+        {
+            return _difficultyLevelScaleDao.IsInUse(difficultyLevelScale);
+        }
+
+        /// <summary>
+        ///     Löscht die Skale, wenn nicht mehr verwendet
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        public void Delete(DifficultyLevelScale difficultyLevelScale)
+        {
+            if (_difficultyLevelScaleDao.IsInUse(difficultyLevelScale))
+            {
+                throw new NodeInUseException();
+            }
+            _difficultyLevelScaleDao.Delete(difficultyLevelScale);
         }
     }
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using FluentAssert;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Services;
@@ -18,40 +15,71 @@ namespace SummitLog.Services.Test.ServiceTests
     [TestFixture]
     public class DifficultyLevelScaleServiceTest
     {
-        [Test]
-        public void TestGetAll()
-        {
-            Mock<IDifficultyLevelScaleDao> scaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
-            scaleDaoMock.Setup(x => x.GetAll()).Returns(new List<DifficultyLevelScale> {new DifficultyLevelScale{Name = "D"}});
-
-            IDifficultyLevelScaleService scaleService = new DifficultyLevelScaleService(scaleDaoMock.Object);
-            IList<DifficultyLevelScale> result = scaleService.GetAll();
-            Assert.AreEqual(1, result.Count);
-            scaleDaoMock.Verify(x=>x.GetAll(), Times.Once);
-        }
-
-        [Test]
-        public void TestCreate()
-        {
-            Mock<IDifficultyLevelScaleDao> scaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
-            scaleDaoMock.Setup(x => x.Create(It.IsAny<DifficultyLevelScale>()));
-
-            string scaleName = "D";
-
-            IDifficultyLevelScaleService scaleService= new DifficultyLevelScaleService(scaleDaoMock.Object);
-            scaleService.Create(scaleName);
-
-            scaleDaoMock.Verify(x=>x.Create(It.Is<DifficultyLevelScale>(y=>y.Name == scaleName)));
-        }
-
         [TestCase("")]
         [TestCase(" ")]
         [TestCase("    ")]
         [TestCase(null)]
         public void TestMissingName(string name)
         {
-            Action act = ()=>new DifficultyLevelScaleService(null).Create(name);
+            Action act = () => new DifficultyLevelScaleService(null).Create(name);
             act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestCreate()
+        {
+            var scaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            scaleDaoMock.Setup(x => x.Create(It.IsAny<DifficultyLevelScale>()));
+
+            var scaleName = "D";
+
+            IDifficultyLevelScaleService scaleService = new DifficultyLevelScaleService(scaleDaoMock.Object);
+            scaleService.Create(scaleName);
+
+            scaleDaoMock.Verify(x => x.Create(It.Is<DifficultyLevelScale>(y => y.Name == scaleName)));
+        }
+
+        [Test]
+        public void TestGetAll()
+        {
+            var scaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            scaleDaoMock.Setup(x => x.GetAll())
+                .Returns(new List<DifficultyLevelScale> {new DifficultyLevelScale {Name = "D"}});
+
+            IDifficultyLevelScaleService scaleService = new DifficultyLevelScaleService(scaleDaoMock.Object);
+            var result = scaleService.GetAll();
+            Assert.AreEqual(1, result.Count);
+            scaleDaoMock.Verify(x => x.GetAll(), Times.Once);
+        }
+
+        [Test]
+        public void TestIsInUse()
+        {
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(true);
+
+            DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale();
+            IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
+            bool isInUse = difficultyLevelScaleService.IsInUse(difficultyLevelScale);
+
+            Assert.IsTrue(isInUse);
+            difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
+        }
+
+        [TestCase(false)]
+        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
+        public void TestDelete(bool isInUse)
+        {
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(isInUse);
+            difficultyLevelScaleDaoMock.Setup(x => x.Delete(It.IsAny<DifficultyLevelScale>()));
+
+            DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale();
+            IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
+            difficultyLevelScaleService.Delete(difficultyLevelScale);
+
+            difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
+            difficultyLevelScaleDaoMock.Verify(x=>x.Delete(difficultyLevelScale), Times.Once);
         }
     }
 }
