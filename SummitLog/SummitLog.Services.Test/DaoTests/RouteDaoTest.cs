@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -13,12 +14,14 @@ namespace SummitLog.Services.Test.DaoTests
     public class RouteDaoTest
     {
         private GraphClient _graphClient;
+        private DbTestDataGenerator _dataGenerator;
 
         [TestInitialize]
         public void Init()
         {
             _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
             _graphClient.Connect();
+            _dataGenerator = new DbTestDataGenerator(_graphClient);
             _graphClient.BeginTransaction();
         }
 
@@ -206,6 +209,52 @@ namespace SummitLog.Services.Test.DaoTests
                 .Return(route => route.As<Route>())
                 .Results.ToList();
             Assert.AreEqual(1, allRoutes.Count);
+        }
+
+        [TestMethod]
+        public void TestRouteIsInUse()
+        {
+            Route route = _dataGenerator.CreateRouteInArea();
+            Variation variation = _dataGenerator.CreateVariation(route: route);
+
+            IRoutesDao routesDao = new RouteDao(_graphClient);
+            bool isInUse = routesDao.IsInUse(route);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestRouteIsNotInUse()
+        {
+            Route route = _dataGenerator.CreateRouteInArea();
+
+            IRoutesDao routesDao = new RouteDao(_graphClient);
+            bool isInUse = routesDao.IsInUse(route);
+
+            Assert.IsFalse(isInUse);
+        }
+
+        [TestMethod]
+        public void TestDeleteRouteNotInUse()
+        {
+            Area area = _dataGenerator.CreateArea();
+            Route route = _dataGenerator.CreateRouteInArea(area:area);
+
+            IRoutesDao routesDao = new RouteDao(_graphClient);
+            routesDao.Delete(route);
+
+            Assert.AreEqual(0, routesDao.GetRoutesIn(area).Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteRouteInUse()
+        {
+            Route route = _dataGenerator.CreateRouteInArea();
+            Variation variation = _dataGenerator.CreateVariation(route: route);
+
+            IRoutesDao routesDao = new RouteDao(_graphClient);
+            routesDao.Delete(route);
         }
     }
 }

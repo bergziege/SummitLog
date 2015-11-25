@@ -63,5 +63,18 @@ namespace SummitLog.Services.Persistence
         /// <param name="summit"></param>
         /// <returns></returns>
         IList<Route> GetRoutesIn(Summit summit);
+
+        /// <summary>
+        ///     Liefert ob die Route verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        bool IsInUse(Route route);
+
+        /// <summary>
+        ///     Löscht eine Route wenn diese nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        void Delete(Route route);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -136,6 +138,32 @@ namespace SummitLog.Services.Persistence.Impl
                     .Where((Summit s) => s.Id == summit.Id)
                     .Return(route => route.As<Route>())
                     .Results.ToList();
+        }
+
+        /// <summary>
+        ///     Liefert ob die Route verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        public bool IsInUse(Route route)
+        {
+            return
+                GraphClient.Cypher.Match("".Route().AnyOutboundRelationAs("usage").Variation())
+                    .Return(usage => usage.Count())
+                    .Results.First() > 0;
+        }
+
+        /// <summary>
+        ///     Löscht eine Route wenn diese nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        public void Delete(Route route)
+        {
+            if (IsInUse(route))
+            {
+                throw new NodeInUseException();
+            }
+            GraphClient.Cypher.Match("(n)-[parentAssignment:HAS]->(r:Route)").Delete("parentAssignment, r").ExecuteWithoutResults();
         }
     }
 }
