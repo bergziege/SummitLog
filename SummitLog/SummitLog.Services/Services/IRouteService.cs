@@ -63,5 +63,18 @@ namespace SummitLog.Services.Services
         /// <param name="summit"></param>
         /// <returns></returns>
         IList<Route> GetRoutesIn(Summit summit);
+
+        /// <summary>
+        ///     Liefert ob die Route in Verwendung ist
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        bool IsInUse(Route route);
+
+        /// <summary>
+        ///     Löscht eine Route wenn idese nicht mehr in Verwendung ist
+        /// </summary>
+        /// <param name="route"></param>
+        void Delete(Route route);
     }
 }

@@ -96,6 +96,7 @@
     <Compile Include="DaoTests\VariationDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceTests\LogEntryServiceTest.cs" />
+    <Compile Include="ServiceTests\RouteServiceTest.cs" />
     <Compile Include="ServiceTests\VariationServiceTest.cs" />
     <Compile Include="ServiceTests\DifficultyLevelServiceTest.cs" />
     <Compile Include="ServiceTests\DifficultyLevelScaleServiceTest.cs" />
