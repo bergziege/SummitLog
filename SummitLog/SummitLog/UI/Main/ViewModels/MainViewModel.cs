@@ -53,6 +53,7 @@ namespace SummitLog.UI.Main.ViewModels
         private Summit _selectedSummit;
         private SummitGroup _selectedSummitGroup;
         private Variation _selectedVariation;
+        private RelayCommand _removeSelectedVariationCommand;
 
         /// <summary>
         ///     Ctor.
@@ -485,6 +486,32 @@ namespace SummitLog.UI.Main.ViewModels
                 }
                 return _manageDifficultiesCommand;
             }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu löschen
+        /// </summary>
+        public RelayCommand RemoveSelectedVariationCommand
+        {
+            get
+            {
+                if (_removeSelectedVariationCommand == null)
+                {
+                    _removeSelectedVariationCommand = new RelayCommand(RemoveSelectedVariation, CanRemoveSelectedVariation);
+                }
+                return _removeSelectedVariationCommand;
+            }
+        }
+
+        private bool CanRemoveSelectedVariation()
+        {
+            return SelectedVariation != null && !_variationService.IsInUse(SelectedVariation);
+        }
+
+        private void RemoveSelectedVariation()
+        {
+            _variationService.Delete(SelectedVariation);
+            RefreshVariationsOnLastSelectedRoute();
         }
 
         /// <summary>

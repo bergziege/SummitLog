@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -45,6 +46,31 @@ namespace SummitLog.Services.Services.Impl
             if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
             if (string.IsNullOrWhiteSpace(variationName)) throw new ArgumentNullException(nameof(variationName));
             _variationDao.Create(new Variation() {Name = variationName}, route, difficultyLevel);
+        }
+
+        /// <summary>
+        ///     Löscht eine Variation, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Delete(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            if (_variationDao.IsInUse(variation))
+            {
+                throw new NodeInUseException();
+            }
+            _variationDao.Delete(variation);
+        }
+
+        /// <summary>
+        ///     Prüft, ob eine Varation noch in Verwendung ist.
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        public bool IsInUse(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            return _variationDao.IsInUse(variation);
         }
     }
 }

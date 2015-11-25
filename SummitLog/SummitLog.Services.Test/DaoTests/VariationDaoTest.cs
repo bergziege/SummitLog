@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -58,6 +59,46 @@ namespace SummitLog.Services.Test.DaoTests
             Assert.AreEqual(variation.Name, variationsOnRoute.First().Name);
             Assert.AreEqual(variation.Id, variationsOnRoute.First().Id);
             Assert.AreEqual(created.Id, variationsOnRoute.First().Id);
+        }
+
+        [TestMethod]
+        public void TestIsInUse()
+        {
+            Variation variationWithLogEntry = _dataGenerator.CreateVariation();
+            LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
+
+            bool isInUse = new VariationDao(_graphClient).IsInUse(variationWithLogEntry);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsNotInUse()
+        {
+
+            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation();
+
+            bool isInUse = new VariationDao(_graphClient).IsInUse(variationWithoutLogEntries);
+            Assert.IsFalse(isInUse);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteInUse()
+        {
+            Variation variationWithLogEntry = _dataGenerator.CreateVariation();
+            LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
+
+            IVariationDao variationDao = new VariationDao(_graphClient);
+            variationDao.Delete(variationWithLogEntry);
+        }
+
+        [TestMethod]
+        public void TestDeleteNormal()
+        {
+            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation();
+            IVariationDao variationDao = new VariationDao(_graphClient);
+            variationDao.Delete(variationWithoutLogEntries);
         }
     }
 }

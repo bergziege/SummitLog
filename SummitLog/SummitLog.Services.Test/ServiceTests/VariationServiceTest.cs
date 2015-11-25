@@ -4,6 +4,7 @@ using FluentAssertions;
 using FluentAssertions.Common;
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Services;
@@ -72,6 +73,38 @@ namespace SummitLog.Services.Test.ServiceTests
         {
             Action act = ()=> new VariationService(null).GetAllOn(null);
             act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [TestCase(false)]
+        [TestCase(true, ExpectedException = typeof (NodeInUseException))]
+        public void TestDelete(bool isInUse)
+        {
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+            variationDaoMock.Setup(x => x.IsInUse(It.IsAny<Variation>())).Returns(isInUse);
+            variationDaoMock.Setup(x => x.Delete(It.IsAny<Variation>()));
+
+            Variation variation = new Variation();
+
+            IVariationService service = new VariationService(variationDaoMock.Object);
+            service.Delete(variation);
+
+            variationDaoMock.Verify(x=>x.IsInUse(variation), Times.Once);
+            variationDaoMock.Verify(x=>x.Delete(variation), Times.Once);
+        }
+
+        [Test]
+        public void TestIsInUse()
+        {
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+        variationDaoMock.Setup(x => x.IsInUse(It.IsAny<Variation>())).Returns(true);
+
+            Variation variation = new Variation();
+
+            IVariationService service = new VariationService(variationDaoMock.Object);
+            bool isInUse = service.IsInUse(variation);
+
+            Assert.IsTrue(isInUse);
+            variationDaoMock.Verify(x => x.IsInUse(variation), Times.Once);
         }
     }
 }

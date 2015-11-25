@@ -18,5 +18,18 @@ namespace SummitLog.Services.Persistence
         ///     Erstellt eine neue Variation einer Route zu einer bestimmen Schwierigkeit
         /// </summary>
         Variation Create(Variation variation, Route route, DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        ///     Liefert ob die Variation noch verwendet wird (ob Logeiträge zur Variation vorhanden sind).
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        bool IsInUse(Variation variation);
+
+        /// <summary>
+        ///     Löscht die Variation, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        /// <param name="variationWithoutLogEntries"></param>
+        void Delete(Variation variationWithoutLogEntries);
     }
 }

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -39,7 +42,33 @@ namespace SummitLog.Services.Persistence.Impl
                 .Create("r-[:HAS]->(v:Variation {variation})-[:HAS]->dl")
                 .WithParam("variation", variation);
 
-            return query.Return(v=>v.As<Variation>()).Results.First();
+            return query.Return(v => v.As<Variation>()).Results.First();
+        }
+
+        /// <summary>
+        /// Liefert ob die Variation noch verwendet wird (ob Logeiträge zur Variation vorhanden sind).
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        public bool IsInUse(Variation variation)
+        {
+            return GraphClient.Cypher.Match("".Variation("var").AnyOutboundRelationAs("usage").LogEntry())
+                .Where((Variation var) => var.Id == variation.Id).Return(var => var.Count()).Results.First() > 0;
+        }
+
+        /// <summary>
+        ///     Löscht die Variation, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Delete(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            if (IsInUse(variation))
+            {
+                throw new NodeInUseException();
+            }
+            GraphClient.Cypher.Match("".Route().AnyOutboundRelationAs("routeAssignment").Variation("v").AnyOutboundRelationAs("levelAssignment").DifficultyLevel())
+                .Where((Variation v)=>v.Id == variation.Id).Delete("v, levelAssignment, routeAssignment").ExecuteWithoutResults();
         }
     }
 }

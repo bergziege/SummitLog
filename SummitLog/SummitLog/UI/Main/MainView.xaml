@@ -158,8 +158,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddVariationToSelectedRouteCommand}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddVariationToSelectedRouteCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSelectedVariationCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=VariationsOnSelectedRoute}"
                           SelectedItem="{Binding Path=SelectedVariation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>

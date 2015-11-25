@@ -247,6 +247,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public RelayCommand ManageDifficultiesCommand { get; }
 
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu löschen
+        /// </summary>
+        public RelayCommand RemoveSelectedVariationCommand { get; }
+
         public void LoadData()
         {
             
