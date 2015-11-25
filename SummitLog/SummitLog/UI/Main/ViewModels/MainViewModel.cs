@@ -58,6 +58,7 @@ namespace SummitLog.UI.Main.ViewModels
         private Summit _selectedSummit;
         private SummitGroup _selectedSummitGroup;
         private Variation _selectedVariation;
+        private RelayCommand _removeSummitCommand;
 
         /// <summary>
         ///     Ctor.
@@ -567,6 +568,32 @@ namespace SummitLog.UI.Main.ViewModels
                 }
                 return _removeRouteInSummitCommand;
             }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um den Gipfel zu entfernen
+        /// </summary>
+        public RelayCommand RemoveSummitCommand
+        {
+            get
+            {
+                if (_removeSummitCommand == null)
+                {
+                    _removeSummitCommand = new RelayCommand(RemoveSummit, CanRemoveSummit);
+                }
+                return _removeSummitCommand;
+            }
+        }
+
+        private bool CanRemoveSummit()
+        {
+            return SelectedSummit != null && !_summitService.IsInUse(SelectedSummit);
+        }
+
+        private void RemoveSummit()
+        {
+            _summitService.Delete(SelectedSummit);
+            RefreshSummitGroups();
         }
 
         /// <summary>

@@ -12,6 +12,8 @@ namespace SummitLog.UI.Main.DesignViewModels
     /// </summary>
     public class MainDesignViewModel: ReactiveObject, IMainViewModel
     {
+        private RelayCommand _removeSummitCommand;
+
         /// <summary>
         /// Erstellt eine neue Instanz des Design View Models
         /// </summary>
@@ -271,6 +273,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         ///     Liefert ein Command um eine Route an einem Gipfel zu löschen.
         /// </summary>
         public RelayCommand RemoveRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den Gipfel zu entfernen
+        /// </summary>
+        public RelayCommand RemoveSummitCommand { get; }
 
         public void LoadData()
         {

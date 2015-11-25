@@ -245,6 +245,11 @@ namespace SummitLog.UI.Main
         RelayCommand RemoveRouteInSummitCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um den Gipfel zu entfernen
+        /// </summary>
+        RelayCommand RemoveSummitCommand { get; }
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         void LoadData();

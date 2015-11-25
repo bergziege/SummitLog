@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -20,8 +21,8 @@ namespace SummitLog.Services.Test.DaoTests
         {
             _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
             _graphClient.Connect();
-            _graphClient.BeginTransaction();
             _dataGenerator = new DbTestDataGenerator(_graphClient);
+            _graphClient.BeginTransaction();
         }
 
         [TestCleanup]
@@ -42,6 +43,53 @@ namespace SummitLog.Services.Test.DaoTests
             Assert.AreEqual(created.Name, summitsInGroup.First().Name);
             Assert.AreEqual(created.Id, summitsInGroup.First().Id);
             Assert.AreEqual(created.Id, summitsInGroup.First().Id);
+        }
+
+        [TestMethod]
+        public void TestIsInUseByRoute()
+        {
+            Summit summit = _dataGenerator.CreateSummit();
+            Route route = _dataGenerator.CreateRouteInSummit(summit: summit);
+            
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            bool isInUse = summitDao.IsInUse(summit);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsNotInUse()
+        {
+            Summit summit = _dataGenerator.CreateSummit();
+
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            bool isInUse = summitDao.IsInUse(summit);
+
+            Assert.IsFalse(isInUse);
+        }
+
+        [TestMethod]
+        public void TestDeleteUnused()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+            Summit summit = _dataGenerator.CreateSummit(summitGroup:summitGroup);
+
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            summitDao.Delete(summit);
+
+            Assert.AreEqual(0, summitDao.GetAllIn(summitGroup).Count);
+            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteUsed()
+        {
+            Summit summit = _dataGenerator.CreateSummit();
+            Route route = _dataGenerator.CreateRouteInSummit(summit: summit);
+
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            summitDao.Delete(summit);
         }
     }
 }
