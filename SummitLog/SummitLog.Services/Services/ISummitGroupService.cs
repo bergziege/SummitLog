@@ -21,5 +21,18 @@ namespace SummitLog.Services.Services
         /// <param name="area"></param>
         /// <param name="name"></param>
         void Create(Area area, string name);
+
+        /// <summary>
+        ///     Liefert ob die Gipfelgruppe in Verwendung ist
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        /// <returns></returns>
+        bool IsInUse(SummitGroup summitGroup);
+
+        /// <summary>
+        ///     Löscht eine Gipfelgruppe wenn diese nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        void Delete(SummitGroup summitGroup);
     }
 }

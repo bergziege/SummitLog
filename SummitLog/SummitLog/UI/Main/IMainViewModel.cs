@@ -250,6 +250,11 @@ namespace SummitLog.UI.Main
         RelayCommand RemoveSummitCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu löschen
+        /// </summary>
+        RelayCommand RemoveSummitGroupCommand { get; }
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         void LoadData();

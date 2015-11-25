@@ -75,8 +75,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSummitGroupCommand}" HorizontalAlignment="Left"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitGroupsInSelectedArea}"
                           SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>

@@ -279,6 +279,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public RelayCommand RemoveSummitCommand { get; }
 
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu löschen
+        /// </summary>
+        public RelayCommand RemoveSummitGroupCommand { get; }
+
         public void LoadData()
         {
             
