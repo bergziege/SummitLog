@@ -122,7 +122,8 @@ namespace SummitLog.Services.Services.Impl
         /// <returns></returns>
         public bool IsInUse(Route route)
         {
-            return _routesDao.IsInUse(route);
+            bool isInUse = _routesDao.IsInUse(route);
+            return isInUse;
         }
 
         /// <summary>

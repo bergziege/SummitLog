@@ -148,7 +148,8 @@ namespace SummitLog.Services.Persistence.Impl
         public bool IsInUse(Route route)
         {
             return
-                GraphClient.Cypher.Match("".Route().AnyOutboundRelationAs("usage").Variation())
+                GraphClient.Cypher.Match("".Route("r").AnyOutboundRelationAs("usage").Variation())
+                    .Where((Route r)=>r.Id == route.Id)
                     .Return(usage => usage.Count())
                     .Results.First() > 0;
         }
@@ -163,7 +164,7 @@ namespace SummitLog.Services.Persistence.Impl
             {
                 throw new NodeInUseException();
             }
-            GraphClient.Cypher.Match("(n)-[parentAssignment:HAS]->(r:Route)").Delete("parentAssignment, r").ExecuteWithoutResults();
+            GraphClient.Cypher.Match("(n)-[parentAssignment:HAS]->(r:Route)").Where((Route r)=>r.Id == route.Id).Delete("parentAssignment, r").ExecuteWithoutResults();
         }
     }
 }

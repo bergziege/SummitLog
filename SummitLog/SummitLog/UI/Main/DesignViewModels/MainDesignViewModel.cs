@@ -252,6 +252,26 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public RelayCommand RemoveSelectedVariationCommand { get; }
 
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Land zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Gebiet zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einer Gipflegruppe zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route an einem Gipfel zu löschen.
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitCommand { get; }
+
         public void LoadData()
         {
             

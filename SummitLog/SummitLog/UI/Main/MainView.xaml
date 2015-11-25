@@ -103,8 +103,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddRouteInSelectedCountryCommand}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddRouteInSelectedCountryCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveRouteInCountryCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedCountry}"
                           SelectedItem="{Binding Path=SelectedRouteInCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
@@ -117,7 +121,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddRouteInSelectedAreaCommand}" Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddRouteInSelectedAreaCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveRouteInAreaCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedArea}"
                           SelectedItem="{Binding Path=SelectedRouteInArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
@@ -130,8 +139,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveRouteInSummitGroupCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummitGroup}"
                           SelectedItem="{Binding Path=SelectedRouteInSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
@@ -144,8 +157,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddRouteInSelectedSummitCommand}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddRouteInSelectedSummitCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveRouteInSummitCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummit}"
                           SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>

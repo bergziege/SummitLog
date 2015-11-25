@@ -42,7 +42,12 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _addSummitInSelectedSummitGroupCommand;
         private RelayCommand _addVariationToSelectedRouteCommand;
         private RelayCommand _manageDifficultiesCommand;
+        private RelayCommand _removeRouteInAreaCommand;
+        private RelayCommand _removeRouteInCountryCommand;
+        private RelayCommand _removeRouteInSummitCommand;
+        private RelayCommand _removeRouteInSummitGroupCommand;
         private RelayCommand _removeSelectedLogEntryCommand;
+        private RelayCommand _removeSelectedVariationCommand;
         private Area _selectedArea;
         private Country _selectedCountry;
         private LogEntry _selectedLogEntry;
@@ -53,7 +58,6 @@ namespace SummitLog.UI.Main.ViewModels
         private Summit _selectedSummit;
         private SummitGroup _selectedSummitGroup;
         private Variation _selectedVariation;
-        private RelayCommand _removeSelectedVariationCommand;
 
         /// <summary>
         ///     Ctor.
@@ -497,21 +501,72 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 if (_removeSelectedVariationCommand == null)
                 {
-                    _removeSelectedVariationCommand = new RelayCommand(RemoveSelectedVariation, CanRemoveSelectedVariation);
+                    _removeSelectedVariationCommand = new RelayCommand(RemoveSelectedVariation,
+                        CanRemoveSelectedVariation);
                 }
                 return _removeSelectedVariationCommand;
             }
         }
 
-        private bool CanRemoveSelectedVariation()
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Land zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInCountryCommand
         {
-            return SelectedVariation != null && !_variationService.IsInUse(SelectedVariation);
+            get
+            {
+                if (_removeRouteInCountryCommand == null)
+                {
+                    _removeRouteInCountryCommand = new RelayCommand(RemoveRouteInCountry, CanRemoveRouteInCountry);
+                }
+                return _removeRouteInCountryCommand;
+            }
         }
 
-        private void RemoveSelectedVariation()
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Gebiet zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInAreaCommand
         {
-            _variationService.Delete(SelectedVariation);
-            RefreshVariationsOnLastSelectedRoute();
+            get
+            {
+                if (_removeRouteInAreaCommand == null)
+                {
+                    _removeRouteInAreaCommand = new RelayCommand(RemoveRouteInArea, CanRemoveRouteInArea);
+                }
+                return _removeRouteInAreaCommand;
+            }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einer Gipflegruppe zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitGroupCommand
+        {
+            get
+            {
+                if (_removeRouteInSummitGroupCommand == null)
+                {
+                    _removeRouteInSummitGroupCommand = new RelayCommand(RemoveRouteInSummitGroup,
+                        CanRemoveRouteInSummitGroup);
+                }
+                return _removeRouteInSummitGroupCommand;
+            }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route an einem Gipfel zu löschen.
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitCommand
+        {
+            get
+            {
+                if (_removeRouteInSummitCommand == null)
+                {
+                    _removeRouteInSummitCommand = new RelayCommand(RemoveRouteInSummit, CanRemoveRouteInSummit);
+                }
+                return _removeRouteInSummitCommand;
+            }
         }
 
         /// <summary>
@@ -604,12 +659,67 @@ namespace SummitLog.UI.Main.ViewModels
             return true;
         }
 
+        private void RemoveRouteInCountry()
+        {
+            _routeService.Delete(SelectedRouteInCountry);
+            RefreshRoutesInSelectedCountry();
+        }
+
+        private bool CanRemoveRouteInCountry()
+        {
+            return SelectedRouteInCountry != null && !_routeService.IsInUse(SelectedRouteInCountry);
+        }
+
+        private void RemoveRouteInArea()
+        {
+            _routeService.Delete(SelectedRouteInArea);
+            RefreshRoutesInSelectedArea();
+        }
+
+        private bool CanRemoveRouteInArea()
+        {
+            return SelectedRouteInArea != null && !_routeService.IsInUse(SelectedRouteInArea);
+        }
+
+        private void RemoveRouteInSummitGroup()
+        {
+            _routeService.Delete(SelectedRouteInSummitGroup);
+            RefreshRoutesInSelectedSummitGroup();
+        }
+
+        private bool CanRemoveRouteInSummitGroup()
+        {
+            return SelectedRouteInSummitGroup != null && !_routeService.IsInUse(SelectedRouteInSummitGroup);
+        }
+
+        private void RemoveRouteInSummit()
+        {
+            _routeService.Delete(SelectedRouteInSummit);
+            RefreshRoutesInSelectedSummit();
+        }
+
+        private bool CanRemoveRouteInSummit()
+        {
+            return SelectedRouteInSummit != null && !_routeService.IsInUse(SelectedRouteInSummit);
+        }
+
+        private bool CanRemoveSelectedVariation()
+        {
+            return SelectedVariation != null && !_variationService.IsInUse(SelectedVariation);
+        }
+
+        private void RemoveSelectedVariation()
+        {
+            _variationService.Delete(SelectedVariation);
+            RefreshVariationsOnLastSelectedRoute();
+        }
+
         private void RefreshLogEntriesOnSelectedVariation()
         {
             if (SelectedVariation != null)
             {
                 LogEntriesOnSelectedVariation.Clear();
-                foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation))
+                foreach (var logEntry in _logEntryService.GetAllIn(SelectedVariation))
                 {
                     LogEntriesOnSelectedVariation.Add(logEntry);
                 }
@@ -632,7 +742,7 @@ namespace SummitLog.UI.Main.ViewModels
             AreasInSelectedCountry.Clear();
             if (SelectedCountry != null)
             {
-                foreach (Area area in _areaService.GetAllIn(SelectedCountry))
+                foreach (var area in _areaService.GetAllIn(SelectedCountry))
                 {
                     AreasInSelectedCountry.Add(area);
                 }
@@ -646,7 +756,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedArea.Clear();
             if (SelectedArea != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedArea))
+                foreach (var route in _routeService.GetRoutesIn(SelectedArea))
                 {
                     RoutesInSelectedArea.Add(route);
                 }
@@ -658,7 +768,7 @@ namespace SummitLog.UI.Main.ViewModels
             SummitGroupsInSelectedArea.Clear();
             if (SelectedArea != null)
             {
-                foreach (SummitGroup summitGroup in _summitGroupService.GetAllIn(SelectedArea))
+                foreach (var summitGroup in _summitGroupService.GetAllIn(SelectedArea))
                 {
                     SummitGroupsInSelectedArea.Add(summitGroup);
                 }
@@ -672,7 +782,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedSummitGroup.Clear();
             if (SelectedSummitGroup != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedSummitGroup))
+                foreach (var route in _routeService.GetRoutesIn(SelectedSummitGroup))
                 {
                     RoutesInSelectedSummitGroup.Add(route);
                 }
@@ -684,7 +794,7 @@ namespace SummitLog.UI.Main.ViewModels
             SummitsInSelectedSummitGroup.Clear();
             if (SelectedSummitGroup != null)
             {
-                foreach (Summit summit in _summitService.GetAllIn(SelectedSummitGroup))
+                foreach (var summit in _summitService.GetAllIn(SelectedSummitGroup))
                 {
                     SummitsInSelectedSummitGroup.Add(summit);
                 }
@@ -698,7 +808,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedSummit.Clear();
             if (SelectedSummit != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedSummit))
+                foreach (var route in _routeService.GetRoutesIn(SelectedSummit))
                 {
                     RoutesInSelectedSummit.Add(route);
                 }
@@ -710,7 +820,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInCountry != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInCountry))
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInCountry))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -722,7 +832,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInArea != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInArea))
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInArea))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -734,7 +844,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInSummitGroup != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummitGroup))
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInSummitGroup))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -746,7 +856,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInSummit != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummit))
+                foreach (var variation in _variationService.GetAllOn(SelectedRouteInSummit))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -756,7 +866,7 @@ namespace SummitLog.UI.Main.ViewModels
         private void RefreshCountries()
         {
             Countries.Clear();
-            foreach (Country country in _countryService.GetAll())
+            foreach (var country in _countryService.GetAll())
             {
                 Countries.Add(country);
             }
@@ -769,7 +879,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedCountry.Clear();
             if (SelectedCountry != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedCountry))
+                foreach (var route in _routeService.GetRoutesIn(SelectedCountry))
                 {
                     RoutesInSelectedCountry.Add(route);
                 }
@@ -908,7 +1018,7 @@ namespace SummitLog.UI.Main.ViewModels
             if (!string.IsNullOrWhiteSpace(_nameAndLevelInputViewCommand.Name) &&
                 _nameAndLevelInputViewCommand.DifficultyLevel != null)
             {
-                Route selectedRoute = GetSelectedRoute();
+                var selectedRoute = GetSelectedRoute();
                 if (selectedRoute != null)
                 {
                     _variationService.Create(_nameAndLevelInputViewCommand.Name, selectedRoute,
@@ -921,10 +1031,10 @@ namespace SummitLog.UI.Main.ViewModels
         private void RefreshVariationsOnLastSelectedRoute()
         {
             VariationsOnSelectedRoute.Clear();
-            Route selectedRoute = GetSelectedRoute();
+            var selectedRoute = GetSelectedRoute();
             if (selectedRoute != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(selectedRoute))
+                foreach (var variation in _variationService.GetAllOn(selectedRoute))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
