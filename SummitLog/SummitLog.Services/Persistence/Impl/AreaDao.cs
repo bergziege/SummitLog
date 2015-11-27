@@ -80,11 +80,9 @@ namespace SummitLog.Services.Persistence.Impl
                 throw new NodeInUseException();
             }
 
-            GraphClient.Cypher.Match("".Area("a"))
-                .OptionalMatch("".Node("a").AnyOutboundRelationAs("summitGroupUsage").SummitGroup())
-                .OptionalMatch("".Node("a").AnyOutboundRelationAs("routeUsages").Route())
+            GraphClient.Cypher.Match("".Area("a").AnyInboundRelationsAs("usages").Country())
                 .Where((Area a)=>a.Id == area.Id)
-                .Delete("a, summitGroupUsage, routeUsages").ExecuteWithoutResults();
+                .Delete("a, usages").ExecuteWithoutResults();
         }
     }
 }

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 
 namespace SummitLog.Services.Test.DaoTests
@@ -49,6 +51,63 @@ namespace SummitLog.Services.Test.DaoTests
             IEnumerable<Country> allCountries = dao.GetAll();
             Assert.AreEqual(1, allCountries.Count());
             Assert.AreEqual(created.Id, allCountries.First().Id);
+        }
+
+        [TestMethod]
+        public void TestIsInUseByArea()
+        {
+            Country country = _dataGenerator.CreateCountry();
+            Area area = _dataGenerator.CreateArea(country: country);
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            bool isInUse = countryDao.IsInUse(country);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsInUseByRoute()
+        {
+            Country country = _dataGenerator.CreateCountry();
+            Route route = _dataGenerator.CreateRouteInCountry(country:country);
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            bool isInUse = countryDao.IsInUse(country);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsNotInUse()
+        {
+            Country country = _dataGenerator.CreateCountry();
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            bool isInUse = countryDao.IsInUse(country);
+
+            Assert.IsFalse(isInUse);
+        }
+
+        [TestMethod]
+        public void TestDeleteNotInUse()
+        {
+            Country country = _dataGenerator.CreateCountry();
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            countryDao.Delete(country);
+
+            Assert.AreEqual(0, countryDao.GetAll().Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteInUse()
+        {
+            Country country = _dataGenerator.CreateCountry();
+            Route route = _dataGenerator.CreateRouteInCountry(country: country);
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            countryDao.Delete(country);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using SummitLog.Services.Model;
 
 namespace SummitLog.Services.Persistence
@@ -20,5 +19,18 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="country"></param>
         Country Create(Country country);
+
+        /// <summary>
+        ///     Liefert ob ein Land noch verwendet wird
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        bool IsInUse(Country country);
+
+        /// <summary>
+        ///     Löscht ein Land, wenn dies nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="country"></param>
+        void Delete(Country country);
     }
 }
