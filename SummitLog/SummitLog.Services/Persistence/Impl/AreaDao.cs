@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence.Extensions;
 
@@ -44,6 +46,45 @@ namespace SummitLog.Services.Persistence.Impl
                 .WithParam("area", area);
 
             return query.Return(a=>a.As<Area>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob das Gebiet verwendet wird.
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public bool IsInUse(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            var countResult = GraphClient.Cypher.Match("".Area("a"))
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnRoute").Route())
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnSummitGroup").SummitGroup())
+                .Where((Area a) => a.Id == area.Id)
+                .Return((usageOnRoute, usageOnSummitGroup) => new {
+                    RouteCountUsageCount = usageOnRoute.Count(),
+                    SummitGroupUsageCount = usageOnSummitGroup.Count()
+                }).Results.First();
+            return countResult.RouteCountUsageCount > 0 || countResult.SummitGroupUsageCount > 0;
+        }
+
+        /// <summary>
+        ///     Löscht ein Gebiet, wenn dies nicht mehr in Verwendung ist.
+        /// </summary>
+        /// <param name="area"></param>
+        public void Delete(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+
+            if (IsInUse(area))
+            {
+                throw new NodeInUseException();
+            }
+
+            GraphClient.Cypher.Match("".Area("a"))
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("summitGroupUsage").SummitGroup())
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("routeUsages").Route())
+                .Where((Area a)=>a.Id == area.Id)
+                .Delete("a, summitGroupUsage, routeUsages").ExecuteWithoutResults();
         }
     }
 }

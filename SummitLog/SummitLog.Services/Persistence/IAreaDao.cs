@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using SummitLog.Services.Model;
 
 namespace SummitLog.Services.Persistence
@@ -21,5 +20,18 @@ namespace SummitLog.Services.Persistence
         /// <param name="country"></param>
         /// <param name="area"></param>
         Area Create(Country country, Area area);
+
+        /// <summary>
+        ///     Liefert ob das Gebiet verwendet wird.
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        bool IsInUse(Area area);
+
+        /// <summary>
+        ///     Löscht ein Gebiet, wenn dies nicht mehr in Verwendung ist.
+        /// </summary>
+        /// <param name="area"></param>
+        void Delete(Area area);
     }
 }
