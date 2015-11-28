@@ -12,6 +12,8 @@ namespace SummitLog.UI.Main.DesignViewModels
     /// </summary>
     public class MainDesignViewModel: ReactiveObject, IMainViewModel
     {
+        private RelayCommand _removeSummitCommand;
+
         /// <summary>
         /// Erstellt eine neue Instanz des Design View Models
         /// </summary>
@@ -247,6 +249,51 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public RelayCommand ManageDifficultiesCommand { get; }
 
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu löschen
+        /// </summary>
+        public RelayCommand RemoveSelectedVariationCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Land zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Gebiet zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einer Gipflegruppe zu löschen
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route an einem Gipfel zu löschen.
+        /// </summary>
+        public RelayCommand RemoveRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den Gipfel zu entfernen
+        /// </summary>
+        public RelayCommand RemoveSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu löschen
+        /// </summary>
+        public RelayCommand RemoveSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Líefert ein Command um Gebiet zu löschen
+        /// </summary>
+        public RelayCommand RemoveAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um ein Land zu löschen
+        /// </summary>
+        public RelayCommand RemoveCountryCommand { get; }
+
         public void LoadData()
         {
             
@@ -301,5 +348,10 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// Liefert ob Logeinträge geladen werden
         /// </summary>
         public bool IsLoadingLogs { get; }
+
+        /// <summary>
+        /// Liefert ein Command um den gewählten Logeintrag zu löschen.
+        /// </summary>
+        public RelayCommand RemoveSelectedLogEntryCommand { get; }
     }
 }

@@ -18,6 +18,20 @@ namespace SummitLog.Services.Persistence
         ///     Erstellt eine neue Schwierigkeitsgradskala
         /// </summary>
         /// <param name="difficultyLevelScale"></param>
-        void Create(DifficultyLevelScale difficultyLevelScale);
+        DifficultyLevelScale Create(DifficultyLevelScale difficultyLevelScale);
+
+        /// <summary>
+        ///     Liefert ob eine Scale aktuell in Verwendung ist.
+        ///     d.h. ob es Schwierigkeitsgrade zu dieser Skala gibt.
+        /// </summary>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        bool IsInUse(DifficultyLevelScale scale);
+
+        /// <summary>
+        ///     Löscht die übergebene Schwierigkeitsgradskala
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        void Delete(DifficultyLevelScale difficultyLevelScale);
     }
 }

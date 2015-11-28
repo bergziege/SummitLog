@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -25,7 +28,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Area> GetAllIn(Country country)
         {
-            return GraphClient.Cypher.Match("(c:Country)-[:HAS]->(a:Area)")
+            return GraphClient.Cypher.Match("".Country("c").Has().Area("a"))
                 .Where((Country c) => c.Id == country.Id).Return(a => a.As<Area>()).Results.ToList();
         }
 
@@ -34,15 +37,52 @@ namespace SummitLog.Services.Persistence.Impl
         /// </summary>
         /// <param name="country"></param>
         /// <param name="area"></param>
-        public void Create(Country country, Area area)
+        public Area Create(Country country, Area area)
         {
             var query = GraphClient.Cypher
-                .Match("(c:Country)")
+                .Match("".Country("c"))
                 .Where((Country c) => c.Id == country.Id)
-                .Create("c-[:HAS]->(area:Area {area})")
+                .Create("c".Has().AreaWithParam())
                 .WithParam("area", area);
 
-            query.ExecuteWithoutResults();
+            return query.Return(a=>a.As<Area>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob das Gebiet verwendet wird.
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public bool IsInUse(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            var countResult = GraphClient.Cypher.Match("".Area("a"))
+                .Where((Area a) => a.Id == area.Id)
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnRoute").Route())
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnSummitGroup").SummitGroup())
+                .Return((usageOnRoute, usageOnSummitGroup) => new {
+                    RouteCountUsageCount = usageOnRoute.Count(),
+                    SummitGroupUsageCount = usageOnSummitGroup.Count()
+                }).Results.First();
+            return countResult.RouteCountUsageCount > 0 || countResult.SummitGroupUsageCount > 0;
+        }
+
+        /// <summary>
+        ///     Löscht ein Gebiet, wenn dies nicht mehr in Verwendung ist.
+        /// </summary>
+        /// <param name="area"></param>
+        public void Delete(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+
+            if (IsInUse(area))
+            {
+                throw new NodeInUseException();
+            }
+
+            GraphClient.Cypher.Match("".Area("a").AnyInboundRelationsAs("usages").Country())
+                .Where((Area a)=>a.Id == area.Id)
+                .Delete("a, usages").ExecuteWithoutResults();
         }
     }
 }

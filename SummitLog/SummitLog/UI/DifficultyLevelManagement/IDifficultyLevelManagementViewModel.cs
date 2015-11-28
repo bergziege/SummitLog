@@ -20,6 +20,16 @@ namespace SummitLog.UI.DifficultyLevelManagement
         ObservableCollection<DifficultyLevel> DifficultyLevels { get; }
 
         /// <summary>
+        ///     Liefert oder setzt das gewählte <see cref="DifficultyLevel" />
+        /// </summary>
+        DifficultyLevel SelectedDifficultyLevel { get; set; }
+
+        /// <summary>
+        ///     Liefert ein Command um das gewählte <see cref="DifficultyLevel" /> zu löschen
+        /// </summary>
+        RelayCommand DeleteSelectedDifficultyLevelCommand { get; }
+
+        /// <summary>
         ///     LÄdt die VM relevanten Daten zu einer Schwierigkeitsgradskale
         /// </summary>
         /// <param name="difficultyLevelScale"></param>

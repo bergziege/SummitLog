@@ -8,7 +8,8 @@
         xmlns:difficultyLevelScaleManagement="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement"
         xmlns:difficultyLevelManagement="clr-namespace:SummitLog.UI.DifficultyLevelManagement"
         mc:Ignorable="d"
-        Title="DifficultyManagementView" Height="300" Width="600">
+        Title="DifficultyManagementView" Height="300" Width="600"
+        WindowStartupLocation="CenterOwner">
     <d:DesignProperties.DataContext>
         <designViewModels:DifficultyManagementDesignViewModel />
     </d:DesignProperties.DataContext>
@@ -18,7 +19,12 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <difficultyLevelScaleManagement:DifficultyLevelScaleMangementView DataContext="{Binding Path=DifficultyLevelScaleManagementViewModel}"/>
-        <difficultyLevelManagement:DifficultyLevelManagementView Grid.Column="1" DataContext="{Binding Path=DifficultyLevelManagementViewModel}"/>
+        <HeaderedContentControl Header="Skalen" Style="{StaticResource StretchedHeaderedContentControl}" Margin="3" Padding="3">
+            <difficultyLevelScaleManagement:DifficultyLevelScaleMangementView
+                DataContext="{Binding Path=DifficultyLevelScaleManagementViewModel}" />
+        </HeaderedContentControl>
+        <HeaderedContentControl Header="Schwierigkeitsgrade" Grid.Column="1" Style="{StaticResource StretchedHeaderedContentControl}" Margin="3" Padding="3">
+            <difficultyLevelManagement:DifficultyLevelManagementView
+                DataContext="{Binding Path=DifficultyLevelManagementViewModel}" /></HeaderedContentControl>
     </Grid>
 </Window>

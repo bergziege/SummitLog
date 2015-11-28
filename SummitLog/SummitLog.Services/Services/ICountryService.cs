@@ -19,5 +19,18 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="countryName"></param>
         void Create(string countryName);
+
+        /// <summary>
+        ///     Liefert ob ein Land verwendet wird
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        bool IsInUse(Country country);
+
+        /// <summary>
+        ///     Löscht ein Land wenn es nicht mehr in Verwendung ist
+        /// </summary>
+        /// <param name="country"></param>
+        void Delete(Country country);
     }
 }

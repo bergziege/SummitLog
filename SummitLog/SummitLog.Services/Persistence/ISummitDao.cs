@@ -17,6 +17,19 @@ namespace SummitLog.Services.Persistence
         /// <summary>
         ///     Erstellt einen neuen Gipfel in einer Gipfelgruppe
         /// </summary>
-        void Create(SummitGroup summitGroup, Summit summit);
+        Summit Create(SummitGroup summitGroup, Summit summit);
+
+        /// <summary>
+        ///     Liefert ob der Gipfel verwendet wird
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <returns></returns>
+        bool IsInUse(Summit summit);
+
+        /// <summary>
+        ///     Löscht einen Gipfel wenn diese rnicht mehr verwendet wird
+        /// </summary>
+        /// <param name="summit"></param>
+        void Delete(Summit summit);
     }
 }

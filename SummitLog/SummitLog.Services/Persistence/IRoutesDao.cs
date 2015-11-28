@@ -27,21 +27,21 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="country"></param>
         /// <param name="route"></param>
-        void CreateIn(Country country, Route route);
+        Route CreateIn(Country country, Route route);
 
         /// <summary>
         ///     Erstellt eine neue Route in einer Gegend
         /// </summary>
         /// <param name="area"></param>
         /// <param name="route"></param>
-        void CreateIn(Area area, Route route);
+        Route CreateIn(Area area, Route route);
 
         /// <summary>
         ///     Erstellt eine neue Route in einer Gipfelgruppe
         /// </summary>
         /// <param name="summitGroup"></param>
         /// <param name="route"></param>
-        void CreateIn(SummitGroup summitGroup, Route route);
+        Route CreateIn(SummitGroup summitGroup, Route route);
 
         /// <summary>
         ///     Liefert alle Routen direkt in der Gipfelgruppe, nicht jedoch die der Einzelnen Gipfel
@@ -55,7 +55,7 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="summit"></param>
         /// <param name="route"></param>
-        void CreateIn(Summit summit, Route route);
+        Route CreateIn(Summit summit, Route route);
 
         /// <summary>
         ///     Liefert alle Routen eines Gipfels
@@ -63,5 +63,18 @@ namespace SummitLog.Services.Persistence
         /// <param name="summit"></param>
         /// <returns></returns>
         IList<Route> GetRoutesIn(Summit summit);
+
+        /// <summary>
+        ///     Liefert ob die Route verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        bool IsInUse(Route route);
+
+        /// <summary>
+        ///     Löscht eine Route wenn diese nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="route"></param>
+        void Delete(Route route);
     }
 }

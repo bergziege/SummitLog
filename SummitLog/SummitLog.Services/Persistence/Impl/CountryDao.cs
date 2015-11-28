@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -26,8 +29,8 @@ namespace SummitLog.Services.Persistence.Impl
         public IList<Country> GetAll()
         {
             return
-                GraphClient.Cypher.Match("(country:Country)")
-                    .Return(country => country.As<Country>())
+                GraphClient.Cypher.Match("".Country("c"))
+                    .Return(c => c.As<Country>())
                     .Results.ToList();
         }
 
@@ -35,9 +38,48 @@ namespace SummitLog.Services.Persistence.Impl
         ///     Erstellt ein neues Land
         /// </summary>
         /// <param name="country"></param>
-        public void Create(Country country)
+        public Country Create(Country country)
         {
-            GraphClient.Cypher.Create("(n:Country {country})").WithParam("country", country).ExecuteWithoutResults();
+            return GraphClient.Cypher.Create("".CountryWithParam())
+                .WithParam("country", country)
+                .Return(c => c.As<Country>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob ein Land noch verwendet wird
+        /// </summary>
+        /// <param name="country"></param>
+        /// <returns></returns>
+        public bool IsInUse(Country country)
+        {
+            if (country == null) throw new ArgumentNullException(nameof(country));
+            var counts = GraphClient.Cypher.Match("".Country("c"))
+                .Where((Country c) => c.Id == country.Id)
+                .OptionalMatch("".Node("c").AnyOutboundRelationAs("usagesInArea").Area())
+                .OptionalMatch("".Node("c").AnyOutboundRelationAs("usagesInRoute").Route())
+                .Return((usagesInArea, usagesInRoute) => new
+                {
+                    UsagesInAreaCount = usagesInArea.Count(),
+                    UsagesInRoute = usagesInRoute.Count()
+                }).Results.First();
+            return counts.UsagesInAreaCount > 0 || counts.UsagesInRoute > 0;
+        }
+
+        /// <summary>
+        ///     Löscht ein Land, wenn dies nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="country"></param>
+        public void Delete(Country country)
+        {
+            if (country == null) throw new ArgumentNullException(nameof(country));
+            if (IsInUse(country))
+            {
+                throw new NodeInUseException();
+            }
+
+            GraphClient.Cypher.Match("".Country("c"))
+                .Where((Country c)=>c.Id == country.Id)
+                .Delete("c").ExecuteWithoutResults();
         }
     }
 }

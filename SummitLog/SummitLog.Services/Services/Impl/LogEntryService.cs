@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +30,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<LogEntry> GetAllIn(Variation variation)
         {
             if (variation == null) throw new ArgumentNullException(nameof(variation));
-            return _logEntryDao.GetAllIn(variation);
+            return _logEntryDao.GetAllIn(variation).OrderByDescending(x=>x.DateTime).ToList();
         }
 
         /// <summary>
@@ -43,6 +44,17 @@ namespace SummitLog.Services.Services.Impl
             if (variation == null) throw new ArgumentNullException(nameof(variation));
             if (string.IsNullOrWhiteSpace(memo)) throw new ArgumentNullException(nameof(memo));
             _logEntryDao.Create(variation, new LogEntry() {Memo = memo, DateTime = date});
+        }
+
+        /// <summary>
+        /// Löscht den übergebenen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        public void Delete(LogEntry logEntry)
+        {
+            if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
+            
+            _logEntryDao.Delete(logEntry);
         }
     }
 }

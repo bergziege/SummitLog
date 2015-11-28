@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +31,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Summit> GetAllIn(SummitGroup summitGroup)
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
-            return _summitDao.GetAllIn(summitGroup);
+            return _summitDao.GetAllIn(summitGroup).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>
@@ -42,6 +44,31 @@ namespace SummitLog.Services.Services.Impl
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             _summitDao.Create(summitGroup, new Summit {Name = name});
+        }
+
+        /// <summary>
+        ///     Liefert ob ein Gipfel verwendet wird
+        /// </summary>
+        /// <param name="summit"></param>
+        /// <returns></returns>
+        public bool IsInUse(Summit summit)
+        {
+            if (summit == null) throw new ArgumentNullException(nameof(summit));
+            return _summitDao.IsInUse(summit);
+        }
+
+        /// <summary>
+        ///     Löscht einen Gipfel wenn dieser nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="summit"></param>
+        public void Delete(Summit summit)
+        {
+            if (summit == null) throw new ArgumentNullException(nameof(summit));
+            if (_summitDao.IsInUse(summit))
+            {
+                throw new NodeInUseException();
+            }
+            _summitDao.Delete(summit);
         }
     }
 }

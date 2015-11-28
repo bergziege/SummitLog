@@ -1,4 +1,6 @@
-﻿using DryIoc;
+﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
+using DryIoc;
+using SummitLog.UI.Main;
 
 namespace SummitLog.UI.DifficultyManagement.ViewCommands
 {
@@ -10,6 +12,9 @@ namespace SummitLog.UI.DifficultyManagement.ViewCommands
             IDifficultyManagementViewModel vm = AppContext.Container.Resolve<IDifficultyManagementViewModel>();
             view.DataContext = vm;
             vm.LoadData();
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof (MainView));
+
             view.ShowDialog();
         }
     }

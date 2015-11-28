@@ -8,7 +8,7 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement
     /// <summary>
     ///     Schnittstelle für View Models zur Verwaltung von Schwierigkeitsgradskalen
     /// </summary>
-    public interface IDifficultyLevelScaleManagementViewModel: IReactiveObject
+    public interface IDifficultyLevelScaleManagementViewModel : IReactiveObject
     {
         /// <summary>
         ///     LIefert ein Command um eine neue Schwierigkeitsgradskala hinzuzufügen
@@ -24,6 +24,11 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement
         ///     Liefert oder setzt die gewählte Schwierigkeitsgradskala
         /// </summary>
         DifficultyLevelScale SelectedDifficultyLevelScale { get; set; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
+        /// </summary>
+        RelayCommand DeleteSelectedDifficultyLevelScaleCommand { get; }
 
         /// <summary>
         ///     Lädt die VM relevanten Daten

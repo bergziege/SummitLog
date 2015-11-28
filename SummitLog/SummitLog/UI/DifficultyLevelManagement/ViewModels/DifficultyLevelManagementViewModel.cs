@@ -6,26 +6,28 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.NameAndScoreInput.ViewCommands;
-using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
 {
     /// <summary>
-    /// View Model zur Verwaltung von Schwierigkeitsgraden zu einer Skale
+    ///     View Model zur Verwaltung von Schwierigkeitsgraden zu einer Skale
     /// </summary>
-    public class DifficultyLevelManagementViewModel: ReactiveObject, IDifficultyLevelManagementViewModel
+    public class DifficultyLevelManagementViewModel : ReactiveObject, IDifficultyLevelManagementViewModel
     {
-        private readonly NameAndScoreInputViewCommand _nameAndScoreInputViewCommand;
         private readonly IDifficultyLevelService _difficultyLevelService;
-        private DifficultyLevelScale _difficultyLevelScale;
+        private readonly NameAndScoreInputViewCommand _nameAndScoreInputViewCommand;
         private RelayCommand _addDifficultyLevelCommand;
+        private RelayCommand _deleteSelectedDifficultyLevelCommand;
+        private DifficultyLevelScale _difficultyLevelScale;
+        private DifficultyLevel _selectedDifficultyLevel;
 
         /// <summary>
-        /// Liefert eine neue Instanz des View Models
+        ///     Liefert eine neue Instanz des View Models
         /// </summary>
         /// <param name="nameAndScoreInputViewCommand"></param>
         /// <param name="difficultyLevelService"></param>
-        public DifficultyLevelManagementViewModel(NameAndScoreInputViewCommand nameAndScoreInputViewCommand, IDifficultyLevelService difficultyLevelService)
+        public DifficultyLevelManagementViewModel(NameAndScoreInputViewCommand nameAndScoreInputViewCommand,
+            IDifficultyLevelService difficultyLevelService)
         {
             _nameAndScoreInputViewCommand = nameAndScoreInputViewCommand;
             _difficultyLevelService = difficultyLevelService;
@@ -47,25 +49,35 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             }
         }
 
-        private bool CanAddDifficultyLevel()
-        {
-            return _difficultyLevelScale != null;
-        }
-
-        private void AddDifficultyLevel()
-        {
-            _nameAndScoreInputViewCommand.Execute();
-            if (!string.IsNullOrWhiteSpace(_nameAndScoreInputViewCommand.Name))
-            {
-                _difficultyLevelService.Create(_difficultyLevelScale, _nameAndScoreInputViewCommand.Name,_nameAndScoreInputViewCommand.Score);
-            }
-            LoadData(_difficultyLevelScale);
-        }
-
         /// <summary>
         ///     Liefert die Liste aller Schwierigkeitsgrade
         /// </summary>
-        public ObservableCollection<DifficultyLevel> DifficultyLevels { get; } = new ObservableCollection<DifficultyLevel>();
+        public ObservableCollection<DifficultyLevel> DifficultyLevels { get; } =
+            new ObservableCollection<DifficultyLevel>();
+
+        /// <summary>
+        ///     Liefert oder setzt das gewählte <see cref="DifficultyLevel" />
+        /// </summary>
+        public DifficultyLevel SelectedDifficultyLevel
+        {
+            get { return _selectedDifficultyLevel; }
+            set { this.RaiseAndSetIfChanged(ref _selectedDifficultyLevel, value); }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um das gewählte <see cref="DifficultyLevel" /> zu löschen
+        /// </summary>
+        public RelayCommand DeleteSelectedDifficultyLevelCommand
+        {
+            get
+            {
+                if (_deleteSelectedDifficultyLevelCommand == null)
+                {
+                    _deleteSelectedDifficultyLevelCommand = new RelayCommand(DeleteSelected, CanDeleteSelected);
+                }
+                return _deleteSelectedDifficultyLevelCommand;
+            }
+        }
 
         /// <summary>
         ///     LÄdt die VM relevanten Daten zu einer Schwierigkeitsgradskale
@@ -82,6 +94,33 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
                 DifficultyLevels.Add(difficultyLevel);
             }
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        private bool CanAddDifficultyLevel()
+        {
+            return _difficultyLevelScale != null;
+        }
+
+        private void AddDifficultyLevel()
+        {
+            _nameAndScoreInputViewCommand.Execute();
+            if (!string.IsNullOrWhiteSpace(_nameAndScoreInputViewCommand.Name))
+            {
+                _difficultyLevelService.Create(_difficultyLevelScale, _nameAndScoreInputViewCommand.Name,
+                    _nameAndScoreInputViewCommand.Score);
+            }
+            LoadData(_difficultyLevelScale);
+        }
+
+        private void DeleteSelected()
+        {
+            _difficultyLevelService.Delete(SelectedDifficultyLevel);
+            LoadData(_difficultyLevelScale);
+        }
+
+        private bool CanDeleteSelected()
+        {
+            return SelectedDifficultyLevel != null && !_difficultyLevelService.IsInUse(SelectedDifficultyLevel);
         }
     }
 }

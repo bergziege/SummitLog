@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +31,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<SummitGroup> GetAllIn(Area area)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
-            return _summitGroupDao.GetAllIn(area);
+            return _summitGroupDao.GetAllIn(area).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>
@@ -42,6 +44,30 @@ namespace SummitLog.Services.Services.Impl
             if (area == null) throw new ArgumentNullException(nameof(area));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             _summitGroupDao.Create(area, new SummitGroup {Name = name});
+        }
+
+        /// <summary>
+        ///     Liefert ob die Gipfelgruppe in Verwendung ist
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        /// <returns></returns>
+        public bool IsInUse(SummitGroup summitGroup)
+        {
+            return _summitGroupDao.IsInUse(summitGroup);
+        }
+
+        /// <summary>
+        ///     Löscht eine Gipfelgruppe wenn diese nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        public void Delete(SummitGroup summitGroup)
+        {
+            if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
+            if (_summitGroupDao.IsInUse(summitGroup))
+            {
+                throw new NodeInUseException();
+            }
+            _summitGroupDao.Delete(summitGroup);
         }
     }
 }

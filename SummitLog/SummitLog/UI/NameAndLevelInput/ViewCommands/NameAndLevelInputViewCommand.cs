@@ -1,5 +1,7 @@
-﻿using DryIoc;
+﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
+using DryIoc;
 using SummitLog.Services.Model;
+using SummitLog.UI.Main;
 
 namespace SummitLog.UI.NameAndLevelInput.ViewCommands
 {
@@ -23,6 +25,9 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
         /// </summary>
         public void Execute()
         {
+            Name = null;
+            DifficultyLevel = null;
+
             NameAndLevelInputView view = AppContext.Container.Resolve<NameAndLevelInputView>();
             INameAndLevelInputViewModel vm = AppContext.Container.Resolve<INameAndLevelInputViewModel>();
             view.DataContext = vm;
@@ -36,6 +41,9 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
             };
 
             vm.LoadData();
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
             view.ShowDialog();
         }
     }

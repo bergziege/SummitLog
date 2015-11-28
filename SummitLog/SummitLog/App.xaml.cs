@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using DryIoc;
 using SummitLog.Services;
 using SummitLog.UI.Main;
@@ -22,6 +23,7 @@ namespace SummitLog
 
             MainView mainView = AppContext.Container.Resolve<MainView>();
             IMainViewModel mainViewModel = AppContext.Container.Resolve<IMainViewModel>();
+            WindowParentHelper.Instance.RegisterWindow(mainView);
             mainView.DataContext = mainViewModel;
             mainViewModel.LoadData();
             MainWindow = mainView;

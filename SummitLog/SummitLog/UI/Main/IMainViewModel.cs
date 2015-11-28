@@ -165,58 +165,108 @@ namespace SummitLog.UI.Main
         RelayCommand ManageDifficultiesCommand { get; }
 
         /// <summary>
-        /// Lädt die relevanten Daten des View Models
-        /// </summary>
-        void LoadData();
-
-        /// <summary>
-        /// Liefert ob Länder geladen werden
+        ///     Liefert ob Länder geladen werden
         /// </summary>
         bool IsLoadingCountries { get; }
 
         /// <summary>
-        /// Liefert ob Gegenden geladen werden
+        ///     Liefert ob Gegenden geladen werden
         /// </summary>
         bool IsLoadingAreas { get; }
 
         /// <summary>
-        /// Liefert ob Gipfelgruppen geladen werden
+        ///     Liefert ob Gipfelgruppen geladen werden
         /// </summary>
         bool IsLoadingSummitGroups { get; }
 
         /// <summary>
-        /// Liefert ob Gipfel geladen werden
+        ///     Liefert ob Gipfel geladen werden
         /// </summary>
         bool IsLoadingSummits { get; }
 
         /// <summary>
-        /// Liefert ob Wege im Land geladen werden
+        ///     Liefert ob Wege im Land geladen werden
         /// </summary>
         bool IsLoadingRoutesInCountry { get; }
 
         /// <summary>
-        /// Liefert ob Wege in Gegend geladen werden
+        ///     Liefert ob Wege in Gegend geladen werden
         /// </summary>
         bool IsLoadingRoutesInArea { get; }
 
         /// <summary>
-        /// Liefert ob Wege in Gipfelgruppe geladen werden
+        ///     Liefert ob Wege in Gipfelgruppe geladen werden
         /// </summary>
         bool IsLoadingRoutesInSummitGroup { get; }
 
         /// <summary>
-        /// Liefert ob Wege in Gipfel geladen werden
+        ///     Liefert ob Wege in Gipfel geladen werden
         /// </summary>
         bool IsLoadingRoutesInSummit { get; }
 
         /// <summary>
-        /// Liefert ob Variationen geladen werden
+        ///     Liefert ob Variationen geladen werden
         /// </summary>
         bool IsLoadingVariations { get; }
 
         /// <summary>
-        /// Liefert ob Logeinträge geladen werden
+        ///     Liefert ob Logeinträge geladen werden
         /// </summary>
         bool IsLoadingLogs { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Logeintrag zu löschen.
+        /// </summary>
+        RelayCommand RemoveSelectedLogEntryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu löschen
+        /// </summary>
+        RelayCommand RemoveSelectedVariationCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Land zu löschen
+        /// </summary>
+        RelayCommand RemoveRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einem Gebiet zu löschen
+        /// </summary>
+        RelayCommand RemoveRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route in einer Gipflegruppe zu löschen
+        /// </summary>
+        RelayCommand RemoveRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um eine Route an einem Gipfel zu löschen.
+        /// </summary>
+        RelayCommand RemoveRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den Gipfel zu entfernen
+        /// </summary>
+        RelayCommand RemoveSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu löschen
+        /// </summary>
+        RelayCommand RemoveSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Líefert ein Command um Gebiet zu löschen
+        /// </summary>
+        RelayCommand RemoveAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um ein Land zu löschen
+        /// </summary>
+        RelayCommand RemoveCountryCommand { get; }
+
+        /// <summary>
+        ///     Lädt die relevanten Daten des View Models
+        /// </summary>
+        void LoadData();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using DryIoc;
+using SummitLog.UI.Main;
 
 namespace SummitLog.UI.LogEntryInput.ViewCommands
 {
@@ -39,6 +41,8 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
             {
                 view.Close();
             };
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
 

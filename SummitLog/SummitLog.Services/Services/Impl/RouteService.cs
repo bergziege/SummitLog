@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -29,7 +31,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Route> GetRoutesIn(Country country)
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
-            return _routesDao.GetRoutesIn(country);
+            return _routesDao.GetRoutesIn(country).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Route> GetRoutesIn(Area area)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
-            return _routesDao.GetRoutesIn(area);
+            return _routesDao.GetRoutesIn(area).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Route> GetRoutesIn(SummitGroup summitGroup)
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
-            return _routesDao.GetRoutesIn(summitGroup);
+            return _routesDao.GetRoutesIn(summitGroup).OrderBy(x=>x.Name).ToList();
         }
 
         /// <summary>
@@ -110,7 +112,31 @@ namespace SummitLog.Services.Services.Impl
         public IList<Route> GetRoutesIn(Summit summit)
         {
             if (summit == null) throw new ArgumentNullException(nameof(summit));
-            return _routesDao.GetRoutesIn(summit);
+            return _routesDao.GetRoutesIn(summit).OrderBy(x=>x.Name).ToList();
+        }
+
+        /// <summary>
+        ///     Liefert ob die Route in Verwendung ist
+        /// </summary>
+        /// <param name="route"></param>
+        /// <returns></returns>
+        public bool IsInUse(Route route)
+        {
+            bool isInUse = _routesDao.IsInUse(route);
+            return isInUse;
+        }
+
+        /// <summary>
+        ///     Löscht eine Route wenn idese nicht mehr in Verwendung ist
+        /// </summary>
+        /// <param name="route"></param>
+        public void Delete(Route route)
+        {
+            if (_routesDao.IsInUse(route))
+            {
+                throw new NodeInUseException();
+            }
+            _routesDao.Delete(route);
         }
     }
 }

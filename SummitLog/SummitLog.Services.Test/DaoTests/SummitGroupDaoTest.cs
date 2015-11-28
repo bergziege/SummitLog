@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -13,6 +14,7 @@ namespace SummitLog.Services.Test.DaoTests
     public class SummitGroupDaoTest
     {
         private GraphClient _graphClient;
+        private DbTestDataGenerator _dataGenerator;
 
         [TestInitialize]
         public void Init()
@@ -20,6 +22,7 @@ namespace SummitLog.Services.Test.DaoTests
             _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
             _graphClient.Connect();
             _graphClient.BeginTransaction();
+            _dataGenerator = new DbTestDataGenerator(_graphClient);
         }
 
         [TestCleanup]
@@ -31,22 +34,73 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            ICountryDao countryDao = new CountryDao(_graphClient);
-            Country newCountry = new Country() { Name = "Deutschland" };
-            countryDao.Create(newCountry);
+            Area area = _dataGenerator.CreateArea();
+            SummitGroupDao groupDao = new SummitGroupDao(_graphClient);
+            SummitGroup created = _dataGenerator.CreateSummitGroup(area: area);
 
-            IAreaDao dao = new AreaDao(_graphClient);
-            Area newArea = new Area() {Name = "Sächsiche Schweiz"};
-            dao.Create(newCountry, newArea);
-
-            ISummitGroupDao groupDao = new SummitGroupDao(_graphClient);
-            SummitGroup newGroup = new SummitGroup() {Name = "Gipfelgruppe"};
-            groupDao.Create(newArea, newGroup);
-
-            IList<SummitGroup> groupsInArea = groupDao.GetAllIn(newArea);
+            IList<SummitGroup> groupsInArea = groupDao.GetAllIn(area);
             Assert.AreEqual(1, groupsInArea.Count);
-            Assert.AreEqual(newGroup.Name, groupsInArea.First().Name);
-            Assert.AreEqual(newGroup.Id, groupsInArea.First().Id);
+            Assert.AreEqual(created.Name, groupsInArea.First().Name);
+            Assert.AreEqual(created.Id, groupsInArea.First().Id);
+            Assert.AreEqual(created.Id, groupsInArea.First().Id);
+        }
+
+        [TestMethod]
+        public void TestIsInUseBySummit()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+            Summit summit = _dataGenerator.CreateSummit(summitGroup: summitGroup);
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            bool isInUse = summitGroupDao.IsInUse(summitGroup);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsInUseByRoute()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+            Route route = _dataGenerator.CreateRouteInSummitGroup(summitGroup: summitGroup);
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            bool isInUse = summitGroupDao.IsInUse(summitGroup);
+
+            Assert.IsTrue(isInUse);
+        }
+
+        [TestMethod]
+        public void TestIsNotInUse()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            bool isInUse = summitGroupDao.IsInUse(summitGroup);
+
+            Assert.IsFalse(isInUse);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NodeInUseException))]
+        public void TestDeleteInUse()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+            Route route = _dataGenerator.CreateRouteInSummitGroup(summitGroup: summitGroup);
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            summitGroupDao.Delete(summitGroup);
+        }
+
+        [TestMethod]
+        public void TestDeleteNotInUse()
+        {
+            Area area = _dataGenerator.CreateArea();
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup(area:area);
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            summitGroupDao.Delete(summitGroup);
+
+            Assert.AreEqual(0, summitGroupDao.GetAllIn(area).Count);
         }
     }
 }

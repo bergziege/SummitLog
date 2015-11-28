@@ -1,4 +1,6 @@
-﻿using DryIoc;
+﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
+using DryIoc;
+using SummitLog.UI.Main;
 
 namespace SummitLog.UI.NameInput
 {
@@ -26,6 +28,9 @@ namespace SummitLog.UI.NameInput
                 view.Close();
                 Name = vm.Name;
             };
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
             view.ShowDialog();
         }
     }

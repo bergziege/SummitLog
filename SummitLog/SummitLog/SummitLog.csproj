@@ -116,6 +116,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppContext.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
@@ -197,6 +199,8 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Resource Include="Resources\FontAwesome.otf" />
+    <Resource Include="Resources\fontawesome-webfont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
