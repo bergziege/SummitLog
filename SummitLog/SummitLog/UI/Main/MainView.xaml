@@ -48,7 +48,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveCountryCommand}" HorizontalAlignment="Left"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
                           SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>
@@ -61,8 +65,12 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <Button Command="{Binding Path=AddAreaInSelectedCountryCommand}"
-                        Style="{StaticResource AddButtonStyle}" />
+                <StackPanel VerticalAlignment="Center">
+                    <Button Command="{Binding Path=AddAreaInSelectedCountryCommand}"
+                            Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveAreaCommand}" HorizontalAlignment="Left"
+                            Style="{StaticResource RemoveButtonStyle}" />
+                </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=AreasInSelectedCountry}"
                           SelectedItem="{Binding Path=SelectedArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </Grid>

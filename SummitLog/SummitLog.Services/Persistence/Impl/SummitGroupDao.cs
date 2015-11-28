@@ -56,9 +56,9 @@ namespace SummitLog.Services.Persistence.Impl
         public bool IsInUse(SummitGroup summitGroup)
         {
             var countResult = GraphClient.Cypher.Match("".SummitGroup("sg"))
+                .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
                 .OptionalMatch("".Node("sg").AnyOutboundRelationAs("usageOnRoute").Route())
                 .OptionalMatch("".Node("sg").AnyOutboundRelationAs("usageOnSummit").Summit())
-                .Where((SummitGroup sg)=>sg.Id == summitGroup.Id)
                 .Return((usageOnRoute, usageOnSummit) => new {RouteCountUsageCount = usageOnRoute.Count(),
                     SummitUsageCount =usageOnSummit.Count()}).Results.First();
             return countResult.RouteCountUsageCount > 0 || countResult.SummitUsageCount > 0;

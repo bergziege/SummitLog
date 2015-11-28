@@ -255,6 +255,16 @@ namespace SummitLog.UI.Main
         RelayCommand RemoveSummitGroupCommand { get; }
 
         /// <summary>
+        ///     Líefert ein Command um Gebiet zu löschen
+        /// </summary>
+        RelayCommand RemoveAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um ein Land zu löschen
+        /// </summary>
+        RelayCommand RemoveCountryCommand { get; }
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         void LoadData();

@@ -54,9 +54,9 @@ namespace SummitLog.Services.Persistence.Impl
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
             var counts = GraphClient.Cypher.Match("".Country("c"))
+                .Where((Country c) => c.Id == country.Id)
                 .OptionalMatch("".Node("c").AnyOutboundRelationAs("usagesInArea").Area())
                 .OptionalMatch("".Node("c").AnyOutboundRelationAs("usagesInRoute").Route())
-                .Where((Country c) => c.Id == country.Id)
                 .Return((usagesInArea, usagesInRoute) => new
                 {
                     UsagesInAreaCount = usagesInArea.Count(),

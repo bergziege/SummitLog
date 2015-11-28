@@ -73,6 +73,8 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestIsNotInUse()
         {
             Area area = _dataGenerator.CreateArea();
+            Area areaWithRoutes = _dataGenerator.CreateArea();
+            Route route = _dataGenerator.CreateRouteInArea(area: areaWithRoutes);
 
             IAreaDao areaDao = new AreaDao(_graphClient);
             bool isInUse = areaDao.IsInUse(area);

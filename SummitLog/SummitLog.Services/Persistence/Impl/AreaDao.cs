@@ -57,9 +57,9 @@ namespace SummitLog.Services.Persistence.Impl
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
             var countResult = GraphClient.Cypher.Match("".Area("a"))
+                .Where((Area a) => a.Id == area.Id)
                 .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnRoute").Route())
                 .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnSummitGroup").SummitGroup())
-                .Where((Area a) => a.Id == area.Id)
                 .Return((usageOnRoute, usageOnSummitGroup) => new {
                     RouteCountUsageCount = usageOnRoute.Count(),
                     SummitGroupUsageCount = usageOnSummitGroup.Count()
