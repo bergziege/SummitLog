@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 
@@ -43,6 +44,32 @@ namespace SummitLog.Services.Services.Impl
             if (country == null) throw new ArgumentNullException(nameof(country));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
             _areaDao.Create(country, new Area {Name = name});
+        }
+
+        /// <summary>
+        ///     Liefert ob ein Gebiet noch verwendet wird
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public bool IsInUse(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            return _areaDao.IsInUse(area);
+        }
+
+        /// <summary>
+        ///     Löscht ein Gebiet, wenn es nicht mehr verwendet wird
+        /// </summary>
+        /// <param name="area"></param>
+        public void Delete(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            if (_areaDao.IsInUse(area))
+            {
+                throw new NodeInUseException();
+            }
+
+            _areaDao.Delete(area);
         }
     }
 }
