@@ -7,6 +7,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Services;
@@ -52,6 +53,38 @@ namespace SummitLog.Services.Test.ServiceTests
         {
             Action act = ()=>new CountryService(null).Create(name);
             act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestIsInUse()
+        {
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(true);
+
+            Country country = new Country();
+
+            ICountryService countryService = new CountryService(countryDaoMock.Object);
+            bool isInUse = countryService.IsInUse(country);
+
+            Assert.IsTrue(isInUse);
+            countryDaoMock.Verify(x=>x.IsInUse(country), Times.Once);
+        }
+
+        [TestCase(false)]
+        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
+        public void TestDelete(bool isInUse)
+        {
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(isInUse);
+            countryDaoMock.Setup(x => x.Delete(It.IsAny<Country>()));
+
+            Country country = new Country();
+
+            ICountryService countryService = new CountryService(countryDaoMock.Object);
+            countryService.Delete(country);
+
+            countryDaoMock.Verify(x => x.IsInUse(country), Times.Once);
+            countryDaoMock.Verify(x => x.Delete(country), Times.Once);
         }
     }
 }
