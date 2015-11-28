@@ -13,10 +13,11 @@ namespace SummitLog.Services.Persistence.Extensions
         public const string SummitGroupIdentifier = "sg";
         public const string SummitGroupParamIdentifier = "summitGroup";
         public const string SummitIdentifier = "s";
+        public const string SummitParamIdentifier = "summit";
         public const string RouteIdentifier = "r";
         public const string RouteParamIdentifier = "route";
         public const string VariationIdentifier = "v";
-        public const string VariationParamIdentifier = "param";
+        public const string VariationParamIdentifier = "variation";
         public const string LogEntryIdentifier = "le";
         public const string LogEntryParamIdentifier = "logEntry";
         public const string DifficultyLevelScaleIdentifier = "dls";
@@ -94,7 +95,7 @@ namespace SummitLog.Services.Persistence.Extensions
             return String.Format(NodeWithParameterTemplate, input, cypherIdentifier, NodeLabels.SummitGroup, paramIdentifier);
         }
 
-        public static string SummitWithParam(this string input, string paramIdentifier = SummitGroupParamIdentifier, string cypherIdentifier = SummitIdentifier)
+        public static string SummitWithParam(this string input, string paramIdentifier = SummitParamIdentifier, string cypherIdentifier = SummitIdentifier)
         {
             return String.Format(NodeWithParameterTemplate, input, cypherIdentifier, NodeLabels.Summit, paramIdentifier);
         }

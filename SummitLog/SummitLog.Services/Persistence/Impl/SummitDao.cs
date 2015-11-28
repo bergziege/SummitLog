@@ -26,7 +26,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Summit> GetAllIn(SummitGroup summitGroup)
         {
-            return GraphClient.Cypher.Match("(sg:SummitGroup)-[:HAS]->(s:Summit)")
+            return GraphClient.Cypher.Match("".SummitGroup("sg").Has().Summit("s"))
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id).Return(s => s.As<Summit>()).Results.ToList();
         }
 
@@ -36,9 +36,9 @@ namespace SummitLog.Services.Persistence.Impl
         public Summit Create(SummitGroup summitGroup, Summit summit)
         {
             var query = GraphClient.Cypher
-                .Match("(sg:SummitGroup)")
+                .Match("".SummitGroup("sg"))
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
-                .Create("sg-[:HAS]->(s:Summit {summit})")
+                .Create("sg".Has().SummitWithParam())
                 .WithParam("summit", summit);
 
             return query.Return(s=>s.As<Summit>()).Results.First();

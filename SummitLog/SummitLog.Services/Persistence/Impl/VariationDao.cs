@@ -27,7 +27,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<Variation> GetAllOn(Route route)
         {
-            return GraphClient.Cypher.Match("(r:Route)-[:HAS]->(v:Variation)")
+            return GraphClient.Cypher.Match("".Route("r").Has().Variation("v"))
                 .Where((Route r) => r.Id == route.Id).Return(v => v.As<Variation>()).Results.ToList();
         }
 
@@ -39,7 +39,7 @@ namespace SummitLog.Services.Persistence.Impl
             var query = GraphClient.Cypher
                 .Match("(r:Route),(dl:DifficultyLevel)")
                 .Where((Route r, DifficultyLevel dl) => r.Id == route.Id && dl.Id == difficultyLevel.Id)
-                .Create("r-[:HAS]->(v:Variation {variation})-[:HAS]->dl")
+                .Create("".Node("r").Has().VariationWithParam().Has().Node("dl"))
                 .WithParam("variation", variation);
 
             return query.Return(v => v.As<Variation>()).Results.First();

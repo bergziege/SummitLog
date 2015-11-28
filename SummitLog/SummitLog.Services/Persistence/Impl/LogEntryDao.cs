@@ -4,6 +4,7 @@ using System.Linq;
 using Neo4jClient;
 using Neo4jClient.Cypher;
 using SummitLog.Services.Model;
+using SummitLog.Services.Persistence.Extensions;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -26,7 +27,7 @@ namespace SummitLog.Services.Persistence.Impl
         /// <returns></returns>
         public IList<LogEntry> GetAllIn(Variation variation)
         {
-            return GraphClient.Cypher.Match("(v:Variation)-[:HAS]->(le:LogEntry)")
+            return GraphClient.Cypher.Match("".Variation("v").Has().LogEntry("le"))
                 .Where((Variation v) => v.Id == variation.Id).Return(le => le.As<LogEntry>()).Results.ToList();
         }
 
@@ -36,12 +37,12 @@ namespace SummitLog.Services.Persistence.Impl
         public LogEntry Create(Variation variation, LogEntry logEntry)
         {
             ICypherFluentQuery query = GraphClient.Cypher
-                .Match("(v:Variation)")
+                .Match("".Variation("v"))
                 .Where((Variation v) => v.Id == variation.Id)
-                .Create("v-[:HAS]->(l:LogEntry {logEntry})")
+                .Create("".Node("v").Has().LogEntryWithParam())
                 .WithParam("logEntry", logEntry);
 
-            return query.Return(l=>l.As<LogEntry>()).Results.First();
+            return query.Return(le=>le.As<LogEntry>()).Results.First();
         }
 
         /// <summary>
@@ -53,8 +54,8 @@ namespace SummitLog.Services.Persistence.Impl
             if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
 
             GraphClient.Cypher
-                .Match("(l:LogEntry)<-[r]-()")
-                .Where((LogEntry l) => l.Id == logEntry.Id).Delete("l, r").ExecuteWithoutResults();
+                .Match("".LogEntry("le").AnyInboundRelationsAs("r").Node(""))
+                .Where((LogEntry le) => le.Id == logEntry.Id).Delete("le, r").ExecuteWithoutResults();
         }
     }
 }
