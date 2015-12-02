@@ -12,12 +12,12 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert die Liste aller Länder
         /// </summary>
-        ObservableCollection<Country> Countries { get; }
+        ObservableCollection<IItemWithNameViewModel<Country>> Countries { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Land
         /// </summary>
-        Country SelectedCountry { get; set; }
+        IItemWithNameViewModel<Country> SelectedCountry { get; set; }
 
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
@@ -263,6 +263,11 @@ namespace SummitLog.UI.Main
         ///     Liefert ein Command um ein Land zu löschen
         /// </summary>
         RelayCommand RemoveCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um das gewählte Land zu speichern
+        /// </summary>
+        RelayCommand EditSelectedCountryCommand { get; }
 
         /// <summary>
         ///     Lädt die relevanten Daten des View Models

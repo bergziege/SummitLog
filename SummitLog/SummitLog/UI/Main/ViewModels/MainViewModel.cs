@@ -53,7 +53,7 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _removeSummitCommand;
         private RelayCommand _removeSummitGroupCommand;
         private Area _selectedArea;
-        private Country _selectedCountry;
+        private IItemWithNameViewModel<Country> _selectedCountry;
         private LogEntry _selectedLogEntry;
         private Route _selectedRouteInArea;
         private Route _selectedRouteInCountry;
@@ -62,6 +62,7 @@ namespace SummitLog.UI.Main.ViewModels
         private Summit _selectedSummit;
         private SummitGroup _selectedSummitGroup;
         private Variation _selectedVariation;
+        private RelayCommand _editSelectedCountryCommand;
 
         /// <summary>
         ///     Ctor.
@@ -100,12 +101,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert die Liste aller Länder
         /// </summary>
-        public ObservableCollection<Country> Countries { get; } = new ObservableCollection<Country>();
+        public ObservableCollection<IItemWithNameViewModel<Country>> Countries { get; } = new ObservableCollection<IItemWithNameViewModel<Country>>();
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Land
         /// </summary>
-        public Country SelectedCountry
+        public IItemWithNameViewModel<Country> SelectedCountry
         {
             get { return _selectedCountry; }
             set
@@ -634,6 +635,37 @@ namespace SummitLog.UI.Main.ViewModels
         }
 
         /// <summary>
+        ///     Liefert ein Command um das gewählte Land zu speichern
+        /// </summary>
+        public RelayCommand EditSelectedCountryCommand
+        {
+            get
+            {
+                if (_editSelectedCountryCommand == null)
+                {
+                    _editSelectedCountryCommand = new RelayCommand(EditSelectedCountry, CanEditSelectedCountry);
+                }
+                return _editSelectedCountryCommand;
+            }
+        }
+
+        private bool CanEditSelectedCountry()
+        {
+            return SelectedCountry != null;
+        }
+
+        private void EditSelectedCountry()
+        {
+            _nameInputViewCommand.Execute(SelectedCountry.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedCountry.Item.Name = _nameInputViewCommand.Name;
+                _countryService.Save(SelectedCountry.Item);
+                SelectedCountry.DoUpdate();
+            }
+        }
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         public void LoadData()
@@ -736,13 +768,13 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void RemoveCountry()
         {
-            _countryService.Delete(SelectedCountry);
+            _countryService.Delete(SelectedCountry.Item);
             RefreshCountries();
         }
 
         private bool CanRemoveCountry()
         {
-            return SelectedCountry != null && !_countryService.IsInUse(SelectedCountry);
+            return SelectedCountry != null && !_countryService.IsInUse(SelectedCountry.Item);
         }
 
         private void RemoveSummitGroup()
@@ -850,7 +882,7 @@ namespace SummitLog.UI.Main.ViewModels
             AreasInSelectedCountry.Clear();
             if (SelectedCountry != null)
             {
-                foreach (Area area in _areaService.GetAllIn(SelectedCountry))
+                foreach (Area area in _areaService.GetAllIn(SelectedCountry.Item))
                 {
                     AreasInSelectedCountry.Add(area);
                 }
@@ -976,7 +1008,9 @@ namespace SummitLog.UI.Main.ViewModels
             Countries.Clear();
             foreach (Country country in _countryService.GetAll())
             {
-                Countries.Add(country);
+                IItemWithNameViewModel<Country> itemViewModel = new ItemWithNameViewModel<Country>();
+                itemViewModel.LoadData(country);
+                Countries.Add(itemViewModel);
             }
             RefreshAreas();
             RefreshRoutesInSelectedCountry();
@@ -987,7 +1021,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedCountry.Clear();
             if (SelectedCountry != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedCountry))
+                foreach (Route route in _routeService.GetRoutesIn(SelectedCountry.Item))
                 {
                     RoutesInSelectedCountry.Add(route);
                 }
@@ -1019,7 +1053,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _areaService.Create(SelectedCountry, _nameInputViewCommand.Name);
+                _areaService.Create(SelectedCountry.Item, _nameInputViewCommand.Name);
             }
             RefreshAreas();
         }
@@ -1064,7 +1098,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedCountry, _nameInputViewCommand.Name);
+                _routeService.CreateIn(SelectedCountry.Item, _nameInputViewCommand.Name);
             }
             RefreshRoutesInSelectedCountry();
         }

@@ -50,6 +50,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedCountryCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveCountryCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>

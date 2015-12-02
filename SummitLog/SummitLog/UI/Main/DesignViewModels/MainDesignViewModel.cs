@@ -19,10 +19,10 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public MainDesignViewModel()
         {
-            Countries = new ObservableCollection<Country>
+            Countries = new ObservableCollection<IItemWithNameViewModel<Country>>
             {
-                new Country() {Name = "Land A"},
-                new Country() {Name = "Land B"}
+                new ItemWithNameDesignViewModel<Country>(),
+                new ItemWithNameDesignViewModel<Country>()
             };
 
             AreasInSelectedCountry = new ObservableCollection<Area>
@@ -97,12 +97,12 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         ///     Liefert die Liste aller Länder
         /// </summary>
-        public ObservableCollection<Country> Countries { get; }
+        public ObservableCollection<IItemWithNameViewModel<Country>> Countries { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Land
         /// </summary>
-        public Country SelectedCountry { get; set; }
+        public IItemWithNameViewModel<Country> SelectedCountry { get; set; }
 
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
@@ -293,6 +293,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         ///     Liefert ein Command um ein Land zu löschen
         /// </summary>
         public RelayCommand RemoveCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um das gewählte Land zu speichern
+        /// </summary>
+        public RelayCommand EditSelectedCountryCommand { get; }
 
         public void LoadData()
         {

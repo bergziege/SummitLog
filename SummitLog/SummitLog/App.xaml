@@ -27,7 +27,12 @@
             <Setter Property="Content" Value="&#xf068;" />
             <Setter Property="Foreground" Value="Red" />
         </Style>
-        
+
+        <Style x:Key="EditButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonBaseStyle}">
+            <Setter Property="Content" Value="&#xf040;" />
+            <Setter Property="Foreground" Value="Orange" />
+        </Style>
+
         <Style TargetType="HeaderedContentControl" x:Key="StretchedHeaderedContentControl">
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="Template">
