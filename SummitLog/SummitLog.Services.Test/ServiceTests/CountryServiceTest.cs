@@ -86,5 +86,27 @@ namespace SummitLog.Services.Test.ServiceTests
             countryDaoMock.Verify(x => x.IsInUse(country), Times.Once);
             countryDaoMock.Verify(x => x.Delete(country), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.Save(It.IsAny<Country>()));
+
+            Country country = new Country();
+
+            ICountryService countryService = new CountryService(countryDaoMock.Object);
+            countryService.Save(country);
+
+            countryDaoMock.Verify(x=>x.Save(country), Times.Once);
+
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            ICountryService countryService = new CountryService(null);
+            NUnit.Framework.Assert.Throws<ArgumentNullException>(()=>countryService.Save(null));
+        }
     }
 }

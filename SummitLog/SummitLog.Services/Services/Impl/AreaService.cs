@@ -71,5 +71,15 @@ namespace SummitLog.Services.Services.Impl
 
             _areaDao.Delete(area);
         }
+
+        /// <summary>
+        ///     Speichert das Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        public void Save(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            _areaDao.Save(area);
+        }
     }
 }
