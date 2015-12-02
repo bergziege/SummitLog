@@ -84,5 +84,16 @@ namespace SummitLog.Services.Persistence.Impl
                 .Where((Area a)=>a.Id == area.Id)
                 .Delete("a, usages").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert das Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        public void Save(Area area)
+        {
+            GraphClient.Cypher.Match("".Area("a"))
+                .Where((Area a) => a.Id == area.Id)
+                .Set("a.Name = {Name}").WithParam("Name", area.Name).ExecuteWithoutResults();
+        }
     }
 }

@@ -79,5 +79,17 @@ namespace SummitLog.Services.Persistence.Impl
                 .Where((SummitGroup sg) => sg.Id == summitGroup.Id)
                 .Delete("sg, usage").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert die Gipfelgruppe
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        public void Save(SummitGroup summitGroup)
+        {
+            GraphClient.Cypher.Match("".SummitGroup("sg"))
+                .Where((SummitGroup sg)=>sg.Id == summitGroup.Id)
+                .Set("sg.Name={Name}").WithParam("Name", summitGroup.Name)
+                .ExecuteWithoutResults();
+        }
     }
 }

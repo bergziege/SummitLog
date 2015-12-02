@@ -109,5 +109,18 @@ namespace SummitLog.Services.Test.DaoTests
             ICountryDao countryDao = new CountryDao(_graphClient);
             countryDao.Delete(country);
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            Country country = _dataGenerator.CreateCountry();
+
+            country.Name = "newname";
+
+            ICountryDao countryDao = new CountryDao(_graphClient);
+            countryDao.Save(country);
+
+            Assert.AreEqual("newname", countryDao.GetAll().First().Name);
+        }
     }
 }

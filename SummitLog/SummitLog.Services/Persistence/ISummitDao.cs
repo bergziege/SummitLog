@@ -31,5 +31,11 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="summit"></param>
         void Delete(Summit summit);
+
+        /// <summary>
+        ///     Speichert denm Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        void Save(Summit summit);
     }
 }

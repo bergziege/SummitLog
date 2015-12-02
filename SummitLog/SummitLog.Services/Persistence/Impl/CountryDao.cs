@@ -81,5 +81,17 @@ namespace SummitLog.Services.Persistence.Impl
                 .Where((Country c)=>c.Id == country.Id)
                 .Delete("c").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert das Land
+        /// </summary>
+        /// <param name="country"></param>
+        public void Save(Country country)
+        {
+            GraphClient.Cypher.Match("".Country("c"))
+                .Where((Country c)=>c.Id == country.Id)
+                .Set("c.Name={Name}").WithParam("Name", country.Name)
+                .ExecuteWithoutResults();
+        }
     }
 }

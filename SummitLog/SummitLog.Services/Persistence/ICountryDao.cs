@@ -32,5 +32,11 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="country"></param>
         void Delete(Country country);
+
+        /// <summary>
+        ///     Speichert das Land
+        /// </summary>
+        /// <param name="country"></param>
+        void Save(Country country);
     }
 }

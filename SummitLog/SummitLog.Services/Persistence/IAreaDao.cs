@@ -33,5 +33,11 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="area"></param>
         void Delete(Area area);
+
+        /// <summary>
+        ///     Speichert das Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        void Save(Area area);
     }
 }
