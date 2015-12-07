@@ -19,7 +19,7 @@ namespace SummitLog.UI.Common
         ///     LÄdt die VM relevanten Daten
         /// </summary>
         /// <param name="item"></param>
-        public void LoadData(T item)
+        public virtual void LoadData(T item)
         {
             Item = item;
         }

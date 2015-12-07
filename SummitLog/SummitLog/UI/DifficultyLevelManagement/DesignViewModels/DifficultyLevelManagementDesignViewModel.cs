@@ -16,8 +16,8 @@ namespace SummitLog.UI.DifficultyLevelManagement.DesignViewModels
         /// </summary>
         public DifficultyLevelManagementDesignViewModel()
         {
-            DifficultyLevels.Add(new DifficultyLevel() {Name = "Level 1", Score = 100});
-            DifficultyLevels.Add(new DifficultyLevel() {Name = "Level 2", Score = 200});
+            DifficultyLevels.Add(new ItemWIthNameAndScoreDesignViewModel());
+            DifficultyLevels.Add(new ItemWIthNameAndScoreDesignViewModel());
 
             SelectedDifficultyLevel = DifficultyLevels.First();
         }
@@ -30,12 +30,12 @@ namespace SummitLog.UI.DifficultyLevelManagement.DesignViewModels
         /// <summary>
         ///     Liefert die Liste aller Schwierigkeitsgrade
         /// </summary>
-        public ObservableCollection<DifficultyLevel> DifficultyLevels { get; } = new ObservableCollection<DifficultyLevel>();
+        public ObservableCollection<IItemWithNameAndScoreViewModel> DifficultyLevels { get; } = new ObservableCollection<IItemWithNameAndScoreViewModel>();
 
         /// <summary>
         ///     Liefert oder setzt das gewählte <see cref="DifficultyLevel" />
         /// </summary>
-        public DifficultyLevel SelectedDifficultyLevel { get; set; }
+        public IItemWithNameAndScoreViewModel SelectedDifficultyLevel { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um das gewählte <see cref="DifficultyLevel" /> zu löschen
