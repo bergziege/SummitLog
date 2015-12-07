@@ -22,32 +22,32 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
         /// </summary>
-        ObservableCollection<Area> AreasInSelectedCountry { get; }
+        ObservableCollection<IItemWithNameViewModel<Area>> AreasInSelectedCountry { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Gebiet
         /// </summary>
-        Area SelectedArea { get; set; }
+        IItemWithNameViewModel<Area> SelectedArea { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfelgruppen im gewählten Gebiet
         /// </summary>
-        ObservableCollection<SummitGroup> SummitGroupsInSelectedArea { get; }
+        ObservableCollection<IItemWithNameViewModel<SummitGroup>> SummitGroupsInSelectedArea { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Gipfelgruppe
         /// </summary>
-        SummitGroup SelectedSummitGroup { get; set; }
+        IItemWithNameViewModel<SummitGroup> SelectedSummitGroup { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfel in der Gewählten Gipfelgruppe
         /// </summary>
-        ObservableCollection<Summit> SummitsInSelectedSummitGroup { get; }
+        ObservableCollection<IItemWithNameViewModel<Summit>> SummitsInSelectedSummitGroup { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Gipfel
         /// </summary>
-        Summit SelectedSummit { get; set; }
+        IItemWithNameViewModel<Summit> SelectedSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Land

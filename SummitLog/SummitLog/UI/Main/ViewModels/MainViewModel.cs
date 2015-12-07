@@ -9,6 +9,7 @@ using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.LogEntryInput.ViewCommands;
+using SummitLog.UI.Main.DesignViewModels;
 using SummitLog.UI.NameAndLevelInput.ViewCommands;
 using SummitLog.UI.NameInput;
 
@@ -52,15 +53,15 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _removeSelectedVariationCommand;
         private RelayCommand _removeSummitCommand;
         private RelayCommand _removeSummitGroupCommand;
-        private Area _selectedArea;
+        private IItemWithNameViewModel<Area> _selectedArea;
         private IItemWithNameViewModel<Country> _selectedCountry;
         private LogEntry _selectedLogEntry;
         private Route _selectedRouteInArea;
         private Route _selectedRouteInCountry;
         private Route _selectedRouteInSummit;
         private Route _selectedRouteInSummitGroup;
-        private Summit _selectedSummit;
-        private SummitGroup _selectedSummitGroup;
+        private IItemWithNameViewModel<Summit> _selectedSummit;
+        private IItemWithNameViewModel<SummitGroup> _selectedSummitGroup;
         private Variation _selectedVariation;
         private RelayCommand _editSelectedCountryCommand;
 
@@ -120,12 +121,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
         /// </summary>
-        public ObservableCollection<Area> AreasInSelectedCountry { get; } = new ObservableCollection<Area>();
+        public ObservableCollection<IItemWithNameViewModel<Area>> AreasInSelectedCountry { get; } = new ObservableCollection<IItemWithNameViewModel<Area>>();
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Gebiet
         /// </summary>
-        public Area SelectedArea
+        public IItemWithNameViewModel<Area> SelectedArea
         {
             get { return _selectedArea; }
             set
@@ -139,13 +140,13 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Gipfelgruppen im gewählten Gebiet
         /// </summary>
-        public ObservableCollection<SummitGroup> SummitGroupsInSelectedArea { get; } =
-            new ObservableCollection<SummitGroup>();
+        public ObservableCollection<IItemWithNameViewModel<SummitGroup>> SummitGroupsInSelectedArea { get; } =
+            new ObservableCollection<IItemWithNameViewModel<SummitGroup>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Gipfelgruppe
         /// </summary>
-        public SummitGroup SelectedSummitGroup
+        public IItemWithNameViewModel<SummitGroup> SelectedSummitGroup
         {
             get { return _selectedSummitGroup; }
             set
@@ -159,12 +160,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Gipfel in der Gewählten Gipfelgruppe
         /// </summary>
-        public ObservableCollection<Summit> SummitsInSelectedSummitGroup { get; } = new ObservableCollection<Summit>();
+        public ObservableCollection<IItemWithNameViewModel<Summit>> SummitsInSelectedSummitGroup { get; } = new ObservableCollection<IItemWithNameViewModel<Summit>>();
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Gipfel
         /// </summary>
-        public Summit SelectedSummit
+        public IItemWithNameViewModel<Summit> SelectedSummit
         {
             get { return _selectedSummit; }
             set
@@ -757,13 +758,13 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void RemoveArea()
         {
-            _areaService.Delete(SelectedArea);
+            _areaService.Delete(SelectedArea.Item);
             RefreshAreas();
         }
 
         private bool CanRemoveArea()
         {
-            return SelectedArea != null && !_areaService.IsInUse(SelectedArea);
+            return SelectedArea != null && !_areaService.IsInUse(SelectedArea.Item);
         }
 
         private void RemoveCountry()
@@ -779,23 +780,23 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void RemoveSummitGroup()
         {
-            _summitGroupService.Delete(SelectedSummitGroup);
+            _summitGroupService.Delete(SelectedSummitGroup.Item);
             RefreshSummitGroups();
         }
 
         private bool CanRemoveSummitGroup()
         {
-            return SelectedSummitGroup != null && !_summitGroupService.IsInUse(SelectedSummitGroup);
+            return SelectedSummitGroup != null && !_summitGroupService.IsInUse(SelectedSummitGroup.Item);
         }
 
         private bool CanRemoveSummit()
         {
-            return SelectedSummit != null && !_summitService.IsInUse(SelectedSummit);
+            return SelectedSummit != null && !_summitService.IsInUse(SelectedSummit.Item);
         }
 
         private void RemoveSummit()
         {
-            _summitService.Delete(SelectedSummit);
+            _summitService.Delete(SelectedSummit.Item);
             RefreshSummitGroups();
         }
 
@@ -884,7 +885,9 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Area area in _areaService.GetAllIn(SelectedCountry.Item))
                 {
-                    AreasInSelectedCountry.Add(area);
+                    IItemWithNameViewModel<Area> areaViewModel = new ItemWithNameViewModel<Area>();
+                    areaViewModel.LoadData(area);
+                    AreasInSelectedCountry.Add(areaViewModel);
                 }
             }
             RefreshSummitGroups();
@@ -896,7 +899,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedArea.Clear();
             if (SelectedArea != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedArea))
+                foreach (Route route in _routeService.GetRoutesIn(SelectedArea.Item))
                 {
                     RoutesInSelectedArea.Add(route);
                 }
@@ -908,9 +911,11 @@ namespace SummitLog.UI.Main.ViewModels
             SummitGroupsInSelectedArea.Clear();
             if (SelectedArea != null)
             {
-                foreach (SummitGroup summitGroup in _summitGroupService.GetAllIn(SelectedArea))
+                foreach (SummitGroup summitGroup in _summitGroupService.GetAllIn(SelectedArea.Item))
                 {
-                    SummitGroupsInSelectedArea.Add(summitGroup);
+                    IItemWithNameViewModel<SummitGroup> summitGroupViewModel = new ItemWithNameViewModel<SummitGroup>();
+                    summitGroupViewModel.LoadData(summitGroup);
+                    SummitGroupsInSelectedArea.Add(summitGroupViewModel);
                 }
             }
             RefreshSummits();
@@ -922,7 +927,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedSummitGroup.Clear();
             if (SelectedSummitGroup != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedSummitGroup))
+                foreach (Route route in _routeService.GetRoutesIn(SelectedSummitGroup.Item))
                 {
                     RoutesInSelectedSummitGroup.Add(route);
                 }
@@ -934,9 +939,11 @@ namespace SummitLog.UI.Main.ViewModels
             SummitsInSelectedSummitGroup.Clear();
             if (SelectedSummitGroup != null)
             {
-                foreach (Summit summit in _summitService.GetAllIn(SelectedSummitGroup))
+                foreach (Summit summit in _summitService.GetAllIn(SelectedSummitGroup.Item))
                 {
-                    SummitsInSelectedSummitGroup.Add(summit);
+                    IItemWithNameViewModel<Summit> summitViewModel = new ItemWithNameViewModel<Summit>();
+                    summitViewModel.LoadData(summit);
+                    SummitsInSelectedSummitGroup.Add(summitViewModel);
                 }
             }
 
@@ -948,7 +955,7 @@ namespace SummitLog.UI.Main.ViewModels
             RoutesInSelectedSummit.Clear();
             if (SelectedSummit != null)
             {
-                foreach (Route route in _routeService.GetRoutesIn(SelectedSummit))
+                foreach (Route route in _routeService.GetRoutesIn(SelectedSummit.Item))
                 {
                     RoutesInSelectedSummit.Add(route);
                 }
@@ -1063,7 +1070,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _summitGroupService.Create(SelectedArea, _nameInputViewCommand.Name);
+                _summitGroupService.Create(SelectedArea.Item, _nameInputViewCommand.Name);
             }
             RefreshSummitGroups();
         }
@@ -1083,7 +1090,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _summitService.Create(SelectedSummitGroup, _nameInputViewCommand.Name);
+                _summitService.Create(SelectedSummitGroup.Item, _nameInputViewCommand.Name);
             }
             RefreshSummits();
         }
@@ -1113,7 +1120,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedArea, _nameInputViewCommand.Name);
+                _routeService.CreateIn(SelectedArea.Item, _nameInputViewCommand.Name);
             }
             RefreshRoutesInSelectedArea();
         }
@@ -1128,7 +1135,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedSummitGroup, _nameInputViewCommand.Name);
+                _routeService.CreateIn(SelectedSummitGroup.Item, _nameInputViewCommand.Name);
             }
             RefreshRoutesInSelectedSummitGroup();
         }
@@ -1143,7 +1150,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedSummit, _nameInputViewCommand.Name);
+                _routeService.CreateIn(SelectedSummit.Item, _nameInputViewCommand.Name);
             }
             RefreshRoutesInSelectedSummit();
         }

@@ -25,22 +25,22 @@ namespace SummitLog.UI.Main.DesignViewModels
                 new ItemWithNameDesignViewModel<Country>()
             };
 
-            AreasInSelectedCountry = new ObservableCollection<Area>
+            AreasInSelectedCountry = new ObservableCollection<IItemWithNameViewModel<Area>>
             {
-                new Area() {Name = "Gebiet A"},
-                new Area() {Name = "Gebiet B"}
+                new ItemWithNameDesignViewModel<Area>(),
+                new ItemWithNameDesignViewModel<Area>()
             };
 
-            SummitGroupsInSelectedArea = new ObservableCollection<SummitGroup>
+            SummitGroupsInSelectedArea = new ObservableCollection<IItemWithNameViewModel<SummitGroup>>
             {
-                new SummitGroup() {Name = "Gruppe A"},
-                new SummitGroup() {Name = "Gruppe B"}
+               new ItemWithNameDesignViewModel<SummitGroup>(),
+               new ItemWithNameDesignViewModel<SummitGroup>()
             };
 
-            SummitsInSelectedSummitGroup = new ObservableCollection<Summit>
+            SummitsInSelectedSummitGroup = new ObservableCollection<IItemWithNameViewModel<Summit>>
             {
-                new Summit() {Name = "Gipfel A"},
-                new Summit() {Name = "Gipfel B"}
+                new ItemWithNameDesignViewModel<Summit>(),
+                new ItemWithNameDesignViewModel<Summit>()
             };
 
             RoutesInSelectedCountry = new ObservableCollection<Route>
@@ -107,32 +107,32 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
         /// </summary>
-        public ObservableCollection<Area> AreasInSelectedCountry { get; }
+        public ObservableCollection<IItemWithNameViewModel<Area>> AreasInSelectedCountry { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Gebiet
         /// </summary>
-        public Area SelectedArea { get; set; }
+        public IItemWithNameViewModel<Area> SelectedArea { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfelgruppen im gewählten Gebiet
         /// </summary>
-        public ObservableCollection<SummitGroup> SummitGroupsInSelectedArea { get; }
+        public ObservableCollection<IItemWithNameViewModel<SummitGroup>> SummitGroupsInSelectedArea { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Gipfelgruppe
         /// </summary>
-        public SummitGroup SelectedSummitGroup { get; set; }
+        public IItemWithNameViewModel<SummitGroup> SelectedSummitGroup { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfel in der Gewählten Gipfelgruppe
         /// </summary>
-        public ObservableCollection<Summit> SummitsInSelectedSummitGroup { get; }
+        public ObservableCollection<IItemWithNameViewModel<Summit>> SummitsInSelectedSummitGroup { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Gipfel
         /// </summary>
-        public Summit SelectedSummit { get; set; }
+        public IItemWithNameViewModel<Summit> SelectedSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Land
