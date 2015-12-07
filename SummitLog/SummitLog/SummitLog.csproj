@@ -119,6 +119,9 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
+    <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
@@ -146,14 +149,11 @@
     </Compile>
     <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
     <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
-    <Compile Include="UI\Main\DesignViewModels\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
-    <Compile Include="UI\Main\IItemWithNameViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\Main\ViewModels\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\INameAndLevelInputViewModel.cs" />

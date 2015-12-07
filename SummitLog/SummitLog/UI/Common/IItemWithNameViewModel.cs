@@ -1,6 +1,6 @@
 ﻿using SummitLog.Services.Model;
 
-namespace SummitLog.UI.Main
+namespace SummitLog.UI.Common
 {
     /// <summary>
     ///     Schnittstelle für Items mit Namen

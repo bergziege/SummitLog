@@ -1,27 +1,19 @@
-﻿using System;
+﻿using ReactiveUI;
 using SummitLog.Services.Model;
 
-namespace SummitLog.UI.Main.DesignViewModels
+namespace SummitLog.UI.Common
 {
-    public class ItemWithNameDesignViewModel<T> : IItemWithNameViewModel<T> where T : EntityWithIdAndName
+    public class ItemWithNameViewModel<T> :ReactiveObject, IItemWithNameViewModel<T> where T : EntityWithIdAndName
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
-        /// </summary>
-        public ItemWithNameDesignViewModel()
-        {
-            Name = "Name " + typeof(T);
-        }
-
         /// <summary>
         ///     Liefert das Item
         /// </summary>
-        public T Item { get; }
+        public T Item { get; private set; }
 
         /// <summary>
         ///     LIefert den Namen
         /// </summary>
-        public string Name { get; }
+        public string Name { get { return Item.Name; } }
 
         /// <summary>
         ///     LÄdt die VM relevanten Daten
@@ -29,6 +21,7 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <param name="item"></param>
         public void LoadData(T item)
         {
+            Item = item;
         }
 
         /// <summary>
@@ -36,6 +29,7 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public void DoUpdate()
         {
+            this.RaisePropertyChanged("Name");
         }
     }
 }
