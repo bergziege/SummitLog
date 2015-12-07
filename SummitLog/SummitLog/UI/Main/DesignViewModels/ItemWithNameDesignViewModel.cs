@@ -10,7 +10,7 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// </summary>
         public ItemWithNameDesignViewModel()
         {
-            Name = "Name";
+            Name = "Name " + typeof(T);
         }
 
         /// <summary>

@@ -43,28 +43,28 @@ namespace SummitLog.UI.Main.DesignViewModels
                 new ItemWithNameDesignViewModel<Summit>()
             };
 
-            RoutesInSelectedCountry = new ObservableCollection<Route>
+            RoutesInSelectedCountry = new ObservableCollection<IItemWithNameViewModel<Route>>
             {
-                new Route() {Name = "Land A Route A"},
-                new Route() {Name = "Land A Route B"}
+                new ItemWithNameDesignViewModel<Route>(),
+                new ItemWithNameDesignViewModel<Route>()
             };
 
-            RoutesInSelectedArea = new ObservableCollection<Route>
+            RoutesInSelectedArea = new ObservableCollection<IItemWithNameViewModel<Route>>
             {
-                new Route() {Name = "Gebiet A Route A"},
-                new Route() {Name = "Gebiet A Route B"}
+                new ItemWithNameDesignViewModel<Route>(),
+                new ItemWithNameDesignViewModel<Route>()
             };
 
-            RoutesInSelectedSummitGroup = new ObservableCollection<Route>
+            RoutesInSelectedSummitGroup = new ObservableCollection<IItemWithNameViewModel<Route>>
             {
-                new Route() {Name = "Gruppe A Route A"},
-                new Route() {Name = "Gruppe A Route B"}
+                new ItemWithNameDesignViewModel<Route>(),
+                new ItemWithNameDesignViewModel<Route>()
             };
 
-            RoutesInSelectedSummit = new ObservableCollection<Route>
+            RoutesInSelectedSummit = new ObservableCollection<IItemWithNameViewModel<Route>>
             {
-                new Route() {Name = "Gipfel A Route A"},
-                new Route() {Name = "Gipfel A Route B"}
+                new ItemWithNameDesignViewModel<Route>(),
+                new ItemWithNameDesignViewModel<Route>()
             };
 
             VariationsOnSelectedRoute = new ObservableCollection<Variation>
@@ -137,42 +137,42 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Land
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedCountry { get; }
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedCountry { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route eines Landes
         /// </summary>
-        public Route SelectedRouteInCountry { get; set; }
+        public IItemWithNameViewModel<Route> SelectedRouteInCountry { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Gebiet
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedArea { get; }
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedArea { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einem Gebiet
         /// </summary>
-        public Route SelectedRouteInArea { get; set; }
+        public IItemWithNameViewModel<Route> SelectedRouteInArea { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen in der gewählten Gipfelgruppe
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedSummitGroup { get; }
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummitGroup { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einer Gipfelgruppe
         /// </summary>
-        public Route SelectedRouteInSummitGroup { get; set; }
+        public IItemWithNameViewModel<Route> SelectedRouteInSummitGroup { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen an einem gewählten Gipfel
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedSummit { get; }
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummit { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route an einem Gipfel
         /// </summary>
-        public Route SelectedRouteInSummit { get; set; }
+        public IItemWithNameViewModel<Route> SelectedRouteInSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)

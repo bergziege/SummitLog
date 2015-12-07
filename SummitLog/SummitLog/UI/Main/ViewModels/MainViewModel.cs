@@ -56,10 +56,10 @@ namespace SummitLog.UI.Main.ViewModels
         private IItemWithNameViewModel<Area> _selectedArea;
         private IItemWithNameViewModel<Country> _selectedCountry;
         private LogEntry _selectedLogEntry;
-        private Route _selectedRouteInArea;
-        private Route _selectedRouteInCountry;
-        private Route _selectedRouteInSummit;
-        private Route _selectedRouteInSummitGroup;
+        private IItemWithNameViewModel<Route> _selectedRouteInArea;
+        private IItemWithNameViewModel<Route> _selectedRouteInCountry;
+        private IItemWithNameViewModel<Route> _selectedRouteInSummit;
+        private IItemWithNameViewModel<Route> _selectedRouteInSummitGroup;
         private IItemWithNameViewModel<Summit> _selectedSummit;
         private IItemWithNameViewModel<SummitGroup> _selectedSummitGroup;
         private Variation _selectedVariation;
@@ -178,12 +178,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Land
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedCountry { get; } = new ObservableCollection<Route>();
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedCountry { get; } = new ObservableCollection<IItemWithNameViewModel<Route>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route eines Landes
         /// </summary>
-        public Route SelectedRouteInCountry
+        public IItemWithNameViewModel<Route> SelectedRouteInCountry
         {
             get { return _selectedRouteInCountry; }
             set
@@ -207,12 +207,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Gebiet
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedArea { get; } = new ObservableCollection<Route>();
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedArea { get; } = new ObservableCollection<IItemWithNameViewModel<Route>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einem Gebiet
         /// </summary>
-        public Route SelectedRouteInArea
+        public IItemWithNameViewModel<Route> SelectedRouteInArea
         {
             get { return _selectedRouteInArea; }
             set
@@ -236,12 +236,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen in der gewählten Gipfelgruppe
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedSummitGroup { get; } = new ObservableCollection<Route>();
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummitGroup { get; } = new ObservableCollection<IItemWithNameViewModel<Route>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einer Gipfelgruppe
         /// </summary>
-        public Route SelectedRouteInSummitGroup
+        public IItemWithNameViewModel<Route> SelectedRouteInSummitGroup
         {
             get { return _selectedRouteInSummitGroup; }
             set
@@ -265,12 +265,12 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen an einem gewählten Gipfel
         /// </summary>
-        public ObservableCollection<Route> RoutesInSelectedSummit { get; } = new ObservableCollection<Route>();
+        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummit { get; } = new ObservableCollection<IItemWithNameViewModel<Route>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route an einem Gipfel
         /// </summary>
-        public Route SelectedRouteInSummit
+        public IItemWithNameViewModel<Route> SelectedRouteInSummit
         {
             get { return _selectedRouteInSummit; }
             set
@@ -802,46 +802,46 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void RemoveRouteInCountry()
         {
-            _routeService.Delete(SelectedRouteInCountry);
+            _routeService.Delete(SelectedRouteInCountry.Item);
             RefreshRoutesInSelectedCountry();
         }
 
         private bool CanRemoveRouteInCountry()
         {
-            return SelectedRouteInCountry != null && !_routeService.IsInUse(SelectedRouteInCountry);
+            return SelectedRouteInCountry != null && !_routeService.IsInUse(SelectedRouteInCountry.Item);
         }
 
         private void RemoveRouteInArea()
         {
-            _routeService.Delete(SelectedRouteInArea);
+            _routeService.Delete(SelectedRouteInArea.Item);
             RefreshRoutesInSelectedArea();
         }
 
         private bool CanRemoveRouteInArea()
         {
-            return SelectedRouteInArea != null && !_routeService.IsInUse(SelectedRouteInArea);
+            return SelectedRouteInArea != null && !_routeService.IsInUse(SelectedRouteInArea.Item);
         }
 
         private void RemoveRouteInSummitGroup()
         {
-            _routeService.Delete(SelectedRouteInSummitGroup);
+            _routeService.Delete(SelectedRouteInSummitGroup.Item);
             RefreshRoutesInSelectedSummitGroup();
         }
 
         private bool CanRemoveRouteInSummitGroup()
         {
-            return SelectedRouteInSummitGroup != null && !_routeService.IsInUse(SelectedRouteInSummitGroup);
+            return SelectedRouteInSummitGroup != null && !_routeService.IsInUse(SelectedRouteInSummitGroup.Item);
         }
 
         private void RemoveRouteInSummit()
         {
-            _routeService.Delete(SelectedRouteInSummit);
+            _routeService.Delete(SelectedRouteInSummit.Item);
             RefreshRoutesInSelectedSummit();
         }
 
         private bool CanRemoveRouteInSummit()
         {
-            return SelectedRouteInSummit != null && !_routeService.IsInUse(SelectedRouteInSummit);
+            return SelectedRouteInSummit != null && !_routeService.IsInUse(SelectedRouteInSummit.Item);
         }
 
         private bool CanRemoveSelectedVariation()
@@ -901,7 +901,9 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Route route in _routeService.GetRoutesIn(SelectedArea.Item))
                 {
-                    RoutesInSelectedArea.Add(route);
+                    IItemWithNameViewModel<Route> routeViewModel = new ItemWithNameViewModel<Route>();
+                    routeViewModel.LoadData(route);
+                    RoutesInSelectedArea.Add(routeViewModel);
                 }
             }
         }
@@ -929,7 +931,9 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Route route in _routeService.GetRoutesIn(SelectedSummitGroup.Item))
                 {
-                    RoutesInSelectedSummitGroup.Add(route);
+                    IItemWithNameViewModel<Route> routeViewModel = new ItemWithNameViewModel<Route>();
+                    routeViewModel.LoadData(route);
+                    RoutesInSelectedSummitGroup.Add(routeViewModel);
                 }
             }
         }
@@ -957,7 +961,9 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Route route in _routeService.GetRoutesIn(SelectedSummit.Item))
                 {
-                    RoutesInSelectedSummit.Add(route);
+                    IItemWithNameViewModel<Route> routeViewModel = new ItemWithNameViewModel<Route>();
+                    routeViewModel.LoadData(route);
+                    RoutesInSelectedSummit.Add(routeViewModel);
                 }
             }
         }
@@ -967,7 +973,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInCountry != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInCountry))
+                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInCountry.Item))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -979,7 +985,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInArea != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInArea))
+                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInArea.Item))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -991,7 +997,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInSummitGroup != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummitGroup))
+                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummitGroup.Item))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -1003,7 +1009,7 @@ namespace SummitLog.UI.Main.ViewModels
             VariationsOnSelectedRoute.Clear();
             if (SelectedRouteInSummit != null)
             {
-                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummit))
+                foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummit.Item))
                 {
                     VariationsOnSelectedRoute.Add(variation);
                 }
@@ -1030,7 +1036,9 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Route route in _routeService.GetRoutesIn(SelectedCountry.Item))
                 {
-                    RoutesInSelectedCountry.Add(route);
+                    IItemWithNameViewModel<Route> routeViewModel = new ItemWithNameViewModel<Route>();
+                    routeViewModel.LoadData(route);
+                    RoutesInSelectedCountry.Add(routeViewModel);
                 }
             }
         }
@@ -1192,14 +1200,15 @@ namespace SummitLog.UI.Main.ViewModels
 
         private Route GetSelectedRoute()
         {
-            return
-                new List<Route>
-                {
-                    SelectedRouteInCountry,
-                    SelectedRouteInArea,
-                    SelectedRouteInSummitGroup,
-                    SelectedRouteInSummit
-                }.FirstOrDefault(x => x != null);
+            IItemWithNameViewModel<Route> selectedRouteViewModel = new List<IItemWithNameViewModel<Route>>
+            {
+                SelectedRouteInCountry,
+                SelectedRouteInArea,
+                SelectedRouteInSummitGroup,
+                SelectedRouteInSummit
+            }.FirstOrDefault(x => x != null);
+
+            return selectedRouteViewModel?.Item;
         }
 
         private bool CanAddLogEntryToSelectedVariation()
