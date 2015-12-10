@@ -138,5 +138,15 @@ namespace SummitLog.Services.Services.Impl
             }
             _routesDao.Delete(route);
         }
+
+        /// <summary>
+        /// Speichert eine Route
+        /// </summary>
+        /// <param name="route"></param>
+        public void Save(Route route)
+        {
+            if (route == null) throw new ArgumentNullException(nameof(route));
+            _routesDao.Save(route);
+        }
     }
 }

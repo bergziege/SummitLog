@@ -283,7 +283,26 @@ namespace SummitLog.UI.Main
         ///     Liefert ein Command um den gewählten Gipfel zu bearbeiten
         /// </summary>
         RelayCommand EditSelectedSummitCommand { get; }
-        
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route im Land zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route ineinem Gebiet zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route in einer Gipfelgruppe zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
+        /// </summary>
+        RelayCommand EditSelectedRouteInSummitCommand { get; }
 
         /// <summary>
         ///     Lädt die relevanten Daten des View Models

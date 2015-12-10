@@ -315,6 +315,26 @@ namespace SummitLog.UI.Main.DesignViewModels
         public RelayCommand EditSelectedSummitCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um die gewählte Route im Land zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route ineinem Gebiet zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route in einer Gipfelgruppe zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedRouteInSummitCommand { get; }
+
+        /// <summary>
         ///     Liefert ein Command um die gewählte Route zu bearbeiten
         /// </summary>
         public RelayCommand EditSelectedRouteCommand { get; }

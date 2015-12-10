@@ -43,6 +43,10 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _addVariationToSelectedRouteCommand;
         private RelayCommand _editSelectedAreaCommand;
         private RelayCommand _editSelectedCountryCommand;
+        private RelayCommand _editSelectedRouteInAreaCommand;
+        private RelayCommand _editSelectedRouteInCountryCommand;
+        private RelayCommand _editSelectedRouteInSummitCommand;
+        private RelayCommand _editSelectedRouteInSummitGroupCommand;
         private RelayCommand _editSelectedSummitCommand;
         private RelayCommand _editSelectedSummitGroupCommand;
         private RelayCommand _manageDifficultiesCommand;
@@ -706,6 +710,70 @@ namespace SummitLog.UI.Main.ViewModels
         }
 
         /// <summary>
+        ///     Liefert ein Command um die gewählte Route im Land zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInCountryCommand
+        {
+            get
+            {
+                if (_editSelectedRouteInCountryCommand == null)
+                {
+                    _editSelectedRouteInCountryCommand = new RelayCommand(EditSelectedRouteInCountry,
+                        CanEditSelectedRouteInCountry);
+                }
+                return _editSelectedRouteInCountryCommand;
+            }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route ineinem Gebiet zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInAreaCommand
+        {
+            get
+            {
+                if (_editSelectedRouteInAreaCommand == null)
+                {
+                    _editSelectedRouteInAreaCommand = new RelayCommand(EditSelectedRouteInArea,
+                        CanEditSelectedRouteInArea);
+                }
+                return _editSelectedRouteInAreaCommand;
+            }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route in einer Gipfelgruppe zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedRouteInSummitGroupCommand
+        {
+            get
+            {
+                if (_editSelectedRouteInSummitGroupCommand == null)
+                {
+                    _editSelectedRouteInSummitGroupCommand = new RelayCommand(EditSelectedRouteInSummitGroup,
+                        CanEditSelectedRouteInSummitGroup);
+                }
+                return _editSelectedRouteInSummitGroupCommand;
+            }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedRouteInSummitCommand
+        {
+            get
+            {
+                if (_editSelectedRouteInSummitCommand == null)
+                {
+                    _editSelectedRouteInSummitCommand = new RelayCommand(EditSelectedRouteInSummit,
+                        CanEditSelectedRouteInSummit);
+                }
+                return _editSelectedRouteInSummitCommand;
+            }
+        }
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         public void LoadData()
@@ -795,6 +863,70 @@ namespace SummitLog.UI.Main.ViewModels
             return true;
         }
 
+        private bool CanEditSelectedRouteInCountry()
+        {
+            return SelectedRouteInCountry != null;
+        }
+
+        private void EditSelectedRouteInCountry()
+        {
+            _nameInputViewCommand.Execute(SelectedRouteInCountry.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedRouteInCountry.Item.Name = _nameInputViewCommand.Name;
+                _routeService.Save(SelectedRouteInCountry.Item);
+                SelectedRouteInCountry.DoUpdate();
+            }
+        }
+
+        private bool CanEditSelectedRouteInArea()
+        {
+            return SelectedRouteInArea != null;
+        }
+
+        private void EditSelectedRouteInArea()
+        {
+            _nameInputViewCommand.Execute(SelectedRouteInArea.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedRouteInArea.Item.Name = _nameInputViewCommand.Name;
+                _routeService.Save(SelectedRouteInArea.Item);
+                SelectedRouteInArea.DoUpdate();
+            }
+        }
+
+        private bool CanEditSelectedRouteInSummitGroup()
+        {
+            return SelectedRouteInSummitGroup != null;
+        }
+
+        private void EditSelectedRouteInSummitGroup()
+        {
+            _nameInputViewCommand.Execute(SelectedRouteInSummitGroup.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedRouteInSummitGroup.Item.Name = _nameInputViewCommand.Name;
+                _routeService.Save(SelectedRouteInSummitGroup.Item);
+                SelectedRouteInSummitGroup.DoUpdate();
+            }
+        }
+
+        private bool CanEditSelectedRouteInSummit()
+        {
+            return SelectedRouteInSummit != null;
+        }
+
+        private void EditSelectedRouteInSummit()
+        {
+            _nameInputViewCommand.Execute(SelectedRouteInSummit.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedRouteInSummit.Item.Name = _nameInputViewCommand.Name;
+                _routeService.Save(SelectedRouteInSummit.Item);
+                SelectedRouteInSummit.DoUpdate();
+            }
+        }
+
         private bool CanEditSelectedArea()
         {
             return SelectedArea != null;
@@ -842,7 +974,7 @@ namespace SummitLog.UI.Main.ViewModels
                 SelectedSummit.DoUpdate();
             }
         }
-        
+
         private bool CanEditSelectedCountry()
         {
             return SelectedCountry != null;
