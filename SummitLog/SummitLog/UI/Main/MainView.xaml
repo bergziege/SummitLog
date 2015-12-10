@@ -69,6 +69,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddAreaInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedAreaCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -87,6 +88,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSummitGroupCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -105,6 +107,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitInSelectedSummitGroupCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedSummitCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSummitCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>

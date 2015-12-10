@@ -270,6 +270,22 @@ namespace SummitLog.UI.Main
         RelayCommand EditSelectedCountryCommand { get; }
 
         /// <summary>
+        ///     Liefert Command um die gewählte Gegend zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Gipfel zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedSummitCommand { get; }
+        
+
+        /// <summary>
         ///     Lädt die relevanten Daten des View Models
         /// </summary>
         void LoadData();
