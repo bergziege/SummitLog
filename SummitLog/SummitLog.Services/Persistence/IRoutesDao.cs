@@ -76,5 +76,11 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="route"></param>
         void Delete(Route route);
+
+        /// <summary>
+        ///     Speichert die Route
+        /// </summary>
+        /// <param name="route"></param>
+        void Save(Route route);
     }
 }

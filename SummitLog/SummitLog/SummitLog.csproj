@@ -119,13 +119,19 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
+    <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\ItemWIthNameAndScoreDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
       <DependentUpon>DifficultyLevelManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DifficultyLevelManagement\IDifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\IItemWithNameAndScoreViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\ViewModels\DifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\ViewModels\ItemWithNameAndScoreViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml.cs">
       <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>

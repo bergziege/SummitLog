@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -165,6 +166,18 @@ namespace SummitLog.Services.Persistence.Impl
                 throw new NodeInUseException();
             }
             GraphClient.Cypher.Match("".Node("n").AnyOutboundRelationAs("parentAssignment").Route("r")).Where((Route r)=>r.Id == route.Id).Delete("parentAssignment, r").ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        ///     Speichert die Route
+        /// </summary>
+        /// <param name="route"></param>
+        public void Save(Route route)
+        {
+            if (route == null) throw new ArgumentNullException(nameof(route));
+            GraphClient.Cypher.Match("".Route("r")).Where((Route r)=>r.Id == route.Id)
+                .Set("r.Name = {Name}").WithParam("Name", route.Name)
+                .ExecuteWithoutResults();
         }
     }
 }

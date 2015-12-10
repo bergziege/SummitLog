@@ -101,5 +101,26 @@ namespace SummitLog.Services.Test.ServiceTests
             areaDaoMock.Verify(x => x.IsInUse(area), Times.Once);
             areaDaoMock.Verify(x => x.Delete(area), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
+            areaDaoMock.Setup(x => x.Save(It.IsAny<Area>()));
+
+            Area area = new Area();
+
+            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.Save(area);
+
+            areaDaoMock.Verify(x=>x.Save(area), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            IAreaService areaService = new AreaService(null);
+            Assert.Throws<ArgumentNullException>(() => areaService.Save(null));
+        }
     }
 }

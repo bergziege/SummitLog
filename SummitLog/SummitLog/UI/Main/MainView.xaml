@@ -50,6 +50,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedCountryCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveCountryCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -68,6 +69,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddAreaInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedAreaCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -86,6 +88,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSummitGroupCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -104,6 +107,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitInSelectedSummitGroupCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedSummitCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSummitCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -122,6 +126,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInCountryCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInCountryCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -140,6 +145,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedAreaCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInAreaCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInAreaCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -158,6 +164,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInSummitGroupCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -176,6 +183,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInSummitCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInSummitCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>

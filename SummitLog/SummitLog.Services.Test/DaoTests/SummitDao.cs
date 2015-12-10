@@ -91,5 +91,21 @@ namespace SummitLog.Services.Test.DaoTests
             ISummitDao summitDao = new SummitDao(_graphClient);
             summitDao.Delete(summit);
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
+            Summit summit = _dataGenerator.CreateSummit("oldname", summitGroup);
+
+
+            summit.Name = "newname";
+
+            ISummitDao summitDao = new SummitDao(_graphClient);
+            summitDao.Save(summit);
+
+            Assert.AreEqual("newname", summitDao.GetAllIn(summitGroup).First().Name);
+
+        }
     }
 }

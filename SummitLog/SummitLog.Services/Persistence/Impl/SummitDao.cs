@@ -66,5 +66,17 @@ namespace SummitLog.Services.Persistence.Impl
             }
             GraphClient.Cypher.Match("".Summit("s").AnyInboundRelationsAs("groupAssignment").SummitGroup()).Where((Summit s)=>s.Id == summit.Id).Delete("s, groupAssignment").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert denm Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        public void Save(Summit summit)
+        {
+            GraphClient.Cypher.Match("".Summit("s"))
+                .Where((Summit s)=>s.Id == summit.Id)
+                .Set("s.Name = {Name}").WithParam("Name", summit.Name)
+                .ExecuteWithoutResults();
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace SummitLog.UI.DifficultyManagement.ViewModels
         {
             if (DifficultyLevelScaleManagementViewModel.SelectedDifficultyLevelScale != null)
             {
-                DifficultyLevelManagementViewModel.LoadData(DifficultyLevelScaleManagementViewModel.SelectedDifficultyLevelScale);
+                DifficultyLevelManagementViewModel.LoadData(DifficultyLevelScaleManagementViewModel.SelectedDifficultyLevelScale.Item);
             }
             return true;
         }

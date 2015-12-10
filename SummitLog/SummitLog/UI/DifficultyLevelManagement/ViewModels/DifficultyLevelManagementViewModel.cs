@@ -19,7 +19,7 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
         private RelayCommand _addDifficultyLevelCommand;
         private RelayCommand _deleteSelectedDifficultyLevelCommand;
         private DifficultyLevelScale _difficultyLevelScale;
-        private DifficultyLevel _selectedDifficultyLevel;
+        private IItemWithNameAndScoreViewModel _selectedDifficultyLevel;
 
         /// <summary>
         ///     Liefert eine neue Instanz des View Models
@@ -52,13 +52,13 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
         /// <summary>
         ///     Liefert die Liste aller Schwierigkeitsgrade
         /// </summary>
-        public ObservableCollection<DifficultyLevel> DifficultyLevels { get; } =
-            new ObservableCollection<DifficultyLevel>();
+        public ObservableCollection<IItemWithNameAndScoreViewModel> DifficultyLevels { get; } =
+            new ObservableCollection<IItemWithNameAndScoreViewModel>();
 
         /// <summary>
         ///     Liefert oder setzt das gewählte <see cref="DifficultyLevel" />
         /// </summary>
-        public DifficultyLevel SelectedDifficultyLevel
+        public IItemWithNameAndScoreViewModel SelectedDifficultyLevel
         {
             get { return _selectedDifficultyLevel; }
             set { this.RaiseAndSetIfChanged(ref _selectedDifficultyLevel, value); }
@@ -91,7 +91,9 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             DifficultyLevels.Clear();
             foreach (DifficultyLevel difficultyLevel in _difficultyLevelService.GetAllIn(_difficultyLevelScale))
             {
-                DifficultyLevels.Add(difficultyLevel);
+                IItemWithNameAndScoreViewModel itemViewModel = new ItemWithNameAndScoreViewModel();
+                itemViewModel.LoadData(difficultyLevel);
+                DifficultyLevels.Add(itemViewModel);
             }
             CommandManager.InvalidateRequerySuggested();
         }
@@ -114,13 +116,13 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
 
         private void DeleteSelected()
         {
-            _difficultyLevelService.Delete(SelectedDifficultyLevel);
+            _difficultyLevelService.Delete(SelectedDifficultyLevel.Item);
             LoadData(_difficultyLevelScale);
         }
 
         private bool CanDeleteSelected()
         {
-            return SelectedDifficultyLevel != null && !_difficultyLevelService.IsInUse(SelectedDifficultyLevel);
+            return SelectedDifficultyLevel != null && !_difficultyLevelService.IsInUse(SelectedDifficultyLevel.Item);
         }
     }
 }

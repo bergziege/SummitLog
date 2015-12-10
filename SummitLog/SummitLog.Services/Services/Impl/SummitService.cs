@@ -70,5 +70,15 @@ namespace SummitLog.Services.Services.Impl
             }
             _summitDao.Delete(summit);
         }
+
+        /// <summary>
+        ///     Speichert ein Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        public void Save(Summit summit)
+        {
+            if (summit == null) throw new ArgumentNullException(nameof(summit));
+            _summitDao.Save(summit);
+        }
     }
 }

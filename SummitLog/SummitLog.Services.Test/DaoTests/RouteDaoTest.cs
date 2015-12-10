@@ -256,5 +256,20 @@ namespace SummitLog.Services.Test.DaoTests
             IRoutesDao routesDao = new RouteDao(_graphClient);
             routesDao.Delete(route);
         }
+
+        [TestMethod]
+        public void TestSave()
+        {
+            Country country = _dataGenerator.CreateCountry();
+            Route route = _dataGenerator.CreateRouteInCountry("oldname", country);
+
+            IRoutesDao routesDao = new RouteDao(_graphClient);
+            Assert.AreEqual(1, routesDao.GetRoutesIn(country).Count);
+
+            route.Name = "newname";
+            routesDao.Save(route);
+
+            Assert.AreEqual("newname",  routesDao.GetRoutesIn(country).First().Name);
+        }
     }
 }

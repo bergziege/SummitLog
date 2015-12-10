@@ -17,12 +17,12 @@ namespace SummitLog.UI.DifficultyLevelManagement
         /// <summary>
         ///     Liefert die Liste aller Schwierigkeitsgrade
         /// </summary>
-        ObservableCollection<DifficultyLevel> DifficultyLevels { get; }
+        ObservableCollection<IItemWithNameAndScoreViewModel> DifficultyLevels { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte <see cref="DifficultyLevel" />
         /// </summary>
-        DifficultyLevel SelectedDifficultyLevel { get; set; }
+        IItemWithNameAndScoreViewModel SelectedDifficultyLevel { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um das gewählte <see cref="DifficultyLevel" /> zu löschen

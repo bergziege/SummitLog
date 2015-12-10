@@ -67,5 +67,15 @@ namespace SummitLog.Services.Services.Impl
             }
             _countryDao.Delete(country);
         }
+
+        /// <summary>
+        ///     Speichert das Land
+        /// </summary>
+        /// <param name="country"></param>
+        public void Save(Country country)
+        {
+            if (country == null) throw new ArgumentNullException(nameof(country));
+            _countryDao.Save(country);
+        }
     }
 }

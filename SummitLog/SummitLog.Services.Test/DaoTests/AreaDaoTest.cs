@@ -103,5 +103,19 @@ namespace SummitLog.Services.Test.DaoTests
             IAreaDao areaDao = new AreaDao(_graphClient);
             areaDao.Delete(area);
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            Country country = _dataGenerator.CreateCountry();
+            Area area = _dataGenerator.CreateArea(country:country, name:"oldname");
+
+            area.Name = "newname";
+
+            IAreaDao areaDao = new AreaDao(_graphClient);
+            areaDao.Save(area);
+
+            Assert.AreEqual("newname", areaDao.GetAllIn(country).First().Name);
+        }
     }
 }
