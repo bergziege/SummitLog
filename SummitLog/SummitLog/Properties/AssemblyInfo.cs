@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("SummitLog")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("BerndNet-2000")]
 [assembly: AssemblyProduct("SummitLog")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
