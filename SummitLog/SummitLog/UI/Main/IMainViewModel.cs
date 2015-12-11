@@ -15,7 +15,7 @@ namespace SummitLog.UI.Main
         ObservableCollection<Country> Countries { get; }
 
         /// <summary>
-        ///     Liefert oder setzt das gewählte Land
+        ///     Liefrt oder setzt das gewählte Land
         /// </summary>
         Country SelectedCountry { get; set; }
 
