@@ -42,7 +42,7 @@
         </Menu>
         
         <!--Länder-->
-        <HeaderedContentControl Header="Länder" Grid.Row="1" Grid.Column="0" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Länder" Grid.Row="1" Grid.Column="0" Style="{StaticResource MainViewHeaderedContentControl}" >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
