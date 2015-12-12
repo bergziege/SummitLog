@@ -65,5 +65,15 @@ namespace SummitLog.Services.Services.Impl
             }
             _difficultyLevelScaleDao.Delete(difficultyLevelScale);
         }
+
+        /// <summary>
+        ///     Speichert die Schwierigkeitsgradskale
+        /// </summary>
+        /// <param name="scaleToSave"></param>
+        public void Save(DifficultyLevelScale scaleToSave)
+        {
+            if (scaleToSave == null) throw new ArgumentNullException(nameof(scaleToSave));
+            _difficultyLevelScaleDao.Save(scaleToSave);
+        }
     }
 }

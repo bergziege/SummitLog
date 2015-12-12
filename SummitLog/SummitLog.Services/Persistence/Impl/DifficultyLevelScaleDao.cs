@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -67,6 +68,19 @@ namespace SummitLog.Services.Persistence.Impl
                 throw new NodeInUseException();
             }
             GraphClient.Cypher.Match("".DifficultyLevelScale("dls")).Where((DifficultyLevelScale dls)=>dls.Id == difficultyLevelScale.Id).Delete("dls").ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        ///     Speichert die Schwierigkeitsgradskale
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        public void Save(DifficultyLevelScale difficultyLevelScale)
+        {
+            if (difficultyLevelScale == null) throw new ArgumentNullException(nameof(difficultyLevelScale));
+            GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
+                .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
+                .Set("dls.Name = {name}").WithParam("name", difficultyLevelScale.Name)
+                .ExecuteWithoutResults();
         }
     }
 }
