@@ -217,7 +217,18 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\icon_buch.png" />
+    <Resource Include="Assets\icon_gebiet.png" />
+    <Resource Include="Assets\icon_gebiet_wege.png" />
+    <Resource Include="Assets\icon_gipfel.png" />
+    <Resource Include="Assets\icon_gipfelgruppe.png" />
+    <Resource Include="Assets\icon_gipfelgruppe_wege.png" />
+    <Resource Include="Assets\icon_gipfel_wege.png" />
+    <Resource Include="Assets\icon_land.png" />
+    <Resource Include="Assets\icon_land_wege.png" />
+    <Resource Include="Assets\icon_schwierigkeiten.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>

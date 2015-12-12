@@ -48,11 +48,15 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                
+                <Image Source="/Assets/icon_land.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect><DropShadowEffect ShadowDepth="0"></DropShadowEffect></Image.Effect>
+                </Image>
+                
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
                     <Button Command="{Binding Path=EditSelectedCountryCommand}" Style="{StaticResource EditButtonStyle}" />
-                    <Button Command="{Binding Path=RemoveCountryCommand}" HorizontalAlignment="Left"
-                            Style="{StaticResource RemoveButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveCountryCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
                           SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -66,12 +70,16 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gebiet.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddAreaInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
                     <Button Command="{Binding Path=EditSelectedAreaCommand}" Style="{StaticResource EditButtonStyle}" />
-                    <Button Command="{Binding Path=RemoveAreaCommand}" HorizontalAlignment="Left"
-                            Style="{StaticResource RemoveButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveAreaCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=AreasInSelectedCountry}"
                           SelectedItem="{Binding Path=SelectedArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -85,12 +93,16 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gipfelgruppe.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource AddButtonStyle}" />
                     <Button Command="{Binding Path=EditSelectedSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
-                    <Button Command="{Binding Path=RemoveSummitGroupCommand}" HorizontalAlignment="Left"
-                            Style="{StaticResource RemoveButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSummitGroupCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitGroupsInSelectedArea}"
                           SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -104,12 +116,16 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gipfel.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitInSelectedSummitGroupCommand}"
                             Style="{StaticResource AddButtonStyle}" />
                     <Button Command="{Binding Path=EditSelectedSummitCommand}" Style="{StaticResource EditButtonStyle}" />
-                    <Button Command="{Binding Path=RemoveSummitCommand}"
-                            Style="{StaticResource RemoveButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSummitCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
                           SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -123,6 +139,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_land_wege.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
@@ -142,6 +163,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gebiet_wege.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedAreaCommand}"
                             Style="{StaticResource AddButtonStyle}" />
@@ -161,6 +187,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gipfelgruppe_wege.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}"
                             Style="{StaticResource AddButtonStyle}" />
@@ -180,6 +211,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_gipfel_wege.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitCommand}"
                             Style="{StaticResource AddButtonStyle}" />
@@ -199,6 +235,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_schwierigkeiten.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddVariationToSelectedRouteCommand}"
                             Style="{StaticResource AddButtonStyle}" />
@@ -217,6 +258,11 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Image Source="/Assets/icon_buch.png" Width="32" Height="32" VerticalAlignment="Top">
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                    </Image.Effect>
+                </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddLogEntryToSelectedVariationCommand}"
                             Style="{StaticResource AddButtonStyle}" />
