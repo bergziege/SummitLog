@@ -13,3 +13,10 @@ SummitLog ist ein Hobbyprojekt zur Erfassung von Wander und Kletterrouten sowie 
 
 - Neo4j auf localhost:7474 mit Nutzer "neo4j" und Passwort "extra"
 - .net 4.5
+
+## Geplante Features nach Basisfunktionen ##
+
+- Ändern der DB Einstellungen zur Laufzeit
+- Suche
+- Reporting
+- Alle aktuell noch einzelnen Fenster in Hauptfenster aufnehmen.
