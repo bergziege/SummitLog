@@ -15,8 +15,8 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         /// </summary>
         public DifficultyLevelScaleManagementDesignViewModel()
         {
-            DifficultyLevelScales.Add(new DifficultyLevelScale() {Name = "Weltweit"});
-            DifficultyLevelScales.Add(new DifficultyLevelScale() {Name = "Sächsich"});
+            DifficultyLevelScales.Add(new ItemWithNameDesignViewModel<DifficultyLevelScale>());
+            DifficultyLevelScales.Add(new ItemWithNameDesignViewModel<DifficultyLevelScale>());
         }
 
         /// <summary>
@@ -27,17 +27,22 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         /// <summary>
         ///     Liefert die Liste der Schwierigkeitsgradskalen
         /// </summary>
-        public ObservableCollection<DifficultyLevelScale> DifficultyLevelScales { get; } =new ObservableCollection<DifficultyLevelScale>();
+        public ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>> DifficultyLevelScales { get; } =new ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Schwierigkeitsgradskala
         /// </summary>
-        public DifficultyLevelScale SelectedDifficultyLevelScale { get; set; }
+        public IItemWithNameViewModel<DifficultyLevelScale> SelectedDifficultyLevelScale { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
         /// </summary>
         public RelayCommand DeleteSelectedDifficultyLevelScaleCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedDifficultyLevelScaleCommand { get; }
 
         /// <summary>
         ///     Lädt die VM relevanten Daten

@@ -15,14 +15,17 @@ namespace SummitLog.UI.NameInput
         /// Führt das View Command aus
         /// </summary>
         /// <returns></returns>
-        public void Execute()
+        public void Execute(string name = "")
         {
-            Name = string.Empty;
+            Name = name;
             NameInputView view = AppContext.Container.Resolve<NameInputView>();
             INameInputViewModel vm = AppContext.Container.Resolve<INameInputViewModel>();
             view.DataContext = vm;
+            vm.Name = name;
 
-            vm.RequestCloseAfterCancel += delegate { view.Close(); };
+            vm.RequestCloseAfterCancel += delegate { view.Close();
+                                                       Name = null;
+            };
             vm.RequestCloseAfterOk += delegate
             {
                 view.Close();

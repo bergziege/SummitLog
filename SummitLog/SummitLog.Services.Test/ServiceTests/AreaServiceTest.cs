@@ -4,6 +4,7 @@ using FluentAssertions;
 
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Services;
@@ -67,6 +68,59 @@ namespace SummitLog.Services.Test.ServiceTests
         {
             Action act = ()=> new AreaService(null).GetAllIn(null);
             act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestIsInUse()
+        {
+            Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
+            areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(true);
+
+            Area area = new Area();
+
+            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            bool isInUse = areaService.IsInUse(area);
+
+            Assert.IsTrue(isInUse);
+            areaDaoMock.Verify(x=>x.IsInUse(area), Times.Once);
+        }
+
+        [TestCase(false)]
+        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
+        public void TestDelete(bool isInUse)
+        {
+            Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
+            areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(isInUse);
+            areaDaoMock.Setup(x => x.Delete(It.IsAny<Area>()));
+
+            Area area = new Area();
+
+            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.Delete(area);
+
+            areaDaoMock.Verify(x => x.IsInUse(area), Times.Once);
+            areaDaoMock.Verify(x => x.Delete(area), Times.Once);
+        }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
+            areaDaoMock.Setup(x => x.Save(It.IsAny<Area>()));
+
+            Area area = new Area();
+
+            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.Save(area);
+
+            areaDaoMock.Verify(x=>x.Save(area), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            IAreaService areaService = new AreaService(null);
+            Assert.Throws<ArgumentNullException>(() => areaService.Save(null));
         }
     }
 }

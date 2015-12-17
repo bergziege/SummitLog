@@ -15,8 +15,9 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
         private readonly NameInputViewCommand _nameInputViewCommand;
         private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
         private RelayCommand _addDifficultyLevelScaleCommand;
-        private DifficultyLevelScale _selectedDifficultyLevelScale;
+        private IItemWithNameViewModel<DifficultyLevelScale> _selectedDifficultyLevelScale;
         private RelayCommand _deleteSelectedDifficultyLevelScaleCommand;
+        private RelayCommand _editSelectedDifficultyLevelScaleCommand;
 
         /// <summary>
         /// Liefert eine neue Instanz des View Models
@@ -57,12 +58,12 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
         /// <summary>
         ///     Liefert die Liste der Schwierigkeitsgradskalen
         /// </summary>
-        public ObservableCollection<DifficultyLevelScale> DifficultyLevelScales { get; } = new ObservableCollection<DifficultyLevelScale>();
+        public ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>> DifficultyLevelScales { get; } = new ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Schwierigkeitsgradskala
         /// </summary>
-        public DifficultyLevelScale SelectedDifficultyLevelScale
+        public IItemWithNameViewModel<DifficultyLevelScale> SelectedDifficultyLevelScale
         {
             get { return _selectedDifficultyLevelScale; }
             set { this.RaiseAndSetIfChanged(ref _selectedDifficultyLevelScale, value); }
@@ -83,15 +84,46 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
             }
         }
 
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedDifficultyLevelScaleCommand
+        {
+            get
+            {
+                if (_editSelectedDifficultyLevelScaleCommand == null)
+                {
+                    _editSelectedDifficultyLevelScaleCommand = new RelayCommand(EditSelectedDifficultyLevelScale, CanEditSelectedDifficultyLevelScale);
+                }
+                return _editSelectedDifficultyLevelScaleCommand;
+            }
+        }
+
+        private bool CanEditSelectedDifficultyLevelScale()
+        {
+            return SelectedDifficultyLevelScale != null;
+        }
+
+        private void EditSelectedDifficultyLevelScale()
+        {
+            _nameInputViewCommand.Execute(SelectedDifficultyLevelScale.Name);
+            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            {
+                SelectedDifficultyLevelScale.Item.Name = _nameInputViewCommand.Name;
+                _difficultyLevelScaleService.Save(SelectedDifficultyLevelScale.Item);
+                SelectedDifficultyLevelScale.DoUpdate();
+            }
+        }
+
         private void DeleteSelected()
         {
-            _difficultyLevelScaleService.Delete(SelectedDifficultyLevelScale);
+            _difficultyLevelScaleService.Delete(SelectedDifficultyLevelScale.Item);
             LoadData();
         }
 
         private bool CanDeleteSelected()
         {
-            return SelectedDifficultyLevelScale != null && !_difficultyLevelScaleService.IsInUse(SelectedDifficultyLevelScale);
+            return SelectedDifficultyLevelScale != null && !_difficultyLevelScaleService.IsInUse(SelectedDifficultyLevelScale.Item);
         }
 
         /// <summary>
@@ -102,7 +134,9 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
             DifficultyLevelScales.Clear();
             foreach (DifficultyLevelScale difficultyLevelScale in _difficultyLevelScaleService.GetAll())
             {
-                DifficultyLevelScales.Add(difficultyLevelScale);
+                IItemWithNameViewModel<DifficultyLevelScale> difficultyLevelScaleViewModel = new ItemWithNameViewModel<DifficultyLevelScale>();
+                difficultyLevelScaleViewModel.LoadData(difficultyLevelScale);
+                DifficultyLevelScales.Add(difficultyLevelScaleViewModel);
             }
         }
     }

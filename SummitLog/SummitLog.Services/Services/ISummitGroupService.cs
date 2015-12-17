@@ -34,5 +34,11 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="summitGroup"></param>
         void Delete(SummitGroup summitGroup);
+
+        /// <summary>
+        ///     Speichert die Gipfelgruppe
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        void Save(SummitGroup summitGroup);
     }
 }

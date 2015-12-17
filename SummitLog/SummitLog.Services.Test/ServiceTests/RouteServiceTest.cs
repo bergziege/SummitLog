@@ -44,5 +44,19 @@ namespace SummitLog.Services.Test.ServiceTests
             routeDaoMock.Verify(x=>x.Delete(route), Times.Once);
             routeDaoMock.Verify(x=>x.IsInUse(route), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IRoutesDao> routesDaoMock = new Mock<IRoutesDao>();
+            routesDaoMock.Setup(x => x.Save(It.IsAny<Route>()));
+
+            Route route = new Route();
+
+            IRouteService routeService = new RouteService(routesDaoMock.Object);
+            routeService.Save(route);
+
+            routesDaoMock.Verify(x=>x.Save(route), Times.Once);
+        }
     }
 }

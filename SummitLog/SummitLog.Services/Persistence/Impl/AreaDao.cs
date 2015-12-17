@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Neo4jClient;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence.Extensions;
 
@@ -44,6 +46,54 @@ namespace SummitLog.Services.Persistence.Impl
                 .WithParam("area", area);
 
             return query.Return(a=>a.As<Area>()).Results.First();
+        }
+
+        /// <summary>
+        ///     Liefert ob das Gebiet verwendet wird.
+        /// </summary>
+        /// <param name="area"></param>
+        /// <returns></returns>
+        public bool IsInUse(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+            var countResult = GraphClient.Cypher.Match("".Area("a"))
+                .Where((Area a) => a.Id == area.Id)
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnRoute").Route())
+                .OptionalMatch("".Node("a").AnyOutboundRelationAs("usageOnSummitGroup").SummitGroup())
+                .Return((usageOnRoute, usageOnSummitGroup) => new {
+                    RouteCountUsageCount = usageOnRoute.Count(),
+                    SummitGroupUsageCount = usageOnSummitGroup.Count()
+                }).Results.First();
+            return countResult.RouteCountUsageCount > 0 || countResult.SummitGroupUsageCount > 0;
+        }
+
+        /// <summary>
+        ///     Löscht ein Gebiet, wenn dies nicht mehr in Verwendung ist.
+        /// </summary>
+        /// <param name="area"></param>
+        public void Delete(Area area)
+        {
+            if (area == null) throw new ArgumentNullException(nameof(area));
+
+            if (IsInUse(area))
+            {
+                throw new NodeInUseException();
+            }
+
+            GraphClient.Cypher.Match("".Area("a").AnyInboundRelationsAs("usages").Country())
+                .Where((Area a)=>a.Id == area.Id)
+                .Delete("a, usages").ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        ///     Speichert das Gebiet
+        /// </summary>
+        /// <param name="area"></param>
+        public void Save(Area area)
+        {
+            GraphClient.Cypher.Match("".Area("a"))
+                .Where((Area a) => a.Id == area.Id)
+                .Set("a.Name = {Name}").WithParam("Name", area.Name).ExecuteWithoutResults();
         }
     }
 }

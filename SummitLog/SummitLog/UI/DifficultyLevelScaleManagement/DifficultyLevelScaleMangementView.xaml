@@ -1,31 +1,35 @@
 ﻿<UserControl x:Class="SummitLog.UI.DifficultyLevelScaleManagement.DifficultyLevelScaleMangementView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement"
              xmlns:designViewModels="clr-namespace:SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels"
              xmlns:model="clr-namespace:SummitLog.Services.Model;assembly=SummitLog.Services"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <d:DesignProperties.DataContext>
         <designViewModels:DifficultyLevelScaleManagementDesignViewModel />
     </d:DesignProperties.DataContext>
     <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <Button Command="{Binding Path=AddDifficultyLevelScaleCommand}" Style="{StaticResource AddButtonStyle}"></Button>
-            <Button Command="{Binding Path=DeleteSelectedDifficultyLevelScaleCommand}" Style="{StaticResource RemoveButtonStyle}"></Button>
-            </StackPanel>
-        
-        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1" SelectedItem="{Binding Path=SelectedDifficultyLevelScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <Button Command="{Binding Path=AddDifficultyLevelScaleCommand}" Style="{StaticResource AddButtonStyle}" />
+            <Button Command="{Binding Path=EditSelectedDifficultyLevelScaleCommand}"
+                    Style="{StaticResource EditButtonStyle}" />
+            <Button Command="{Binding Path=DeleteSelectedDifficultyLevelScaleCommand}"
+                    Style="{StaticResource RemoveButtonStyle}" />
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1"
+                  SelectedItem="{Binding Path=SelectedDifficultyLevelScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <ListView.ItemTemplate>
                 <DataTemplate DataType="model:DifficultyLevelScale">
-                    <Label Content="{Binding Path=Name}"></Label>
+                    <Label Content="{Binding Path=Name}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -119,13 +119,19 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
+    <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
+    <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\ItemWIthNameAndScoreDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
       <DependentUpon>DifficultyLevelManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DifficultyLevelManagement\IDifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\IItemWithNameAndScoreViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\ViewModels\DifficultyLevelManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelManagement\ViewModels\ItemWithNameAndScoreViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml.cs">
       <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>
@@ -211,7 +217,18 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\icon_buch.png" />
+    <Resource Include="Assets\icon_gebiet.png" />
+    <Resource Include="Assets\icon_gebiet_wege.png" />
+    <Resource Include="Assets\icon_gipfel.png" />
+    <Resource Include="Assets\icon_gipfelgruppe.png" />
+    <Resource Include="Assets\icon_gipfelgruppe_wege.png" />
+    <Resource Include="Assets\icon_gipfel_wege.png" />
+    <Resource Include="Assets\icon_land.png" />
+    <Resource Include="Assets\icon_land_wege.png" />
+    <Resource Include="Assets\icon_schwierigkeiten.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>

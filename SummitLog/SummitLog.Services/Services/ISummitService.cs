@@ -34,5 +34,11 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="summit"></param>
         void Delete(Summit summit);
+
+        /// <summary>
+        ///     Speichert ein Gipfel
+        /// </summary>
+        /// <param name="summit"></param>
+        void Save(Summit summit);
     }
 }

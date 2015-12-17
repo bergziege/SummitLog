@@ -12,82 +12,82 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert die Liste aller Länder
         /// </summary>
-        ObservableCollection<Country> Countries { get; }
+        ObservableCollection<IItemWithNameViewModel<Country>> Countries { get; }
 
         /// <summary>
         ///     Liefrt oder setzt das gewählte Land
         /// </summary>
-        Country SelectedCountry { get; set; }
+        IItemWithNameViewModel<Country> SelectedCountry { get; set; }
 
         /// <summary>
         ///     Liefert die Liste aller Gebiete im gewählten Land
         /// </summary>
-        ObservableCollection<Area> AreasInSelectedCountry { get; }
+        ObservableCollection<IItemWithNameViewModel<Area>> AreasInSelectedCountry { get; }
 
         /// <summary>
         ///     Liefert oder setzt das gewählte Gebiet
         /// </summary>
-        Area SelectedArea { get; set; }
+        IItemWithNameViewModel<Area> SelectedArea { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfelgruppen im gewählten Gebiet
         /// </summary>
-        ObservableCollection<SummitGroup> SummitGroupsInSelectedArea { get; }
+        ObservableCollection<IItemWithNameViewModel<SummitGroup>> SummitGroupsInSelectedArea { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Gipfelgruppe
         /// </summary>
-        SummitGroup SelectedSummitGroup { get; set; }
+        IItemWithNameViewModel<SummitGroup> SelectedSummitGroup { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Gipfel in der Gewählten Gipfelgruppe
         /// </summary>
-        ObservableCollection<Summit> SummitsInSelectedSummitGroup { get; }
+        ObservableCollection<IItemWithNameViewModel<Summit>> SummitsInSelectedSummitGroup { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Gipfel
         /// </summary>
-        Summit SelectedSummit { get; set; }
+        IItemWithNameViewModel<Summit> SelectedSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Land
         /// </summary>
-        ObservableCollection<Route> RoutesInSelectedCountry { get; }
+        ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedCountry { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route eines Landes
         /// </summary>
-        Route SelectedRouteInCountry { get; set; }
+        IItemWithNameViewModel<Route> SelectedRouteInCountry { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen im gewählten Gebiet
         /// </summary>
-        ObservableCollection<Route> RoutesInSelectedArea { get; }
+        ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedArea { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einem Gebiet
         /// </summary>
-        Route SelectedRouteInArea { get; set; }
+        IItemWithNameViewModel<Route> SelectedRouteInArea { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen in der gewählten Gipfelgruppe
         /// </summary>
-        ObservableCollection<Route> RoutesInSelectedSummitGroup { get; }
+        ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummitGroup { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route in einer Gipfelgruppe
         /// </summary>
-        Route SelectedRouteInSummitGroup { get; set; }
+        IItemWithNameViewModel<Route> SelectedRouteInSummitGroup { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Routen an einem gewählten Gipfel
         /// </summary>
-        ObservableCollection<Route> RoutesInSelectedSummit { get; }
+        ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummit { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route an einem Gipfel
         /// </summary>
-        Route SelectedRouteInSummit { get; set; }
+        IItemWithNameViewModel<Route> SelectedRouteInSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)
@@ -253,6 +253,56 @@ namespace SummitLog.UI.Main
         ///     Liefert ein Command um die gewählte Gipfelgruppe zu löschen
         /// </summary>
         RelayCommand RemoveSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Líefert ein Command um Gebiet zu löschen
+        /// </summary>
+        RelayCommand RemoveAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um ein Land zu löschen
+        /// </summary>
+        RelayCommand RemoveCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um das gewählte Land zu speichern
+        /// </summary>
+        RelayCommand EditSelectedCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert Command um die gewählte Gegend zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gipfelgruppe zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Gipfel zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route im Land zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInCountryCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route ineinem Gebiet zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInAreaCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Route in einer Gipfelgruppe zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedRouteInSummitGroupCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
+        /// </summary>
+        RelayCommand EditSelectedRouteInSummitCommand { get; }
 
         /// <summary>
         ///     Lädt die relevanten Daten des View Models

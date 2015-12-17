@@ -81,5 +81,19 @@ namespace SummitLog.Services.Test.ServiceTests
             difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
             difficultyLevelScaleDaoMock.Verify(x=>x.Delete(difficultyLevelScale), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.Save(It.IsAny<DifficultyLevelScale>()));
+
+            DifficultyLevelScale scaleToSave = new DifficultyLevelScale();
+
+            IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
+            difficultyLevelScaleService.Save(scaleToSave);
+
+            difficultyLevelScaleDaoMock.Verify(x=>x.Save(scaleToSave), Times.Once);
+        }
     }
 }

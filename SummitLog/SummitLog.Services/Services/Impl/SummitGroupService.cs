@@ -69,5 +69,15 @@ namespace SummitLog.Services.Services.Impl
             }
             _summitGroupDao.Delete(summitGroup);
         }
+
+        /// <summary>
+        ///     Speichert die Gipfelgruppe
+        /// </summary>
+        /// <param name="summitGroup"></param>
+        public void Save(SummitGroup summitGroup)
+        {
+            if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
+            _summitGroupDao.Save(summitGroup);
+        }
     }
 }

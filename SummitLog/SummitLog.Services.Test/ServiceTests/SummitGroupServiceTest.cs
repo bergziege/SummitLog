@@ -101,5 +101,26 @@ namespace SummitLog.Services.Test.ServiceTests
             summitGroupDaoMock.Verify(x => x.IsInUse(summitGroup), Times.Once);
             summitGroupDaoMock.Verify(x => x.Delete(summitGroup), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<ISummitGroupDao> summitGroupDaoMock = new Mock<ISummitGroupDao>();
+            summitGroupDaoMock.Setup(x => x.Save(It.IsAny<SummitGroup>()));
+
+            SummitGroup summitGroup = new SummitGroup();
+
+            ISummitGroupService summitGroupService = new SummitGroupService(summitGroupDaoMock.Object);
+            summitGroupService.Save(summitGroup);
+
+            summitGroupDaoMock.Verify(x=>x.Save(summitGroup), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            ISummitGroupService summitGroupService = new SummitGroupService(null);
+            Assert.Throws<ArgumentNullException>(() => summitGroupService.Save(null));
+        }
     }
 }

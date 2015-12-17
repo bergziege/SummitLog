@@ -13,10 +13,11 @@ namespace SummitLog.Services.Persistence.Extensions
         public const string SummitGroupIdentifier = "sg";
         public const string SummitGroupParamIdentifier = "summitGroup";
         public const string SummitIdentifier = "s";
+        public const string SummitParamIdentifier = "summit";
         public const string RouteIdentifier = "r";
         public const string RouteParamIdentifier = "route";
         public const string VariationIdentifier = "v";
-        public const string VariationParamIdentifier = "param";
+        public const string VariationParamIdentifier = "variation";
         public const string LogEntryIdentifier = "le";
         public const string LogEntryParamIdentifier = "logEntry";
         public const string DifficultyLevelScaleIdentifier = "dls";
@@ -25,52 +26,58 @@ namespace SummitLog.Services.Persistence.Extensions
         public const string DifficultyLevelParamIdentifier = "difficultyLevel";
 
 
-        private static string NodeTemplate =  "{0}({1}:{2})";
+        private static string NodeTemplate = "{0}({1})";
+        private static string NodeWithLabelTemplate =  "{0}({1}:{2})";
         private static string NodeWithParameterTemplate = "{0}({1}:{2} {{{3}}})";
+
+        public static string Node(this string input, string cypherIdentifier)
+        {
+            return string.Format(NodeTemplate, input, cypherIdentifier);
+        }
 
         public static string Country(this string input, string cypherIdentifier = "")
         {
-            return String.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.Country);
+            return String.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.Country);
         }
 
         public static string Area(this string input, string cypherIdentifier = "")
         {
-            return String.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.Area);
+            return String.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.Area);
         }
         
         public static string SummitGroup(this string input, string cypherIdentifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.SummitGroup);
+            return string.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.SummitGroup);
         }
 
         public static string Summit(this string input, string cypherIdentifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.Summit);
+            return string.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.Summit);
         }
 
         public static string Route(this string input, string cypherIdentifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.Route);
+            return string.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.Route);
         }
 
         public static string Variation(this string input, string cypherIditifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIditifier, NodeLabels.Variation);
+            return string.Format(NodeWithLabelTemplate, input, cypherIditifier, NodeLabels.Variation);
         }
 
         public static string LogEntry(this string input, string cypherIdentifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.LogEntry);
+            return string.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.LogEntry);
         }
 
         public static string DifficultyLevelScale(this string input, string cypherIdentifier = "")
         {
-            return string.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.DifficultyLevelScale);
+            return string.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.DifficultyLevelScale);
         }
 
         public static string DifficultyLevel(this string input, string cypherIdentifier = "")
         {
-            return String.Format(NodeTemplate, input, cypherIdentifier, NodeLabels.DifficultyLevel);
+            return String.Format(NodeWithLabelTemplate, input, cypherIdentifier, NodeLabels.DifficultyLevel);
         }
 
         public static string CountryWithParam(this string input, string paramIdentifier = CountryParamIdentifier, string cypherIdentifier = CountryIdentifier)
@@ -88,7 +95,7 @@ namespace SummitLog.Services.Persistence.Extensions
             return String.Format(NodeWithParameterTemplate, input, cypherIdentifier, NodeLabels.SummitGroup, paramIdentifier);
         }
 
-        public static string SummitWithParam(this string input, string paramIdentifier = SummitGroupParamIdentifier, string cypherIdentifier = SummitIdentifier)
+        public static string SummitWithParam(this string input, string paramIdentifier = SummitParamIdentifier, string cypherIdentifier = SummitIdentifier)
         {
             return String.Format(NodeWithParameterTemplate, input, cypherIdentifier, NodeLabels.Summit, paramIdentifier);
         }

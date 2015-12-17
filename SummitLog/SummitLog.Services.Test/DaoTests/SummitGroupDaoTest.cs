@@ -102,5 +102,19 @@ namespace SummitLog.Services.Test.DaoTests
 
             Assert.AreEqual(0, summitGroupDao.GetAllIn(area).Count);
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            Area area = _dataGenerator.CreateArea();
+            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup("oldname", area);
+
+            summitGroup.Name = "newname";
+
+            ISummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
+            summitGroupDao.Save(summitGroup);
+
+            Assert.AreEqual("newname", summitGroupDao.GetAllIn(area).First().Name);
+        }
     }
 }

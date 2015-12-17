@@ -27,7 +27,12 @@
             <Setter Property="Content" Value="&#xf068;" />
             <Setter Property="Foreground" Value="Red" />
         </Style>
-        
+
+        <Style x:Key="EditButtonStyle" TargetType="Button" BasedOn="{StaticResource IconButtonBaseStyle}">
+            <Setter Property="Content" Value="&#xf040;" />
+            <Setter Property="Foreground" Value="Orange" />
+        </Style>
+
         <Style TargetType="HeaderedContentControl" x:Key="StretchedHeaderedContentControl">
             <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="Template">
@@ -45,7 +50,16 @@
         <Style x:Key="MainViewHeaderedContentControl" TargetType="HeaderedContentControl" BasedOn="{StaticResource StretchedHeaderedContentControl}">
             <Setter Property="Margin" Value="3"></Setter>
             <Setter Property="Padding" Value="3"></Setter>
-            <Setter Property="Background" Value="#F0F0F0"></Setter>
+            <!--<Setter Property="Background" Value="#F0F0F0"></Setter>-->
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#F0F0F0" Offset="0"></GradientStop>
+                        <GradientStop Color="#F0F0F0" Offset="0.3"></GradientStop>
+                        <GradientStop Color="Transparent" Offset="0.8"></GradientStop>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Application.Resources>
 </Application>

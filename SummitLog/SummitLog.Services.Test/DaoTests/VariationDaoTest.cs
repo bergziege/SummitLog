@@ -96,9 +96,12 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteNormal()
         {
-            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation();
+            Route route = _dataGenerator.CreateRouteInArea();
+            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation(route:route);
             IVariationDao variationDao = new VariationDao(_graphClient);
             variationDao.Delete(variationWithoutLogEntries);
+            Assert.AreEqual(0, variationDao.GetAllOn(route).Count);
+
         }
     }
 }
