@@ -1469,6 +1469,7 @@ namespace SummitLog.UI.Main.ViewModels
         private void ManageDifficulties()
         {
             _difficultyManagementViewCommand.Execute();
+            RefreshVariationsOnLastSelectedRoute();
         }
     }
 }
