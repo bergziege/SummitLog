@@ -119,5 +119,21 @@ namespace SummitLog.Services.Test.DaoTests
 
             variationDao.GetAllOn(route).First().Name.Should().Be("newname");
         }
+
+        [TestMethod]
+        public void TestChangeDifficultyLevelToNewValue()
+        {
+            Route route = _dataGenerator.CreateRouteInCountry();
+            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
+            Variation variation = _dataGenerator.CreateVariation(route: route, difficultyLevel:level);
+
+            DifficultyLevel newLevel = _dataGenerator.CreateDifficultyLevel(name: "neues Level");
+
+            IVariationDao variationDao = new VariationDao(_graphClient);
+            variationDao.ChangeDifficultyLevel(variation, newLevel);
+
+            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            difficultyLevelDao.GetLevelOnVariation(variation).Id.Should().Be(newLevel.Id);
+        }
     }
 }

@@ -83,5 +83,24 @@ namespace SummitLog.Services.Persistence.Impl
                 .ExecuteWithoutResults();
 
         }
+
+        /// <summary>
+        ///     Ändert den Schwierigkeitsgrad der Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        public void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel)
+        {
+            GraphClient.Cypher.Match("".Variation("v").Has("dlc").DifficultyLevel())
+                .Where((Variation v)=>v.Id == variation.Id)
+                .Delete("dlc")
+                .ExecuteWithoutResults();
+
+            GraphClient.Cypher
+                .Match("(v:Variation),(dl:DifficultyLevel)")
+                .Where((Variation v, DifficultyLevel dl) => v.Id == variation.Id && dl.Id == newLevel.Id)
+                .Create("".Node("v").Has().Node("dl"))
+                .ExecuteWithoutResults();
+        }
     }
 }

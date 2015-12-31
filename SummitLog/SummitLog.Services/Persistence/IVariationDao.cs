@@ -37,5 +37,12 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="variation"></param>
         void Save(Variation variation);
+
+        /// <summary>
+        ///     Ändert den Schwiwerigkeitsgrad der Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel);
     }
 }
