@@ -70,5 +70,18 @@ namespace SummitLog.Services.Persistence.Impl
             GraphClient.Cypher.Match("".Route().AnyOutboundRelationAs("routeAssignment").Variation("v").AnyOutboundRelationAs("levelAssignment").DifficultyLevel())
                 .Where((Variation v)=>v.Id == variation.Id).Delete("v, levelAssignment, routeAssignment").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert die Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Save(Variation variation)
+        {
+            GraphClient.Cypher.Match("".Variation("v"))
+                .Where((Variation v)=>v.Id == variation.Id)
+                .Set("v.Name={Name}").WithParam("Name", variation.Name)
+                .ExecuteWithoutResults();
+
+        }
     }
 }

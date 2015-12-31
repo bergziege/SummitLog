@@ -31,5 +31,11 @@ namespace SummitLog.Services.Persistence
         /// </summary>
         /// <param name="variationWithoutLogEntries"></param>
         void Delete(Variation variationWithoutLogEntries);
+
+        /// <summary>
+        ///     Speichert die Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        void Save(Variation variation);
     }
 }
