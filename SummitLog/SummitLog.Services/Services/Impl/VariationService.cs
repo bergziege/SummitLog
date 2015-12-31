@@ -72,5 +72,27 @@ namespace SummitLog.Services.Services.Impl
             if (variation == null) throw new ArgumentNullException(nameof(variation));
             return _variationDao.IsInUse(variation);
         }
+
+        /// <summary>
+        ///     Speichert die Variante
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Save(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            _variationDao.Save(variation);
+        }
+
+        /// <summary>
+        ///     Ändert den Schwierigkeitsgrad einer Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        public void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            if (newLevel == null) throw new ArgumentNullException(nameof(newLevel));
+            _variationDao.ChangeDifficultyLevel(variation, newLevel);
+        }
     }
 }

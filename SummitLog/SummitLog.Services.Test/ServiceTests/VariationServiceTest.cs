@@ -54,6 +54,42 @@ namespace SummitLog.Services.Test.ServiceTests
             variationDaoMock.Verify(x => x.Delete(variation), Times.Once);
         }
 
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void TestChangeDifficultyLevelWithNull(bool variationExists, bool levelExists)
+        {
+            Variation variation = null;
+            DifficultyLevel level = null;
+
+            if (variationExists)
+            {
+                variation = new Variation();
+            }
+
+            if (levelExists)
+            {
+                level = new DifficultyLevel();
+            }
+
+            Action action = () => new VariationService(null).ChangeDifficultyLevel(variation, level);
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestChangeDifficultyLevel()
+        {
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+            variationDaoMock.Setup(x => x.ChangeDifficultyLevel(It.IsAny<Variation>(), It.IsAny<DifficultyLevel>()));
+
+            Variation variation = new Variation();
+            DifficultyLevel newLevel = new DifficultyLevel();
+
+            IVariationService variationService = new VariationService(variationDaoMock.Object);
+            variationService.ChangeDifficultyLevel(variation, newLevel);
+
+            variationDaoMock.Verify(x => x.ChangeDifficultyLevel(variation, newLevel), Times.Once);
+        }
+
         [Test]
         public void TestCreate()
         {
@@ -106,6 +142,27 @@ namespace SummitLog.Services.Test.ServiceTests
 
             Assert.IsTrue(isInUse);
             variationDaoMock.Verify(x => x.IsInUse(variation), Times.Once);
+        }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+            variationDaoMock.Setup(x => x.Save(It.IsAny<Variation>()));
+
+            Variation variation = new Variation();
+
+            IVariationService variationService = new VariationService(variationDaoMock.Object);
+            variationService.Save(variation);
+
+            variationDaoMock.Verify(x => x.Save(variation), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            Action action = () => new VariationService(null).Save(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }
