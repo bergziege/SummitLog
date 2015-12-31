@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
@@ -45,11 +46,11 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestDeleteNull()
         {
             ILogEntryDao dao = new LogEntryDao(_graphClient);
-            dao.Delete(null);
+            Action action = ()=>dao.Delete(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [TestMethod]

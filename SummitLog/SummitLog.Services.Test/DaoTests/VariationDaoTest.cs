@@ -84,14 +84,14 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteInUse()
         {
             Variation variationWithLogEntry = _dataGenerator.CreateVariation();
             LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
 
             IVariationDao variationDao = new VariationDao(_graphClient);
-            variationDao.Delete(variationWithLogEntry);
+            Action action = ()=> variationDao.Delete(variationWithLogEntry);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]

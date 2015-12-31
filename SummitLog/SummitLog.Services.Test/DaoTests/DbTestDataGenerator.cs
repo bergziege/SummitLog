@@ -83,19 +83,19 @@ namespace SummitLog.Services.Test.DaoTests
 
         public Route CreateRouteInSummitGroup(string name = "Route in Gipfelgruppe", SummitGroup summitGroup = null)
         {
-            if (summitGroup == null)
-            {
-                summitGroup = CreateSummitGroup();
-            }
+            //if (summitGroup == null)
+            //{
+            //    summitGroup = CreateSummitGroup();
+            //}
             return new RouteDao(_graphClient).CreateIn(summitGroup, GetRouteWithName(name));
         }
 
         public Route CreateRouteInSummit(string name = "Route auf Gipfel", Summit summit = null)
         {
-            if (summit == null)
-            {
-                summit = CreateSummit();
-            }
+            //if (summit == null)
+            //{
+            //    summit = CreateSummit();
+            //}
             return new RouteDao(_graphClient).CreateIn(summit, GetRouteWithName(name));
         }
 
@@ -128,10 +128,10 @@ namespace SummitLog.Services.Test.DaoTests
 
         public LogEntry CreateLogEntry(Variation variation = null, string memo = "Ich war hier", DateTime? logDate = null)
         {
-            if (variation == null)
-            {
-                variation = CreateVariation();
-            }
+            //if (variation == null)
+            //{
+            //    variation = CreateVariation();
+            //}
             if (!logDate.HasValue)
             {
                 logDate = new DateTime(2015,01,01);
