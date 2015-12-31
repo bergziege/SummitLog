@@ -32,7 +32,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<DifficultyLevel> GetAllIn(DifficultyLevelScale scale)
         {
             if (scale == null) throw new ArgumentNullException(nameof(scale));
-            return _difficultyLevelDao.GetAllIn(scale).OrderBy(x=>x.Score).ToList();
+            return _difficultyLevelDao.GetAllIn(scale).OrderBy(x => x.Score).ToList();
         }
 
         /// <summary>
@@ -69,6 +69,16 @@ namespace SummitLog.Services.Services.Impl
                 throw new NodeInUseException();
             }
             _difficultyLevelDao.Delete(difficultyLevel);
+        }
+
+        /// <summary>
+        ///     Speichert den Schwierigkeitsgrad
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        public void Save(DifficultyLevel difficultyLevel)
+        {
+            if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
+            _difficultyLevelDao.Save(difficultyLevel);
         }
     }
 }

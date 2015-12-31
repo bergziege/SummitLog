@@ -41,5 +41,27 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
 
             view.ShowDialog();
         }
+
+        public void Execute(string name, int score)
+        {
+            NameAndScoreInputView view = AppContext.Container.Resolve<NameAndScoreInputView>();
+            INameAndScoreInputViewModel vm = AppContext.Container.Resolve<INameAndScoreInputViewModel>();
+            view.DataContext = vm;
+
+            vm.Name = name;
+            vm.Score = score;
+
+            vm.RequestCloseAfterCancel += delegate { view.Close(); };
+            vm.RequestCloseAfterOk += delegate
+            {
+                view.Close();
+                Name = vm.Name;
+                Score = vm.Score;
+            };
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
+            view.ShowDialog();
+        }
     }
 }

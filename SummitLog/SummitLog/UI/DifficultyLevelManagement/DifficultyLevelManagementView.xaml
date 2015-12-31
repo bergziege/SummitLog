@@ -18,6 +18,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <Button Command="{Binding Path=AddDifficultyLevelCommand}" Style="{StaticResource AddButtonStyle}" />
+            <Button Command="{Binding Path=EditSelectedDifficultyLevelCommand}" Style="{StaticResource EditButtonStyle}" />
             <Button Command="{Binding Path=DeleteSelectedDifficultyLevelCommand}" Style="{StaticResource RemoveButtonStyle}" />
         </StackPanel>
 

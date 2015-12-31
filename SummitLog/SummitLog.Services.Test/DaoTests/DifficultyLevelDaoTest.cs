@@ -113,5 +113,19 @@ namespace SummitLog.Services.Test.DaoTests
 
             Assert.IsFalse(isLevelInUse);
         }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            DifficultyLevelScale scale = _dataGenerator.CreateDifficultyLevelScale();
+            DifficultyLevel difficultyLevel= _dataGenerator.CreateDifficultyLevel(difficultyLevelScale:scale);
+
+            difficultyLevel.Name = "newname";
+
+            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            difficultyLevelDao.Save(difficultyLevel);
+
+            Assert.AreEqual("newname", difficultyLevelDao.GetAllIn(scale).First().Name);
+        }
     }
 }

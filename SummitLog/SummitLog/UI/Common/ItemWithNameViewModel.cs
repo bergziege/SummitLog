@@ -27,7 +27,7 @@ namespace SummitLog.UI.Common
         /// <summary>
         ///     Aktualisiert das View Model
         /// </summary>
-        public void DoUpdate()
+        public virtual void DoUpdate()
         {
             this.RaisePropertyChanged("Name");
         }

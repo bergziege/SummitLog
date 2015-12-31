@@ -43,6 +43,11 @@ namespace SummitLog.UI.DifficultyLevelManagement.DesignViewModels
         public RelayCommand DeleteSelectedDifficultyLevelCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um den gewählten Schwierigkeitsgrad zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedDifficultyLevelCommand { get; }
+
+        /// <summary>
         ///     LÄdt die VM relevanten Daten zu einer Schwierigkeitsgradskale
         /// </summary>
         /// <param name="difficultyLevelScale"></param>

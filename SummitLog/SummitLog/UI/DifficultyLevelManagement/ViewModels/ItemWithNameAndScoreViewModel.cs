@@ -29,5 +29,15 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             base.LoadData(item);
             Score = item.Score;
         }
+
+        /// <summary>
+        ///     Aktualisiert das View Model
+        /// </summary>
+        public void DoUpdate()
+        {
+            base.DoUpdate();
+            Score = Item.Score;
+
+        }
     }
 }

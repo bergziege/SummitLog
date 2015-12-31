@@ -35,5 +35,11 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="difficultyLevel"></param>
         void Delete(DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        ///     Speichert den Schwierigkeitsgrad
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        void Save(DifficultyLevel difficultyLevel);
     }
 }

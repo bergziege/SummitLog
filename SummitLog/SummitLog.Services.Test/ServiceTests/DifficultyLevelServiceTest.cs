@@ -100,6 +100,23 @@ namespace SummitLog.Services.Test.ServiceTests
             difficultyLevelDaoMock.Verify(x=>x.Delete(difficultyLevel), Times.Once);
         }
 
+        [Test]
+        public void TestSave()
+        {
+            Mock<IDifficultyLevelDao> difficultyLevelDaoMock = new Mock<IDifficultyLevelDao>();
+            difficultyLevelDaoMock.Setup(x => x.Save(It.IsAny<DifficultyLevel>()));
 
+            DifficultyLevel level = new DifficultyLevel();
+            new DifficultyLevelService(difficultyLevelDaoMock.Object).Save(level);
+
+            difficultyLevelDaoMock.Verify(x=>x.Save(level), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            Action action = ()=>new DifficultyLevelService(null).Save(null);
+            action.ShouldThrow<ArgumentNullException>();
+        }
     }
 }
