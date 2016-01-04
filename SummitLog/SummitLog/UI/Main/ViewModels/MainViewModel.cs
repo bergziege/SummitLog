@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using DryIoc;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
@@ -1165,7 +1166,7 @@ namespace SummitLog.UI.Main.ViewModels
                 LogEntriesOnSelectedVariation.Clear();
                 foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation.Item))
                 {
-                    LogEntriesOnSelectedVariation.Add(new LogItemViewModel().LoadData(logEntry));
+                    LogEntriesOnSelectedVariation.Add(AppContext.Container.Resolve<ILogItemViewModel>().LoadData(logEntry));
                 }
             }
         }
@@ -1278,7 +1279,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInCountry.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = new VariationItemViewModel();
+                    IVariationItemViewModel variationItemViewModel =AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1292,7 +1293,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInArea.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = new VariationItemViewModel();
+                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1306,7 +1307,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummitGroup.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = new VariationItemViewModel();
+                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1320,7 +1321,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummit.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = new VariationItemViewModel();
+                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1504,7 +1505,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(selectedRoute))
                 {
-                    IVariationItemViewModel variationItemViewModel = new VariationItemViewModel();
+                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }

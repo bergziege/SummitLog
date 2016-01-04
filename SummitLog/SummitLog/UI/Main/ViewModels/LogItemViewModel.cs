@@ -1,14 +1,14 @@
 ﻿using System;
 using ReactiveUI;
 using SummitLog.Services.Model;
+using SummitLog.Services.Services;
 
 namespace SummitLog.UI.Main.ViewModels
 {
-    public class LogItemViewModel:ReactiveObject, ILogItemViewModel
+    public class LogItemViewModel : ReactiveObject, ILogItemViewModel
     {
-        private string _memo;
         private DateTimeOffset _date;
-        private LogEntry _logEntry;
+        private string _memo;
 
         /// <summary>
         ///     Liefert das Memo
@@ -16,7 +16,7 @@ namespace SummitLog.UI.Main.ViewModels
         public string Memo
         {
             get { return _memo; }
-            private set { this.RaiseAndSetIfChanged(ref _memo, value);}
+            private set { this.RaiseAndSetIfChanged(ref _memo, value); }
         }
 
         /// <summary>
@@ -31,10 +31,7 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert den Logeintrag
         /// </summary>
-        public LogEntry LogEntry
-        {
-            get { return _logEntry; }
-        }
+        public LogEntry LogEntry { get; private set; }
 
         /// <summary>
         ///     Lädt die VM relevanten Daten
@@ -44,9 +41,9 @@ namespace SummitLog.UI.Main.ViewModels
         public ILogItemViewModel LoadData(LogEntry logEntry)
         {
             if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
-            _logEntry = logEntry;
-            Memo = _logEntry.Memo;
-            Date = _logEntry.DateTime;
+            LogEntry = logEntry;
+            Memo = LogEntry.Memo;
+            Date = LogEntry.DateTime;
 
             return this;
         }
@@ -58,8 +55,8 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="dateTime"></param>
         public void Update(string memo, DateTime dateTime)
         {
-            Memo = _logEntry.Memo = memo;
-            Date = _logEntry.DateTime = dateTime;
+            Memo = LogEntry.Memo = memo;
+            Date = LogEntry.DateTime = dateTime;
         }
     }
 }
