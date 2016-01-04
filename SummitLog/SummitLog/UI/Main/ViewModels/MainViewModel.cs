@@ -64,7 +64,7 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _removeSummitGroupCommand;
         private IItemWithNameViewModel<Area> _selectedArea;
         private IItemWithNameViewModel<Country> _selectedCountry;
-        private LogEntry _selectedLogEntry;
+        private ILogItemViewModel _selectedLogEntry;
         private IItemWithNameViewModel<Route> _selectedRouteInArea;
         private IItemWithNameViewModel<Route> _selectedRouteInCountry;
         private IItemWithNameViewModel<Route> _selectedRouteInSummit;
@@ -332,13 +332,13 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Logeinträge zur gewählten Variation
         /// </summary>
-        public ObservableCollection<LogEntry> LogEntriesOnSelectedVariation { get; } =
-            new ObservableCollection<LogEntry>();
+        public ObservableCollection<ILogItemViewModel> LogEntriesOnSelectedVariation { get; } =
+            new ObservableCollection<ILogItemViewModel>();
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Logeintrag
         /// </summary>
-        public LogEntry SelectedLogEntry
+        public ILogItemViewModel SelectedLogEntry
         {
             get { return _selectedLogEntry; }
             set { this.RaiseAndSetIfChanged(ref _selectedLogEntry, value); }
@@ -1137,7 +1137,7 @@ namespace SummitLog.UI.Main.ViewModels
                 LogEntriesOnSelectedVariation.Clear();
                 foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation.Item))
                 {
-                    LogEntriesOnSelectedVariation.Add(logEntry);
+                    LogEntriesOnSelectedVariation.Add(new LogItemViewModel().LoadData(logEntry));
                 }
             }
         }
@@ -1149,7 +1149,7 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void RemoveSelectedLogEntry()
         {
-            _logEntryService.Delete(SelectedLogEntry);
+            _logEntryService.Delete(SelectedLogEntry.LogEntry);
             RefreshLogEntriesOnSelectedVariation();
         }
 

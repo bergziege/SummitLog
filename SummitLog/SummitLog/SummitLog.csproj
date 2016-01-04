@@ -152,13 +152,16 @@
     </Compile>
     <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
     <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
+    <Compile Include="UI\Main\DesignViewModels\LogItemDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\VariationItemDesignViewModel.cs" />
+    <Compile Include="UI\Main\ILogItemViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
     <Compile Include="UI\Main\IVariationItemViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Main\ViewModels\LogItemViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\VariationItemViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />

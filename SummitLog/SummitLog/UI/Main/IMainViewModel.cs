@@ -102,12 +102,12 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert eine Liste aller Logeinträge zur gewählten Variation
         /// </summary>
-        ObservableCollection<LogEntry> LogEntriesOnSelectedVariation { get; }
+        ObservableCollection<ILogItemViewModel> LogEntriesOnSelectedVariation { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Logeintrag
         /// </summary>
-        LogEntry SelectedLogEntry { get; set; }
+        ILogItemViewModel SelectedLogEntry { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um ein Land hinzuzufügen
