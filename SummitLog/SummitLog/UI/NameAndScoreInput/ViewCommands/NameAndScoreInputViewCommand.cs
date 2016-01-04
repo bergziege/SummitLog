@@ -44,6 +44,9 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
 
         public void Execute(string name, int score)
         {
+            Name = name;
+            Score = score;
+
             NameAndScoreInputView view = AppContext.Container.Resolve<NameAndScoreInputView>();
             INameAndScoreInputViewModel vm = AppContext.Container.Resolve<INameAndScoreInputViewModel>();
             view.DataContext = vm;
