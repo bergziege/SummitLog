@@ -20,9 +20,15 @@ namespace SummitLog.Services.Persistence
         LogEntry Create(Variation variation, LogEntry logEntry);
 
         /// <summary>
-        /// Löscht den übergebenen Logeintrag
+        ///     Löscht den übergebenen Logeintrag
         /// </summary>
         /// <param name="logEntry"></param>
         void Delete(LogEntry logEntry);
+
+        /// <summary>
+        ///     Speichert den Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        void Save(LogEntry logEntry);
     }
 }

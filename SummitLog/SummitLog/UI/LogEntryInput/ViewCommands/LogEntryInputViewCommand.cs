@@ -48,5 +48,44 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
 
             return closedAfterOk;
         }
+
+        /// <summary>
+        /// Führt das Commando mit den übergebenen Daten aus.
+        /// </summary>
+        /// <param name="memo"></param>
+        /// <param name="date"></param>
+        /// <returns></returns>
+        public bool Execute(string memo, DateTime date)
+        {
+
+            Memo = memo;
+            Date = date;
+
+            LogEntryInputView view = AppContext.Container.Resolve<LogEntryInputView>();
+            ILogEntryInputViewModel vm = AppContext.Container.Resolve<ILogEntryInputViewModel>();
+            view.DataContext = vm;
+
+            vm.Memo = memo;
+            vm.Date = date;
+
+            bool closedAfterOk = false;
+            vm.RequestCloseAfterOk += delegate
+            {
+                Memo = vm.Memo;
+                Date = vm.Date;
+                closedAfterOk = true;
+                view.Close();
+            };
+            vm.RequestCloseAfterCancel += delegate
+            {
+                view.Close();
+            };
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
+            view.ShowDialog();
+
+            return closedAfterOk;
+        }
     }
 }

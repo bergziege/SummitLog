@@ -36,7 +36,7 @@ namespace SummitLog.Services.Test.DaoTests
         {
             ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
             Variation variation = _dataGenerator.CreateVariation();
-            LogEntry created = _dataGenerator.CreateLogEntry(variation:variation);
+            LogEntry created = _dataGenerator.CreateLogEntry(variation: variation);
 
             IList<LogEntry> logsOnVariation = logEntryDao.GetAllIn(variation);
             Assert.AreEqual(1, logsOnVariation.Count);
@@ -49,7 +49,7 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestDeleteNull()
         {
             ILogEntryDao dao = new LogEntryDao(_graphClient);
-            Action action = ()=>dao.Delete(null);
+            Action action = () => dao.Delete(null);
             action.ShouldThrow<ArgumentNullException>();
         }
 
@@ -58,7 +58,7 @@ namespace SummitLog.Services.Test.DaoTests
         {
 
             Route route = _dataGenerator.CreateRouteInCountry();
-            Variation variation = _dataGenerator.CreateVariation(route:route);
+            Variation variation = _dataGenerator.CreateVariation(route: route);
 
             IVariationDao variationDao = new VariationDao(_graphClient);
             ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
@@ -70,8 +70,29 @@ namespace SummitLog.Services.Test.DaoTests
             logEntryDao.Delete(logEntry);
 
             /* Muss der Logeintrag verschwunden, aber die Variation noch vorhanden sein */
-            Assert.AreEqual(0,logEntryDao.GetAllIn(variation).Count);
+            Assert.AreEqual(0, logEntryDao.GetAllIn(variation).Count);
             Assert.AreEqual(1, variationDao.GetAllOn(route).Count);
+        }
+
+        [TestMethod]
+        public void TestSave()
+        {
+            Variation variation = _dataGenerator.CreateVariation();
+            LogEntry logEntry = _dataGenerator.CreateLogEntry(variation: variation);
+
+            logEntry.Memo.Should().NotBe("newmemo");
+            logEntry.DateTime.Should().NotBe(1.April(2015));
+
+            logEntry.DateTime = 1.April(2015);
+            logEntry.Memo = "newmemo";
+
+            ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
+            logEntryDao.Save(logEntry);
+
+            LogEntry reloaded = logEntryDao.GetAllIn(variation).First();
+            reloaded.DateTime.Should().Be(1.April(2015));
+            reloaded.Memo.Should().Be("newmemo");
+
         }
     }
 }

@@ -25,9 +25,15 @@ namespace SummitLog.Services.Services
         void Create(string memo, DateTime date, Variation variation);
 
         /// <summary>
-        /// Löscht den übergebenen Logeintrag
+        ///     Löscht den übergebenen Logeintrag
         /// </summary>
         /// <param name="logEntry"></param>
         void Delete(LogEntry logEntry);
+
+        /// <summary>
+        ///     Speichert einen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        void Save(LogEntry logEntry);
     }
 }

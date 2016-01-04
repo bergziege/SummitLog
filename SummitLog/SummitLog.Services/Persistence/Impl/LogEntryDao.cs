@@ -57,5 +57,19 @@ namespace SummitLog.Services.Persistence.Impl
                 .Match("".LogEntry("le").AnyInboundRelationsAs("r").Node(""))
                 .Where((LogEntry le) => le.Id == logEntry.Id).Delete("le, r").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert den Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        public void Save(LogEntry logEntry)
+        {
+            if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
+            GraphClient.Cypher.Match("".LogEntry("l"))
+                .Where((LogEntry l) => l.Id == logEntry.Id)
+                .Set("l.Memo={Memo}, l.DateTime={Date}")
+                .WithParams(new Dictionary<string, object> {{"Memo", logEntry.Memo}, {"Date", logEntry.DateTime}})
+                .ExecuteWithoutResults();
+        }
     }
 }

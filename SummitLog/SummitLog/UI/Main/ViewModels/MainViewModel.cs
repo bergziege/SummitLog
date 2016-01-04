@@ -73,6 +73,7 @@ namespace SummitLog.UI.Main.ViewModels
         private IItemWithNameViewModel<SummitGroup> _selectedSummitGroup;
         private IVariationItemViewModel _selectedVariation;
         private RelayCommand _editSelectedVariationCommand;
+        private RelayCommand _editSelectedLogEntryCommand;
 
         /// <summary>
         ///     Ctor.
@@ -792,6 +793,33 @@ namespace SummitLog.UI.Main.ViewModels
                 }
                 return _editSelectedVariationCommand;
             }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Logeintrag zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedLogEntryCommand
+        {
+            get
+            {
+                if (_editSelectedLogEntryCommand == null)
+                {
+                    _editSelectedLogEntryCommand = new RelayCommand(EditSelectedLogEntry, CanEditSelectedLogEntry);
+                }
+                return _editSelectedLogEntryCommand;
+            }
+        }
+
+        private bool CanEditSelectedLogEntry()
+        {
+            return SelectedLogEntry != null;
+        }
+
+        private void EditSelectedLogEntry()
+        {
+            _logEntryInputViewCommand.Execute(SelectedLogEntry.Memo, SelectedLogEntry.Date.DateTime);
+            SelectedLogEntry.Update(_logEntryInputViewCommand.Memo, _logEntryInputViewCommand.Date);
+            _logEntryService.Save(SelectedLogEntry.LogEntry);
         }
 
         private bool CanEditSelectedVariation()

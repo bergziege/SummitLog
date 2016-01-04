@@ -267,6 +267,8 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddLogEntryToSelectedVariationCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedLogEntryCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSelectedLogEntryCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>

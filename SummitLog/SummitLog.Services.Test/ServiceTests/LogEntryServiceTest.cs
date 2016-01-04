@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
+using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
 using SummitLog.Services.Services.Impl;
 
@@ -87,6 +88,27 @@ namespace SummitLog.Services.Test.ServiceTests
             logEntryService.Delete(logEntry);
             
             logEntryDaoMock.Verify(x=>x.Delete(logEntry), Times.Once);
+        }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            logEntryDaoMock.Setup(x => x.Save(It.IsAny<LogEntry>()));
+
+            LogEntry logEntry = new LogEntry();
+
+            ILogEntryService logEntryService = new LogEntryService(logEntryDaoMock.Object);
+            logEntryService.Save(logEntry);
+
+            logEntryDaoMock.Verify(x=>x.Save(logEntry), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            Action action = ()=> new LogEntryService(null).Save(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

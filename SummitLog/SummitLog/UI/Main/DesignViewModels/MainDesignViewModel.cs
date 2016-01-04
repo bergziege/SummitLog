@@ -340,6 +340,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         public RelayCommand EditSelectedVariationCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um den gewählten Logeintrag zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedLogEntryCommand { get; }
+
+        /// <summary>
         ///     Liefert ein Command um die gewählte Route zu bearbeiten
         /// </summary>
         public RelayCommand EditSelectedRouteCommand { get; }

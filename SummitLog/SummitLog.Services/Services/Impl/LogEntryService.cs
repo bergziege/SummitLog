@@ -56,5 +56,15 @@ namespace SummitLog.Services.Services.Impl
             
             _logEntryDao.Delete(logEntry);
         }
+
+        /// <summary>
+        ///     Speichert einen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        public void Save(LogEntry logEntry)
+        {
+            if (logEntry == null) throw new ArgumentNullException(nameof(logEntry));
+            _logEntryDao.Save(logEntry);
+        }
     }
 }
