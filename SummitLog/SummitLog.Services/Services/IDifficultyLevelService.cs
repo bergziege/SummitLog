@@ -41,5 +41,12 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="difficultyLevel"></param>
         void Save(DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        ///     Liefert den Schwierigkeitsgrad einer Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        DifficultyLevel GetForVariation(Variation variation);
     }
 }

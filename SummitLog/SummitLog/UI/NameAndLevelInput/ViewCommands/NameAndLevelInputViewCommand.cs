@@ -46,5 +46,32 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
 
             view.ShowDialog();
         }
+
+        public void Execute(string name, DifficultyLevelScale scale, DifficultyLevel level)
+        {
+            Name = name;
+            DifficultyLevel = level;
+
+
+            NameAndLevelInputView view = AppContext.Container.Resolve<NameAndLevelInputView>();
+            INameAndLevelInputViewModel vm = AppContext.Container.Resolve<INameAndLevelInputViewModel>();
+            view.DataContext = vm;
+
+            vm.RequestCloseAfterCancel += delegate { view.Close(); };
+            vm.RequestCloseAfterOk += delegate
+            {
+                view.Close();
+                Name = vm.Name;
+                DifficultyLevel = vm.SelectedDifficultyLevel;
+            };
+
+            vm.LoadData();
+
+            vm.PresetValues(name, scale, level);
+
+            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+
+            view.ShowDialog();
+        }
     }
 }

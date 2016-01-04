@@ -85,5 +85,18 @@ namespace SummitLog.Services.Test.DaoTests
 
             Assert.AreEqual("newname", difficultyLevelScaleDao.GetAll().First().Name);
         }
+
+        [TestMethod]
+        public void TestGetForLevel()
+        {
+            DifficultyLevelScale scale = _dataGenerator.CreateDifficultyLevelScale();
+            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel(difficultyLevelScale: scale);
+
+            IDifficultyLevelScaleDao difficultyLevelScaleDao = new DifficultyLevelScaleDao(_graphClient);
+            DifficultyLevelScale scaleForLevel = difficultyLevelScaleDao.GetForDifficultyLevel(level);
+
+            scaleForLevel.Should().NotBeNull();
+            scaleForLevel.Id.Should().Be(scale.Id);
+        }
     }
 }

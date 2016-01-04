@@ -92,12 +92,12 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)
         /// </summary>
-        ObservableCollection<Variation> VariationsOnSelectedRoute { get; }
+        ObservableCollection<IVariationItemViewModel> VariationsOnSelectedRoute { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Variation
         /// </summary>
-        Variation SelectedVariation { get; set; }
+        IVariationItemViewModel SelectedVariation { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Logeinträge zur gewählten Variation
@@ -303,6 +303,11 @@ namespace SummitLog.UI.Main
         ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
         /// </summary>
         RelayCommand EditSelectedRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu bearbeiten.
+        /// </summary>
+        RelayCommand EditSelectedVariationCommand { get; }
 
         /// <summary>
         ///     Lädt die relevanten Daten des View Models

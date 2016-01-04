@@ -243,6 +243,7 @@
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddVariationToSelectedRouteCommand}"
                             Style="{StaticResource AddButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedVariationCommand}" Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSelectedVariationCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>

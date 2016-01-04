@@ -51,5 +51,16 @@ namespace SummitLog.UI.NameAndLevelInput.DesignViewModels
         public void LoadData()
         {
         }
+
+        /// <summary>
+        ///     Setzt vorbestimmte Werte
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="scale"></param>
+        /// <param name="level"></param>
+        public void PresetValues(string name, DifficultyLevelScale scale, DifficultyLevel level)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

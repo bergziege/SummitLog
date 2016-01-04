@@ -82,5 +82,17 @@ namespace SummitLog.Services.Persistence.Impl
                 .Set("dls.Name = {name}").WithParam("name", difficultyLevelScale.Name)
                 .ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Liefert die Skale eines Schwierigkeitsgrades
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        /// <returns></returns>
+        public DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel)
+        {
+            return GraphClient.Cypher.Match("".DifficultyLevelScale("dls").Has().DifficultyLevel("dl"))
+                .Where((DifficultyLevel dl) => dl.Id == difficultyLevel.Id)
+                .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
+        }
     }
 }

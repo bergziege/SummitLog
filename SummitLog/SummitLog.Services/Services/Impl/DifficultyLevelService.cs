@@ -80,5 +80,16 @@ namespace SummitLog.Services.Services.Impl
             if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
             _difficultyLevelDao.Save(difficultyLevel);
         }
+
+        /// <summary>
+        ///     Liefert den Schwierigkeitsgrad einer Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <returns></returns>
+        public DifficultyLevel GetForVariation(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            return _difficultyLevelDao.GetLevelOnVariation(variation);
+        }
     }
 }

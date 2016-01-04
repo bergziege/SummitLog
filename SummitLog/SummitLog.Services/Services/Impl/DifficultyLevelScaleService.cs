@@ -75,5 +75,16 @@ namespace SummitLog.Services.Services.Impl
             if (scaleToSave == null) throw new ArgumentNullException(nameof(scaleToSave));
             _difficultyLevelScaleDao.Save(scaleToSave);
         }
+
+        /// <summary>
+        ///     Liefert die Sakale zu einer Skala
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        /// <returns></returns>
+        public DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel)
+        {
+            if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
+            return _difficultyLevelScaleDao.GetForDifficultyLevel(difficultyLevel);
+        }
     }
 }

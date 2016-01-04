@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssert;
 using FluentAssertions;
 
 using Moq;
@@ -116,6 +117,32 @@ namespace SummitLog.Services.Test.ServiceTests
         public void TestSaveNull()
         {
             Action action = ()=>new DifficultyLevelService(null).Save(null);
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestGetForVariation()
+        {
+            DifficultyLevel level = new DifficultyLevel();
+            Mock<IDifficultyLevelDao> difficultyLevelDaoMock = new Mock<IDifficultyLevelDao>();
+            difficultyLevelDaoMock.Setup(x => x.GetLevelOnVariation(It.IsAny<Variation>())).Returns(level);
+
+            Variation variation = new Variation();
+
+            IDifficultyLevelService difficultyLevelService = new DifficultyLevelService(difficultyLevelDaoMock.Object);
+            DifficultyLevel levelForVariation = difficultyLevelService.GetForVariation(variation);
+
+            levelForVariation.Should().NotBeNull();
+            levelForVariation.Id.Should().Be(level.Id);
+
+            difficultyLevelDaoMock.Verify(x=>x.GetLevelOnVariation(variation), Times.Once);
+
+        }
+
+        [Test]
+        public void TestGetForVariationNull()
+        {
+            Action action = ()=>new DifficultyLevelService(null).GetForVariation(null);
             action.ShouldThrow<ArgumentNullException>();
         }
     }
