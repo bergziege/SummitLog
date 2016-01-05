@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -67,6 +68,31 @@ namespace SummitLog.Services.Persistence.Impl
                 throw new NodeInUseException();
             }
             GraphClient.Cypher.Match("".DifficultyLevelScale("dls")).Where((DifficultyLevelScale dls)=>dls.Id == difficultyLevelScale.Id).Delete("dls").ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        ///     Speichert die Schwierigkeitsgradskale
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        public void Save(DifficultyLevelScale difficultyLevelScale)
+        {
+            if (difficultyLevelScale == null) throw new ArgumentNullException(nameof(difficultyLevelScale));
+            GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
+                .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
+                .Set("dls.Name = {name}").WithParam("name", difficultyLevelScale.Name)
+                .ExecuteWithoutResults();
+        }
+
+        /// <summary>
+        ///     Liefert die Skale eines Schwierigkeitsgrades
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        /// <returns></returns>
+        public DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel)
+        {
+            return GraphClient.Cypher.Match("".DifficultyLevelScale("dls").Has().DifficultyLevel("dl"))
+                .Where((DifficultyLevel dl) => dl.Id == difficultyLevel.Id)
+                .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
         }
     }
 }

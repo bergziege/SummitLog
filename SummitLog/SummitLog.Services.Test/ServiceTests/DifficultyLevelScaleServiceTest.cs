@@ -81,5 +81,42 @@ namespace SummitLog.Services.Test.ServiceTests
             difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
             difficultyLevelScaleDaoMock.Verify(x=>x.Delete(difficultyLevelScale), Times.Once);
         }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.Save(It.IsAny<DifficultyLevelScale>()));
+
+            DifficultyLevelScale scaleToSave = new DifficultyLevelScale();
+
+            IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
+            difficultyLevelScaleService.Save(scaleToSave);
+
+            difficultyLevelScaleDaoMock.Verify(x=>x.Save(scaleToSave), Times.Once);
+        }
+
+        [Test]
+        public void TestGetForLevel()
+        {
+            DifficultyLevelScale scaleToReturn = new DifficultyLevelScale();
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.GetForDifficultyLevel(It.IsAny<DifficultyLevel>()))
+                .Returns(scaleToReturn);
+
+            DifficultyLevel levelToGetScaleFor = new DifficultyLevel();
+
+            DifficultyLevelScale scale = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object).GetForDifficultyLevel(levelToGetScaleFor);
+
+            scale.Should().Be(scaleToReturn);
+            difficultyLevelScaleDaoMock.Verify(x=>x.GetForDifficultyLevel(levelToGetScaleFor), Times.Once);
+        }
+
+        [Test]
+        public void TestGetForLevelNull()
+        {
+            Action action = () => new DifficultyLevelScaleService(null).GetForDifficultyLevel(null);
+            action.ShouldThrow<ArgumentNullException>();
+        }
     }
 }

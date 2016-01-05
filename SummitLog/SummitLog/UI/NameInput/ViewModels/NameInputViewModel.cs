@@ -10,8 +10,13 @@ namespace SummitLog.UI.NameInput.ViewModels
     public class NameInputViewModel : ReactiveObject, INameInputViewModel
     {
         private RelayCommand _cancelCommand;
-        private RelayCommand _okCommand;
         private string _name;
+        private RelayCommand _okCommand;
+
+        /// <summary>
+        ///     Liefert ob der Name benötigt wird
+        /// </summary>
+        public virtual bool RequiresName => true;
 
         /// <summary>
         ///     Líefert oder setzt den Namen
@@ -62,18 +67,22 @@ namespace SummitLog.UI.NameInput.ViewModels
         /// </summary>
         public event EventHandler RequestCloseAfterCancel;
 
-        private bool CanOk()
-        {
-            return !string.IsNullOrWhiteSpace(Name) && MoreCanOkCriterias();
-        }
-
         /// <summary>
-        /// Weitere Kriterien, die zur Prüfung herangezogen werden ob das OK Command ausgeführt werden darf.
+        ///     Weitere Kriterien, die zur Prüfung herangezogen werden ob das OK Command ausgeführt werden darf.
         /// </summary>
         /// <returns></returns>
         public virtual bool MoreCanOkCriterias()
         {
             return true;
+        }
+
+        private bool CanOk()
+        {
+            if (RequiresName)
+            {
+                return !string.IsNullOrWhiteSpace(Name) && MoreCanOkCriterias();
+            }
+            return MoreCanOkCriterias();
         }
 
         private void Ok()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -49,14 +50,14 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteInUse()
         {
             DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
             Variation variation = _dataGenerator.CreateVariation(difficultyLevel: level);
 
             IDifficultyLevelDao dao = new DifficultyLevelDao(_graphClient);
-            dao.Delete(level);
+            Action action = ()=> dao.Delete(level);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]
@@ -112,6 +113,20 @@ namespace SummitLog.Services.Test.DaoTests
             bool isLevelInUse = difficultyLevelDao.IsInUse(levelNotInUse);
 
             Assert.IsFalse(isLevelInUse);
+        }
+
+        [TestMethod]
+        public void TestUpdate()
+        {
+            DifficultyLevelScale scale = _dataGenerator.CreateDifficultyLevelScale();
+            DifficultyLevel difficultyLevel= _dataGenerator.CreateDifficultyLevel(difficultyLevelScale:scale);
+
+            difficultyLevel.Name = "newname";
+
+            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            difficultyLevelDao.Save(difficultyLevel);
+
+            Assert.AreEqual("newname", difficultyLevelDao.GetAllIn(scale).First().Name);
         }
     }
 }

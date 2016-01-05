@@ -152,12 +152,19 @@
     </Compile>
     <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
     <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
+    <Compile Include="UI\Main\Converter\StringContentToVisibilityConverter.cs" />
+    <Compile Include="UI\Main\DesignViewModels\LogItemDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
+    <Compile Include="UI\Main\DesignViewModels\VariationItemDesignViewModel.cs" />
+    <Compile Include="UI\Main\ILogItemViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
+    <Compile Include="UI\Main\IVariationItemViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Main\ViewModels\LogItemViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\Main\ViewModels\VariationItemViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\INameAndLevelInputViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\NameAndLevelInputView.xaml.cs">
@@ -217,7 +224,18 @@
       <Name>SummitLog.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\icon_buch.png" />
+    <Resource Include="Assets\icon_gebiet.png" />
+    <Resource Include="Assets\icon_gebiet_wege.png" />
+    <Resource Include="Assets\icon_gipfel.png" />
+    <Resource Include="Assets\icon_gipfelgruppe.png" />
+    <Resource Include="Assets\icon_gipfelgruppe_wege.png" />
+    <Resource Include="Assets\icon_gipfel_wege.png" />
+    <Resource Include="Assets\icon_land.png" />
+    <Resource Include="Assets\icon_land_wege.png" />
+    <Resource Include="Assets\icon_schwierigkeiten.png" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>

@@ -70,5 +70,37 @@ namespace SummitLog.Services.Persistence.Impl
             GraphClient.Cypher.Match("".Route().AnyOutboundRelationAs("routeAssignment").Variation("v").AnyOutboundRelationAs("levelAssignment").DifficultyLevel())
                 .Where((Variation v)=>v.Id == variation.Id).Delete("v, levelAssignment, routeAssignment").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert die Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Save(Variation variation)
+        {
+            GraphClient.Cypher.Match("".Variation("v"))
+                .Where((Variation v)=>v.Id == variation.Id)
+                .Set("v.Name={Name}").WithParam("Name", variation.Name)
+                .ExecuteWithoutResults();
+
+        }
+
+        /// <summary>
+        ///     Ändert den Schwierigkeitsgrad der Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        public void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel)
+        {
+            GraphClient.Cypher.Match("".Variation("v").Has("dlc").DifficultyLevel())
+                .Where((Variation v)=>v.Id == variation.Id)
+                .Delete("dlc")
+                .ExecuteWithoutResults();
+
+            GraphClient.Cypher
+                .Match("(v:Variation),(dl:DifficultyLevel)")
+                .Where((Variation v, DifficultyLevel dl) => v.Id == variation.Id && dl.Id == newLevel.Id)
+                .Create("".Node("v").Has().Node("dl"))
+                .ExecuteWithoutResults();
+        }
     }
 }

@@ -32,5 +32,18 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="difficultyLevelScale"></param>
         void Delete(DifficultyLevelScale difficultyLevelScale);
+
+        /// <summary>
+        ///     Speichert die Schwierigkeitsgradskale
+        /// </summary>
+        /// <param name="scaleToSave"></param>
+        void Save(DifficultyLevelScale scaleToSave);
+
+        /// <summary>
+        ///     Liefert die Sakale zu einer Skala
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        /// <returns></returns>
+        DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel);
     }
 }

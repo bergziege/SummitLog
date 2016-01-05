@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -82,14 +83,14 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteUsed()
         {
             Summit summit = _dataGenerator.CreateSummit();
             Route route = _dataGenerator.CreateRouteInSummit(summit: summit);
 
             ISummitDao summitDao = new SummitDao(_graphClient);
-            summitDao.Delete(summit);
+            Action action = ()=>summitDao.Delete(summit);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]

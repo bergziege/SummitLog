@@ -31,20 +31,19 @@ namespace SummitLog.Services.Services.Impl
         public IList<Variation> GetAllOn(Route route)
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
-            return _variationDao.GetAllOn(route).OrderBy(x=>x.Name).ToList();
+            return _variationDao.GetAllOn(route).ToList();
         }
 
         /// <summary>
         ///     Erstellt eine neue Variation einer Route mit einem Schwierigkeitsgrad
         /// </summary>
-        /// <param name="variationName"></param>
         /// <param name="route"></param>
         /// <param name="difficultyLevel"></param>
-        public void Create(string variationName, Route route, DifficultyLevel difficultyLevel)
+        /// <param name="variationName"></param>
+        public void Create(Route route, DifficultyLevel difficultyLevel, string variationName)
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
             if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
-            if (string.IsNullOrWhiteSpace(variationName)) throw new ArgumentNullException(nameof(variationName));
             _variationDao.Create(new Variation() {Name = variationName}, route, difficultyLevel);
         }
 
@@ -71,6 +70,28 @@ namespace SummitLog.Services.Services.Impl
         {
             if (variation == null) throw new ArgumentNullException(nameof(variation));
             return _variationDao.IsInUse(variation);
+        }
+
+        /// <summary>
+        ///     Speichert die Variante
+        /// </summary>
+        /// <param name="variation"></param>
+        public void Save(Variation variation)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            _variationDao.Save(variation);
+        }
+
+        /// <summary>
+        ///     Ändert den Schwierigkeitsgrad einer Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        public void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel)
+        {
+            if (variation == null) throw new ArgumentNullException(nameof(variation));
+            if (newLevel == null) throw new ArgumentNullException(nameof(newLevel));
+            _variationDao.ChangeDifficultyLevel(variation, newLevel);
         }
     }
 }

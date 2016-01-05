@@ -67,16 +67,16 @@ namespace SummitLog.UI.Main.DesignViewModels
                 new ItemWithNameDesignViewModel<Route>()
             };
 
-            VariationsOnSelectedRoute = new ObservableCollection<Variation>
+            VariationsOnSelectedRoute = new ObservableCollection<IVariationItemViewModel>
             {
-                new Variation() {Name = "Var A"},
-                new Variation() {Name = "Var B"}
+                new VariationItemDesignViewModel(),
+                new VariationItemDesignViewModel()
             };
 
-            LogEntriesOnSelectedVariation = new ObservableCollection<LogEntry>
+            LogEntriesOnSelectedVariation = new ObservableCollection<ILogItemViewModel>
             {
-                new LogEntry() {DateTime = DateTime.Today, Memo = "freeclimb"},
-                new LogEntry() {DateTime = DateTime.Today.AddDays(1), Memo = "freeclimb 2"}
+                new LogItemDesignViewModel(),
+                new LogItemDesignViewModel()
             };
 
             SelectedCountry = Countries.First();
@@ -177,22 +177,22 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)
         /// </summary>
-        public ObservableCollection<Variation> VariationsOnSelectedRoute { get; }
+        public ObservableCollection<IVariationItemViewModel> VariationsOnSelectedRoute { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Variation
         /// </summary>
-        public Variation SelectedVariation { get; set; }
+        public IVariationItemViewModel SelectedVariation { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Logeinträge zur gewählten Variation
         /// </summary>
-        public ObservableCollection<LogEntry> LogEntriesOnSelectedVariation { get; }
+        public ObservableCollection<ILogItemViewModel> LogEntriesOnSelectedVariation { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Logeintrag
         /// </summary>
-        public LogEntry SelectedLogEntry { get; set; }
+        public ILogItemViewModel SelectedLogEntry { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um ein Land hinzuzufügen
@@ -333,6 +333,16 @@ namespace SummitLog.UI.Main.DesignViewModels
         ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
         /// </summary>
         public RelayCommand EditSelectedRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedVariationCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Logeintrag zu bearbeiten.
+        /// </summary>
+        public RelayCommand EditSelectedLogEntryCommand { get; }
 
         /// <summary>
         ///     Liefert ein Command um die gewählte Route zu bearbeiten

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -83,14 +84,14 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteInUse()
         {
             Variation variationWithLogEntry = _dataGenerator.CreateVariation();
             LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
 
             IVariationDao variationDao = new VariationDao(_graphClient);
-            variationDao.Delete(variationWithLogEntry);
+            Action action = ()=> variationDao.Delete(variationWithLogEntry);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]
@@ -101,7 +102,38 @@ namespace SummitLog.Services.Test.DaoTests
             IVariationDao variationDao = new VariationDao(_graphClient);
             variationDao.Delete(variationWithoutLogEntries);
             Assert.AreEqual(0, variationDao.GetAllOn(route).Count);
+        }
 
+        [TestMethod]
+        public void TestSave()
+        {
+            Route route = _dataGenerator.CreateRouteInCountry();
+            Variation variation = _dataGenerator.CreateVariation(route:route);
+
+            variation.Name.Should().NotBe("newname");
+
+            variation.Name = "newname";
+
+            IVariationDao variationDao = new VariationDao(_graphClient);
+            variationDao.Save(variation);
+
+            variationDao.GetAllOn(route).First().Name.Should().Be("newname");
+        }
+
+        [TestMethod]
+        public void TestChangeDifficultyLevelToNewValue()
+        {
+            Route route = _dataGenerator.CreateRouteInCountry();
+            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
+            Variation variation = _dataGenerator.CreateVariation(route: route, difficultyLevel:level);
+
+            DifficultyLevel newLevel = _dataGenerator.CreateDifficultyLevel(name: "neues Level");
+
+            IVariationDao variationDao = new VariationDao(_graphClient);
+            variationDao.ChangeDifficultyLevel(variation, newLevel);
+
+            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            difficultyLevelDao.GetLevelOnVariation(variation).Id.Should().Be(newLevel.Id);
         }
     }
 }

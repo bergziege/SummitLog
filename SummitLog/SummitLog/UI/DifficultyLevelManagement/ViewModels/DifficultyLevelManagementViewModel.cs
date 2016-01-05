@@ -20,6 +20,7 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
         private RelayCommand _deleteSelectedDifficultyLevelCommand;
         private DifficultyLevelScale _difficultyLevelScale;
         private IItemWithNameAndScoreViewModel _selectedDifficultyLevel;
+        private RelayCommand _editSelectedDifficultyLevelCommand;
 
         /// <summary>
         ///     Liefert eine neue Instanz des View Models
@@ -77,6 +78,35 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
                 }
                 return _deleteSelectedDifficultyLevelCommand;
             }
+        }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Schwierigkeitsgrad zu bearbeiten
+        /// </summary>
+        public RelayCommand EditSelectedDifficultyLevelCommand
+        {
+            get
+            {
+                if (_editSelectedDifficultyLevelCommand == null)
+                {
+                    _editSelectedDifficultyLevelCommand = new RelayCommand(EditSelectedDifficultyLevel, CanEditSelectedDifficultyLevel);
+                }
+                return _editSelectedDifficultyLevelCommand;
+            }
+        }
+
+        private bool CanEditSelectedDifficultyLevel()
+        {
+            return SelectedDifficultyLevel != null;
+        }
+
+        private void EditSelectedDifficultyLevel()
+        {
+            _nameAndScoreInputViewCommand.Execute(SelectedDifficultyLevel.Name, SelectedDifficultyLevel.Score);
+            SelectedDifficultyLevel.Item.Name = _nameAndScoreInputViewCommand.Name;
+            SelectedDifficultyLevel.Item.Score = _nameAndScoreInputViewCommand.Score;
+            _difficultyLevelService.Save(SelectedDifficultyLevel.Item);
+            SelectedDifficultyLevel.DoUpdate();
         }
 
         /// <summary>

@@ -19,15 +19,21 @@ namespace SummitLog.Services.Services
         /// <summary>
         ///     Erstellt ein neuen Logeintrag zur Variation
         /// </summary>
-        /// <param name="memo"></param>
-        /// <param name="date"></param>
         /// <param name="variation"></param>
-        void Create(string memo, DateTime date, Variation variation);
+        /// <param name="date"></param>
+        /// <param name="memo"></param>
+        void Create(Variation variation, DateTime date, string memo);
 
         /// <summary>
-        /// Löscht den übergebenen Logeintrag
+        ///     Löscht den übergebenen Logeintrag
         /// </summary>
         /// <param name="logEntry"></param>
         void Delete(LogEntry logEntry);
+
+        /// <summary>
+        ///     Speichert einen Logeintrag
+        /// </summary>
+        /// <param name="logEntry"></param>
+        void Save(LogEntry logEntry);
     }
 }

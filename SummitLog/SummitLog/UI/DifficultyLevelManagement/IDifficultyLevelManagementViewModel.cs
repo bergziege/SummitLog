@@ -30,6 +30,11 @@ namespace SummitLog.UI.DifficultyLevelManagement
         RelayCommand DeleteSelectedDifficultyLevelCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command um den gewählten Schwierigkeitsgrad zu bearbeiten
+        /// </summary>
+        RelayCommand EditSelectedDifficultyLevelCommand { get; }
+
+        /// <summary>
         ///     LÄdt die VM relevanten Daten zu einer Schwierigkeitsgradskale
         /// </summary>
         /// <param name="difficultyLevelScale"></param>

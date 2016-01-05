@@ -59,6 +59,8 @@ namespace SummitLog
             container.Register<IDifficultyManagementViewModel, DifficultyManagementViewModel>();
             container.Register<INameAndLevelInputViewModel, NameAndLevelInputViewModel>();
             container.Register<ILogEntryInputViewModel, LogEntryInputViewModel>();
+            container.Register<ILogItemViewModel, LogItemViewModel>();
+            container.Register<IVariationItemViewModel, VariationItemViewModel>();
         }
 
         private static void SetupViews(Container container)

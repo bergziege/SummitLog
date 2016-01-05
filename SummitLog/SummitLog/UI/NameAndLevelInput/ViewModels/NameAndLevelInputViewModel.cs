@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
@@ -15,6 +16,11 @@ namespace SummitLog.UI.NameAndLevelInput.ViewModels
         private readonly IDifficultyLevelService _difficultyLevelService;
         private DifficultyLevelScale _selectedDifficultyLevelScale;
         private DifficultyLevel _selectedDifficultyLevel;
+
+        /// <summary>
+        ///     Liefert ob der Name benötigt wird
+        /// </summary>
+        public override bool RequiresName => false;
 
         /// <summary>
         /// Liefert eine neue Instanz des View Models
@@ -80,6 +86,25 @@ namespace SummitLog.UI.NameAndLevelInput.ViewModels
             foreach (DifficultyLevelScale difficultyLevelScale in _difficultyLevelScaleService.GetAll())
             {
                 DifficultyLevelScales.Add(difficultyLevelScale);
+            }
+        }
+
+        /// <summary>
+        ///     Setzt vorbestimmte Werte
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="scale"></param>
+        /// <param name="level"></param>
+        public void PresetValues(string name, DifficultyLevelScale scale, DifficultyLevel level)
+        {
+            Name = name;
+            if (DifficultyLevelScales.Any())
+            {
+                SelectedDifficultyLevelScale = DifficultyLevelScales.FirstOrDefault(x => x.Id == scale.Id);
+            }
+            if (SelectedDifficultyLevelScale != null)
+            {
+                SelectedDifficultyLevel = DifficultyLevels.FirstOrDefault(x => x.Id == level.Id);
             }
         }
 

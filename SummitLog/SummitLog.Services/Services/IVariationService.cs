@@ -18,10 +18,10 @@ namespace SummitLog.Services.Services
         /// <summary>
         ///     Erstellt eine neue Variation einer Route mit einem Schwierigkeitsgrad
         /// </summary>
-        /// <param name="variationName"></param>
         /// <param name="route"></param>
         /// <param name="difficultyLevel"></param>
-        void Create(string variationName, Route route, DifficultyLevel difficultyLevel);
+        /// <param name="variationName"></param>
+        void Create(Route route, DifficultyLevel difficultyLevel, string variationName);
 
         /// <summary>
         ///     Löscht eine Variation, wenn diese nicht mehr verwendet wird.
@@ -35,5 +35,18 @@ namespace SummitLog.Services.Services
         /// <param name="variation"></param>
         /// <returns></returns>
         bool IsInUse(Variation variation);
+
+        /// <summary>
+        ///     Speichert die Variante
+        /// </summary>
+        /// <param name="variation"></param>
+        void Save(Variation variation);
+
+        /// <summary>
+        ///     Ändert den Schwierigkeitsgrad einer Variation
+        /// </summary>
+        /// <param name="variation"></param>
+        /// <param name="newLevel"></param>
+        void ChangeDifficultyLevel(Variation variation, DifficultyLevel newLevel);
     }
 }

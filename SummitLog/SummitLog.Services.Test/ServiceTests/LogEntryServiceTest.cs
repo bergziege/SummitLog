@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
+using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
 using SummitLog.Services.Services.Impl;
 
@@ -38,7 +39,7 @@ namespace SummitLog.Services.Test.ServiceTests
             Variation fakeVariation = new Variation();
 
             ILogEntryService logService = new LogEntryService(logDaoMock.Object);
-            logService.Create("freeclimb", DateTime.Today, fakeVariation);
+            logService.Create(fakeVariation, DateTime.Today, "freeclimb");
 
             logDaoMock.Verify(x=>x.Create(fakeVariation, It.Is<LogEntry>(y=>y.Memo == "freeclimb" && y.DateTime == DateTime.Today)), Times.Once);
         }
@@ -47,17 +48,16 @@ namespace SummitLog.Services.Test.ServiceTests
         [TestCase(true, " ")]
         [TestCase(true, "    ")]
         [TestCase(true, null)]
-        [TestCase(false, "freeclimb")]
-        public void TestCreateMissingName(bool useVariation, string name)
+        [TestCase(false, "freeclimb", ExpectedException = typeof(ArgumentNullException))]
+        public void TestCreateWithSomeMissing(bool useVariation, string name)
         {
             Variation fakeVariation = null;
             if (useVariation)
             {
                 fakeVariation = new Variation();
             }
-
-            Action act = ()=>new LogEntryService(null).Create(name, DateTime.Today, fakeVariation);
-            act.ShouldThrow<ArgumentNullException>();
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            new LogEntryService(logEntryDaoMock.Object).Create(fakeVariation, DateTime.Today, name);
         }
 
         [Test]
@@ -87,6 +87,27 @@ namespace SummitLog.Services.Test.ServiceTests
             logEntryService.Delete(logEntry);
             
             logEntryDaoMock.Verify(x=>x.Delete(logEntry), Times.Once);
+        }
+
+        [Test]
+        public void TestSave()
+        {
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            logEntryDaoMock.Setup(x => x.Save(It.IsAny<LogEntry>()));
+
+            LogEntry logEntry = new LogEntry();
+
+            ILogEntryService logEntryService = new LogEntryService(logEntryDaoMock.Object);
+            logEntryService.Save(logEntry);
+
+            logEntryDaoMock.Verify(x=>x.Save(logEntry), Times.Once);
+        }
+
+        [Test]
+        public void TestSaveNull()
+        {
+            Action action = ()=> new LogEntryService(null).Save(null);
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

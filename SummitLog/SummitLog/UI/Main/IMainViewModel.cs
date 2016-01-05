@@ -15,7 +15,7 @@ namespace SummitLog.UI.Main
         ObservableCollection<IItemWithNameViewModel<Country>> Countries { get; }
 
         /// <summary>
-        ///     Liefert oder setzt das gewählte Land
+        ///     Liefrt oder setzt das gewählte Land
         /// </summary>
         IItemWithNameViewModel<Country> SelectedCountry { get; set; }
 
@@ -92,22 +92,22 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)
         /// </summary>
-        ObservableCollection<Variation> VariationsOnSelectedRoute { get; }
+        ObservableCollection<IVariationItemViewModel> VariationsOnSelectedRoute { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Variation
         /// </summary>
-        Variation SelectedVariation { get; set; }
+        IVariationItemViewModel SelectedVariation { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Logeinträge zur gewählten Variation
         /// </summary>
-        ObservableCollection<LogEntry> LogEntriesOnSelectedVariation { get; }
+        ObservableCollection<ILogItemViewModel> LogEntriesOnSelectedVariation { get; }
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Logeintrag
         /// </summary>
-        LogEntry SelectedLogEntry { get; set; }
+        ILogItemViewModel SelectedLogEntry { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um ein Land hinzuzufügen
@@ -303,6 +303,16 @@ namespace SummitLog.UI.Main
         ///     Liefert ein Command um die gewählte Gruppe in einem Gipfel zu bearbeiten.
         /// </summary>
         RelayCommand EditSelectedRouteInSummitCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um die gewählte Variation zu bearbeiten.
+        /// </summary>
+        RelayCommand EditSelectedVariationCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Command um den gewählten Logeintrag zu bearbeiten.
+        /// </summary>
+        RelayCommand EditSelectedLogEntryCommand { get; }
 
         /// <summary>
         ///     Lädt die relevanten Daten des View Models

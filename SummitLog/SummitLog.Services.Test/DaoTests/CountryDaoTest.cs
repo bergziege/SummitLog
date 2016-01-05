@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -100,14 +101,14 @@ namespace SummitLog.Services.Test.DaoTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NodeInUseException))]
         public void TestDeleteInUse()
         {
             Country country = _dataGenerator.CreateCountry();
             Route route = _dataGenerator.CreateRouteInCountry(country: country);
 
             ICountryDao countryDao = new CountryDao(_graphClient);
-            countryDao.Delete(country);
+            Action action = ()=>countryDao.Delete(country);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]

@@ -86,5 +86,16 @@ namespace SummitLog.Services.Persistence.Impl
             }
             GraphClient.Cypher.Match("".DifficultyLevel("dl").AnyInboundRelationsAs("usage").DifficultyLevelScale()).Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id).Delete("dl, usage").ExecuteWithoutResults();
         }
+
+        /// <summary>
+        ///     Speichert den Schwierigkeitsgrad
+        /// </summary>
+        /// <param name="difficultyLevel"></param>
+        public void Save(DifficultyLevel difficultyLevel)
+        {
+            GraphClient.Cypher.Match("".DifficultyLevel("dl")).Where((DifficultyLevel dl)=>dl.Id == difficultyLevel.Id)
+                .Set("dl.Name={Name}, dl.Score={Score}").WithParams(new Dictionary<string, object> { {"Name", difficultyLevel.Name}, {"Score", difficultyLevel.Score} })
+                .ExecuteWithoutResults();
+        }
     }
 }
