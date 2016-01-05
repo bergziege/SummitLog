@@ -18,8 +18,8 @@ namespace SummitLog.Services.Test.ServiceTests
         [TestCase("", true, true)]
         [TestCase(" ", true, true)]
         [TestCase("   ", true, true)]
-        [TestCase("var", false, true)]
-        [TestCase("var", true, false)]
+        [TestCase("var", false, true, ExpectedException = typeof(ArgumentNullException))]
+        [TestCase("var", true, false, ExpectedException = typeof(ArgumentNullException))]
         public void TestCreateMissingName(string name, bool useRoute, bool useLevel)
         {
             Route route = null;
@@ -33,8 +33,9 @@ namespace SummitLog.Services.Test.ServiceTests
                 level = new DifficultyLevel();
             }
 
-            Action act = () => new VariationService(null).Create(name, route, level);
-            act.ShouldThrow<ArgumentNullException>();
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+
+            new VariationService(variationDaoMock.Object).Create(route, level, name);            
         }
 
         [TestCase(false)]
@@ -100,7 +101,7 @@ namespace SummitLog.Services.Test.ServiceTests
             DifficultyLevel fakeLevel = new DifficultyLevel();
 
             IVariationService variationService = new VariationService(variationDaoMock.Object);
-            variationService.Create("Variation 1", fakeRoute, fakeLevel);
+            variationService.Create(fakeRoute, fakeLevel, "Variation 1");
 
             variationDaoMock.Verify(
                 x => x.Create(It.Is<Variation>(y => y.Name == "Variation 1"), fakeRoute, fakeLevel), Times.Once);

@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:designViewModels="clr-namespace:SummitLog.UI.Main.DesignViewModels"
         xmlns:main="clr-namespace:SummitLog.UI.Main"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+        xmlns:converter="clr-namespace:SummitLog.UI.Main.Converter"
         mc:Ignorable="d"
         Title="SummitLog" Height="600" Width="800">
     <d:DesignProperties.DataContext>
@@ -19,6 +21,15 @@
         <Style TargetType="ListView">
             <Setter Property="ItemTemplate" Value="{StaticResource ItemWithNameTemplate}"></Setter>
         </Style>
+        
+        <CollectionViewSource Source="{Binding Path=VariationsOnSelectedRoute}" x:Key="VariationsSource">
+            <CollectionViewSource.SortDescriptions>
+                <componentModel:SortDescription PropertyName="DifficultyLevel.Name"></componentModel:SortDescription>
+                <componentModel:SortDescription PropertyName="Name"></componentModel:SortDescription>
+            </CollectionViewSource.SortDescriptions>
+        </CollectionViewSource>
+
+        <converter:StringContentToVisibilityConverter x:Key="StringContentToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -248,13 +259,14 @@
                     <Button Command="{Binding Path=RemoveSelectedVariationCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
-                <ListView Grid.Column="1" ItemsSource="{Binding Path=VariationsOnSelectedRoute}"
+                <ListView Grid.Column="1" ItemsSource="{Binding Source={StaticResource VariationsSource}}"
                           SelectedItem="{Binding Path=SelectedVariation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:IVariationItemViewModel">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Path=DifficultyLevel.Name}"></TextBlock>
-                                <TextBlock Text="{Binding Path=Name, StringFormat={} ({0})}"></TextBlock></StackPanel>
+                                <TextBlock Text="{Binding Path=Name, StringFormat={} ({0})}"
+                                           Visibility="{Binding Path=Name, Converter={StaticResource StringContentToVisibilityConverter}}"></TextBlock></StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

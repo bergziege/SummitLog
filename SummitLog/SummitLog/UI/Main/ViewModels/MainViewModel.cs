@@ -1484,14 +1484,13 @@ namespace SummitLog.UI.Main.ViewModels
         private void AddVariationToSelectedRoute()
         {
             _nameAndLevelInputViewCommand.Execute();
-            if (!string.IsNullOrWhiteSpace(_nameAndLevelInputViewCommand.Name) &&
-                _nameAndLevelInputViewCommand.DifficultyLevel != null)
+            if (_nameAndLevelInputViewCommand.DifficultyLevel != null)
             {
                 Route selectedRoute = GetSelectedRoute();
                 if (selectedRoute != null)
                 {
-                    _variationService.Create(_nameAndLevelInputViewCommand.Name, selectedRoute,
-                        _nameAndLevelInputViewCommand.DifficultyLevel);
+                    _variationService.Create(selectedRoute,
+                        _nameAndLevelInputViewCommand.DifficultyLevel, _nameAndLevelInputViewCommand.Name);
                 }
             }
             RefreshVariationsOnLastSelectedRoute();

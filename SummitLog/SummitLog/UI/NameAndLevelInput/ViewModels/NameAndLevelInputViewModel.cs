@@ -18,6 +18,11 @@ namespace SummitLog.UI.NameAndLevelInput.ViewModels
         private DifficultyLevel _selectedDifficultyLevel;
 
         /// <summary>
+        ///     Liefert ob der Name benötigt wird
+        /// </summary>
+        public override bool RequiresName => false;
+
+        /// <summary>
         /// Liefert eine neue Instanz des View Models
         /// </summary>
         /// <param name="difficultyLevelScaleService"></param>
