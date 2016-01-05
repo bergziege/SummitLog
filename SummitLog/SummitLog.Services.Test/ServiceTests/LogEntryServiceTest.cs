@@ -39,7 +39,7 @@ namespace SummitLog.Services.Test.ServiceTests
             Variation fakeVariation = new Variation();
 
             ILogEntryService logService = new LogEntryService(logDaoMock.Object);
-            logService.Create("freeclimb", DateTime.Today, fakeVariation);
+            logService.Create(fakeVariation, DateTime.Today, "freeclimb");
 
             logDaoMock.Verify(x=>x.Create(fakeVariation, It.Is<LogEntry>(y=>y.Memo == "freeclimb" && y.DateTime == DateTime.Today)), Times.Once);
         }
@@ -48,17 +48,16 @@ namespace SummitLog.Services.Test.ServiceTests
         [TestCase(true, " ")]
         [TestCase(true, "    ")]
         [TestCase(true, null)]
-        [TestCase(false, "freeclimb")]
-        public void TestCreateMissingName(bool useVariation, string name)
+        [TestCase(false, "freeclimb", ExpectedException = typeof(ArgumentNullException))]
+        public void TestCreateWithSomeMissing(bool useVariation, string name)
         {
             Variation fakeVariation = null;
             if (useVariation)
             {
                 fakeVariation = new Variation();
             }
-
-            Action act = ()=>new LogEntryService(null).Create(name, DateTime.Today, fakeVariation);
-            act.ShouldThrow<ArgumentNullException>();
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            new LogEntryService(logEntryDaoMock.Object).Create(fakeVariation, DateTime.Today, name);
         }
 
         [Test]

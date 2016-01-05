@@ -1534,8 +1534,7 @@ namespace SummitLog.UI.Main.ViewModels
         {
             if (_logEntryInputViewCommand.Execute())
             {
-                _logEntryService.Create(_logEntryInputViewCommand.Memo, _logEntryInputViewCommand.Date,
-                    SelectedVariation.Item);
+                _logEntryService.Create(SelectedVariation.Item, _logEntryInputViewCommand.Date, _logEntryInputViewCommand.Memo);
                 RefreshLogEntriesOnSelectedVariation();
             }
         }

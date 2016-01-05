@@ -32,7 +32,7 @@ namespace SummitLog.UI.LogEntryInput.ViewModels
 
         private bool CanOk()
         {
-            return Memo.IsNotNullOrWhitespace();
+            return true;
         }
 
         private void Ok()
