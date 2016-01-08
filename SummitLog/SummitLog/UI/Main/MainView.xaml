@@ -140,7 +140,17 @@
                     <Button Command="{Binding Path=RemoveSummitCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
-                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="main:ISummitViewModel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                                <TextBlock Text="{Binding Path=SummitNumber, StringFormat={} ({0})}"
+                                           Visibility="{Binding Path=SummitNumber, Converter={StaticResource StringContentToVisibilityConverter}}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 

@@ -155,15 +155,18 @@
     <Compile Include="UI\Main\Converter\StringContentToVisibilityConverter.cs" />
     <Compile Include="UI\Main\DesignViewModels\LogItemDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
+    <Compile Include="UI\Main\DesignViewModels\SummitDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\VariationItemDesignViewModel.cs" />
     <Compile Include="UI\Main\ILogItemViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
+    <Compile Include="UI\Main\ISummitViewModel.cs" />
     <Compile Include="UI\Main\IVariationItemViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Main\ViewModels\LogItemViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\Main\ViewModels\SummitViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\VariationItemViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\INameAndLevelInputViewModel.cs" />
@@ -186,6 +189,13 @@
     </Compile>
     <Compile Include="UI\NameInput\ViewCommands\NameInputViewCommand.cs" />
     <Compile Include="UI\NameInput\ViewModels\NameInputViewModel.cs" />
+    <Compile Include="UI\SummitEdit\DesignViewModels\SummitEditDesignViewModel.cs" />
+    <Compile Include="UI\SummitEdit\ISummitEditViewModel.cs" />
+    <Compile Include="UI\SummitEdit\SummitEditView.xaml.cs">
+      <DependentUpon>SummitEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SummitEdit\ViewCommands\SummitEditViewCommand.cs" />
+    <Compile Include="UI\SummitEdit\ViewModels\SummitEditViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -269,7 +279,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\SummitEdit\SummitEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

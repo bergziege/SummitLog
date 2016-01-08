@@ -12,6 +12,7 @@ using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.LogEntryInput.ViewCommands;
 using SummitLog.UI.NameAndLevelInput.ViewCommands;
 using SummitLog.UI.NameInput;
+using SummitLog.UI.SummitEdit.ViewCommands;
 
 namespace SummitLog.UI.Main.ViewModels
 {
@@ -24,6 +25,7 @@ namespace SummitLog.UI.Main.ViewModels
         private readonly ICountryService _countryService;
         private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
         private readonly LogEntryInputViewCommand _logEntryInputViewCommand;
+        private readonly SummitEditViewCommand _summitEditViewCommand;
         private readonly ILogEntryService _logEntryService;
         private readonly IDifficultyLevelService _difficultyLevelService;
         private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
@@ -70,7 +72,7 @@ namespace SummitLog.UI.Main.ViewModels
         private IItemWithNameViewModel<Route> _selectedRouteInCountry;
         private IItemWithNameViewModel<Route> _selectedRouteInSummit;
         private IItemWithNameViewModel<Route> _selectedRouteInSummitGroup;
-        private IItemWithNameViewModel<Summit> _selectedSummit;
+        private ISummitViewModel _selectedSummit;
         private IItemWithNameViewModel<SummitGroup> _selectedSummitGroup;
         private IVariationItemViewModel _selectedVariation;
         private RelayCommand _editSelectedVariationCommand;
@@ -86,17 +88,20 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="routeService"></param>
         /// <param name="variationService"></param>
         /// <param name="logEntryService"></param>
+        /// <param name="difficultyLevelService"></param>
+        /// <param name="difficultyLevelScaleService"></param>
         /// <param name="nameInputViewCommand"></param>
         /// <param name="difficultyManagementViewCommand"></param>
         /// <param name="nameAndLevelInputViewCommand"></param>
         /// <param name="logEntryInputViewCommand"></param>
+        /// <param name="summitEditViewCommand"></param>
         public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
             IVariationService variationService, ILogEntryService logEntryService, IDifficultyLevelService difficultyLevelService,
             IDifficultyLevelScaleService difficultyLevelScaleService,
             NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand,
             NameAndLevelInputViewCommand nameAndLevelInputViewCommand
-            , LogEntryInputViewCommand logEntryInputViewCommand)
+            , LogEntryInputViewCommand logEntryInputViewCommand, SummitEditViewCommand summitEditViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -111,6 +116,7 @@ namespace SummitLog.UI.Main.ViewModels
             _difficultyManagementViewCommand = difficultyManagementViewCommand;
             _nameAndLevelInputViewCommand = nameAndLevelInputViewCommand;
             _logEntryInputViewCommand = logEntryInputViewCommand;
+            _summitEditViewCommand = summitEditViewCommand;
         }
 
         /// <summary>
@@ -176,13 +182,13 @@ namespace SummitLog.UI.Main.ViewModels
         /// <summary>
         ///     Liefert eine Liste aller Gipfel in der Gewählten Gipfelgruppe
         /// </summary>
-        public ObservableCollection<IItemWithNameViewModel<Summit>> SummitsInSelectedSummitGroup { get; } =
-            new ObservableCollection<IItemWithNameViewModel<Summit>>();
+        public ObservableCollection<ISummitViewModel> SummitsInSelectedSummitGroup { get; } =
+            new ObservableCollection<ISummitViewModel>();
 
         /// <summary>
         ///     Liefert oder setzt den gewählten Gipfel
         /// </summary>
-        public IItemWithNameViewModel<Summit> SelectedSummit
+        public ISummitViewModel SelectedSummit
         {
             get { return _selectedSummit; }
             set
@@ -1035,13 +1041,12 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void EditSelectedSummit()
         {
-            _nameInputViewCommand.Execute(SelectedSummit.Name);
-            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            SelectedSummit.LoadData(_summitEditViewCommand.Execute(SelectedSummit.Item));
+            if (!string.IsNullOrWhiteSpace(SelectedSummit.Item.Name))
             {
-                SelectedSummit.Item.Name = _nameInputViewCommand.Name;
                 _summitService.Save(SelectedSummit.Item);
-                SelectedSummit.DoUpdate();
             }
+            SelectedSummit.DoUpdate();
         }
 
         private bool CanEditSelectedCountry()
@@ -1249,7 +1254,7 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Summit summit in _summitService.GetAllIn(SelectedSummitGroup.Item))
                 {
-                    IItemWithNameViewModel<Summit> summitViewModel = new ItemWithNameViewModel<Summit>();
+                    ISummitViewModel summitViewModel = new SummitViewModel();
                     summitViewModel.LoadData(summit);
                     SummitsInSelectedSummitGroup.Add(summitViewModel);
                 }
@@ -1407,10 +1412,10 @@ namespace SummitLog.UI.Main.ViewModels
 
         private void AddSummitInSelectedSummitGroup()
         {
-            _nameInputViewCommand.Execute();
-            if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
+            Summit summitData = _summitEditViewCommand.Execute(new Summit());
+            if (!string.IsNullOrWhiteSpace(summitData.Name))
             {
-                _summitService.Create(SelectedSummitGroup.Item, _nameInputViewCommand.Name, "");
+                _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber);
             }
             RefreshSummits();
         }
