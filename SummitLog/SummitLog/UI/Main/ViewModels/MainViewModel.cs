@@ -1410,7 +1410,7 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _summitService.Create(SelectedSummitGroup.Item, _nameInputViewCommand.Name);
+                _summitService.Create(SelectedSummitGroup.Item, _nameInputViewCommand.Name, "");
             }
             RefreshSummits();
         }

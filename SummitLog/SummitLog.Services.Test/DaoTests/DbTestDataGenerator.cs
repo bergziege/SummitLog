@@ -46,14 +46,14 @@ namespace SummitLog.Services.Test.DaoTests
             return summitGroupDao.Create(area, newSummitGroup);
         }
 
-        public Summit CreateSummit(string name = "Gipfel", SummitGroup summitGroup = null)
+        public Summit CreateSummit(string name = "Gipfel", string summitNumber = "100A", SummitGroup summitGroup = null)
         {
             if (summitGroup == null)
             {
                 summitGroup = CreateSummitGroup();
             }
             SummitDao summitDao = new SummitDao(_graphClient);
-            Summit newSummit = new Summit() { Name = name };
+            Summit newSummit = new Summit() { Name = name, SummitNumber = summitNumber};
             return summitDao.Create(summitGroup, newSummit);
         }
 

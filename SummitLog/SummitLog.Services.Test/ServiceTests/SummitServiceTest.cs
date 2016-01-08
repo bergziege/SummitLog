@@ -38,12 +38,13 @@ namespace SummitLog.Services.Test.ServiceTests
 
             string groupName = "Gruppe 1";
             string summitName = "Gipfel 1";
+            string summitNumber = "70B";
             SummitGroup fakeGroup = new SummitGroup { Name = groupName };
 
             ISummitService summitService = new SummitService(summitDaoMock.Object);
-            summitService.Create(fakeGroup, summitName);
+            summitService.Create(fakeGroup, summitName, summitNumber);
 
-            summitDaoMock.Verify(x=>x.Create(It.Is<SummitGroup>(y=>y.Name == groupName), It.Is<Summit>(y=>y.Name == summitName)), Times.Once);
+            summitDaoMock.Verify(x=>x.Create(It.Is<SummitGroup>(y=>y.Name == groupName), It.Is<Summit>(y=>y.Name == summitName && y.SummitNumber == summitNumber)), Times.Once);
         }
 
         [TestCase(true,"")]
@@ -59,7 +60,7 @@ namespace SummitLog.Services.Test.ServiceTests
                 fakeGroup = new SummitGroup();
             }
 
-            Action act = ()=>new SummitService(null).Create(fakeGroup, name);
+            Action act = ()=>new SummitService(null).Create(fakeGroup, name, "");
             act.ShouldThrow<ArgumentNullException>();
         }
 
