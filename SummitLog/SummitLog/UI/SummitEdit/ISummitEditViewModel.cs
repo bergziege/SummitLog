@@ -2,8 +2,9 @@
 
 namespace SummitLog.UI.SummitEdit
 {
-    public interface ISummitEditViewModel:INameInputViewModel
+    public interface ISummitEditViewModel : INameInputViewModel
     {
-         string SummitNumber { get; set; }
+        string SummitNumber { get; set; }
+        double Rating { get; set; }
     }
 }

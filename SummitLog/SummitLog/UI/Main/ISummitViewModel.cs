@@ -9,5 +9,10 @@ namespace SummitLog.UI.Main
         ///     Liefert die Gipfelnummer
         /// </summary>
         string SummitNumber { get; }
+
+        /// <summary>
+        ///     Liefert die Bewertung
+        /// </summary>
+        double Rating { get; }
     }
 }

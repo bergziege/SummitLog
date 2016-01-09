@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace SummitLog.UI.Main.Converter
 {
-    public class StringContentToVisibilityConverter : IValueConverter
+    public class ContentToVisibilityConverter : IValueConverter
     {
         /// <summary>
         ///     Converts a value.
@@ -23,6 +23,14 @@ namespace SummitLog.UI.Main.Converter
             {
                 string stringValue = (string) value;
                 if (!string.IsNullOrWhiteSpace(stringValue))
+                {
+                    return Visibility.Visible;
+                }
+            }
+            if (value is double)
+            {
+                double doubleValue = (double) value;
+                if (doubleValue > 0)
                 {
                     return Visibility.Visible;
                 }

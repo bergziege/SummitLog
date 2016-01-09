@@ -20,6 +20,7 @@ namespace SummitLog.UI.SummitEdit.ViewCommands
             view.DataContext = vm;
             vm.Name = summitToEdit.Name;
             vm.SummitNumber = summitToEdit.SummitNumber;
+            vm.Rating = summitToEdit.Rating;
 
             vm.RequestCloseAfterCancel += delegate { view.Close();};
             vm.RequestCloseAfterOk += delegate
@@ -27,6 +28,7 @@ namespace SummitLog.UI.SummitEdit.ViewCommands
                 view.Close();
                 summitToEdit.Name = vm.Name;
                 summitToEdit.SummitNumber = vm.SummitNumber;
+                summitToEdit.Rating = vm.Rating;
             };
 
             view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));

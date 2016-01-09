@@ -37,13 +37,14 @@ namespace SummitLog.Services.Test.DaoTests
         {
             SummitGroup group = _dataGenerator.CreateSummitGroup();
             ISummitDao summitDao = new SummitDao(_graphClient);
-            Summit created = _dataGenerator.CreateSummit(summitGroup: group);
+            Summit created = _dataGenerator.CreateSummit(summitGroup: group, rating:4.5);
 
             IList<Summit> summitsInGroup = summitDao.GetAllIn(group);
             summitsInGroup.Should().HaveCount(1);
             created.Name.Should().Be(summitsInGroup.First().Name);
             created.Id.Should().Be(summitsInGroup.First().Id);
             created.SummitNumber.Should().Be(summitsInGroup.First().SummitNumber);
+            created.Rating.Should().Be(4.5);
 
         }
 
@@ -103,6 +104,7 @@ namespace SummitLog.Services.Test.DaoTests
 
             summit.Name = "newname";
             summit.SummitNumber = "200A";
+            summit.Rating = 2.3;
 
             ISummitDao summitDao = new SummitDao(_graphClient);
             summitDao.Save(summit);
@@ -110,6 +112,7 @@ namespace SummitLog.Services.Test.DaoTests
             Summit savedSummit = summitDao.GetAllIn(summitGroup).First();
             savedSummit.Name.Should().Be("newname");
             savedSummit.SummitNumber.Should().Be("200A");
+            savedSummit.Rating.Should().Be(2.3);
 
 
         }

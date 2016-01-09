@@ -21,7 +21,8 @@ namespace SummitLog.Services.Services
         /// <param name="summitGroup"></param>
         /// <param name="name"></param>
         /// <param name="summitNumber"></param>
-        void Create(SummitGroup summitGroup, string name, string summitNumber);
+        /// <param name="rating"></param>
+        void Create(SummitGroup summitGroup, string name, string summitNumber, double rating);
 
         /// <summary>
         ///     Liefert ob ein Gipfel verwendet wird

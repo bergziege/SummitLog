@@ -7,6 +7,7 @@ namespace SummitLog.UI.Main.ViewModels
     public class SummitViewModel:ItemWithNameViewModel<Summit>, ISummitViewModel
     {
         private string _summitNumber;
+        private double _rating;
 
         /// <summary>
         ///     LÄdt die VM relevanten Daten
@@ -16,6 +17,7 @@ namespace SummitLog.UI.Main.ViewModels
         {
             base.LoadData(item);
             SummitNumber = item.SummitNumber;
+            Rating = item.Rating;
         }
 
         /// <summary>
@@ -25,6 +27,7 @@ namespace SummitLog.UI.Main.ViewModels
         {
             base.DoUpdate();
             this.RaisePropertyChanged("SummitNumber");
+            this.RaisePropertyChanged("Rating");
         }
 
         /// <summary>
@@ -34,6 +37,15 @@ namespace SummitLog.UI.Main.ViewModels
         {
             get { return _summitNumber; }
             private set { this.RaiseAndSetIfChanged(ref _summitNumber, value); }
+        }
+
+        /// <summary>
+        ///     Liefert die Bewertung
+        /// </summary>
+        public double Rating
+        {
+            get { return _rating; }
+            private set { this.RaiseAndSetIfChanged(ref _rating, value); }
         }
     }
 }

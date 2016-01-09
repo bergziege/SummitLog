@@ -1415,7 +1415,7 @@ namespace SummitLog.UI.Main.ViewModels
             Summit summitData = _summitEditViewCommand.Execute(new Summit());
             if (!string.IsNullOrWhiteSpace(summitData.Name))
             {
-                _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber);
+                _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber, summitData.Rating);
             }
             RefreshSummits();
         }

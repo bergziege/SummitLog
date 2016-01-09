@@ -75,7 +75,7 @@ namespace SummitLog.Services.Persistence.Impl
         {
             GraphClient.Cypher.Match("".Summit("s"))
                 .Where((Summit s)=>s.Id == summit.Id)
-                .Set("s.Name = {Name}, s.SummitNumber = {SummitNumber}").WithParam("Name", summit.Name).WithParam("SummitNumber", summit.SummitNumber)
+                .Set("s = {summit}").WithParam("summit", summit)
                 .ExecuteWithoutResults();
         }
     }

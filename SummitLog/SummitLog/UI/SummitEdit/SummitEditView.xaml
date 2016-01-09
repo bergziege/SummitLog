@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SummitLog.UI.SummitEdit"
         xmlns:designViewModels="clr-namespace:SummitLog.UI.SummitEdit.DesignViewModels"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Gipfel bearbeiten" SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner">
@@ -19,6 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
+            <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
@@ -29,7 +31,10 @@
         <Label Content="Gipfelnummer:" Grid.Row="1" />
         <TextBox Text="{Binding Path=SummitNumber}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="3" />
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
+        <Label Content="Bewertung:" Grid.Row="2" />
+        <xctk:DoubleUpDown Value="{Binding Path=Rating}" Grid.Row="2" Increment="0.1" Grid.Column="1" VerticalAlignment="Center" Margin="3" />
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
             <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3"
                     Style="{StaticResource StandardDialogButton}" />
             <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3"

@@ -152,7 +152,7 @@
     </Compile>
     <Compile Include="UI\LogEntryInput\ViewCommands\LogEntryInputViewCommand.cs" />
     <Compile Include="UI\LogEntryInput\ViewModels\LogEntryInputViewModel.cs" />
-    <Compile Include="UI\Main\Converter\StringContentToVisibilityConverter.cs" />
+    <Compile Include="UI\Main\Converter\ContentToVisibilityConverter.cs" />
     <Compile Include="UI\Main\DesignViewModels\LogItemDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\SummitDesignViewModel.cs" />
