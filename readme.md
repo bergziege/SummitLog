@@ -1,4 +1,6 @@
 # SummitLog #
+
+[![Join the chat at https://gitter.im/bergziege/SummitLog](https://badges.gitter.im/bergziege/SummitLog.svg)](https://gitter.im/bergziege/SummitLog?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 SummitLog ist ein Hobbyprojekt zur Erfassung von Wander und Kletterrouten sowie deren Begehungen.
 
 ## Features ##
