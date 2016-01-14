@@ -1,4 +1,5 @@
 [![Join the chat at https://gitter.im/bergziege/SummitLog](https://badges.gitter.im/bergziege/SummitLog.svg)](https://gitter.im/bergziege/SummitLog?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build status](https://ci.appveyor.com/api/projects/status/v69dhslduqxy8g4j?svg=true)](https://ci.appveyor.com/project/bergziege/summitlog)
 
 # SummitLog #
 
