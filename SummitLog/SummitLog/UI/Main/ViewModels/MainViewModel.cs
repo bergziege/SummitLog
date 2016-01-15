@@ -227,8 +227,8 @@ namespace SummitLog.UI.Main.ViewModels
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInCountry = false;
 
+                    ClearLogEntries();
                     RefreshVariationsOnCountryRoute();
-                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -257,8 +257,8 @@ namespace SummitLog.UI.Main.ViewModels
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInArea = false;
 
+                    ClearLogEntries();
                     RefreshVariationsOnAreaRoute();
-                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -287,8 +287,8 @@ namespace SummitLog.UI.Main.ViewModels
                     SelectedRouteInSummit = null;
                     IsLoadingRoutesInSummitGroup = false;
 
+                    ClearLogEntries();
                     RefreshVariationsOnSummitGroupRoute();
-                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -317,8 +317,8 @@ namespace SummitLog.UI.Main.ViewModels
                     SelectedRouteInSummitGroup = null;
                     IsLoadingRoutesInSummit = false;
 
+                    ClearLogEntries();
                     RefreshVariationsOnSummitRoute();
-                    LogEntriesOnSelectedVariation.Clear();
                 }
             }
         }
@@ -1172,12 +1172,17 @@ namespace SummitLog.UI.Main.ViewModels
         {
             if (SelectedVariation != null)
             {
-                LogEntriesOnSelectedVariation.Clear();
+                ClearLogEntries();
                 foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation.Item))
                 {
                     LogEntriesOnSelectedVariation.Add(AppContext.Container.Resolve<ILogItemViewModel>().LoadData(logEntry));
                 }
             }
+        }
+
+        private void ClearLogEntries()
+        {
+            LogEntriesOnSelectedVariation.Clear();
         }
 
         private bool CanRemoveSelectedLogEntry()
@@ -1293,6 +1298,7 @@ namespace SummitLog.UI.Main.ViewModels
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
             }
+            AutoShowLogEntries();
         }
 
         private void RefreshVariationsOnAreaRoute()
@@ -1307,6 +1313,7 @@ namespace SummitLog.UI.Main.ViewModels
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
             }
+            AutoShowLogEntries();
         }
 
         private void RefreshVariationsOnSummitGroupRoute()
@@ -1321,6 +1328,7 @@ namespace SummitLog.UI.Main.ViewModels
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
             }
+            AutoShowLogEntries();
         }
 
         private void RefreshVariationsOnSummitRoute()
@@ -1334,6 +1342,15 @@ namespace SummitLog.UI.Main.ViewModels
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
+            }
+            AutoShowLogEntries();
+        }
+
+        private void AutoShowLogEntries()
+        {
+            if (VariationsOnSelectedRoute.Count == 1)
+            {
+                SelectedVariation = VariationsOnSelectedRoute.First();
             }
         }
 
