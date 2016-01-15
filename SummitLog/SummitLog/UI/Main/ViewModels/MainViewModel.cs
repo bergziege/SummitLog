@@ -1389,11 +1389,16 @@ namespace SummitLog.UI.Main.ViewModels
         private void AddCountry()
         {
             _nameInputViewCommand.Execute();
+            Country created = null;
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _countryService.Create(_nameInputViewCommand.Name);
+                created = _countryService.Create(_nameInputViewCommand.Name);
             }
-            RefreshCountries();
+            if (created != null)
+            {
+                RefreshCountries();
+                SelectedCountry = Countries.FirstOrDefault(x => x.Item.Id == created.Id);
+            }
         }
 
         private bool CanAddAreaInSelectedCountry()

@@ -18,7 +18,7 @@ namespace SummitLog.Services.Services
         ///     Erstellt ein neues Land mit dem übergebenen Namen
         /// </summary>
         /// <param name="countryName"></param>
-        void Create(string countryName);
+        Country Create(string countryName);
 
         /// <summary>
         ///     Liefert ob ein Land verwendet wird

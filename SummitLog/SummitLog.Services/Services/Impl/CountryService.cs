@@ -36,11 +36,11 @@ namespace SummitLog.Services.Services.Impl
         ///     Erstellt ein neues Land mit dem übergebenen Namen
         /// </summary>
         /// <param name="countryName"></param>
-        public void Create(string countryName)
+        public Country Create(string countryName)
         {
             if (string.IsNullOrWhiteSpace(countryName))
                 throw new ArgumentNullException(nameof(countryName));
-            _countryDao.Create(new Country {Name = countryName});
+            return _countryDao.Create(new Country {Name = countryName});
         }
 
         /// <summary>
