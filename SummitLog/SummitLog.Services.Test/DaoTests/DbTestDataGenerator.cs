@@ -57,46 +57,46 @@ namespace SummitLog.Services.Test.DaoTests
             return summitDao.Create(summitGroup, newSummit);
         }
 
-        public Route CreateRouteInCountry(string name = "Route im Land", Country country = null)
+        public Route CreateRouteInCountry(string name = "Route im Land", double rating = 3.5, Country country = null)
         {
             if (country == null)
             {
                 country = CreateCountry();
             }
-            return new RouteDao(_graphClient).CreateIn(country, GetRouteWithName(name));
+            return new RouteDao(_graphClient).CreateIn(country, GetRouteEntity(name, rating));
         }
 
-        private static Route GetRouteWithName(string name)
+        private static Route GetRouteEntity(string name, double rating)
         {
-            Route route = new Route() { Name = name };
+            Route route = new Route() { Name = name, Rating = rating};
             return route;
         }
 
-        public Route CreateRouteInArea(string name = "Route im Gebiet", Area area = null)
+        public Route CreateRouteInArea(string name = "Route im Gebiet", double rating = 3.5, Area area = null)
         {
             if (area == null)
             {
                 area = CreateArea();
             }
-            return new RouteDao(_graphClient).CreateIn(area, GetRouteWithName(name));
+            return new RouteDao(_graphClient).CreateIn(area, GetRouteEntity(name, rating));
         }
 
-        public Route CreateRouteInSummitGroup(string name = "Route in Gipfelgruppe", SummitGroup summitGroup = null)
+        public Route CreateRouteInSummitGroup(string name = "Route in Gipfelgruppe", double rating = 3.5, SummitGroup summitGroup = null)
         {
             //if (summitGroup == null)
             //{
             //    summitGroup = CreateSummitGroup();
             //}
-            return new RouteDao(_graphClient).CreateIn(summitGroup, GetRouteWithName(name));
+            return new RouteDao(_graphClient).CreateIn(summitGroup, GetRouteEntity(name, rating));
         }
 
-        public Route CreateRouteInSummit(string name = "Route auf Gipfel", Summit summit = null)
+        public Route CreateRouteInSummit(string name = "Route auf Gipfel", double rating = 3.5, Summit summit = null)
         {
             //if (summit == null)
             //{
             //    summit = CreateSummit();
             //}
-            return new RouteDao(_graphClient).CreateIn(summit, GetRouteWithName(name));
+            return new RouteDao(_graphClient).CreateIn(summit, GetRouteEntity(name, rating));
         }
 
         public DifficultyLevelScale CreateDifficultyLevelScale(string name = "Schwierigkeitsgradskala")

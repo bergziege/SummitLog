@@ -55,7 +55,8 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="summit"></param>
         /// <param name="routeName"></param>
-        void CreateIn(Summit summit, string routeName);
+        /// <param name="rating"></param>
+        void CreateIn(Summit summit, string routeName, double rating = 0);
 
         /// <summary>
         ///     Liefert alle Routen eines Gipfels

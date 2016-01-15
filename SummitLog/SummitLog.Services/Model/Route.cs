@@ -5,5 +5,9 @@
     /// </summary>
     public class Route : EntityWithIdAndName
     {
+        /// <summary>
+        ///     Liefert oder setzt die Bewertung einer Route
+        /// </summary>
+        public double Rating { get; set; }
     }
 }

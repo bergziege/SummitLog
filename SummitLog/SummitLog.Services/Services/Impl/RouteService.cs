@@ -97,11 +97,12 @@ namespace SummitLog.Services.Services.Impl
         /// </summary>
         /// <param name="summit"></param>
         /// <param name="routeName"></param>
-        public void CreateIn(Summit summit, string routeName)
+        /// <param name="rating"></param>
+        public void CreateIn(Summit summit, string routeName, double rating = 0)
         {
             if (summit == null) throw new ArgumentNullException(nameof(summit));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(summit, new Route {Name = routeName});
+            _routesDao.CreateIn(summit, new Route {Name = routeName, Rating = rating});
         }
 
         /// <summary>
