@@ -82,18 +82,16 @@ namespace SummitLog.Services.Test.ServiceTests
         }
 
         [Test]
-        public void TestDeleteWhileInUse(bool isInUse)
+        public void TestDeleteWhileInUse()
         {
             Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
-            difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(isInUse);
+            difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(true);
             difficultyLevelScaleDaoMock.Setup(x => x.Delete(It.IsAny<DifficultyLevelScale>()));
 
             DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale();
             IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
-            difficultyLevelScaleService.Delete(difficultyLevelScale);
-
-            difficultyLevelScaleDaoMock.Verify(x => x.IsInUse(difficultyLevelScale), Times.Once);
-            difficultyLevelScaleDaoMock.Verify(x => x.Delete(difficultyLevelScale), Times.Once);
+            Action action = ()=> difficultyLevelScaleService.Delete(difficultyLevelScale);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

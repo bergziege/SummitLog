@@ -30,41 +30,29 @@ namespace SummitLog.Services.Test.ServiceTests
         }
 
         [Test]
-        public void TestCreateMissingRouteShouldThrow(string name, bool useRoute, bool useLevel)
+        public void TestCreateMissingRouteShouldThrow()
         {
             Route route = null;
-            if (useRoute)
-            {
-                route = new Route();
-            }
-            DifficultyLevel level = null;
-            if (useLevel)
-            {
-                level = new DifficultyLevel();
-            }
-
+            
+            DifficultyLevel level = new DifficultyLevel();
+            
             Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
 
-            new VariationService(variationDaoMock.Object).Create(route, level, name);
+            Action action = ()=> new VariationService(variationDaoMock.Object).Create(route, level, "name");
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
-        public void TestCreateMissingLevelShouldThrow(string name, bool useRoute, bool useLevel)
+        public void TestCreateMissingLevelShouldThrow()
         {
-            Route route = null;
-            if (useRoute)
-            {
-                route = new Route();
-            }
+            Route route  = new Route();
+            
             DifficultyLevel level = null;
-            if (useLevel)
-            {
-                level = new DifficultyLevel();
-            }
 
             Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
 
-            new VariationService(variationDaoMock.Object).Create(route, level, name);
+            Action action = ()=> new VariationService(variationDaoMock.Object).Create(route, level, "name");
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
