@@ -70,12 +70,11 @@ namespace SummitLog.Services.Test.ServiceTests
             countryDaoMock.Verify(x=>x.IsInUse(country), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
-            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(isInUse);
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(false);
             countryDaoMock.Setup(x => x.Delete(It.IsAny<Country>()));
 
             Country country = new Country();
@@ -85,6 +84,20 @@ namespace SummitLog.Services.Test.ServiceTests
 
             countryDaoMock.Verify(x => x.IsInUse(country), Times.Once);
             countryDaoMock.Verify(x => x.Delete(country), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(true);
+            countryDaoMock.Setup(x => x.Delete(It.IsAny<Country>()));
+
+            Country country = new Country();
+
+            ICountryService countryService = new CountryService(countryDaoMock.Object);
+            Action action = ()=> countryService.Delete(country);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

@@ -88,12 +88,11 @@ namespace SummitLog.Services.Test.ServiceTests
             summitDaoMock.Verify(x=>x.IsInUse(summit), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<ISummitDao> summitDaoMock = new Mock<ISummitDao>();
-            summitDaoMock.Setup(x => x.IsInUse(It.IsAny<Summit>())).Returns(isInUse);
+            summitDaoMock.Setup(x => x.IsInUse(It.IsAny<Summit>())).Returns(false);
             summitDaoMock.Setup(x => x.Delete(It.IsAny<Summit>()));
 
             Summit summit = new Summit();
@@ -103,6 +102,21 @@ namespace SummitLog.Services.Test.ServiceTests
 
             summitDaoMock.Verify(x => x.IsInUse(summit), Times.Once);
             summitDaoMock.Verify(x => x.Delete(summit), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<ISummitDao> summitDaoMock = new Mock<ISummitDao>();
+            summitDaoMock.Setup(x => x.IsInUse(It.IsAny<Summit>())).Returns(true);
+            summitDaoMock.Setup(x => x.Delete(It.IsAny<Summit>()));
+
+            Summit summit = new Summit();
+
+            ISummitService summitService = new SummitService(summitDaoMock.Object);
+            Action action = ()=> summitService.Delete(summit);
+
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

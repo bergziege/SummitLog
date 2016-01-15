@@ -66,9 +66,23 @@ namespace SummitLog.Services.Test.ServiceTests
             difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
+        {
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(false);
+            difficultyLevelScaleDaoMock.Setup(x => x.Delete(It.IsAny<DifficultyLevelScale>()));
+
+            DifficultyLevelScale difficultyLevelScale = new DifficultyLevelScale();
+            IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
+            difficultyLevelScaleService.Delete(difficultyLevelScale);
+
+            difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
+            difficultyLevelScaleDaoMock.Verify(x=>x.Delete(difficultyLevelScale), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse(bool isInUse)
         {
             Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDaoMock = new Mock<IDifficultyLevelScaleDao>();
             difficultyLevelScaleDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevelScale>())).Returns(isInUse);
@@ -78,8 +92,8 @@ namespace SummitLog.Services.Test.ServiceTests
             IDifficultyLevelScaleService difficultyLevelScaleService = new DifficultyLevelScaleService(difficultyLevelScaleDaoMock.Object);
             difficultyLevelScaleService.Delete(difficultyLevelScale);
 
-            difficultyLevelScaleDaoMock.Verify(x=>x.IsInUse(difficultyLevelScale), Times.Once);
-            difficultyLevelScaleDaoMock.Verify(x=>x.Delete(difficultyLevelScale), Times.Once);
+            difficultyLevelScaleDaoMock.Verify(x => x.IsInUse(difficultyLevelScale), Times.Once);
+            difficultyLevelScaleDaoMock.Verify(x => x.Delete(difficultyLevelScale), Times.Once);
         }
 
         [Test]

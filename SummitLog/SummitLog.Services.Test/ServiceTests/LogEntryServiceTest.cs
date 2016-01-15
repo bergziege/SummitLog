@@ -4,6 +4,7 @@ using FluentAssertions;
 
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
@@ -48,8 +49,7 @@ namespace SummitLog.Services.Test.ServiceTests
         [TestCase(true, " ")]
         [TestCase(true, "    ")]
         [TestCase(true, null)]
-        [TestCase(false, "freeclimb", ExpectedException = typeof(ArgumentNullException))]
-        public void TestCreateWithSomeMissing(bool useVariation, string name)
+        public void TestCreateWithNameMissing(bool useVariation, string name)
         {
             Variation fakeVariation = null;
             if (useVariation)
@@ -58,6 +58,14 @@ namespace SummitLog.Services.Test.ServiceTests
             }
             Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
             new LogEntryService(logEntryDaoMock.Object).Create(fakeVariation, DateTime.Today, name);
+        }
+
+        [Test]
+        public void TestCreateWithVariationMissing()
+        {
+            Mock<ILogEntryDao> logEntryDaoMock = new Mock<ILogEntryDao>();
+            Action action = ()=> new LogEntryService(logEntryDaoMock.Object).Create(null, DateTime.Today,"name");
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]

@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
@@ -28,12 +29,11 @@ namespace SummitLog.Services.Test.ServiceTests
             routeDaoMock.Verify(x=>x.IsInUse(route), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<IRoutesDao> routeDaoMock = new Mock<IRoutesDao>();
-            routeDaoMock.Setup(x => x.IsInUse(It.IsAny<Route>())).Returns(isInUse);
+            routeDaoMock.Setup(x => x.IsInUse(It.IsAny<Route>())).Returns(false);
             routeDaoMock.Setup(x => x.Delete(It.IsAny<Route>()));
 
             Route route = new Route();
@@ -43,6 +43,21 @@ namespace SummitLog.Services.Test.ServiceTests
 
             routeDaoMock.Verify(x=>x.Delete(route), Times.Once);
             routeDaoMock.Verify(x=>x.IsInUse(route), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<IRoutesDao> routeDaoMock = new Mock<IRoutesDao>();
+            routeDaoMock.Setup(x => x.IsInUse(It.IsAny<Route>())).Returns(true);
+            routeDaoMock.Setup(x => x.Delete(It.IsAny<Route>()));
+
+            Route route = new Route();
+
+            IRouteService routeService = new RouteService(routeDaoMock.Object);
+            Action action = ()=> routeService.Delete(route);
+
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

@@ -85,12 +85,11 @@ namespace SummitLog.Services.Test.ServiceTests
             areaDaoMock.Verify(x=>x.IsInUse(area), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
-            areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(isInUse);
+            areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(false);
             areaDaoMock.Setup(x => x.Delete(It.IsAny<Area>()));
 
             Area area = new Area();
@@ -100,6 +99,21 @@ namespace SummitLog.Services.Test.ServiceTests
 
             areaDaoMock.Verify(x => x.IsInUse(area), Times.Once);
             areaDaoMock.Verify(x => x.Delete(area), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhenInUse()
+        {
+            Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
+            areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(true);
+            areaDaoMock.Setup(x => x.Delete(It.IsAny<Area>()));
+
+            Area area = new Area();
+
+            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            Action deleteWithAreaInUse = ()=> areaService.Delete(area);
+
+            deleteWithAreaInUse.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

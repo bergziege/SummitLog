@@ -14,13 +14,23 @@ namespace SummitLog.Services.Test.ServiceTests
     [TestFixture]
     public class VariationServiceTest
     {
-        [TestCase(null, true, true)]
-        [TestCase("", true, true)]
-        [TestCase(" ", true, true)]
-        [TestCase("   ", true, true)]
-        [TestCase("var", false, true, ExpectedException = typeof(ArgumentNullException))]
-        [TestCase("var", true, false, ExpectedException = typeof(ArgumentNullException))]
-        public void TestCreateMissingName(string name, bool useRoute, bool useLevel)
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        [TestCase("   ")]
+        public void TestCreateMissingNameShouldSucced(string name)
+        {
+            Route route = new Route();
+            
+            DifficultyLevel level = new DifficultyLevel();
+
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+
+            new VariationService(variationDaoMock.Object).Create(route, level, name);            
+        }
+
+        [Test]
+        public void TestCreateMissingRouteShouldThrow(string name, bool useRoute, bool useLevel)
         {
             Route route = null;
             if (useRoute)
@@ -35,15 +45,33 @@ namespace SummitLog.Services.Test.ServiceTests
 
             Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
 
-            new VariationService(variationDaoMock.Object).Create(route, level, name);            
+            new VariationService(variationDaoMock.Object).Create(route, level, name);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof (NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestCreateMissingLevelShouldThrow(string name, bool useRoute, bool useLevel)
+        {
+            Route route = null;
+            if (useRoute)
+            {
+                route = new Route();
+            }
+            DifficultyLevel level = null;
+            if (useLevel)
+            {
+                level = new DifficultyLevel();
+            }
+
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+
+            new VariationService(variationDaoMock.Object).Create(route, level, name);
+        }
+
+        [Test]
+        public void TestDelete()
         {
             Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
-            variationDaoMock.Setup(x => x.IsInUse(It.IsAny<Variation>())).Returns(isInUse);
+            variationDaoMock.Setup(x => x.IsInUse(It.IsAny<Variation>())).Returns(false);
             variationDaoMock.Setup(x => x.Delete(It.IsAny<Variation>()));
 
             Variation variation = new Variation();
@@ -53,6 +81,21 @@ namespace SummitLog.Services.Test.ServiceTests
 
             variationDaoMock.Verify(x => x.IsInUse(variation), Times.Once);
             variationDaoMock.Verify(x => x.Delete(variation), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<IVariationDao> variationDaoMock = new Mock<IVariationDao>();
+            variationDaoMock.Setup(x => x.IsInUse(It.IsAny<Variation>())).Returns(true);
+            variationDaoMock.Setup(x => x.Delete(It.IsAny<Variation>()));
+
+            Variation variation = new Variation();
+
+            IVariationService service = new VariationService(variationDaoMock.Object);
+            Action action = ()=> service.Delete(variation);
+
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [TestCase(true, false)]
