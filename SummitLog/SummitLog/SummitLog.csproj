@@ -170,10 +170,12 @@
     <Compile Include="UI\Main\Converter\ContentToVisibilityConverter.cs" />
     <Compile Include="UI\Main\DesignViewModels\LogItemDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\MainDesignViewModel.cs" />
+    <Compile Include="UI\Main\DesignViewModels\RouteDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\SummitDesignViewModel.cs" />
     <Compile Include="UI\Main\DesignViewModels\VariationItemDesignViewModel.cs" />
     <Compile Include="UI\Main\ILogItemViewModel.cs" />
     <Compile Include="UI\Main\IMainViewModel.cs" />
+    <Compile Include="UI\Main\IRouteViewModel.cs" />
     <Compile Include="UI\Main\ISummitViewModel.cs" />
     <Compile Include="UI\Main\IVariationItemViewModel.cs" />
     <Compile Include="UI\Main\MainView.xaml.cs">
@@ -181,6 +183,7 @@
     </Compile>
     <Compile Include="UI\Main\ViewModels\LogItemViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\MainViewModel.cs" />
+    <Compile Include="UI\Main\ViewModels\RouteViewModeln.cs" />
     <Compile Include="UI\Main\ViewModels\SummitViewModel.cs" />
     <Compile Include="UI\Main\ViewModels\VariationItemViewModel.cs" />
     <Compile Include="UI\NameAndLevelInput\DesignViewModels\NameAndLevelInputDesignViewModel.cs" />
@@ -204,6 +207,13 @@
     </Compile>
     <Compile Include="UI\NameInput\ViewCommands\NameInputViewCommand.cs" />
     <Compile Include="UI\NameInput\ViewModels\NameInputViewModel.cs" />
+    <Compile Include="UI\RouteOnSummitEdit\DesignViewModels\RouteOnSummitEditDesignViewModel.cs" />
+    <Compile Include="UI\RouteOnSummitEdit\IRouteOnSummitEditViewModel.cs" />
+    <Compile Include="UI\RouteOnSummitEdit\RouteOnSummitEditView.xaml.cs">
+      <DependentUpon>RouteOnSummitEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\RouteOnSummitEdit\ViewCommands\RouteOnSummitEditViewCommand.cs" />
+    <Compile Include="UI\RouteOnSummitEdit\ViewModels\RouteOnSummitEditViewModel.cs" />
     <Compile Include="UI\SummitEdit\DesignViewModels\SummitEditDesignViewModel.cs" />
     <Compile Include="UI\SummitEdit\ISummitEditViewModel.cs" />
     <Compile Include="UI\SummitEdit\SummitEditView.xaml.cs">
@@ -292,6 +302,10 @@
     <Page Include="UI\NameInput\NameInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\RouteOnSummitEdit\RouteOnSummitEditView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\SummitEdit\SummitEditView.xaml">
       <SubType>Designer</SubType>

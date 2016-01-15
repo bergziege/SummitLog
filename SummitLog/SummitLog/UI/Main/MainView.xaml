@@ -265,7 +265,17 @@
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummit}"
-                          SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="main:IRouteViewModel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Name}" />
+                                <TextBlock Text="{Binding Path=Rating, StringFormat={} ({0}*)}"
+                                           Visibility="{Binding Path=Rating, Converter={StaticResource StringContentToVisibilityConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 

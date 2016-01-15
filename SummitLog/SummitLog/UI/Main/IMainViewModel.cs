@@ -82,12 +82,12 @@ namespace SummitLog.UI.Main
         /// <summary>
         ///     Liefert eine Liste aller Routen an einem gewählten Gipfel
         /// </summary>
-        ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummit { get; }
+        ObservableCollection<IRouteViewModel> RoutesInSelectedSummit { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route an einem Gipfel
         /// </summary>
-        IItemWithNameViewModel<Route> SelectedRouteInSummit { get; set; }
+        IRouteViewModel SelectedRouteInSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)

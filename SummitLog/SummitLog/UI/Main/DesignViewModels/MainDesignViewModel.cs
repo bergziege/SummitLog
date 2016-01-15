@@ -61,10 +61,10 @@ namespace SummitLog.UI.Main.DesignViewModels
                 new ItemWithNameDesignViewModel<Route>()
             };
 
-            RoutesInSelectedSummit = new ObservableCollection<IItemWithNameViewModel<Route>>
+            RoutesInSelectedSummit = new ObservableCollection<IRouteViewModel>
             {
-                new ItemWithNameDesignViewModel<Route>(),
-                new ItemWithNameDesignViewModel<Route>()
+                new RouteDesignViewModel(),
+                new RouteDesignViewModel()
             };
 
             VariationsOnSelectedRoute = new ObservableCollection<IVariationItemViewModel>
@@ -167,12 +167,12 @@ namespace SummitLog.UI.Main.DesignViewModels
         /// <summary>
         ///     Liefert eine Liste aller Routen an einem gewählten Gipfel
         /// </summary>
-        public ObservableCollection<IItemWithNameViewModel<Route>> RoutesInSelectedSummit { get; }
+        public ObservableCollection<IRouteViewModel> RoutesInSelectedSummit { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Route an einem Gipfel
         /// </summary>
-        public IItemWithNameViewModel<Route> SelectedRouteInSummit { get; set; }
+        public IRouteViewModel SelectedRouteInSummit { get; set; }
 
         /// <summary>
         ///     Liefert eine Liste aller Variationen einer gewählten Route (Land, Gebiet, Gruppe ODER Gipfel)
