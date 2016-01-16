@@ -20,14 +20,14 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="country"></param>
         /// <param name="routeName"></param>
-        void CreateIn(Country country, string routeName);
+        Route CreateIn(Country country, string routeName);
 
         /// <summary>
         ///     Erstellt eine neue Route in einem Gebiet
         /// </summary>
         /// <param name="area"></param>
         /// <param name="routeName"></param>
-        void CreateIn(Area area, string routeName);
+        Route CreateIn(Area area, string routeName);
 
         /// <summary>
         ///     LIefert alle Routen in einem Gebiet
@@ -41,7 +41,7 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="summitGroup"></param>
         /// <param name="routeName"></param>
-        void CreateIn(SummitGroup summitGroup, string routeName);
+        Route CreateIn(SummitGroup summitGroup, string routeName);
 
         /// <summary>
         ///     Liefert alle Routen einer Gipfelgruppe
@@ -56,7 +56,7 @@ namespace SummitLog.Services.Services
         /// <param name="summit"></param>
         /// <param name="routeName"></param>
         /// <param name="rating"></param>
-        void CreateIn(Summit summit, string routeName, double rating = 0);
+        Route CreateIn(Summit summit, string routeName, double rating = 0);
 
         /// <summary>
         ///     Liefert alle Routen eines Gipfels

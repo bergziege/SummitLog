@@ -39,11 +39,11 @@ namespace SummitLog.Services.Services.Impl
         /// </summary>
         /// <param name="country"></param>
         /// <param name="routeName"></param>
-        public void CreateIn(Country country, string routeName)
+        public Route CreateIn(Country country, string routeName)
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(country, new Route {Name = routeName});
+            return _routesDao.CreateIn(country, new Route {Name = routeName});
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace SummitLog.Services.Services.Impl
         /// </summary>
         /// <param name="area"></param>
         /// <param name="routeName"></param>
-        public void CreateIn(Area area, string routeName)
+        public Route CreateIn(Area area, string routeName)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(area, new Route {Name = routeName});
+            return _routesDao.CreateIn(area, new Route {Name = routeName});
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace SummitLog.Services.Services.Impl
         /// </summary>
         /// <param name="summitGroup"></param>
         /// <param name="routeName"></param>
-        public void CreateIn(SummitGroup summitGroup, string routeName)
+        public Route CreateIn(SummitGroup summitGroup, string routeName)
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(summitGroup, new Route {Name = routeName});
+            return _routesDao.CreateIn(summitGroup, new Route {Name = routeName});
         }
 
         /// <summary>
@@ -98,11 +98,11 @@ namespace SummitLog.Services.Services.Impl
         /// <param name="summit"></param>
         /// <param name="routeName"></param>
         /// <param name="rating"></param>
-        public void CreateIn(Summit summit, string routeName, double rating = 0)
+        public Route CreateIn(Summit summit, string routeName, double rating = 0)
         {
             if (summit == null) throw new ArgumentNullException(nameof(summit));
             if (string.IsNullOrWhiteSpace(routeName)) throw new ArgumentNullException(nameof(routeName));
-            _routesDao.CreateIn(summit, new Route {Name = routeName, Rating = rating});
+            return _routesDao.CreateIn(summit, new Route {Name = routeName, Rating = rating});
         }
 
         /// <summary>

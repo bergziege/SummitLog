@@ -1455,9 +1455,10 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedCountry.Item, _nameInputViewCommand.Name);
+                Route created = _routeService.CreateIn(SelectedCountry.Item, _nameInputViewCommand.Name);
+                RefreshRoutesInSelectedCountry();
+                SelectedRouteInCountry = RoutesInSelectedCountry.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshRoutesInSelectedCountry();
         }
 
         private bool CanAddRouteInSelectedArea()
@@ -1470,9 +1471,10 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedArea.Item, _nameInputViewCommand.Name);
+                Route created = _routeService.CreateIn(SelectedArea.Item, _nameInputViewCommand.Name);
+                RefreshRoutesInSelectedArea();
+                SelectedRouteInArea = RoutesInSelectedArea.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshRoutesInSelectedArea();
         }
 
         private bool CanAddRouteInSelectedSummmitGroup()
@@ -1485,9 +1487,10 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _routeService.CreateIn(SelectedSummitGroup.Item, _nameInputViewCommand.Name);
+                Route created = _routeService.CreateIn(SelectedSummitGroup.Item, _nameInputViewCommand.Name);
+                RefreshRoutesInSelectedSummitGroup();
+                SelectedRouteInSummitGroup = RoutesInSelectedSummitGroup.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshRoutesInSelectedSummitGroup();
         }
 
         private bool CanAddRouteInSelectedSummit()
@@ -1500,9 +1503,10 @@ namespace SummitLog.UI.Main.ViewModels
             Route editedRoute = _routeOnSummitEditViewCommand.Execute(new Route());
             if (!string.IsNullOrWhiteSpace(editedRoute.Name))
             {
-                _routeService.CreateIn(SelectedSummit.Item, editedRoute.Name, editedRoute.Rating);
+                Route created = _routeService.CreateIn(SelectedSummit.Item, editedRoute.Name, editedRoute.Rating);
+                RefreshRoutesInSelectedSummit();
+                SelectedRouteInSummit = RoutesInSelectedSummit.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshRoutesInSelectedSummit();
         }
 
         private bool CanAddVariationToSelectedRoute()
