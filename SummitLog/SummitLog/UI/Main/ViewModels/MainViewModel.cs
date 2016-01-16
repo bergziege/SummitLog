@@ -1523,11 +1523,12 @@ namespace SummitLog.UI.Main.ViewModels
                 Route selectedRoute = GetSelectedRoute();
                 if (selectedRoute != null)
                 {
-                    _variationService.Create(selectedRoute,
+                    Variation created = _variationService.Create(selectedRoute,
                         _nameAndLevelInputViewCommand.DifficultyLevel, _nameAndLevelInputViewCommand.Name);
+                    RefreshVariationsOnLastSelectedRoute();
+                    SelectedVariation = VariationsOnSelectedRoute.FirstOrDefault(x => x.Item.Id == created.Id);
                 }
             }
-            RefreshVariationsOnLastSelectedRoute();
         }
 
         private void RefreshVariationsOnLastSelectedRoute()
@@ -1567,8 +1568,9 @@ namespace SummitLog.UI.Main.ViewModels
         {
             if (_logEntryInputViewCommand.Execute())
             {
-                _logEntryService.Create(SelectedVariation.Item, _logEntryInputViewCommand.Date, _logEntryInputViewCommand.Memo);
+                LogEntry created = _logEntryService.Create(SelectedVariation.Item, _logEntryInputViewCommand.Date, _logEntryInputViewCommand.Memo);
                 RefreshLogEntriesOnSelectedVariation();
+                SelectedLogEntry = LogEntriesOnSelectedVariation.FirstOrDefault(x => x.LogEntry.Id == created.Id);
             }
         }
 

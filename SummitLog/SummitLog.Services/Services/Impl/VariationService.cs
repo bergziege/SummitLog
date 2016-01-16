@@ -40,11 +40,11 @@ namespace SummitLog.Services.Services.Impl
         /// <param name="route"></param>
         /// <param name="difficultyLevel"></param>
         /// <param name="variationName"></param>
-        public void Create(Route route, DifficultyLevel difficultyLevel, string variationName)
+        public Variation Create(Route route, DifficultyLevel difficultyLevel, string variationName)
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
             if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
-            _variationDao.Create(new Variation() {Name = variationName}, route, difficultyLevel);
+            return _variationDao.Create(new Variation() {Name = variationName}, route, difficultyLevel);
         }
 
         /// <summary>

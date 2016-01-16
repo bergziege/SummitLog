@@ -39,10 +39,10 @@ namespace SummitLog.Services.Services.Impl
         /// <param name="variation"></param>
         /// <param name="date"></param>
         /// <param name="memo"></param>
-        public void Create(Variation variation, DateTime date, string memo)
+        public LogEntry Create(Variation variation, DateTime date, string memo)
         {
             if (variation == null) throw new ArgumentNullException(nameof(variation));
-            _logEntryDao.Create(variation, new LogEntry() {Memo = memo, DateTime = date});
+            return _logEntryDao.Create(variation, new LogEntry() {Memo = memo, DateTime = date});
         }
 
         /// <summary>
