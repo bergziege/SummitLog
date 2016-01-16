@@ -1389,13 +1389,9 @@ namespace SummitLog.UI.Main.ViewModels
         private void AddCountry()
         {
             _nameInputViewCommand.Execute();
-            Country created = null;
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                created = _countryService.Create(_nameInputViewCommand.Name);
-            }
-            if (created != null)
-            {
+                Country created = _countryService.Create(_nameInputViewCommand.Name);
                 RefreshCountries();
                 SelectedCountry = Countries.FirstOrDefault(x => x.Item.Id == created.Id);
             }
@@ -1411,9 +1407,10 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _areaService.Create(SelectedCountry.Item, _nameInputViewCommand.Name);
+                Area created = _areaService.Create(SelectedCountry.Item, _nameInputViewCommand.Name);
+                RefreshAreas();
+                SelectedArea = AreasInSelectedCountry.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshAreas();
         }
 
         private void AddSummitGroupInSelectedArea()
@@ -1421,9 +1418,10 @@ namespace SummitLog.UI.Main.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _summitGroupService.Create(SelectedArea.Item, _nameInputViewCommand.Name);
+                SummitGroup created = _summitGroupService.Create(SelectedArea.Item, _nameInputViewCommand.Name);
+                RefreshSummitGroups();
+                SelectedSummitGroup = SummitGroupsInSelectedArea.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshSummitGroups();
         }
 
         private bool CanAddSummitGroupInSelectedArea()
@@ -1441,9 +1439,10 @@ namespace SummitLog.UI.Main.ViewModels
             Summit summitData = _summitEditViewCommand.Execute(new Summit());
             if (!string.IsNullOrWhiteSpace(summitData.Name))
             {
-                _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber, summitData.Rating);
+                Summit created = _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber, summitData.Rating);
+                RefreshSummits();
+                SelectedSummit = SummitsInSelectedSummitGroup.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            RefreshSummits();
         }
 
         private bool CanAddRouteInSelectedCountry()

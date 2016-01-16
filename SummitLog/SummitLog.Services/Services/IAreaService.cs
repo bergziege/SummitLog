@@ -20,7 +20,7 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="country"></param>
         /// <param name="name"></param>
-        void Create(Country country, string name);
+        Area Create(Country country, string name);
 
         /// <summary>
         ///     Liefert ob ein Gebiet noch verwendet wird

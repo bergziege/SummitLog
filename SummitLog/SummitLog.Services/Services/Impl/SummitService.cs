@@ -41,11 +41,11 @@ namespace SummitLog.Services.Services.Impl
         /// <param name="name"></param>
         /// <param name="summitNumber"></param>
         /// <param name="rating"></param>
-        public void Create(SummitGroup summitGroup, string name, string summitNumber, double rating)
+        public Summit Create(SummitGroup summitGroup, string name, string summitNumber, double rating)
         {
             if (summitGroup == null) throw new ArgumentNullException(nameof(summitGroup));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-            _summitDao.Create(summitGroup, new Summit {Name = name, SummitNumber = summitNumber, Rating = rating});
+            return _summitDao.Create(summitGroup, new Summit {Name = name, SummitNumber = summitNumber, Rating = rating});
         }
 
         /// <summary>
