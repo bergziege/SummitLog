@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
@@ -50,9 +51,10 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
             _nameInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameInputViewCommand.Name))
             {
-                _difficultyLevelScaleService.Create(_nameInputViewCommand.Name);
+                DifficultyLevelScale created = _difficultyLevelScaleService.Create(_nameInputViewCommand.Name);
+                LoadData();
+                SelectedDifficultyLevelScale = DifficultyLevelScales.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            LoadData();
         }
 
         /// <summary>
