@@ -214,6 +214,12 @@
     </Compile>
     <Compile Include="UI\RouteOnSummitEdit\ViewCommands\RouteOnSummitEditViewCommand.cs" />
     <Compile Include="UI\RouteOnSummitEdit\ViewModels\RouteOnSummitEditViewModel.cs" />
+    <Compile Include="UI\Splash\DesignViewModels\SplashscreenDesignViewModel.cs" />
+    <Compile Include="UI\Splash\ISplashscreenViewModel.cs" />
+    <Compile Include="UI\Splash\Splashscreen.xaml.cs">
+      <DependentUpon>Splashscreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Splash\ViewModels\SplashscreenViewModel.cs" />
     <Compile Include="UI\SummitEdit\DesignViewModels\SummitEditDesignViewModel.cs" />
     <Compile Include="UI\SummitEdit\ISummitEditViewModel.cs" />
     <Compile Include="UI\SummitEdit\SummitEditView.xaml.cs">
@@ -307,10 +313,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\Splash\Splashscreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\SummitEdit\SummitEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Splashscreen.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
