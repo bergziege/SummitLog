@@ -23,10 +23,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-
-        <Label Content="Bemerkung:" Grid.Row="2"></Label>
-        <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="200" Grid.Row="2"/>
-
+        
         <Label Content="Skala:" Grid.Row="0"/>
         <ComboBox Margin="3" ItemsSource="{Binding Path=DifficultyLevelScales}" SelectedItem="{Binding Path=SelectedDifficultyLevelScale}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
             <ComboBox.ItemTemplate>
@@ -47,6 +44,9 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+
+        <Label Content="Bemerkung:" Grid.Row="2"></Label>
+        <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="200" Grid.Row="2"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
             <Button IsDefault="true" Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
