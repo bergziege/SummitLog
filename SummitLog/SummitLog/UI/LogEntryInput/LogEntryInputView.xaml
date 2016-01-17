@@ -30,8 +30,8 @@
         <DatePicker SelectedDate="{Binding Path=Date, UpdateSourceTrigger=PropertyChanged}" SelectedDateFormat="Short" Grid.Column="1" Grid.Row="0" Margin="3" />
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
+            <Button IsDefault="True" Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
+            <Button IsCancel="True" Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
         </StackPanel>
     </Grid>
 </Window>

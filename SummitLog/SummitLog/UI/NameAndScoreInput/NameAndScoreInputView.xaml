@@ -33,8 +33,8 @@
             <xctk:IntegerUpDown Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Value="{Binding Path=Score}" Margin="3"/>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="2">
-                <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
-                <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
+                <Button IsDefault="True" Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}"/>
+                <Button IsCancel="True" Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
             </StackPanel>
         </Grid>
     </Grid>
