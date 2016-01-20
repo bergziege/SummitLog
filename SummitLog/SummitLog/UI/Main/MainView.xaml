@@ -15,21 +15,21 @@
     <Window.Resources>
 
         <DataTemplate x:Key="ItemWithNameTemplate">
-            <Label Content="{Binding Path=Name}"></Label>
+            <Label Content="{Binding Path=Name}" />
         </DataTemplate>
-        
+
         <Style TargetType="ListView">
-            <Setter Property="ItemTemplate" Value="{StaticResource ItemWithNameTemplate}"></Setter>
+            <Setter Property="ItemTemplate" Value="{StaticResource ItemWithNameTemplate}" />
         </Style>
-        
+
         <CollectionViewSource Source="{Binding Path=VariationsOnSelectedRoute}" x:Key="VariationsSource">
             <CollectionViewSource.SortDescriptions>
-                <componentModel:SortDescription PropertyName="DifficultyLevel.Name"></componentModel:SortDescription>
-                <componentModel:SortDescription PropertyName="Name"></componentModel:SortDescription>
+                <componentModel:SortDescription PropertyName="DifficultyLevel.Name" />
+                <componentModel:SortDescription PropertyName="Name" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
 
-        <converter:StringContentToVisibilityConverter x:Key="StringContentToVisibilityConverter"/>
+        <converter:ContentToVisibilityConverter x:Key="StringContentToVisibilityConverter" />
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -40,7 +40,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -49,25 +49,29 @@
         <!--Menü-->
         <Menu Grid.ColumnSpan="4">
             <MenuItem Header="Verwalten">
-                <MenuItem Header="Schwierigkeitsgrade" Command="{Binding Path=ManageDifficultiesCommand}"></MenuItem>
+                <MenuItem Header="Schwierigkeitsgrade" Command="{Binding Path=ManageDifficultiesCommand}" />
             </MenuItem>
         </Menu>
-        
+
         <!--Länder-->
-        <HeaderedContentControl Header="Länder" Grid.Row="1" Grid.Column="0" Style="{StaticResource MainViewHeaderedContentControl}" >
+        <HeaderedContentControl Header="Länder" Grid.Row="1" Grid.Column="0"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                
+
                 <Image Source="/Assets/icon_land.png" Width="32" Height="32" VerticalAlignment="Top">
-                    <Image.Effect><DropShadowEffect ShadowDepth="0"></DropShadowEffect></Image.Effect>
+                    <Image.Effect>
+                        <DropShadowEffect ShadowDepth="0" />
+                    </Image.Effect>
                 </Image>
-                
+
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddCountryCommand}" Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedCountryCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedCountryCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveCountryCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
@@ -76,7 +80,8 @@
         </HeaderedContentControl>
 
         <!--Gebiete-->
-        <HeaderedContentControl Header="Gebiete" Grid.Row="1" Grid.Column="1" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Gebiete" Grid.Row="1" Grid.Column="1"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -84,7 +89,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gebiet.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
@@ -99,7 +104,8 @@
         </HeaderedContentControl>
 
         <!--Gipfelgruppen-->
-        <HeaderedContentControl Header="Gipfelgruppen" Grid.Row="1" Grid.Column="2" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Gipfelgruppen" Grid.Row="1" Grid.Column="2"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -107,14 +113,16 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gipfelgruppe.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddSummitGroupInSelectedAreaCommand}" HorizontalAlignment="Left"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
-                    <Button Command="{Binding Path=RemoveSummitGroupCommand}" Style="{StaticResource RemoveButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedSummitGroupCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=RemoveSummitGroupCommand}"
+                            Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitGroupsInSelectedArea}"
                           SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -122,7 +130,8 @@
         </HeaderedContentControl>
 
         <!--Gipfel-->
-        <HeaderedContentControl Header="Gipfel" Grid.Row="1" Grid.Column="3" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Gipfel" Grid.Row="1" Grid.Column="3"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -130,7 +139,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gipfel.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
@@ -140,12 +149,25 @@
                     <Button Command="{Binding Path=RemoveSummitCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
-                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="main:ISummitViewModel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Name}" />
+                                <TextBlock Text="{Binding Path=SummitNumber, StringFormat={} ({0})}"
+                                           Visibility="{Binding Path=SummitNumber, Converter={StaticResource StringContentToVisibilityConverter}}" />
+                                <TextBlock Text="{Binding Path=Rating, StringFormat={} ({0}*)}"
+                                           Visibility="{Binding Path=Rating, Converter={StaticResource StringContentToVisibilityConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
         <!--Routen im Land-->
-        <HeaderedContentControl Header="Routen im Land" Grid.Row="2" Grid.Column="0" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Routen im Land" Grid.Row="2" Grid.Column="0"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -153,13 +175,14 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_land_wege.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedCountryCommand}"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedRouteInCountryCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInCountryCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInCountryCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -169,7 +192,8 @@
         </HeaderedContentControl>
 
         <!--Routen im Gebiet-->
-        <HeaderedContentControl Header="Routen im Gebiet" Grid.Row="2" Grid.Column="1" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Routen im Gebiet" Grid.Row="2" Grid.Column="1"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -177,13 +201,14 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gebiet_wege.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedAreaCommand}"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedRouteInAreaCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInAreaCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInAreaCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -193,7 +218,8 @@
         </HeaderedContentControl>
 
         <!--Routen in Gipfelgruppe-->
-        <HeaderedContentControl Header="Routen in Gipfelgruppe" Grid.Row="2" Grid.Column="2" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Routen in Gipfelgruppe" Grid.Row="2" Grid.Column="2"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -201,13 +227,14 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gipfelgruppe_wege.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitGroupCommnad}"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedRouteInSummitGroupCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInSummitGroupCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInSummitGroupCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -217,7 +244,8 @@
         </HeaderedContentControl>
 
         <!--Routen am Gipfel-->
-        <HeaderedContentControl Header="Routen am Gipfel" Grid.Row="2" Grid.Column="3" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Routen am Gipfel" Grid.Row="2" Grid.Column="3"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -225,23 +253,35 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_gipfel_wege.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddRouteInSelectedSummitCommand}"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedRouteInSummitCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedRouteInSummitCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveRouteInSummitCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummit}"
-                          SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="main:IRouteViewModel">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=Name}" />
+                                <TextBlock Text="{Binding Path=Rating, StringFormat={} ({0}*)}"
+                                           Visibility="{Binding Path=Rating, Converter={StaticResource StringContentToVisibilityConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
         <!--Variationen-->
-        <HeaderedContentControl Header="Variationen der Route" Grid.Row="3" Grid.Column="0" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Variationen der Route" Grid.Row="3" Grid.Column="0"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -249,13 +289,14 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_schwierigkeiten.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
                     <Button Command="{Binding Path=AddVariationToSelectedRouteCommand}"
                             Style="{StaticResource AddButtonStyle}" />
-                    <Button Command="{Binding Path=EditSelectedVariationCommand}" Style="{StaticResource EditButtonStyle}" />
+                    <Button Command="{Binding Path=EditSelectedVariationCommand}"
+                            Style="{StaticResource EditButtonStyle}" />
                     <Button Command="{Binding Path=RemoveSelectedVariationCommand}"
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
@@ -264,9 +305,10 @@
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:IVariationItemViewModel">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=DifficultyLevel.Name}"></TextBlock>
+                                <TextBlock Text="{Binding Path=DifficultyLevel.Name}" />
                                 <TextBlock Text="{Binding Path=Name, StringFormat={} ({0})}"
-                                           Visibility="{Binding Path=Name, Converter={StaticResource StringContentToVisibilityConverter}}"></TextBlock></StackPanel>
+                                           Visibility="{Binding Path=Name, Converter={StaticResource StringContentToVisibilityConverter}}" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -274,7 +316,8 @@
         </HeaderedContentControl>
 
         <!--Logeinträge-->
-        <HeaderedContentControl Header="Logeinträge" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{StaticResource MainViewHeaderedContentControl}">
+        <HeaderedContentControl Header="Logeinträge" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                                Style="{StaticResource MainViewHeaderedContentControl}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -282,7 +325,7 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/icon_buch.png" Width="32" Height="32" VerticalAlignment="Top">
                     <Image.Effect>
-                        <DropShadowEffect ShadowDepth="0"></DropShadowEffect>
+                        <DropShadowEffect ShadowDepth="0" />
                     </Image.Effect>
                 </Image>
                 <StackPanel VerticalAlignment="Center">
@@ -298,12 +341,13 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Path=Date, StringFormat={}{0:dd.MM.yyyy}}" Padding="5"></TextBlock>
-                                <Label Content="{Binding Path=Memo}"></Label>
+                                <TextBlock Text="{Binding Path=Date, StringFormat={}{0:dd.MM.yyyy}}" Padding="5" />
+                                <Label Content="{Binding Path=Memo}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </Grid></HeaderedContentControl>
+            </Grid>
+        </HeaderedContentControl>
     </Grid>
 </Window>

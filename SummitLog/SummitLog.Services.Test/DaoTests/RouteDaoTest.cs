@@ -203,13 +203,14 @@ namespace SummitLog.Services.Test.DaoTests
             summitDao.Create(summitGroup, summit);
 
             IRoutesDao routeDao = new RouteDao(_graphClient);
-            Route newRoute = new Route {Name = "Jakobsweg"};
+            Route newRoute = new Route {Name = "Jakobsweg", Rating = 4.0};
             routeDao.CreateIn(summit, newRoute);
 
             IList<Route> allRoutes = _graphClient.Cypher.Match("(route:Route)")
                 .Return(route => route.As<Route>())
                 .Results.ToList();
             Assert.AreEqual(1, allRoutes.Count);
+            allRoutes.First().Rating.Should().Be(4);
         }
 
         [TestMethod]
@@ -262,15 +263,18 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestSave()
         {
             Country country = _dataGenerator.CreateCountry();
-            Route route = _dataGenerator.CreateRouteInCountry("oldname", country);
+            Route route = _dataGenerator.CreateRouteInCountry("oldname", 3.0, country);
 
             IRoutesDao routesDao = new RouteDao(_graphClient);
             Assert.AreEqual(1, routesDao.GetRoutesIn(country).Count);
 
             route.Name = "newname";
+            route.Rating = 2;
             routesDao.Save(route);
 
-            Assert.AreEqual("newname",  routesDao.GetRoutesIn(country).First().Name);
+            Route reloaded = routesDao.GetRoutesIn(country).First();
+            reloaded.Name.Should().Be("newname");
+            reloaded.Rating.Should().Be(2);
         }
     }
 }

@@ -32,9 +32,9 @@ namespace SummitLog.Services.Test.ServiceTests
             routeDaoMock.Setup(x => x.CreateIn(It.IsAny<Summit>(), It.IsAny<Route>()));
 
             IRouteService routeService = new RouteService(routeDaoMock.Object);
-            routeService.CreateIn(fakeSummit, "Route");
+            routeService.CreateIn(fakeSummit, "Route", 3);
 
-            routeDaoMock.Verify(x => x.CreateIn(fakeSummit, It.Is<Route>(y => y.Name == "Route")));
+            routeDaoMock.Verify(x => x.CreateIn(fakeSummit, It.Is<Route>(y => y.Name == "Route" && Math.Abs(y.Rating - 3) < 0.0001)));
         }
 
         [Test]

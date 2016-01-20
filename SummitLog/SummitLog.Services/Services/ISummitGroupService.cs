@@ -20,7 +20,7 @@ namespace SummitLog.Services.Services
         /// </summary>
         /// <param name="area"></param>
         /// <param name="name"></param>
-        void Create(Area area, string name);
+        SummitGroup Create(Area area, string name);
 
         /// <summary>
         ///     Liefert ob die Gipfelgruppe in Verwendung ist

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using ReactiveUI;
 using SummitLog.Services.Model;
@@ -138,10 +139,11 @@ namespace SummitLog.UI.DifficultyLevelManagement.ViewModels
             _nameAndScoreInputViewCommand.Execute();
             if (!string.IsNullOrWhiteSpace(_nameAndScoreInputViewCommand.Name))
             {
-                _difficultyLevelService.Create(_difficultyLevelScale, _nameAndScoreInputViewCommand.Name,
+                DifficultyLevel created = _difficultyLevelService.Create(_difficultyLevelScale, _nameAndScoreInputViewCommand.Name,
                     _nameAndScoreInputViewCommand.Score);
+                LoadData(_difficultyLevelScale);
+                SelectedDifficultyLevel = DifficultyLevels.FirstOrDefault(x => x.Item.Id == created.Id);
             }
-            LoadData(_difficultyLevelScale);
         }
 
         private void DeleteSelected()

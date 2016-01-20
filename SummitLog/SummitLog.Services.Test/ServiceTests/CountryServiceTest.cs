@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using FluentAssert;
 using FluentAssertions;
+using FluentAssertions.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
@@ -34,15 +35,17 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestCreate()
         {
-            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
-            countryDaoMock.Setup(x => x.Create(It.IsAny<Country>()));
-
             string countryName = "D";
+            Country createdCountry = new Country() {Name = countryName};
+
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.Create(It.IsAny<Country>())).Returns(createdCountry);
 
             ICountryService countryService = new CountryService(countryDaoMock.Object);
-            countryService.Create(countryName);
+            Country created = countryService.Create(countryName);
 
             countryDaoMock.Verify(x=>x.Create(It.Is<Country>(y=>y.Name == countryName)));
+            created.Name.Should().Be(countryName);
         }
 
         [TestCase("")]
@@ -70,12 +73,11 @@ namespace SummitLog.Services.Test.ServiceTests
             countryDaoMock.Verify(x=>x.IsInUse(country), Times.Once);
         }
 
-        [TestCase(false)]
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
-            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(isInUse);
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(false);
             countryDaoMock.Setup(x => x.Delete(It.IsAny<Country>()));
 
             Country country = new Country();
@@ -85,6 +87,20 @@ namespace SummitLog.Services.Test.ServiceTests
 
             countryDaoMock.Verify(x => x.IsInUse(country), Times.Once);
             countryDaoMock.Verify(x => x.Delete(country), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<ICountryDao> countryDaoMock = new Mock<ICountryDao>();
+            countryDaoMock.Setup(x => x.IsInUse(It.IsAny<Country>())).Returns(true);
+            countryDaoMock.Setup(x => x.Delete(It.IsAny<Country>()));
+
+            Country country = new Country();
+
+            ICountryService countryService = new CountryService(countryDaoMock.Object);
+            Action action = ()=> countryService.Delete(country);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

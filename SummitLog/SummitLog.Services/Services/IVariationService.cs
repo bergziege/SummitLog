@@ -21,7 +21,7 @@ namespace SummitLog.Services.Services
         /// <param name="route"></param>
         /// <param name="difficultyLevel"></param>
         /// <param name="variationName"></param>
-        void Create(Route route, DifficultyLevel difficultyLevel, string variationName);
+        Variation Create(Route route, DifficultyLevel difficultyLevel, string variationName);
 
         /// <summary>
         ///     Löscht eine Variation, wenn diese nicht mehr verwendet wird.

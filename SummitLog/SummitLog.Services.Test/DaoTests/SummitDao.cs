@@ -37,13 +37,15 @@ namespace SummitLog.Services.Test.DaoTests
         {
             SummitGroup group = _dataGenerator.CreateSummitGroup();
             ISummitDao summitDao = new SummitDao(_graphClient);
-            Summit created = _dataGenerator.CreateSummit(summitGroup: group);
+            Summit created = _dataGenerator.CreateSummit(summitGroup: group, rating:4.5);
 
             IList<Summit> summitsInGroup = summitDao.GetAllIn(group);
-            Assert.AreEqual(1, summitsInGroup.Count);
-            Assert.AreEqual(created.Name, summitsInGroup.First().Name);
-            Assert.AreEqual(created.Id, summitsInGroup.First().Id);
-            Assert.AreEqual(created.Id, summitsInGroup.First().Id);
+            summitsInGroup.Should().HaveCount(1);
+            created.Name.Should().Be(summitsInGroup.First().Name);
+            created.Id.Should().Be(summitsInGroup.First().Id);
+            created.SummitNumber.Should().Be(summitsInGroup.First().SummitNumber);
+            created.Rating.Should().Be(4.5);
+
         }
 
         [TestMethod]
@@ -97,15 +99,21 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestUpdate()
         {
             SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
-            Summit summit = _dataGenerator.CreateSummit("oldname", summitGroup);
+            Summit summit = _dataGenerator.CreateSummit(name:"oldname", summitNumber:"100C", summitGroup:summitGroup);
 
 
             summit.Name = "newname";
+            summit.SummitNumber = "200A";
+            summit.Rating = 2.3;
 
             ISummitDao summitDao = new SummitDao(_graphClient);
             summitDao.Save(summit);
 
-            Assert.AreEqual("newname", summitDao.GetAllIn(summitGroup).First().Name);
+            Summit savedSummit = summitDao.GetAllIn(summitGroup).First();
+            savedSummit.Name.Should().Be("newname");
+            savedSummit.SummitNumber.Should().Be("200A");
+            savedSummit.Rating.Should().Be(2.3);
+
 
         }
     }

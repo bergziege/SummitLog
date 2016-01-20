@@ -85,12 +85,11 @@ namespace SummitLog.Services.Test.ServiceTests
             Assert.IsTrue(isInUse);
         }
 
-        [TestCase(true, ExpectedException = typeof(NodeInUseException))]
-        [TestCase(false)]
-        public void TestDelete(bool isInUse)
+        [Test]
+        public void TestDelete()
         {
             Mock<IDifficultyLevelDao> difficultyLevelDaoMock = new Mock<IDifficultyLevelDao>();
-            difficultyLevelDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevel>())).Returns(isInUse);
+            difficultyLevelDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevel>())).Returns(false);
             difficultyLevelDaoMock.Setup(x => x.Delete(It.IsAny<DifficultyLevel>()));
 
             DifficultyLevel difficultyLevel = new DifficultyLevel();
@@ -99,6 +98,19 @@ namespace SummitLog.Services.Test.ServiceTests
 
             difficultyLevelDaoMock.Verify(x=>x.IsInUse(difficultyLevel), Times.Once);
             difficultyLevelDaoMock.Verify(x=>x.Delete(difficultyLevel), Times.Once);
+        }
+
+        [Test]
+        public void TestDeleteWhileInUse()
+        {
+            Mock<IDifficultyLevelDao> difficultyLevelDaoMock = new Mock<IDifficultyLevelDao>();
+            difficultyLevelDaoMock.Setup(x => x.IsInUse(It.IsAny<DifficultyLevel>())).Returns(true);
+            difficultyLevelDaoMock.Setup(x => x.Delete(It.IsAny<DifficultyLevel>()));
+
+            DifficultyLevel difficultyLevel = new DifficultyLevel();
+            IDifficultyLevelService difficultyLevelService = new DifficultyLevelService(difficultyLevelDaoMock.Object);
+            Action action = ()=> difficultyLevelService.Delete(difficultyLevel);
+            action.ShouldThrow<NodeInUseException>();
         }
 
         [Test]

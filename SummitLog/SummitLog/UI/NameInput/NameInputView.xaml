@@ -26,8 +26,8 @@
         <TextBox Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="150"/>
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
-            <Button Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}" />
+            <Button IsDefault="True" Content="Ok" Command="{Binding Path=OkCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
+            <Button IsCancel="True" Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}" />
         </StackPanel>
     </Grid>
 </Window>

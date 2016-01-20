@@ -41,11 +41,11 @@ namespace SummitLog.Services.Services.Impl
         /// <param name="scale"></param>
         /// <param name="name"></param>
         /// <param name="score"></param>
-        public void Create(DifficultyLevelScale scale, string name, int score)
+        public DifficultyLevel Create(DifficultyLevelScale scale, string name, int score)
         {
             if (scale == null) throw new ArgumentNullException(nameof(scale));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-            _difficultyLevelDao.Create(scale, new DifficultyLevel {Name = name, Score = score});
+            return _difficultyLevelDao.Create(scale, new DifficultyLevel {Name = name, Score = score});
         }
 
         /// <summary>

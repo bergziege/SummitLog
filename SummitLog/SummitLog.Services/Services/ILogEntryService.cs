@@ -22,7 +22,7 @@ namespace SummitLog.Services.Services
         /// <param name="variation"></param>
         /// <param name="date"></param>
         /// <param name="memo"></param>
-        void Create(Variation variation, DateTime date, string memo);
+        LogEntry Create(Variation variation, DateTime date, string memo);
 
         /// <summary>
         ///     Löscht den übergebenen Logeintrag

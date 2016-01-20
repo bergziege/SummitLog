@@ -18,7 +18,7 @@ namespace SummitLog.Services.Services
         ///     Erstellt eine neue Schwierigkeitsgradskala mit dem übergebenen Namen
         /// </summary>
         /// <param name="scaleName"></param>
-        void Create(string scaleName);
+        DifficultyLevelScale Create(string scaleName);
 
         /// <summary>
         ///     Liefert ob eine Skale verwendet wird

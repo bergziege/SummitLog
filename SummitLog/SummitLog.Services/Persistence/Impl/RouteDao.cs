@@ -176,7 +176,7 @@ namespace SummitLog.Services.Persistence.Impl
         {
             if (route == null) throw new ArgumentNullException(nameof(route));
             GraphClient.Cypher.Match("".Route("r")).Where((Route r)=>r.Id == route.Id)
-                .Set("r.Name = {Name}").WithParam("Name", route.Name)
+                .Set("r.Name = {Name}, r.Rating = {Rating}").WithParam("Name", route.Name).WithParam("Rating", route.Rating)
                 .ExecuteWithoutResults();
         }
     }

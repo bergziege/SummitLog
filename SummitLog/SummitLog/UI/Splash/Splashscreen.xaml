@@ -1,0 +1,24 @@
+﻿<Window x:Class="SummitLog.UI.Splash.Splashscreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SummitLog.UI.Splash"
+        xmlns:designViewModels="clr-namespace:SummitLog.UI.Splash.DesignViewModels"
+        mc:Ignorable="d"
+        Title="Splashscreen" Width="400" Height="300" WindowStartupLocation="CenterScreen" WindowStyle="None"
+        Background="Transparent" BorderThickness="0"
+        AllowsTransparency="True">
+    <d:DesignProperties.DataContext>
+        <designViewModels:SplashscreenDesignViewModel />
+    </d:DesignProperties.DataContext>
+    <Grid>
+        <Image Source="/Assets/Splashscreen.png" />
+
+        <ProgressBar Height="20" Width="350" Maximum="{Binding Path=MaxProgress, Mode=OneWay}" Margin="0,0,0,18"
+                     VerticalAlignment="Bottom" Background="Transparent" Value="{Binding Path=Progress, Mode=OneWay}"
+                     Foreground="#17C4FF"
+                     BorderThickness="0" />
+        <TextBlock Text="{Binding Path=Message}" VerticalAlignment="Bottom" Margin="28,0,0,21" />
+    </Grid>
+</Window>

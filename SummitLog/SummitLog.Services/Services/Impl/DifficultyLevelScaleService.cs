@@ -36,11 +36,11 @@ namespace SummitLog.Services.Services.Impl
         ///     Erstellt eine neue Schwiergkeitsgradskala mit dem übergebenen Namen
         /// </summary>
         /// <param name="scaleName"></param>
-        public void Create(string scaleName)
+        public DifficultyLevelScale Create(string scaleName)
         {
             if (string.IsNullOrWhiteSpace(scaleName))
                 throw new ArgumentNullException(nameof(scaleName));
-            _difficultyLevelScaleDao.Create(new DifficultyLevelScale{Name = scaleName});
+            return _difficultyLevelScaleDao.Create(new DifficultyLevelScale{Name = scaleName});
         }
 
         /// <summary>
