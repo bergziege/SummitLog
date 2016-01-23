@@ -37,6 +37,10 @@
       <HintPath>..\packages\DryIoc.dll.2.1.2\lib\net45\DryIoc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="INIFileParser, Version=2.2.4.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.2.2.4\lib\net20\INIFileParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Neo4jClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Neo4jClient.1.1.0.16\lib\net45\Neo4jClient.dll</HintPath>
       <Private>True</Private>
@@ -64,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\DbSettingsDto.cs" />
     <Compile Include="Exceptions\NodeInUseException.cs" />
     <Compile Include="Model\EntityWithId.cs" />
     <Compile Include="Model\EntityWithIdAndName.cs" />
@@ -78,8 +83,10 @@
     <Compile Include="Model\Route.cs" />
     <Compile Include="Persistence\Enums\NodeLabels.cs" />
     <Compile Include="Persistence\Extensions\DbHelper.cs" />
+    <Compile Include="Persistence\IIniFileDao.cs" />
     <Compile Include="Persistence\ILogEntryDao.cs" />
     <Compile Include="Persistence\Impl\BaseDao.cs" />
+    <Compile Include="Persistence\Impl\IniFielDao.cs" />
     <Compile Include="Persistence\Impl\LogEntryDao.cs" />
     <Compile Include="Persistence\IVariationDao.cs" />
     <Compile Include="Persistence\IDifficultyLevelDao.cs" />
@@ -106,10 +113,12 @@
     <Compile Include="Services\Impl\DifficultyLevelScaleService.cs" />
     <Compile Include="Services\Impl\LogEntryService.cs" />
     <Compile Include="Services\Impl\RouteService.cs" />
+    <Compile Include="Services\Impl\SettingsService.cs" />
     <Compile Include="Services\Impl\SummitService.cs" />
     <Compile Include="Services\Impl\SummitGroupService.cs" />
     <Compile Include="Services\Impl\VariationService.cs" />
     <Compile Include="Services\IRouteService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\ISummitService.cs" />
     <Compile Include="Services\ISummitGroupService.cs" />
     <Compile Include="Services\IAreaService.cs" />

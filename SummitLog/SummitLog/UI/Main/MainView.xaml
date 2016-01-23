@@ -49,6 +49,7 @@
         <!--Menü-->
         <Menu Grid.ColumnSpan="4">
             <MenuItem Header="Verwalten">
+                <MenuItem Header="Db Einstellungen" Command="{Binding Path=ShowDbSettingsCommand}" />
                 <MenuItem Header="Schwierigkeitsgrade" Command="{Binding Path=ManageDifficultiesCommand}" />
             </MenuItem>
         </Menu>

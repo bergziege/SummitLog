@@ -138,6 +138,13 @@
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
+    <Compile Include="UI\DbSettings\DbSettingsView.xaml.cs">
+      <DependentUpon>DbSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DbSettings\DesignViewModels\DbSettingsDesignViewModel.cs" />
+    <Compile Include="UI\DbSettings\IDbSettingsViewModel.cs" />
+    <Compile Include="UI\DbSettings\ViewCommands\DbSettingsViewCommand.cs" />
+    <Compile Include="UI\DbSettings\ViewModels\DbSettingsViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\ItemWIthNameAndScoreDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
@@ -246,6 +253,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Configuration.Template.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Configuration.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -277,6 +290,10 @@
     <Resource Include="Assets\icon_schwierigkeiten.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\DbSettings\DbSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

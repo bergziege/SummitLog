@@ -45,10 +45,11 @@ namespace SummitLog
             Thread.Sleep(250);
             AppContext.Container = new Container();
         }
-
+        
         private void AddServicesToContainer()
         {
             Thread.Sleep(250);
+
             ServicesBootloader.Init(AppContext.Container);
         }
 

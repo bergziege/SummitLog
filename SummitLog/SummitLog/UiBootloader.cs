@@ -1,4 +1,7 @@
 using DryIoc;
+using SummitLog.UI.DbSettings;
+using SummitLog.UI.DbSettings.ViewCommands;
+using SummitLog.UI.DbSettings.ViewModels;
 using SummitLog.UI.DifficultyLevelManagement;
 using SummitLog.UI.DifficultyLevelManagement.ViewModels;
 using SummitLog.UI.DifficultyLevelScaleManagement;
@@ -55,6 +58,7 @@ namespace SummitLog
             container.Register<LogEntryInputViewCommand>();
             container.Register<SummitEditViewCommand>();
             container.Register<RouteOnSummitEditViewCommand>();
+            container.Register<DbSettingsViewCommand>();
         }
 
         private static void SetupViewModels(Container container)
@@ -71,6 +75,7 @@ namespace SummitLog
             container.Register<IVariationItemViewModel, VariationItemViewModel>();
             container.Register<ISummitEditViewModel, SummitEditViewModel>();
             container.Register<IRouteOnSummitEditViewModel, RouteOnSummitEditViewModel>();
+            container.Register<IDbSettingsViewModel, DbSettingsViewModel>();
         }
 
         private static void SetupViews(Container container)
@@ -83,6 +88,7 @@ namespace SummitLog
             container.Register<LogEntryInputView>();
             container.Register<SummitEditView>();
             container.Register<RouteOnSummitEditView>();
+            container.Register<DbSettingsView>();
         }
     }
 }

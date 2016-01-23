@@ -345,6 +345,11 @@ namespace SummitLog.UI.Main.DesignViewModels
         public RelayCommand EditSelectedLogEntryCommand { get; }
 
         /// <summary>
+        ///     Liefert ein Command zur Anzeige der DB Einstellungen
+        /// </summary>
+        public RelayCommand ShowDbSettingsCommand { get; }
+
+        /// <summary>
         ///     Liefert ein Command um die gewählte Route zu bearbeiten
         /// </summary>
         public RelayCommand EditSelectedRouteCommand { get; }
