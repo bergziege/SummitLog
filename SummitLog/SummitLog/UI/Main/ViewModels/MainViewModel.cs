@@ -8,6 +8,7 @@ using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
+using SummitLog.UI.DbSettings.ViewCommands;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.LogEntryInput.ViewCommands;
 using SummitLog.UI.NameAndLevelInput.ViewCommands;
@@ -24,16 +25,17 @@ namespace SummitLog.UI.Main.ViewModels
     {
         private readonly IAreaService _areaService;
         private readonly ICountryService _countryService;
+        private readonly DbSettingsViewCommand _dbSettingsViewCommand;
+        private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
+        private readonly IDifficultyLevelService _difficultyLevelService;
         private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
         private readonly LogEntryInputViewCommand _logEntryInputViewCommand;
-        private readonly SummitEditViewCommand _summitEditViewCommand;
-        private readonly RouteOnSummitEditViewCommand _routeOnSummitEditViewCommand;
         private readonly ILogEntryService _logEntryService;
-        private readonly IDifficultyLevelService _difficultyLevelService;
-        private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
         private readonly NameAndLevelInputViewCommand _nameAndLevelInputViewCommand;
         private readonly NameInputViewCommand _nameInputViewCommand;
+        private readonly RouteOnSummitEditViewCommand _routeOnSummitEditViewCommand;
         private readonly IRouteService _routeService;
+        private readonly SummitEditViewCommand _summitEditViewCommand;
         private readonly ISummitGroupService _summitGroupService;
         private readonly ISummitService _summitService;
         private readonly IVariationService _variationService;
@@ -50,12 +52,14 @@ namespace SummitLog.UI.Main.ViewModels
         private RelayCommand _addVariationToSelectedRouteCommand;
         private RelayCommand _editSelectedAreaCommand;
         private RelayCommand _editSelectedCountryCommand;
+        private RelayCommand _editSelectedLogEntryCommand;
         private RelayCommand _editSelectedRouteInAreaCommand;
         private RelayCommand _editSelectedRouteInCountryCommand;
         private RelayCommand _editSelectedRouteInSummitCommand;
         private RelayCommand _editSelectedRouteInSummitGroupCommand;
         private RelayCommand _editSelectedSummitCommand;
         private RelayCommand _editSelectedSummitGroupCommand;
+        private RelayCommand _editSelectedVariationCommand;
         private RelayCommand _manageDifficultiesCommand;
         private RelayCommand _removeAreaCommand;
         private RelayCommand _removeCountryCommand;
@@ -77,8 +81,7 @@ namespace SummitLog.UI.Main.ViewModels
         private ISummitViewModel _selectedSummit;
         private IItemWithNameViewModel<SummitGroup> _selectedSummitGroup;
         private IVariationItemViewModel _selectedVariation;
-        private RelayCommand _editSelectedVariationCommand;
-        private RelayCommand _editSelectedLogEntryCommand;
+        private RelayCommand _showDbSettingsCommand;
 
         /// <summary>
         ///     Ctor.
@@ -98,14 +101,16 @@ namespace SummitLog.UI.Main.ViewModels
         /// <param name="logEntryInputViewCommand"></param>
         /// <param name="summitEditViewCommand"></param>
         /// <param name="routeOnSummitEditViewCommand"></param>
+        /// <param name="dbSettingsViewCommand"></param>
         public MainViewModel(ICountryService countryService, IAreaService areaService,
             ISummitGroupService summitGroupService, ISummitService summitService, IRouteService routeService,
-            IVariationService variationService, ILogEntryService logEntryService, IDifficultyLevelService difficultyLevelService,
+            IVariationService variationService, ILogEntryService logEntryService,
+            IDifficultyLevelService difficultyLevelService,
             IDifficultyLevelScaleService difficultyLevelScaleService,
             NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand,
             NameAndLevelInputViewCommand nameAndLevelInputViewCommand
             , LogEntryInputViewCommand logEntryInputViewCommand, SummitEditViewCommand summitEditViewCommand,
-            RouteOnSummitEditViewCommand routeOnSummitEditViewCommand)
+            RouteOnSummitEditViewCommand routeOnSummitEditViewCommand, DbSettingsViewCommand dbSettingsViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;
@@ -122,6 +127,7 @@ namespace SummitLog.UI.Main.ViewModels
             _logEntryInputViewCommand = logEntryInputViewCommand;
             _summitEditViewCommand = summitEditViewCommand;
             _routeOnSummitEditViewCommand = routeOnSummitEditViewCommand;
+            _dbSettingsViewCommand = dbSettingsViewCommand;
         }
 
         /// <summary>
@@ -822,35 +828,19 @@ namespace SummitLog.UI.Main.ViewModels
             }
         }
 
-        private bool CanEditSelectedLogEntry()
+        /// <summary>
+        ///     Liefert ein Command zur Anzeige der DB Einstellungen
+        /// </summary>
+        public RelayCommand ShowDbSettingsCommand
         {
-            return SelectedLogEntry != null;
-        }
-
-        private void EditSelectedLogEntry()
-        {
-            _logEntryInputViewCommand.Execute(SelectedLogEntry.Memo, SelectedLogEntry.Date.DateTime);
-            SelectedLogEntry.Update(_logEntryInputViewCommand.Memo, _logEntryInputViewCommand.Date);
-            _logEntryService.Save(SelectedLogEntry.LogEntry);
-        }
-
-        private bool CanEditSelectedVariation()
-        {
-            return SelectedVariation != null;
-        }
-
-        private void EditSelectedVariation()
-        {
-            DifficultyLevel level = _difficultyLevelService.GetForVariation(SelectedVariation.Item);
-            if (level != null)
+            get
             {
-                DifficultyLevelScale scale = _difficultyLevelScaleService.GetForDifficultyLevel(level);
-                _nameAndLevelInputViewCommand.Execute(SelectedVariation.Name, scale,level);
+                if (_showDbSettingsCommand == null)
+                {
+                    _showDbSettingsCommand = new RelayCommand(ShowDbSettings, CanShowDbSettings);
+                }
+                return _showDbSettingsCommand;
             }
-            SelectedVariation.Item.Name = _nameAndLevelInputViewCommand.Name;
-            _variationService.ChangeDifficultyLevel(SelectedVariation.Item, _nameAndLevelInputViewCommand.DifficultyLevel);
-            _variationService.Save(SelectedVariation.Item);
-            SelectedVariation.DoUpdate();
         }
 
         /// <summary>
@@ -941,6 +931,48 @@ namespace SummitLog.UI.Main.ViewModels
         public bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             return true;
+        }
+
+        private bool CanShowDbSettings()
+        {
+            return true;
+        }
+
+        private void ShowDbSettings()
+        {
+            _dbSettingsViewCommand.Execute();
+        }
+
+        private bool CanEditSelectedLogEntry()
+        {
+            return SelectedLogEntry != null;
+        }
+
+        private void EditSelectedLogEntry()
+        {
+            _logEntryInputViewCommand.Execute(SelectedLogEntry.Memo, SelectedLogEntry.Date.DateTime);
+            SelectedLogEntry.Update(_logEntryInputViewCommand.Memo, _logEntryInputViewCommand.Date);
+            _logEntryService.Save(SelectedLogEntry.LogEntry);
+        }
+
+        private bool CanEditSelectedVariation()
+        {
+            return SelectedVariation != null;
+        }
+
+        private void EditSelectedVariation()
+        {
+            DifficultyLevel level = _difficultyLevelService.GetForVariation(SelectedVariation.Item);
+            if (level != null)
+            {
+                DifficultyLevelScale scale = _difficultyLevelScaleService.GetForDifficultyLevel(level);
+                _nameAndLevelInputViewCommand.Execute(SelectedVariation.Name, scale, level);
+            }
+            SelectedVariation.Item.Name = _nameAndLevelInputViewCommand.Name;
+            _variationService.ChangeDifficultyLevel(SelectedVariation.Item,
+                _nameAndLevelInputViewCommand.DifficultyLevel);
+            _variationService.Save(SelectedVariation.Item);
+            SelectedVariation.DoUpdate();
         }
 
         private bool CanEditSelectedRouteInCountry()
@@ -1175,7 +1207,8 @@ namespace SummitLog.UI.Main.ViewModels
                 ClearLogEntries();
                 foreach (LogEntry logEntry in _logEntryService.GetAllIn(SelectedVariation.Item))
                 {
-                    LogEntriesOnSelectedVariation.Add(AppContext.Container.Resolve<ILogItemViewModel>().LoadData(logEntry));
+                    LogEntriesOnSelectedVariation.Add(
+                        AppContext.Container.Resolve<ILogItemViewModel>().LoadData(logEntry));
                 }
             }
         }
@@ -1293,7 +1326,8 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInCountry.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel =AppContext.Container.Resolve<IVariationItemViewModel>();
+                    IVariationItemViewModel variationItemViewModel =
+                        AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1308,7 +1342,8 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInArea.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
+                    IVariationItemViewModel variationItemViewModel =
+                        AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1323,7 +1358,8 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummitGroup.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
+                    IVariationItemViewModel variationItemViewModel =
+                        AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1338,7 +1374,8 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(SelectedRouteInSummit.Item))
                 {
-                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
+                    IVariationItemViewModel variationItemViewModel =
+                        AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1439,7 +1476,8 @@ namespace SummitLog.UI.Main.ViewModels
             Summit summitData = _summitEditViewCommand.Execute(new Summit());
             if (!string.IsNullOrWhiteSpace(summitData.Name))
             {
-                Summit created = _summitService.Create(SelectedSummitGroup.Item, summitData.Name, summitData.SummitNumber, summitData.Rating);
+                Summit created = _summitService.Create(SelectedSummitGroup.Item, summitData.Name,
+                    summitData.SummitNumber, summitData.Rating);
                 RefreshSummits();
                 SelectedSummit = SummitsInSelectedSummitGroup.FirstOrDefault(x => x.Item.Id == created.Id);
             }
@@ -1539,7 +1577,8 @@ namespace SummitLog.UI.Main.ViewModels
             {
                 foreach (Variation variation in _variationService.GetAllOn(selectedRoute))
                 {
-                    IVariationItemViewModel variationItemViewModel = AppContext.Container.Resolve<IVariationItemViewModel>();
+                    IVariationItemViewModel variationItemViewModel =
+                        AppContext.Container.Resolve<IVariationItemViewModel>();
                     variationItemViewModel.LoadData(variation);
                     VariationsOnSelectedRoute.Add(variationItemViewModel);
                 }
@@ -1568,7 +1607,8 @@ namespace SummitLog.UI.Main.ViewModels
         {
             if (_logEntryInputViewCommand.Execute())
             {
-                LogEntry created = _logEntryService.Create(SelectedVariation.Item, _logEntryInputViewCommand.Date, _logEntryInputViewCommand.Memo);
+                LogEntry created = _logEntryService.Create(SelectedVariation.Item, _logEntryInputViewCommand.Date,
+                    _logEntryInputViewCommand.Memo);
                 RefreshLogEntriesOnSelectedVariation();
                 SelectedLogEntry = LogEntriesOnSelectedVariation.FirstOrDefault(x => x.LogEntry.Id == created.Id);
             }

@@ -41,6 +41,10 @@
       <HintPath>..\packages\DryIoc.dll.2.1.2\lib\net45\DryIoc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="INIFileParser, Version=2.2.4.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.2.2.4\lib\net20\INIFileParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -138,6 +142,13 @@
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
+    <Compile Include="UI\DbSettings\DbSettingsView.xaml.cs">
+      <DependentUpon>DbSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DbSettings\DesignViewModels\DbSettingsDesignViewModel.cs" />
+    <Compile Include="UI\DbSettings\IDbSettingsViewModel.cs" />
+    <Compile Include="UI\DbSettings\ViewCommands\DbSettingsViewCommand.cs" />
+    <Compile Include="UI\DbSettings\ViewModels\DbSettingsViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\DifficultyLevelManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DesignViewModels\ItemWIthNameAndScoreDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml.cs">
@@ -246,6 +257,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Configuration.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -277,6 +291,10 @@
     <Resource Include="Assets\icon_schwierigkeiten.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\DbSettings\DbSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\DifficultyLevelManagement\DifficultyLevelManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
