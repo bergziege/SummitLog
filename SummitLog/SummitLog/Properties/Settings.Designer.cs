@@ -22,32 +22,5 @@ namespace SummitLog.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:7474/db/data")]
-        public string DbUrl {
-            get {
-                return ((string)(this["DbUrl"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("neo4j")]
-        public string DbUser {
-            get {
-                return ((string)(this["DbUser"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("extra")]
-        public string DbPassword {
-            get {
-                return ((string)(this["DbPassword"]));
-            }
-        }
     }
 }

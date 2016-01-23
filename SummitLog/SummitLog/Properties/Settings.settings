@@ -1,15 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SummitLog.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="DbUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://localhost:7474/db/data</Value>
-    </Setting>
-    <Setting Name="DbUser" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">neo4j</Value>
-    </Setting>
-    <Setting Name="DbPassword" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">extra</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>
