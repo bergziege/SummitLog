@@ -4,9 +4,6 @@ using System.Threading;
 using System.Windows;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using DryIoc;
-using IniParser;
-using IniParser.Model;
-using SummitLog.Properties;
 using SummitLog.Services;
 using SummitLog.UI.Main;
 using SummitLog.UI.Splash;
@@ -53,15 +50,7 @@ namespace SummitLog
         {
             Thread.Sleep(250);
 
-            FileIniDataParser parser = new FileIniDataParser();
-
-            IniData data = parser.ReadFile("Configuration.ini");
-
-            string dbUrl = data["DB"]["Url"];
-            string dbUser = data["DB"]["User"];
-            string dbPassword = data["DB"]["Pwd"];
-
-            ServicesBootloader.Init(AppContext.Container, dbUrl, dbUser, dbPassword);
+            ServicesBootloader.Init(AppContext.Container);
         }
 
         private void AddUiToContainer()

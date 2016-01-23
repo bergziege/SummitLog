@@ -1,22 +1,32 @@
 ﻿using System;
-using IniParser;
-using IniParser.Model;
 using ReactiveUI;
 using SummitLog.Extensions;
-using SummitLog.Properties;
+using SummitLog.Services.Dtos;
+using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 
 namespace SummitLog.UI.DbSettings.ViewModels
 {
+    /// <summary>
+    ///     View Model für Datenbankeinstellungen
+    /// </summary>
     public class DbSettingsViewModel : ReactiveObject, IDbSettingsViewModel
     {
+        private readonly ISettingsService _settingsService;
         private RelayCommand _cancelCommand;
         private string _dbPassword;
         private string _dbUrl;
         private string _dbUser;
         private RelayCommand _saveCommand;
-        private FileIniDataParser _parser;
-        private IniData _data;
+
+        /// <summary>
+        ///     Liefert eine neue INstanz des View Models
+        /// </summary>
+        /// <param name="settingsService"></param>
+        public DbSettingsViewModel(ISettingsService settingsService)
+        {
+            _settingsService = settingsService;
+        }
 
         /// <summary>
         ///     Liefert oder setzt die URL des DB Servers
@@ -82,17 +92,10 @@ namespace SummitLog.UI.DbSettings.ViewModels
         /// </summary>
         public void LoadData()
         {
-            if (_parser == null)
-            {
-                _parser = new FileIniDataParser();
-            }
-            if (_data == null)
-            {
-                _data = _parser.ReadFile("Configuration.ini");
-            }
-            DbUrl = _data["DB"]["Url"];
-            DbUser = _data["DB"]["User"];
-            DbPassword = _data["DB"]["Pwd"];
+            DbSettingsDto settings = _settingsService.LoadDbSettings();
+            DbUrl = settings.Url;
+            DbUser = settings.User;
+            DbPassword = settings.Pwd;
         }
 
         private bool CanSave()
@@ -102,10 +105,8 @@ namespace SummitLog.UI.DbSettings.ViewModels
 
         private void Save()
         {
-            _data["DB"]["Url"] = DbUrl;
-            _data["DB"]["User"] = DbUser;
-            _data["DB"]["Pwd"] = DbPassword;
-            _parser.WriteFile("Configuration.ini", _data);
+            DbSettingsDto dbSettingsDto = new DbSettingsDto {Url = DbUrl, User = DbUser, Pwd = DbPassword};
+            _settingsService.Save(dbSettingsDto);
             OnRequestClose();
         }
 
