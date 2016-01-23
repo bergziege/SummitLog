@@ -47,6 +47,7 @@ namespace SummitLog.Services
             container.Register<ILogEntryService, LogEntryService>();
             container.Register<IDifficultyLevelScaleService, DifficultyLevelScaleService>();
             container.Register<IDifficultyLevelService, DifficultyLevelService>();
+            container.Register<ISettingsService, SettingsService>();
         }
 
         private static void RegisterDaos(Container container)
@@ -60,6 +61,7 @@ namespace SummitLog.Services
             container.Register<IDifficultyLevelDao, DifficultyLevelDao>();
             container.Register<IVariationDao, VariationDao>();
             container.Register<ILogEntryDao, LogEntryDao>();
+            container.Register<IIniFileDao, IniFielDao>();
         }
     }
 }
