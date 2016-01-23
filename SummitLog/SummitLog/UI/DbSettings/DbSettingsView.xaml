@@ -21,6 +21,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <Label Content="URL:" Grid.Row="0"/>
@@ -32,7 +33,10 @@
         <Label Content="Bemerkung:" Grid.Row="2"></Label>
         <TextBox Text="{Binding Path=DbPassword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="200" Grid.Row="2"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="2">
+        <Label Content="Start .bat:" Grid.Row="3"></Label>
+        <TextBox Text="{Binding Path=StartBat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" Margin="3" Width="200" Grid.Row="3"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="4" Grid.ColumnSpan="2">
             <Button IsDefault="true" Content="Ok" Command="{Binding Path=SaveCommand}" Margin="3" Style="{StaticResource StandardDialogButton}" />
             <Button IsCancel="true" Content="Abbrechen" Command="{Binding Path=CancelCommand}" Margin="0,3,3,3" Style="{StaticResource StandardDialogButton}"/>
         </StackPanel>

@@ -22,6 +22,11 @@ namespace SummitLog.UI.DbSettings
         string DbPassword { get; set; }
 
         /// <summary>
+        ///     Liefert oder setzt den Pfad zur DB Startdatei
+        /// </summary>
+        string StartBat { get; set; }
+
+        /// <summary>
         ///     Liefert ein Command um die Änderungen zu speichern
         /// </summary>
         RelayCommand SaveCommand { get; }

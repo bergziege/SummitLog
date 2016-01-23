@@ -18,6 +18,7 @@ namespace SummitLog.UI.DbSettings.ViewModels
         private string _dbUrl;
         private string _dbUser;
         private RelayCommand _saveCommand;
+        private string _startBat;
 
         /// <summary>
         ///     Liefert eine neue INstanz des View Models
@@ -53,6 +54,15 @@ namespace SummitLog.UI.DbSettings.ViewModels
         {
             get { return _dbPassword; }
             set { this.RaiseAndSetIfChanged(ref _dbPassword, value); }
+        }
+
+        /// <summary>
+        ///     Liefert oder setzt den Pfad zur DB Startdatei
+        /// </summary>
+        public string StartBat
+        {
+            get { return _startBat; }
+            set { this.RaiseAndSetIfChanged(ref _startBat, value); }
         }
 
         /// <summary>
@@ -96,6 +106,7 @@ namespace SummitLog.UI.DbSettings.ViewModels
             DbUrl = settings.Url;
             DbUser = settings.User;
             DbPassword = settings.Pwd;
+            StartBat = settings.StartBat;
         }
 
         private bool CanSave()
@@ -105,7 +116,13 @@ namespace SummitLog.UI.DbSettings.ViewModels
 
         private void Save()
         {
-            DbSettingsDto dbSettingsDto = new DbSettingsDto {Url = DbUrl, User = DbUser, Pwd = DbPassword};
+            DbSettingsDto dbSettingsDto = new DbSettingsDto
+            {
+                Url = DbUrl,
+                User = DbUser,
+                Pwd = DbPassword,
+                StartBat = StartBat
+            };
             _settingsService.Save(dbSettingsDto);
             OnRequestClose();
         }

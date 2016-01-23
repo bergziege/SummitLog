@@ -1,5 +1,4 @@
-﻿using System;
-using IniParser.Model;
+﻿using IniParser.Model;
 using SummitLog.Services.Dtos;
 using SummitLog.Services.Persistence;
 
@@ -31,7 +30,8 @@ namespace SummitLog.Services.Services.Impl
             {
                 Url = settingsData["DB"]["Url"],
                 User = settingsData["DB"]["User"],
-                Pwd = settingsData["DB"]["Pwd"]
+                Pwd = settingsData["DB"]["Pwd"],
+                StartBat = settingsData["DB"]["StartBat"]
             };
         }
 
@@ -45,6 +45,7 @@ namespace SummitLog.Services.Services.Impl
             settingsData["DB"]["Url"] = dbSettings.Url;
             settingsData["DB"]["User"] = dbSettings.User;
             settingsData["DB"]["Pwd"] = dbSettings.Pwd;
+            settingsData["DB"]["StartBat"] = dbSettings.StartBat;
             _iniFileDao.Save(settingsData);
         }
     }

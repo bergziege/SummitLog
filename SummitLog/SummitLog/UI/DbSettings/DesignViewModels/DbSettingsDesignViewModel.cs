@@ -11,6 +11,7 @@ namespace SummitLog.UI.DbSettings.DesignViewModels
             DbUrl = "Url";
             DbUser = "user";
             DbPassword = "pass";
+            StartBat = "neo4j.bat";
         }
 
         /// <summary>
@@ -27,6 +28,11 @@ namespace SummitLog.UI.DbSettings.DesignViewModels
         ///     Liefert oder setzt das Passwort
         /// </summary>
         public string DbPassword { get; set; }
+
+        /// <summary>
+        ///     Liefert oder setzt den Pfad zur DB Startdatei
+        /// </summary>
+        public string StartBat { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um die Änderungen zu speichern

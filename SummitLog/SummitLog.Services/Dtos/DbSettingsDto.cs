@@ -19,5 +19,10 @@
         ///     Liefert oder setzt das Passwort
         /// </summary>
         public string Pwd { get; set; }
+
+        /// <summary>
+        ///     Liefert oder setzt den Pfad der Start Batch Datei
+        /// </summary>
+        public string StartBat { get; set; }
     }
 }
