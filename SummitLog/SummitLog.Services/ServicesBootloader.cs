@@ -18,11 +18,14 @@ namespace SummitLog.Services
         ///     Initialisiert den Bootloader
         /// </summary>
         /// <param name="container"></param>
+        /// <param name="dbUrl"></param>
+        /// <param name="dbUser"></param>
+        /// <param name="dbPassword"></param>
         /// <returns></returns>
-        public static Container Init(Container container)
+        public static Container Init(Container container, string dbUrl, string dbUser, string dbPassword)
         {
 
-            GraphClient client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "extra");
+            GraphClient client = new GraphClient(new Uri(dbUrl), dbUser, dbPassword);
             client.Connect();
 
             container.RegisterInstance(client);

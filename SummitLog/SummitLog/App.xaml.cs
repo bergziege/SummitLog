@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using DryIoc;
+using SummitLog.Properties;
 using SummitLog.Services;
 using SummitLog.UI.Main;
 using SummitLog.UI.Splash;
@@ -49,7 +50,7 @@ namespace SummitLog
         private void AddServicesToContainer()
         {
             Thread.Sleep(250);
-            ServicesBootloader.Init(AppContext.Container);
+            ServicesBootloader.Init(AppContext.Container, Settings.Default.DbUrl, Settings.Default.DbUser, Settings.Default.DbPassword);
         }
 
         private void AddUiToContainer()
