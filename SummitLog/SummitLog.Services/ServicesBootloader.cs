@@ -14,6 +14,26 @@ namespace SummitLog.Services
     /// </summary>
     public static class ServicesBootloader
     {
+        public static bool IsDbAvailable()
+        {
+            ISettingsService settingsService = new SettingsService(new IniFielDao());
+            DbSettingsDto dbSettings = settingsService.LoadDbSettings();
+
+            GraphClient client = new GraphClient(new Uri(dbSettings.Url), dbSettings.User, dbSettings.Pwd);
+            bool isDbAvailable = false;
+            try
+            {
+                client.Connect();
+                isDbAvailable = true;
+                client.Dispose();
+            }
+            catch
+            {
+                // ignored
+            }
+            return isDbAvailable;
+        }
+
         /// <summary>
         ///     Initialisiert den Bootloader
         /// </summary>

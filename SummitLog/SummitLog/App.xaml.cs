@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using DryIoc;
 using SummitLog.Services;
+using SummitLog.Services.Dtos;
+using SummitLog.Services.Model;
+using SummitLog.Services.Persistence;
+using SummitLog.Services.Persistence.Impl;
+using SummitLog.Services.Services;
+using SummitLog.Services.Services.Impl;
 using SummitLog.UI.Main;
 using SummitLog.UI.Splash;
 using SummitLog.UI.Splash.ViewModels;
@@ -32,12 +40,27 @@ namespace SummitLog
             splashscreen.Show();
             vm.Run(new Dictionary<string, Action>
             {
+                {"Start Database", StartDatabase},
                 {"Setup Container", CreateContainer},
                 {"Setup Services", AddServicesToContainer},
                 {"Setup UI", AddUiToContainer},
                 {"Hauptfenster vorbereiten", InitAndShowMainView}
             });
             splashscreen.Close();
+        }
+
+        private void StartDatabase()
+        {
+            if (!ServicesBootloader.IsDbAvailable())
+            {
+                ISettingsService settingsService = new SettingsService(new IniFielDao());
+                DbSettingsDto loadDbSettings = settingsService.LoadDbSettings();
+                Process.Start(loadDbSettings.StartBat);
+                while (!ServicesBootloader.IsDbAvailable())
+                {
+                    Thread.Sleep(1000);
+                }
+            }
         }
 
         private void CreateContainer()
