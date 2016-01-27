@@ -40,8 +40,8 @@ namespace SummitLog
             splashscreen.Show();
             vm.Run(new Dictionary<string, Action>
             {
-                {"Start Database", StartDatabase},
                 {"Setup Container", CreateContainer},
+                {"Start Database", StartDatabase},
                 {"Setup Services", AddServicesToContainer},
                 {"Setup UI", AddUiToContainer},
                 {"Hauptfenster vorbereiten", InitAndShowMainView}
@@ -55,11 +55,12 @@ namespace SummitLog
             {
                 ISettingsService settingsService = new SettingsService(new IniFielDao());
                 DbSettingsDto loadDbSettings = settingsService.LoadDbSettings();
-                Process.Start(loadDbSettings.StartBat);
+                Process dbProcess = Process.Start(loadDbSettings.StartBat);
                 while (!ServicesBootloader.IsDbAvailable())
                 {
                     Thread.Sleep(1000);
                 }
+                AppContext.Container.RegisterInstance(dbProcess);
             }
         }
 
@@ -92,6 +93,11 @@ namespace SummitLog
             mainViewModel.LoadData();
             MainWindow = mainView;
             MainWindow.Show();
+        }
+
+        private void App_OnExit(object sender, ExitEventArgs e)
+        {
+            /* TODO: [SUMMITLOG-15] - DB Schließen, wenn  möglich.
         }
     }
 }
