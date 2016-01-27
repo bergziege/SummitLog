@@ -97,7 +97,7 @@ namespace SummitLog
 
         private void App_OnExit(object sender, ExitEventArgs e)
         {
-            /* TODO: [SUMMITLOG-15] - DB Schließen, wenn  möglich.
+            /* TODO: [SUMMITLOG-15] - DB Schließen, wenn  möglich. */
         }
     }
 }
