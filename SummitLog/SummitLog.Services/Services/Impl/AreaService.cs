@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Practices.Unity;
 using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
@@ -12,17 +13,15 @@ namespace SummitLog.Services.Services.Impl
     /// </summary>
     public class AreaService : IAreaService
     {
-        private readonly IAreaDao _areaDao;
-
         /// <summary>
-        ///     Erstellt eine neue Instanz des Service
+        /// Setzt einen <see cref="IAreaDao"/>
         /// </summary>
-        /// <param name="areaDao"></param>
-        public AreaService(IAreaDao areaDao)
+        [Dependency]
+        public IAreaDao AreaDao
         {
-            _areaDao = areaDao;
+            private get; set;
         }
-
+        
         /// <summary>
         ///     Liefert alle Gebiete innerhalb eines Landes
         /// </summary>
@@ -31,7 +30,7 @@ namespace SummitLog.Services.Services.Impl
         public IList<Area> GetAllIn(Country country)
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
-            return _areaDao.GetAllIn(country).OrderBy(x=>x.Name).ToList();
+            return AreaDao.GetAllIn(country).OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace SummitLog.Services.Services.Impl
         {
             if (country == null) throw new ArgumentNullException(nameof(country));
             if (string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException(nameof(name));
-            return _areaDao.Create(country, new Area {Name = name});
+            return AreaDao.Create(country, new Area { Name = name });
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace SummitLog.Services.Services.Impl
         public bool IsInUse(Area area)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
-            return _areaDao.IsInUse(area);
+            return AreaDao.IsInUse(area);
         }
 
         /// <summary>
@@ -64,12 +63,12 @@ namespace SummitLog.Services.Services.Impl
         public void Delete(Area area)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
-            if (_areaDao.IsInUse(area))
+            if (AreaDao.IsInUse(area))
             {
                 throw new NodeInUseException();
             }
 
-            _areaDao.Delete(area);
+            AreaDao.Delete(area);
         }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace SummitLog.Services.Services.Impl
         public void Save(Area area)
         {
             if (area == null) throw new ArgumentNullException(nameof(area));
-            _areaDao.Save(area);
+            AreaDao.Save(area);
         }
     }
 }

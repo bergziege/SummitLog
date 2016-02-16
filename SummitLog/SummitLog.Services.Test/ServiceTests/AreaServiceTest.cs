@@ -18,12 +18,14 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestGetAll()
         {
+            AreaService areaService = new AreaService();
+
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
             areaDaoMock.Setup(x => x.GetAllIn(It.IsAny<Country>())).Returns(new List<Area> {new Area {Name = "Gebiet 1"}});
 
             Country fakeCountry = new Country() {Name = "D"};
 
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.AreaDao = areaDaoMock.Object;
             IList<Area> areasInCountry = areaService.GetAllIn(fakeCountry);
             Assert.AreEqual(1, areasInCountry.Count);
 
@@ -33,6 +35,8 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestCreate()
         {
+            AreaService areaService = new AreaService();
+
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
             areaDaoMock.Setup(x => x.Create(It.IsAny<Country>(), It.IsAny<Area>()));
 
@@ -40,7 +44,7 @@ namespace SummitLog.Services.Test.ServiceTests
             string areaName = "Gebiet 1";
             Country fakeCountry = new Country() { Name = countryName };
 
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.AreaDao = areaDaoMock.Object;
             areaService.Create(fakeCountry, areaName);
 
             areaDaoMock.Verify(x=>x.Create(It.Is<Country>(y=>y.Name == countryName), It.Is<Area>(y=>y.Name == areaName)), Times.Once);
@@ -59,26 +63,28 @@ namespace SummitLog.Services.Test.ServiceTests
                 fakeCountry = new Country();
             }
 
-            Action act = ()=>new AreaService(null).Create(fakeCountry, name);
+            Action act = ()=>new AreaService().Create(fakeCountry, name);
             act.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
         public void TestGetAllWithoutCountry()
         {
-            Action act = ()=> new AreaService(null).GetAllIn(null);
+            Action act = ()=> new AreaService().GetAllIn(null);
             act.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
         public void TestIsInUse()
         {
+            AreaService areaService = new AreaService();
+
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
             areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(true);
 
             Area area = new Area();
-
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            
+            areaService.AreaDao = areaDaoMock.Object;
             bool isInUse = areaService.IsInUse(area);
 
             Assert.IsTrue(isInUse);
@@ -88,13 +94,15 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestDelete()
         {
+            AreaService areaService = new AreaService();
+
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
             areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(false);
             areaDaoMock.Setup(x => x.Delete(It.IsAny<Area>()));
 
             Area area = new Area();
-
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            
+            areaService.AreaDao = areaDaoMock.Object;
             areaService.Delete(area);
 
             areaDaoMock.Verify(x => x.IsInUse(area), Times.Once);
@@ -104,13 +112,15 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestDeleteWhenInUse()
         {
+            AreaService areaService = new AreaService();
+
             Mock<IAreaDao> areaDaoMock = new Mock<IAreaDao>();
             areaDaoMock.Setup(x => x.IsInUse(It.IsAny<Area>())).Returns(true);
             areaDaoMock.Setup(x => x.Delete(It.IsAny<Area>()));
 
             Area area = new Area();
 
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            areaService.AreaDao = areaDaoMock.Object;
             Action deleteWithAreaInUse = ()=> areaService.Delete(area);
 
             deleteWithAreaInUse.ShouldThrow<NodeInUseException>();
@@ -124,7 +134,8 @@ namespace SummitLog.Services.Test.ServiceTests
 
             Area area = new Area();
 
-            IAreaService areaService = new AreaService(areaDaoMock.Object);
+            AreaService areaService = new AreaService();
+            areaService.AreaDao = areaDaoMock.Object;
             areaService.Save(area);
 
             areaDaoMock.Verify(x=>x.Save(area), Times.Once);
@@ -133,7 +144,7 @@ namespace SummitLog.Services.Test.ServiceTests
         [Test]
         public void TestSaveNull()
         {
-            IAreaService areaService = new AreaService(null);
+            IAreaService areaService = new AreaService();
             Assert.Throws<ArgumentNullException>(() => areaService.Save(null));
         }
     }
