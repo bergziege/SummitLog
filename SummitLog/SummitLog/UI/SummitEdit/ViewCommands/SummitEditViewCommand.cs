@@ -1,5 +1,5 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using SummitLog.Services.Model;
 using SummitLog.UI.Main;
 using SummitLog.UI.NameInput;

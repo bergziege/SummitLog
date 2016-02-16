@@ -1,6 +1,6 @@
 ﻿using System;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using SummitLog.UI.Main;
 
 namespace SummitLog.UI.LogEntryInput.ViewCommands

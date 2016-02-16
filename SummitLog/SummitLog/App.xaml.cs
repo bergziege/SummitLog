@@ -5,7 +5,7 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using SummitLog.Services;
 using SummitLog.Services.Dtos;
 using SummitLog.Services.Model;
@@ -67,7 +67,7 @@ namespace SummitLog
         private void CreateContainer()
         {
             Thread.Sleep(250);
-            AppContext.Container = new Container();
+            AppContext.Container = new UnityContainer();
         }
         
         private void AddServicesToContainer()

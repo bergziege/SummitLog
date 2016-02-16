@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;

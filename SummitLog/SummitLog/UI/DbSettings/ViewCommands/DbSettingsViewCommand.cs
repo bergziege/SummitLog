@@ -1,5 +1,5 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using SummitLog.UI.DbSettings.ViewModels;
 using SummitLog.UI.Main;
 
