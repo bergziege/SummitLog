@@ -14,14 +14,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class RouteDao :BaseDao, IRoutesDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des Daos
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public RouteDao(GraphClient graphClient): base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Routen direkt in einem Land
         /// </summary>
         /// <param name="country"></param>

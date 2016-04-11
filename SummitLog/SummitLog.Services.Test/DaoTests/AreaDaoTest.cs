@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -14,30 +15,32 @@ namespace SummitLog.Services.Test.DaoTests
     [TestClass]
     public class AreaDaoTest
     {
-        private GraphClient _graphClient;
-        private DbTestDataGenerator _dataGenerator;
+        private UnityContainer _container;
 
         [TestInitialize]
         public void Init()
         {
-            _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
-            _graphClient.Connect();
-            _graphClient.BeginTransaction();
-            _dataGenerator = new DbTestDataGenerator(_graphClient);
+            GraphClient graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
+            graphClient.Connect();
+            graphClient.BeginTransaction();
+            _container = new UnityContainer();
+            _container.RegisterInstance(graphClient);
+            _container.RegisterInstance(new DbTestDataGenerator(graphClient));
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            _graphClient.Transaction.Rollback();
+            GraphClient client = _container.Resolve<GraphClient>();
+            client.Transaction.Rollback();
         }
 
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            Country country = _dataGenerator.CreateCountry();
-            AreaDao dao = new AreaDao(_graphClient);
-            Area created = _dataGenerator.CreateArea(country:country);
+            Country country = _container.Resolve<DbTestDataGenerator>().CreateCountry();
+            AreaDao dao = _container.Resolve<AreaDao>();
+            Area created = _container.Resolve<DbTestDataGenerator>().CreateArea(country:country);
 
             IEnumerable<Area> areasInCountry = dao.GetAllIn(country);
             Assert.AreEqual(1, areasInCountry.Count());
@@ -52,7 +55,7 @@ namespace SummitLog.Services.Test.DaoTests
             Area area = _dataGenerator.CreateArea();
             SummitGroup summitGroup = _dataGenerator.CreateSummitGroup(area: area);
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            IAreaDao areaDao = new AreaDao();
             bool isInUse = areaDao.IsInUse(area);
 
             Assert.IsTrue(isInUse);
