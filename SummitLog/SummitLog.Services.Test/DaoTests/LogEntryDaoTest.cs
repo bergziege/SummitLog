@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Model;
@@ -11,32 +12,15 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class LogEntryDaoTest
+    public class LogEntryDaoTest: DbTestBase
     {
-        private GraphClient _graphClient;
-        private DbTestDataGenerator _dataGenerator;
-
-        [TestInitialize]
-        public void Init()
-        {
-            _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
-            _graphClient.Connect();
-            _graphClient.BeginTransaction();
-            _dataGenerator = new DbTestDataGenerator(_graphClient);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _graphClient.Transaction.Rollback();
-        }
 
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
-            Variation variation = _dataGenerator.CreateVariation();
-            LogEntry created = _dataGenerator.CreateLogEntry(variation: variation);
+            ILogEntryDao logEntryDao = Container.Resolve<LogEntryDao>();
+            Variation variation = Container.Resolve<DbTestDataGenerator>().CreateVariation();
+            LogEntry created = Container.Resolve<DbTestDataGenerator>().CreateLogEntry(variation: variation);
 
             IList<LogEntry> logsOnVariation = logEntryDao.GetAllIn(variation);
             Assert.AreEqual(1, logsOnVariation.Count);
@@ -48,7 +32,7 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteNull()
         {
-            ILogEntryDao dao = new LogEntryDao(_graphClient);
+            ILogEntryDao dao = Container.Resolve<LogEntryDao>();
             Action action = () => dao.Delete(null);
             action.ShouldThrow<ArgumentNullException>();
         }
@@ -57,12 +41,12 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestDeleteNormal()
         {
 
-            Route route = _dataGenerator.CreateRouteInCountry();
-            Variation variation = _dataGenerator.CreateVariation(route: route);
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInCountry();
+            Variation variation = Container.Resolve<DbTestDataGenerator>().CreateVariation(route: route);
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
-            ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
-            LogEntry created = _dataGenerator.CreateLogEntry(variation);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
+            ILogEntryDao logEntryDao = Container.Resolve<LogEntryDao>();
+            LogEntry created = Container.Resolve<DbTestDataGenerator>().CreateLogEntry(variation);
 
             LogEntry logEntry = logEntryDao.GetAllIn(variation).First();
 
@@ -77,8 +61,8 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestSave()
         {
-            Variation variation = _dataGenerator.CreateVariation();
-            LogEntry logEntry = _dataGenerator.CreateLogEntry(variation: variation);
+            Variation variation = Container.Resolve<DbTestDataGenerator>().CreateVariation();
+            LogEntry logEntry = Container.Resolve<DbTestDataGenerator>().CreateLogEntry(variation: variation);
 
             logEntry.Memo.Should().NotBe("newmemo");
             logEntry.DateTime.Should().NotBe(1.April(2015));
@@ -86,7 +70,7 @@ namespace SummitLog.Services.Test.DaoTests
             logEntry.DateTime = 1.April(2015);
             logEntry.Memo = "newmemo";
 
-            ILogEntryDao logEntryDao = new LogEntryDao(_graphClient);
+            ILogEntryDao logEntryDao = Container.Resolve<LogEntryDao>();
             logEntryDao.Save(logEntry);
 
             LogEntry reloaded = logEntryDao.GetAllIn(variation).First();
