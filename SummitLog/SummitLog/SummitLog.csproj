@@ -148,12 +148,16 @@
     </Compile>
     <Compile Include="AppContext.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Helper\IWindowParentHelper.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
+    <Compile Include="UI\Common\GenericFactory.cs" />
+    <Compile Include="UI\Common\IGenericFactory.cs" />
     <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
+    <Compile Include="UI\Common\ViewCommandBase.cs" />
     <Compile Include="UI\DbSettings\DbSettingsView.xaml.cs">
       <DependentUpon>DbSettingsView.xaml</DependentUpon>
     </Compile>

@@ -5,6 +5,7 @@ using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.NameInput;
+using SummitLog.UI.NameInput.ViewCommands;
 
 namespace SummitLog.UI.DifficultyLevelScaleManagement.ViewModels
 {

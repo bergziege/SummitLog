@@ -13,6 +13,7 @@ using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
 using SummitLog.Services.Services.Impl;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 using SummitLog.UI.Splash;
 using SummitLog.UI.Splash.ViewModels;
@@ -68,6 +69,8 @@ namespace SummitLog
         {
             Thread.Sleep(250);
             AppContext.Container = new UnityContainer();
+            AppContext.Container.RegisterInstance<IGenericFactory>(new GenericFactory());
+            AppContext.Container.RegisterInstance<IWindowParentHelper>(new WindowParentHelper());
         }
         
         private void AddServicesToContainer()
@@ -88,7 +91,7 @@ namespace SummitLog
             Thread.Sleep(250);
             MainView mainView = AppContext.Container.Resolve<MainView>();
             IMainViewModel mainViewModel = AppContext.Container.Resolve<IMainViewModel>();
-            WindowParentHelper.Instance.RegisterWindow(mainView);
+            AppContext.Container.Resolve<IWindowParentHelper>().RegisterWindow(mainView);
             mainView.DataContext = mainViewModel;
             mainViewModel.LoadData();
             MainWindow = mainView;

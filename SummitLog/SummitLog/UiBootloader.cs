@@ -22,6 +22,7 @@ using SummitLog.UI.NameAndScoreInput;
 using SummitLog.UI.NameAndScoreInput.ViewCommands;
 using SummitLog.UI.NameAndScoreInput.ViewModels;
 using SummitLog.UI.NameInput;
+using SummitLog.UI.NameInput.ViewCommands;
 using SummitLog.UI.NameInput.ViewModels;
 using SummitLog.UI.RouteOnSummitEdit;
 using SummitLog.UI.RouteOnSummitEdit.ViewCommands;
