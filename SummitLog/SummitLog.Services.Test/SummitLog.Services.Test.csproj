@@ -134,7 +134,7 @@
     <Compile Include="ServiceTests\SummitGroupServiceTest.cs" />
     <Compile Include="ServiceTests\AreaServiceTest.cs" />
     <Compile Include="ServiceTests\CountryServiceTest.cs" />
-    <Compile Include="TestWithContainerBase.cs" />
+    <Compile Include="WithContainerBase.cs" />
     <Compile Include="DbTestBase.cs" />
   </ItemGroup>
   <ItemGroup>

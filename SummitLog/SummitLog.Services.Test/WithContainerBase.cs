@@ -3,10 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SummitLog.Services.Test
 {
-    [TestClass]
-    public abstract class TestWithContainerBase
+    public class WithContainerBase
     {
-        [TestInitialize]
         public virtual void Init()
         {
             Container = new UnityContainer();

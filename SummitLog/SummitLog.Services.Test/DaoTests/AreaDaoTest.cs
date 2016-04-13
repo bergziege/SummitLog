@@ -12,7 +12,7 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class AreaDaoTest : TestWithContainerBase
+    public class AreaDaoTest : DbTestBase
     {
         [TestMethod]
         public void TestCreateAndGetAll()

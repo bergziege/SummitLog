@@ -7,7 +7,7 @@ using SummitLog.Services.Test.DaoTests;
 namespace SummitLog.Services.Test
 {
     [TestClass]
-    public abstract class DbTestBase: TestWithContainerBase
+    public class DbTestBase: WithContainerBase
     {
         [TestInitialize]
         public override void Init()
