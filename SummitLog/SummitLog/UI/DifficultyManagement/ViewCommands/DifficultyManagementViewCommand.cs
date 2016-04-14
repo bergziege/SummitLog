@@ -1,19 +1,20 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 
 namespace SummitLog.UI.DifficultyManagement.ViewCommands
 {
-    public class DifficultyManagementViewCommand
+    public class DifficultyManagementViewCommand: ViewCommandBase
     {
         public void Execute()
         {
-            DifficultyManagementView view = AppContext.Container.Resolve<DifficultyManagementView>();
-            IDifficultyManagementViewModel vm = AppContext.Container.Resolve<IDifficultyManagementViewModel>();
+            DifficultyManagementView view = GenericFactory.Resolve<DifficultyManagementView>();
+            IDifficultyManagementViewModel vm = GenericFactory.Resolve<IDifficultyManagementViewModel>();
             view.DataContext = vm;
             vm.LoadData();
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof (MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof (MainView));
 
             view.ShowDialog();
         }

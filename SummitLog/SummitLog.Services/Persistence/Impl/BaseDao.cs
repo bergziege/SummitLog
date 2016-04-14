@@ -1,4 +1,5 @@
-﻿using Neo4jClient;
+﻿using Microsoft.Practices.Unity;
+using Neo4jClient;
 
 namespace SummitLog.Services.Persistence.Impl
 {
@@ -8,17 +9,9 @@ namespace SummitLog.Services.Persistence.Impl
     public class BaseDao
     {
         /// <summary>
-        ///     Erstellt eine neue INstanz der Basiklasse
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public BaseDao(GraphClient graphClient)
-        {
-            GraphClient = graphClient;
-        }
-
-        /// <summary>
         ///     Liefert den GaphClient
         /// </summary>
-        public GraphClient GraphClient { get; }
+        [Dependency]
+        public GraphClient GraphClient { set; protected get; }
     }
 }

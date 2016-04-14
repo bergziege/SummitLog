@@ -1,4 +1,4 @@
-﻿using DryIoc;
+﻿using Microsoft.Practices.Unity;
 
 namespace SummitLog
 {
@@ -10,6 +10,6 @@ namespace SummitLog
         /// <summary>
         ///     Liefert oder setzt den Container
         /// </summary>
-        public static Container Container { get; set; }
+        public static IUnityContainer Container { get; set; }
     }
 }

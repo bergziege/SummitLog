@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -12,46 +13,29 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class VariationDaoTest
+    public class VariationDaoTest: DbTestBase
     {
-        private GraphClient _graphClient;
-        private DbTestDataGenerator _dataGenerator;
-
-        [TestInitialize]
-        public void Init()
-        {
-            _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
-            _graphClient.Connect();
-            _graphClient.BeginTransaction();
-            _dataGenerator = new DbTestDataGenerator(_graphClient);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _graphClient.Transaction.Rollback();
-        }
-
+       
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            ICountryDao countryDao = new CountryDao(_graphClient);
+            ICountryDao countryDao = Container.Resolve<CountryDao>();
             Country country = new Country() {Name = "D"};
             countryDao.Create(country);
 
-            IRoutesDao routeDao = new RouteDao(_graphClient);
+            IRoutesDao routeDao = Container.Resolve<RouteDao>(); ;
             Route route = new Route() {Name = "Route1"};
             routeDao.CreateIn(country, route);
 
-            IDifficultyLevelScaleDao scaleDao = new DifficultyLevelScaleDao(_graphClient);
+            IDifficultyLevelScaleDao scaleDao = Container.Resolve<DifficultyLevelScaleDao>();
             DifficultyLevelScale scale = new DifficultyLevelScale() {Name = "sächsisch"};
             scaleDao.Create(scale);
 
-            IDifficultyLevelDao levelDao = new DifficultyLevelDao(_graphClient);
+            IDifficultyLevelDao levelDao = Container.Resolve<DifficultyLevelDao>();
             DifficultyLevel level = new DifficultyLevel() {Name = "7b"};
             levelDao.Create(scale, level);
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
             Variation variation = new Variation() {Name = "Ein Weg der Route1 als 7b"};
             Variation created = variationDao.Create(variation, route, level);
 
@@ -65,10 +49,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsInUse()
         {
-            Variation variationWithLogEntry = _dataGenerator.CreateVariation();
-            LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
+            Variation variationWithLogEntry = Container.Resolve<DbTestDataGenerator>().CreateVariation();
+            LogEntry logEntry = Container.Resolve<DbTestDataGenerator>().CreateLogEntry(variationWithLogEntry);
 
-            bool isInUse = new VariationDao(_graphClient).IsInUse(variationWithLogEntry);
+            bool isInUse = Container.Resolve<VariationDao>().IsInUse(variationWithLogEntry);
 
             Assert.IsTrue(isInUse);
         }
@@ -77,19 +61,19 @@ namespace SummitLog.Services.Test.DaoTests
         public void TestIsNotInUse()
         {
 
-            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation();
+            Variation variationWithoutLogEntries = Container.Resolve<DbTestDataGenerator>().CreateVariation();
 
-            bool isInUse = new VariationDao(_graphClient).IsInUse(variationWithoutLogEntries);
+            bool isInUse = Container.Resolve<VariationDao>().IsInUse(variationWithoutLogEntries);
             Assert.IsFalse(isInUse);
         }
 
         [TestMethod]
         public void TestDeleteInUse()
         {
-            Variation variationWithLogEntry = _dataGenerator.CreateVariation();
-            LogEntry logEntry = _dataGenerator.CreateLogEntry(variationWithLogEntry);
+            Variation variationWithLogEntry = Container.Resolve<DbTestDataGenerator>().CreateVariation();
+            LogEntry logEntry = Container.Resolve<DbTestDataGenerator>().CreateLogEntry(variationWithLogEntry);
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
             Action action = ()=> variationDao.Delete(variationWithLogEntry);
             action.ShouldThrow<NodeInUseException>();
         }
@@ -97,9 +81,9 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteNormal()
         {
-            Route route = _dataGenerator.CreateRouteInArea();
-            Variation variationWithoutLogEntries = _dataGenerator.CreateVariation(route:route);
-            IVariationDao variationDao = new VariationDao(_graphClient);
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInArea();
+            Variation variationWithoutLogEntries = Container.Resolve<DbTestDataGenerator>().CreateVariation(route:route);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
             variationDao.Delete(variationWithoutLogEntries);
             Assert.AreEqual(0, variationDao.GetAllOn(route).Count);
         }
@@ -107,14 +91,14 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestSave()
         {
-            Route route = _dataGenerator.CreateRouteInCountry();
-            Variation variation = _dataGenerator.CreateVariation(route:route);
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInCountry();
+            Variation variation = Container.Resolve<DbTestDataGenerator>().CreateVariation(route:route);
 
             variation.Name.Should().NotBe("newname");
 
             variation.Name = "newname";
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
             variationDao.Save(variation);
 
             variationDao.GetAllOn(route).First().Name.Should().Be("newname");
@@ -123,16 +107,16 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestChangeDifficultyLevelToNewValue()
         {
-            Route route = _dataGenerator.CreateRouteInCountry();
-            DifficultyLevel level = _dataGenerator.CreateDifficultyLevel();
-            Variation variation = _dataGenerator.CreateVariation(route: route, difficultyLevel:level);
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInCountry();
+            DifficultyLevel level = Container.Resolve<DbTestDataGenerator>().CreateDifficultyLevel();
+            Variation variation = Container.Resolve<DbTestDataGenerator>().CreateVariation(route: route, difficultyLevel:level);
 
-            DifficultyLevel newLevel = _dataGenerator.CreateDifficultyLevel(name: "neues Level");
+            DifficultyLevel newLevel = Container.Resolve<DbTestDataGenerator>().CreateDifficultyLevel(name: "neues Level");
 
-            IVariationDao variationDao = new VariationDao(_graphClient);
+            IVariationDao variationDao = Container.Resolve<VariationDao>();
             variationDao.ChangeDifficultyLevel(variation, newLevel);
 
-            IDifficultyLevelDao difficultyLevelDao = new DifficultyLevelDao(_graphClient);
+            IDifficultyLevelDao difficultyLevelDao = Container.Resolve<DifficultyLevelDao>();
             difficultyLevelDao.GetLevelOnVariation(variation).Id.Should().Be(newLevel.Id);
         }
     }

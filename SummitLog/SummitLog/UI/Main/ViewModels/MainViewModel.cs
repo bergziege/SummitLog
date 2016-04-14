@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
@@ -13,6 +13,7 @@ using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.LogEntryInput.ViewCommands;
 using SummitLog.UI.NameAndLevelInput.ViewCommands;
 using SummitLog.UI.NameInput;
+using SummitLog.UI.NameInput.ViewCommands;
 using SummitLog.UI.RouteOnSummitEdit.ViewCommands;
 using SummitLog.UI.SummitEdit.ViewCommands;
 

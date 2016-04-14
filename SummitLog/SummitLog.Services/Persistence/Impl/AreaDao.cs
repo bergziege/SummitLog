@@ -15,14 +15,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class AreaDao : BaseDao, IAreaDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public AreaDao(GraphClient graphClient) : base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Gegenden in einem Land
         /// </summary>
         /// <returns></returns>

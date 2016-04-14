@@ -1,12 +1,13 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
 using SummitLog.Services.Model;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 using SummitLog.UI.SummitEdit;
 
 namespace SummitLog.UI.RouteOnSummitEdit.ViewCommands
 {
-    public class RouteOnSummitEditViewCommand
+    public class RouteOnSummitEditViewCommand: ViewCommandBase
     {
         
         /// <summary>
@@ -15,8 +16,8 @@ namespace SummitLog.UI.RouteOnSummitEdit.ViewCommands
         /// <returns></returns>
         public Route Execute(Route routeToEdit)
         {
-            RouteOnSummitEditView view = AppContext.Container.Resolve<RouteOnSummitEditView>();
-            ISummitEditViewModel vm = AppContext.Container.Resolve<ISummitEditViewModel>();
+            RouteOnSummitEditView view = GenericFactory.Resolve<RouteOnSummitEditView>();
+            ISummitEditViewModel vm = GenericFactory.Resolve<ISummitEditViewModel>();
             view.DataContext = vm;
             vm.Name = routeToEdit.Name;
             vm.Rating = routeToEdit.Rating;
@@ -29,7 +30,7 @@ namespace SummitLog.UI.RouteOnSummitEdit.ViewCommands
                 routeToEdit.Rating = vm.Rating;
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
 

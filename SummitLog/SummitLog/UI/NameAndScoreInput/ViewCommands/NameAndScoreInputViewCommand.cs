@@ -1,11 +1,12 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.NameAndScoreInput.ViewCommands
 {
-    public class NameAndScoreInputViewCommand
+    public class NameAndScoreInputViewCommand: ViewCommandBase
     {
         /// <summary>
         /// Liefert oder setzt den eingegebenen Namen
@@ -25,7 +26,7 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
         {
             Name = string.Empty;
             Score = 0;
-            NameAndScoreInputView view = AppContext.Container.Resolve<NameAndScoreInputView>();
+            NameAndScoreInputView view = GenericFactory.Resolve<NameAndScoreInputView>();
             INameAndScoreInputViewModel vm = AppContext.Container.Resolve<INameAndScoreInputViewModel>();
             view.DataContext = vm;
 
@@ -37,7 +38,7 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
                 Score = vm.Score;
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
         }
@@ -47,8 +48,8 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
             Name = name;
             Score = score;
 
-            NameAndScoreInputView view = AppContext.Container.Resolve<NameAndScoreInputView>();
-            INameAndScoreInputViewModel vm = AppContext.Container.Resolve<INameAndScoreInputViewModel>();
+            NameAndScoreInputView view = GenericFactory.Resolve<NameAndScoreInputView>();
+            INameAndScoreInputViewModel vm = GenericFactory.Resolve<INameAndScoreInputViewModel>();
             view.DataContext = vm;
 
             vm.Name = name;
@@ -62,7 +63,7 @@ namespace SummitLog.UI.NameAndScoreInput.ViewCommands
                 Score = vm.Score;
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
         }
