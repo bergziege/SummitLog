@@ -1,4 +1,6 @@
+using System;
 using System.ComponentModel;
+using System.Reflection;
 using Microsoft.Practices.Unity;
 using SummitLog.UI.DbSettings;
 using SummitLog.UI.DbSettings.ViewCommands;

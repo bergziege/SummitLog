@@ -11,14 +11,14 @@ namespace SummitLog.UI.DbSettings.ViewCommands
 
         public void Execute()
         {
-            DbSettingsView view = GenericFactory.Resolve<DbSettingsView>();
+            IWindow view = GenericFactory.ResolveAsIWindow<DbSettingsView>();
             IDbSettingsViewModel vm = GenericFactory.Resolve<IDbSettingsViewModel>();
             view.DataContext = vm;
             vm.LoadData();
 
             vm.RequestClose += delegate { view.Close(); };
 
-            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof (MainView));
+            WindowParentHelper.SetOwner<MainView>(view);
             view.ShowDialog();
         }
     }

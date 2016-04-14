@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SummitLog.UI.Common;
 
 namespace SummitLog.UI.DbSettings
 {
     /// <summary>
     /// Interaktionslogik für DbSettingsView.xaml
     /// </summary>
-    public partial class DbSettingsView : Window
+    public partial class DbSettingsView : Window, IWindow
     {
         public DbSettingsView()
         {

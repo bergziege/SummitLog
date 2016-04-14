@@ -156,6 +156,7 @@
     <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameViewModel.cs" />
+    <Compile Include="UI\Common\IWindow.cs" />
     <Compile Include="UI\Common\RelayCommand.cs" />
     <Compile Include="UI\Common\ViewCommandBase.cs" />
     <Compile Include="UI\DbSettings\DbSettingsView.xaml.cs">

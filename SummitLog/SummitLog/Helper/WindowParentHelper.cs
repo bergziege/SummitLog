@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using SummitLog.UI.Common;
 
 namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils {
     /// <summary>
@@ -45,6 +46,11 @@ namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils {
                 window.Closed -= WindowClosed;
                 _registeredWindows.Remove(window);
             }
+        }
+
+        public void SetOwner<T>(IWindow window)
+        {
+            window.Owner = GetWindowBySpecificType(typeof(T));
         }
 
         private void WindowClosed(object sender, EventArgs e) {

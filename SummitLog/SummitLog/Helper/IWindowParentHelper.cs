@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using SummitLog.UI.Common;
 
 namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils
 {
@@ -23,5 +24,7 @@ namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils
         /// </summary>
         /// <param name="window"> </param>
         void RemoveWindow(Window window);
+
+        void SetOwner<T>(IWindow window);
     }
 }
