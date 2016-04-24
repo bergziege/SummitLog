@@ -151,7 +151,7 @@
     <Compile Include="Helper\IWindowParentHelper.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
-    <Compile Include="UI\Common\GenericFactory.cs" />
+    <Compile Include="UI\Common\UnityResolver.cs" />
     <Compile Include="UI\Common\IGenericFactory.cs" />
     <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
@@ -163,6 +163,8 @@
       <DependentUpon>DbSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DbSettings\DesignViewModels\DbSettingsDesignViewModel.cs" />
+    <Compile Include="UI\DbSettings\IDbSettingsView.cs" />
+    <Compile Include="UI\DbSettings\IDbSettingsViewCommand.cs" />
     <Compile Include="UI\DbSettings\IDbSettingsViewModel.cs" />
     <Compile Include="UI\DbSettings\ViewCommands\DbSettingsViewCommand.cs" />
     <Compile Include="UI\DbSettings\ViewModels\DbSettingsViewModel.cs" />

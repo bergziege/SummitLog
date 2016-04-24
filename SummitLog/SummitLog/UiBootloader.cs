@@ -62,7 +62,7 @@ namespace SummitLog
             container.RegisterType<LogEntryInputViewCommand>();
             container.RegisterType<SummitEditViewCommand>();
             container.RegisterType<RouteOnSummitEditViewCommand>();
-            container.RegisterType<DbSettingsViewCommand>();
+            container.RegisterType<IDbSettingsViewCommand,DbSettingsViewCommand>();
         }
 
         private static void SetupViewModels(IUnityContainer container)
@@ -92,7 +92,7 @@ namespace SummitLog
             container.RegisterType<LogEntryInputView>();
             container.RegisterType<SummitEditView>();
             container.RegisterType<RouteOnSummitEditView>();
-            container.RegisterType<DbSettingsView>();
+            container.RegisterType<IDbSettingsView,DbSettingsView>();
         }
     }
 }

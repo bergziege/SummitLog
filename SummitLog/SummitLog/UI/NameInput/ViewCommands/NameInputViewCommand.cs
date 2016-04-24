@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
+using Microsoft.Practices.Unity;
 using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 
@@ -35,6 +36,11 @@ namespace SummitLog.UI.NameInput.ViewCommands
             view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public NameInputViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
         }
     }
 }

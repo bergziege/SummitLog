@@ -69,8 +69,8 @@ namespace SummitLog
         {
             Thread.Sleep(250);
             AppContext.Container = new UnityContainer();
-            AppContext.Container.RegisterInstance<IGenericFactory>(new GenericFactory());
-            AppContext.Container.RegisterInstance<IWindowParentHelper>(new WindowParentHelper());
+            AppContext.Container.RegisterType<IGenericFactory, UnityResolver>(new ContainerControlledLifetimeManager());
+            AppContext.Container.RegisterType<IWindowParentHelper, WindowParentHelper>(new ContainerControlledLifetimeManager());
         }
         
         private void AddServicesToContainer()

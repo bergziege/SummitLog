@@ -3,18 +3,26 @@ using Microsoft.Practices.Unity;
 
 namespace SummitLog.UI.Common
 {
-    public class ViewCommandBase
+    /// <summary>
+    /// Basis für View Commands
+    /// </summary>
+    public abstract class ViewCommandBase
     {
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        protected ViewCommandBase(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper)
+        {
+            GenericFactory = genericFactory;
+            WindowParentHelper = windowParentHelper;
+        }
+
         /// <summary>
         /// Setzt eine <see cref="IGenericFactory"/>
         /// </summary>
-        [Dependency]
-        public IGenericFactory GenericFactory { set; protected get; }
+        protected IGenericFactory GenericFactory { private set; get; }
 
         /// <summary>
         /// Setzt ein <see cref="IWindowParentHelper"/>
         /// </summary>
-        [Dependency]
-        public IWindowParentHelper WindowParentHelper { set; protected get; }
+        protected IWindowParentHelper WindowParentHelper { private set; get; }
     }
 }

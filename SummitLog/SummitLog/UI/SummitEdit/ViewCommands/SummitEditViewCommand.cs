@@ -38,5 +38,10 @@ namespace SummitLog.UI.SummitEdit.ViewCommands
 
             return summitToEdit;
         }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public SummitEditViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
+        }
     }
 }

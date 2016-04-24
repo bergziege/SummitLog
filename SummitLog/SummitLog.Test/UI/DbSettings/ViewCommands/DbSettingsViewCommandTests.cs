@@ -24,9 +24,7 @@ namespace SummitLog.Test.UI.DbSettings.ViewCommands
         public void TestShowNewWindowWithOwnerParent()
         {
             /* Given : */
-            DbSettingsViewCommand dbSettingsViewCommand = new DbSettingsViewCommand();
-
-            Mock<IWindow> dbSettingsViewMock = new Mock<IWindow>();
+            Mock<IDbSettingsView> dbSettingsViewMock = new Mock<IDbSettingsView>();
             dbSettingsViewMock.SetupSet(x => x.DataContext = It.IsAny<IDbSettingsViewModel>());
             dbSettingsViewMock.Setup(x => x.ShowDialog());
 
@@ -34,20 +32,20 @@ namespace SummitLog.Test.UI.DbSettings.ViewCommands
             dbSettingsViewModelMock.Setup(x => x.LoadData());
 
             Mock<IGenericFactory> genericFactoryMock = new Mock<IGenericFactory>();
-            genericFactoryMock.Setup(x => x.ResolveAsIWindow<DbSettingsView>()).Returns(dbSettingsViewMock.Object);
+            genericFactoryMock.Setup(x => x.Resolve<IDbSettingsView>()).Returns(dbSettingsViewMock.Object);
             genericFactoryMock.Setup(x => x.Resolve<IDbSettingsViewModel>()).Returns(dbSettingsViewModelMock.Object);
-            dbSettingsViewCommand.GenericFactory = genericFactoryMock.Object;
 
             Mock<IWindowParentHelper> windowParentHelperMock = new Mock<IWindowParentHelper>();
             windowParentHelperMock.Setup(x => x.SetOwner<MainView>(dbSettingsViewMock.Object));
-            dbSettingsViewCommand.WindowParentHelper = windowParentHelperMock.Object;
+
+            DbSettingsViewCommand dbSettingsViewCommand = new DbSettingsViewCommand(genericFactoryMock.Object, windowParentHelperMock.Object);
 
             /* When */
             dbSettingsViewCommand.Execute();
 
             /* Then */
-            genericFactoryMock.Verify(x=>x.ResolveAsIWindow<DbSettingsView>(), Times.Once);
             genericFactoryMock.Verify(x=>x.Resolve<IDbSettingsViewModel>(), Times.Once);
+            genericFactoryMock.Verify(x=>x.Resolve<IDbSettingsView>(), Times.Once);
             windowParentHelperMock.Verify(x=>x.SetOwner<MainView>(dbSettingsViewMock.Object), Times.Once);
             dbSettingsViewModelMock.Verify(x=>x.LoadData());
             dbSettingsViewMock.VerifySet(x=>x.DataContext = dbSettingsViewModelMock.Object, Times.Once);

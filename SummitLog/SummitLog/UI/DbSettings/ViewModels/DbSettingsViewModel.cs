@@ -10,6 +10,7 @@ namespace SummitLog.UI.DbSettings.ViewModels
     /// <summary>
     ///     View Model für Datenbankeinstellungen
     /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
     public class DbSettingsViewModel : ReactiveObject, IDbSettingsViewModel
     {
         private readonly ISettingsService _settingsService;
@@ -21,7 +22,7 @@ namespace SummitLog.UI.DbSettings.ViewModels
         private string _startBat;
 
         /// <summary>
-        ///     Liefert eine neue INstanz des View Models
+        ///     Liefert eine neue Instanz des View Models
         /// </summary>
         /// <param name="settingsService"></param>
         public DbSettingsViewModel(ISettingsService settingsService)
@@ -95,6 +96,9 @@ namespace SummitLog.UI.DbSettings.ViewModels
             }
         }
 
+        /// <summary>
+        ///     Wird ausgelöst, wenn das Fenster geschlossen werden soll.
+        /// </summary>
         public event EventHandler RequestClose;
 
         /// <summary>

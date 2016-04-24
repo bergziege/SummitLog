@@ -1,13 +1,31 @@
 ﻿using System.Windows;
-using Xceed.Wpf.DataGrid;
 
 namespace SummitLog.UI.Common
 {
+    /// <summary>
+    ///     Schnittstelle für Fenster
+    /// </summary>
     public interface IWindow
     {
-        bool? ShowDialog();
+        /// <summary>
+        ///     Liefert oder setzt den DataContext
+        /// </summary>
         object DataContext { get; set; }
-        void Close();
+
+        /// <summary>
+        ///     Liefert oder setzt den Owner
+        /// </summary>
         Window Owner { get; set; }
+
+        /// <summary>
+        ///     Zeigt das Fenster modal
+        /// </summary>
+        /// <returns></returns>
+        bool? ShowDialog();
+
+        /// <summary>
+        ///     Schließt das Fenster
+        /// </summary>
+        void Close();
     }
 }

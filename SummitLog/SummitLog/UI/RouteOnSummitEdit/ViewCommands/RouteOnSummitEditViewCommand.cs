@@ -36,5 +36,10 @@ namespace SummitLog.UI.RouteOnSummitEdit.ViewCommands
 
             return routeToEdit;
         }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public RouteOnSummitEditViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
+        }
     }
 }

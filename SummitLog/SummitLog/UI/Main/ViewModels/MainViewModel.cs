@@ -8,6 +8,7 @@ using ReactiveUI;
 using SummitLog.Services.Model;
 using SummitLog.Services.Services;
 using SummitLog.UI.Common;
+using SummitLog.UI.DbSettings;
 using SummitLog.UI.DbSettings.ViewCommands;
 using SummitLog.UI.DifficultyManagement.ViewCommands;
 using SummitLog.UI.LogEntryInput.ViewCommands;
@@ -26,7 +27,7 @@ namespace SummitLog.UI.Main.ViewModels
     {
         private readonly IAreaService _areaService;
         private readonly ICountryService _countryService;
-        private readonly DbSettingsViewCommand _dbSettingsViewCommand;
+        private readonly IDbSettingsViewCommand _dbSettingsViewCommand;
         private readonly IDifficultyLevelScaleService _difficultyLevelScaleService;
         private readonly IDifficultyLevelService _difficultyLevelService;
         private readonly DifficultyManagementViewCommand _difficultyManagementViewCommand;
@@ -111,7 +112,7 @@ namespace SummitLog.UI.Main.ViewModels
             NameInputViewCommand nameInputViewCommand, DifficultyManagementViewCommand difficultyManagementViewCommand,
             NameAndLevelInputViewCommand nameAndLevelInputViewCommand
             , LogEntryInputViewCommand logEntryInputViewCommand, SummitEditViewCommand summitEditViewCommand,
-            RouteOnSummitEditViewCommand routeOnSummitEditViewCommand, DbSettingsViewCommand dbSettingsViewCommand)
+            RouteOnSummitEditViewCommand routeOnSummitEditViewCommand, IDbSettingsViewCommand dbSettingsViewCommand)
         {
             _countryService = countryService;
             _areaService = areaService;

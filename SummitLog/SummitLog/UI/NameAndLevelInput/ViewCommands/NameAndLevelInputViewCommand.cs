@@ -74,5 +74,10 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
 
             view.ShowDialog();
         }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public NameAndLevelInputViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
+        }
     }
 }
