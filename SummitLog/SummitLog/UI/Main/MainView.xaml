@@ -76,7 +76,7 @@
                     <Button Command="{Binding Path=RemoveCountryCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
-                          SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseDoubleClick="Control_OnMouseDoubleClick"/>
             </Grid>
         </HeaderedContentControl>
 

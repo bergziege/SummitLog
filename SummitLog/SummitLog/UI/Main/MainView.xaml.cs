@@ -23,5 +23,23 @@ namespace SummitLog.UI.Main
         {
             InitializeComponent();
         }
+
+        private IMainViewModel GetViewModel()
+        {
+            if (DataContext is IMainViewModel)
+            {
+                return (IMainViewModel) DataContext;
+            }
+            return null;
+        }
+
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            IMainViewModel vm = GetViewModel();
+            if (vm != null && vm.EditSelectedCountryCommand.CanExecute(null))
+            {
+                vm.EditSelectedCountryCommand.Execute(null);
+            }
+        }
     }
 }
