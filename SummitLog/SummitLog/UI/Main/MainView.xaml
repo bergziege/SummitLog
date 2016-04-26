@@ -7,6 +7,8 @@
         xmlns:main="clr-namespace:SummitLog.UI.Main"
         xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:converter="clr-namespace:SummitLog.UI.Main.Converter"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:command="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
         Title="SummitLog" Height="600" Width="800">
     <d:DesignProperties.DataContext>
@@ -76,7 +78,14 @@
                     <Button Command="{Binding Path=RemoveCountryCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=Countries}"
-                          SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" MouseDoubleClick="Control_OnMouseDoubleClick"/>
+                          SelectedItem="{Binding Path=SelectedCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedCountryCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -100,7 +109,14 @@
                     <Button Command="{Binding Path=RemoveAreaCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=AreasInSelectedCountry}"
-                          SelectedItem="{Binding Path=SelectedArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedAreaCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -126,7 +142,14 @@
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitGroupsInSelectedArea}"
-                          SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedSummitGroupCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -151,6 +174,12 @@
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
                           SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedSummitCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:ISummitViewModel">
                             <StackPanel Orientation="Horizontal">
@@ -188,7 +217,14 @@
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedCountry}"
-                          SelectedItem="{Binding Path=SelectedRouteInCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedRouteInCountry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedRouteInCountryCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -214,7 +250,14 @@
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedArea}"
-                          SelectedItem="{Binding Path=SelectedRouteInArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedRouteInArea, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedRouteInAreaCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -240,7 +283,14 @@
                             Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummitGroup}"
-                          SelectedItem="{Binding Path=SelectedRouteInSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                          SelectedItem="{Binding Path=SelectedRouteInSummitGroup, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedRouteInSummitGroupCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListView>
             </Grid>
         </HeaderedContentControl>
 
@@ -267,6 +317,12 @@
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=RoutesInSelectedSummit}"
                           SelectedItem="{Binding Path=SelectedRouteInSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedRouteInSummitCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:IRouteViewModel">
                             <StackPanel Orientation="Horizontal">
@@ -303,6 +359,12 @@
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Source={StaticResource VariationsSource}}"
                           SelectedItem="{Binding Path=SelectedVariation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedVariationCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:IVariationItemViewModel">
                             <StackPanel Orientation="Horizontal">
@@ -339,6 +401,12 @@
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=LogEntriesOnSelectedVariation}"
                           SelectedItem="{Binding Path=SelectedLogEntry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedLogEntryCommand}"
+                            PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
