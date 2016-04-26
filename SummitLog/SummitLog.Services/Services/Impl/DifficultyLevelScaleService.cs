@@ -98,7 +98,10 @@ namespace SummitLog.Services.Services.Impl
             DifficultyLevelScale currentDefaultScale = _difficultyLevelScaleDao.GetDefaultScale();
             currentDefaultScale?.RemoveDefaultState();
             difficultyLevelScale.SetAsDefault();
-            _difficultyLevelScaleDao.Save(currentDefaultScale);
+            if (currentDefaultScale != null)
+            {
+                _difficultyLevelScaleDao.Save(currentDefaultScale); 
+            }
             _difficultyLevelScaleDao.Save(difficultyLevelScale);
         }
     }

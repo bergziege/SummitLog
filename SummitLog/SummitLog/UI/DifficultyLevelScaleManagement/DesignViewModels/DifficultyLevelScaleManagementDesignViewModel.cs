@@ -15,8 +15,8 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         /// </summary>
         public DifficultyLevelScaleManagementDesignViewModel()
         {
-            DifficultyLevelScales.Add(new ItemWithNameDesignViewModel<DifficultyLevelScale>());
-            DifficultyLevelScales.Add(new ItemWithNameDesignViewModel<DifficultyLevelScale>());
+            DifficultyLevelScales.Add(new DifficultyLevelScaleItemDesignViewModel());
+            DifficultyLevelScales.Add(new DifficultyLevelScaleItemDesignViewModel());
         }
 
         /// <summary>
@@ -27,12 +27,12 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         /// <summary>
         ///     Liefert die Liste der Schwierigkeitsgradskalen
         /// </summary>
-        public ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>> DifficultyLevelScales { get; } =new ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>>();
+        public ObservableCollection<IDifficultyLevelScaleItemViewModel> DifficultyLevelScales { get; } =new ObservableCollection<IDifficultyLevelScaleItemViewModel>();
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Schwierigkeitsgradskala
         /// </summary>
-        public IItemWithNameViewModel<DifficultyLevelScale> SelectedDifficultyLevelScale { get; set; }
+        public IDifficultyLevelScaleItemViewModel SelectedDifficultyLevelScale { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
@@ -43,6 +43,11 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement.DesignViewModels
         ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu bearbeiten.
         /// </summary>
         public RelayCommand EditSelectedDifficultyLevelScaleCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Relay Command um die gewählte Schwierigkeitsgradskale als Standard zu setzen.
+        /// </summary>
+        public RelayCommand SetSelectedAsDefaultCommand { get; }
 
         /// <summary>
         ///     Lädt die VM relevanten Daten

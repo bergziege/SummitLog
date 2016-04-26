@@ -168,6 +168,7 @@ namespace SummitLog.Services.Test.ServiceTests
 
             scaleToSetDefault.IsDefault.ShouldBeTrue();
             difficultyLevelScaleDao.Verify(x=>x.Save(scaleToSetDefault), Times.Once);
+            difficultyLevelScaleDao.Verify(x=>x.Save(null), Times.Never);
         }
 
         [Test]

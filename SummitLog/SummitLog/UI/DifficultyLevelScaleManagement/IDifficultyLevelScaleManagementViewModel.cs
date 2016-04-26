@@ -18,12 +18,12 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement
         /// <summary>
         ///     Liefert die Liste der Schwierigkeitsgradskalen
         /// </summary>
-        ObservableCollection<IItemWithNameViewModel<DifficultyLevelScale>> DifficultyLevelScales { get; }
+        ObservableCollection<IDifficultyLevelScaleItemViewModel> DifficultyLevelScales { get; }
 
         /// <summary>
         ///     Liefert oder setzt die gewählte Schwierigkeitsgradskala
         /// </summary>
-        IItemWithNameViewModel<DifficultyLevelScale> SelectedDifficultyLevelScale { get; set; }
+        IDifficultyLevelScaleItemViewModel SelectedDifficultyLevelScale { get; set; }
 
         /// <summary>
         ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu löschen, wenn diese nicht mehr verwendet wird.
@@ -34,6 +34,11 @@ namespace SummitLog.UI.DifficultyLevelScaleManagement
         ///     Liefert ein Command um die gewählte Schwierigkeitsgradskala zu bearbeiten.
         /// </summary>
         RelayCommand EditSelectedDifficultyLevelScaleCommand { get; }
+
+        /// <summary>
+        ///     Liefert ein Relay Command um die gewählte Schwierigkeitsgradskale als Standard zu setzen.
+        /// </summary>
+        RelayCommand SetSelectedAsDefaultCommand { get; }
 
         /// <summary>
         ///     Lädt die VM relevanten Daten

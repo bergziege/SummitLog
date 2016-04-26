@@ -193,11 +193,14 @@
     <Compile Include="UI\DifficultyLevelManagement\IItemWithNameAndScoreViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\ViewModels\DifficultyLevelManagementViewModel.cs" />
     <Compile Include="UI\DifficultyLevelManagement\ViewModels\ItemWithNameAndScoreViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleItemDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DesignViewModels\DifficultyLevelScaleManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\DifficultyLevelScaleMangementView.xaml.cs">
       <DependentUpon>DifficultyLevelScaleMangementView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\DifficultyLevelScaleManagement\IDifficultyLevelScaleItemViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\IDifficultyLevelScaleManagementViewModel.cs" />
+    <Compile Include="UI\DifficultyLevelScaleManagement\ViewModels\DifficultyLevelScaleItemViewModel.cs" />
     <Compile Include="UI\DifficultyLevelScaleManagement\ViewModels\DifficultyLevelScaleManagementViewModel.cs" />
     <Compile Include="UI\DifficultyManagement\DesignViewModels\DifficultyManagementDesignViewModel.cs" />
     <Compile Include="UI\DifficultyManagement\DifficultyManagementView.xaml.cs">

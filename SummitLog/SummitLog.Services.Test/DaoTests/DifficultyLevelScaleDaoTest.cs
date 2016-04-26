@@ -64,11 +64,13 @@ namespace SummitLog.Services.Test.DaoTests
             DifficultyLevelScale scale = Container.Resolve<DbTestDataGenerator>().CreateDifficultyLevelScale("oldname");
 
             scale.Name = "newname";
+            scale.SetAsDefault();
 
             IDifficultyLevelScaleDao difficultyLevelScaleDao = Container.Resolve<DifficultyLevelScaleDao>();
             difficultyLevelScaleDao.Save(scale);
 
             Assert.AreEqual("newname", difficultyLevelScaleDao.GetAll().First().Name);
+            Assert.IsTrue(difficultyLevelScaleDao.GetAll().First().IsDefault);
         }
 
         [TestMethod]

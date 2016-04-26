@@ -87,6 +87,7 @@ namespace SummitLog.UI.NameAndLevelInput.ViewModels
             {
                 DifficultyLevelScales.Add(difficultyLevelScale);
             }
+            SelectedDifficultyLevelScale = DifficultyLevelScales.FirstOrDefault(x => x.IsDefault);
         }
 
         /// <summary>

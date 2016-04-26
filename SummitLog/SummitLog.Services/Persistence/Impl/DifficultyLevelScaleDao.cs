@@ -71,7 +71,9 @@ namespace SummitLog.Services.Persistence.Impl
             if (difficultyLevelScale == null) throw new ArgumentNullException(nameof(difficultyLevelScale));
             GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
-                .Set("dls.Name = {name}").WithParam("name", difficultyLevelScale.Name)
+                .Set("dls.Name = {name}, dls.IsDefault = {isDefault}")
+                .WithParam("name", difficultyLevelScale.Name)
+                .WithParam("isDefault", difficultyLevelScale.IsDefault)
                 .ExecuteWithoutResults();
         }
 
