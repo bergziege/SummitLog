@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssert;
 using FluentAssertions;
 using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -81,6 +82,24 @@ namespace SummitLog.Services.Test.DaoTests
 
             scaleForLevel.Should().NotBeNull();
             scaleForLevel.Id.Should().Be(scale.Id);
+        }
+
+        [TestMethod]
+        public void TestGetDefaultScale()
+        {
+            DifficultyLevelScale existingDeault = Container.Resolve<DbTestDataGenerator>().CreateDifficultyLevelScale(isDefault:true);
+
+            IDifficultyLevelScaleDao difficultyLevelScaleDao = Container.Resolve<DifficultyLevelScaleDao>();
+            DifficultyLevelScale reloaded = difficultyLevelScaleDao.GetDefaultScale();
+
+            reloaded.Id.Should().Be(existingDeault.Id);
+            reloaded.IsDefault.ShouldBeTrue();
+        }
+
+        [TestMethod]
+        public void TestGetDefaultScaleWithoutDefaultExisting()
+        {
+            Container.Resolve<DifficultyLevelScaleDao>().GetDefaultScale().ShouldBeNull();
         }
     }
 }

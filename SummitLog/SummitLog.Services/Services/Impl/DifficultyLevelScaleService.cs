@@ -29,7 +29,7 @@ namespace SummitLog.Services.Services.Impl
         /// <returns></returns>
         public IList<DifficultyLevelScale> GetAll()
         {
-            return _difficultyLevelScaleDao.GetAll().OrderBy(x=>x.Name).ToList();
+            return _difficultyLevelScaleDao.GetAll().OrderBy(x => x.Name).ToList();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace SummitLog.Services.Services.Impl
         {
             if (string.IsNullOrWhiteSpace(scaleName))
                 throw new ArgumentNullException(nameof(scaleName));
-            return _difficultyLevelScaleDao.Create(new DifficultyLevelScale{Name = scaleName});
+            return _difficultyLevelScaleDao.Create(new DifficultyLevelScale {Name = scaleName});
         }
 
         /// <summary>
@@ -85,6 +85,21 @@ namespace SummitLog.Services.Services.Impl
         {
             if (difficultyLevel == null) throw new ArgumentNullException(nameof(difficultyLevel));
             return _difficultyLevelScaleDao.GetForDifficultyLevel(difficultyLevel);
+        }
+
+        /// <summary>
+        ///     Setzt eine Schwierigkeitsgradskala als Standardskala
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        public void SetAsDefault(DifficultyLevelScale difficultyLevelScale)
+        {
+            if (difficultyLevelScale == null) throw new ArgumentNullException(nameof(difficultyLevelScale));
+
+            DifficultyLevelScale currentDefaultScale = _difficultyLevelScaleDao.GetDefaultScale();
+            currentDefaultScale?.RemoveDefaultState();
+            difficultyLevelScale.SetAsDefault();
+            _difficultyLevelScaleDao.Save(currentDefaultScale);
+            _difficultyLevelScaleDao.Save(difficultyLevelScale);
         }
     }
 }

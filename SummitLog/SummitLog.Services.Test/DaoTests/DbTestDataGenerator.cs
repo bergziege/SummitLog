@@ -114,9 +114,14 @@ namespace SummitLog.Services.Test.DaoTests
             return _routeDao.CreateIn(summit, GetRouteEntity(name, rating));
         }
 
-        public DifficultyLevelScale CreateDifficultyLevelScale(string name = "Schwierigkeitsgradskala")
+        public DifficultyLevelScale CreateDifficultyLevelScale(string name = "Schwierigkeitsgradskala", bool isDefault = false)
         {
-            return _difficultyLevelScaleDao.Create(new DifficultyLevelScale {Name = name});
+            DifficultyLevelScale scale = new DifficultyLevelScale {Name = name};
+            if (isDefault)
+            {
+                scale.SetAsDefault();
+            }
+            return _difficultyLevelScaleDao.Create(scale);
         }
 
         public DifficultyLevel CreateDifficultyLevel(string name = "Schwierigkeitsgrad", int score = 10,

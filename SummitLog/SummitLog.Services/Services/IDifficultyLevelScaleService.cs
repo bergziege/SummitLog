@@ -45,5 +45,11 @@ namespace SummitLog.Services.Services
         /// <param name="difficultyLevel"></param>
         /// <returns></returns>
         DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        ///     Setzt eine Schwierigkeitsgradskala als Standardskala
+        /// </summary>
+        /// <param name="difficultyLevelScale"></param>
+        void SetAsDefault(DifficultyLevelScale difficultyLevelScale);
     }
 }

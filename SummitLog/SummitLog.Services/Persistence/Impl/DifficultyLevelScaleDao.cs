@@ -86,5 +86,16 @@ namespace SummitLog.Services.Persistence.Impl
                 .Where((DifficultyLevel dl) => dl.Id == difficultyLevel.Id)
                 .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
         }
+
+        /// <summary>
+        ///     Liefert die Standardskala
+        /// </summary>
+        /// <returns></returns>
+        public DifficultyLevelScale GetDefaultScale()
+        {
+            return GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
+                .Where((DifficultyLevelScale dls) => dls.IsDefault == true)
+                .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
+        }
     }
 }
