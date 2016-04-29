@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
@@ -73,24 +74,42 @@ namespace SummitLog
             {
                 ISettingsService settingsService = new SettingsService(new IniFielDao());
                 DbSettingsDto loadDbSettings = settingsService.LoadDbSettings();
-                Process dbProcess = Process.Start(loadDbSettings.StartBat);
+                string startupBatchFile = loadDbSettings.StartBat;
+                while (!File.Exists(startupBatchFile))
+                {
+                    bool dialogResult = dbSettingsViewCommand.Execute();
+                    if(!dialogResult)
+                    {
+                        Environment.Exit(0);
+                    }
+                    loadDbSettings = settingsService.LoadDbSettings();
+                    startupBatchFile = loadDbSettings.StartBat;
+
+                }
+                Process dbProcess = Process.Start(startupBatchFile);
                 bool tryStartDatabase = true;
                 while (tryStartDatabase)
                 {
-                    int waitCounter = 0;
-                    while (!ServicesBootloader.IsDbAvailable(genericFactory))
+                    try
                     {
-                        Thread.Sleep(1000);
-                        waitCounter++;
-                    }
-                    if (waitCounter < 20)
-                    {
+                        while (!ServicesBootloader.IsDbAvailable(genericFactory))
+                        {
+                            Thread.Sleep(1000);
+
+                        }
                         tryStartDatabase = false;
                     }
-                    dbSettingsViewCommand.Execute();
-                    /* [Summitlog-39] - TODO: Rückgabewert des Commands auswerten */
+                    catch (Exception e)
+                    {
+                        bool dialogResult = dbSettingsViewCommand.Execute();
+                        if (!dialogResult)
+                        {
+                            Environment.Exit(0);
+                        }
+                    }
                 }
                 AppContext.Container.RegisterInstance(dbProcess);
+
             }
         }
 
@@ -100,7 +119,7 @@ namespace SummitLog
             AppContext.Container.RegisterType<IGenericFactory, UnityResolver>(new ContainerControlledLifetimeManager());
             AppContext.Container.RegisterType<IWindowParentHelper, WindowParentHelper>(new ContainerControlledLifetimeManager());
         }
-        
+
         private void AddServicesToContainer()
         {
             ServicesBootloader.Init(AppContext.Container);

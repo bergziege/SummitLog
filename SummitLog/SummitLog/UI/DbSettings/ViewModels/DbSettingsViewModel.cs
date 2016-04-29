@@ -99,7 +99,12 @@ namespace SummitLog.UI.DbSettings.ViewModels
         /// <summary>
         ///     Wird ausgelöst, wenn das Fenster geschlossen werden soll.
         /// </summary>
-        public event EventHandler RequestClose;
+        public event EventHandler RequestCloseOnSave;
+
+        /// <summary>
+        ///     Wird ausgelöst, wenn das Fenster bei einem Abbruch geschlossen werden soll
+        /// </summary>
+        public event EventHandler RequestCloseOnCancel;
 
         /// <summary>
         ///     Lädt die VM relevanten Daten
@@ -128,7 +133,7 @@ namespace SummitLog.UI.DbSettings.ViewModels
                 StartBat = StartBat
             };
             _settingsService.Save(dbSettingsDto);
-            OnRequestClose();
+            OnRequestCloseOnSave();
         }
 
         private bool CanCancel()
@@ -138,12 +143,17 @@ namespace SummitLog.UI.DbSettings.ViewModels
 
         private void Cancel()
         {
-            OnRequestClose();
+            OnRequestCloseOnCancel();
         }
 
-        protected virtual void OnRequestClose()
+        protected virtual void OnRequestCloseOnSave()
         {
-            RequestClose?.Invoke(this, EventArgs.Empty);
+            RequestCloseOnSave?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnRequestCloseOnCancel()
+        {
+            RequestCloseOnCancel?.Invoke(this, EventArgs.Empty);
         }
     }
 }

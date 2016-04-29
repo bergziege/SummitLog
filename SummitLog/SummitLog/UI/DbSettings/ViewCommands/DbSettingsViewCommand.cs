@@ -19,17 +19,29 @@ namespace SummitLog.UI.DbSettings.ViewCommands
         /// <summary>
         ///     Verbindet die View mit dem View Model und zeigt diese an.
         /// </summary>
-        public void Execute()
+        public bool Execute()
         {
+            bool dialogResult = false;
             IDbSettingsView view = GenericFactory.Resolve<IDbSettingsView>();
             IDbSettingsViewModel vm = GenericFactory.Resolve<IDbSettingsViewModel>();
             view.DataContext = vm;
             vm.LoadData();
 
-            vm.RequestClose += delegate { view.Close(); };
+            vm.RequestCloseOnSave += delegate
+            {
+                dialogResult = true;
+                view.Close();
+            };
+
+            vm.RequestCloseOnCancel += delegate
+            {
+                dialogResult = false;
+                view.Close();
+            };
 
             WindowParentHelper.SetOwner<MainView>(view);
             view.ShowDialog();
+            return dialogResult;
         }
     }
 }

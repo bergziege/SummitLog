@@ -13,6 +13,16 @@ namespace SummitLog.UI.DbSettings
         public DbSettingsView()
         {
             InitializeComponent();
+            this.Loaded += DbSettingsView_Loaded;
+        }
+
+        private void DbSettingsView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Owner == null)
+            {
+                WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                Activate();
+            }
         }
     }
 }

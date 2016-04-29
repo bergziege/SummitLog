@@ -4,6 +4,9 @@ using SummitLog.UI.Common;
 
 namespace SummitLog.UI.DbSettings
 {
+    /// <summary>
+    /// Schnittstelle für View Models für <see cref="IDbSettingsView"/>
+    /// </summary>
     public interface IDbSettingsViewModel : IReactiveObject
     {
         /// <summary>
@@ -39,7 +42,12 @@ namespace SummitLog.UI.DbSettings
         /// <summary>
         ///     Wird ausgelöst, wenn das Fenster geschlossen werden soll.
         /// </summary>
-        event EventHandler RequestClose;
+        event EventHandler RequestCloseOnSave;
+
+        /// <summary>
+        ///     Wird ausgelöst, wenn das Fenster bei einem Abbruch geschlossen werden soll
+        /// </summary>
+        event EventHandler RequestCloseOnCancel;
 
         /// <summary>
         ///     Lädt die VM relevanten Daten

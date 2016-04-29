@@ -43,7 +43,16 @@ namespace SummitLog.UI.DbSettings.DesignViewModels
         ///     Liefert ein Command um die Änderungen zu verwerfen
         /// </summary>
         public RelayCommand CancelCommand { get; }
-        public event EventHandler RequestClose;
+
+        /// <summary>
+        ///     Wird ausgelöst, wenn das Fenster geschlossen werden soll.
+        /// </summary>
+        public event EventHandler RequestCloseOnSave;
+
+        /// <summary>
+        ///     Wird ausgelöst, wenn das Fenster bei einem Abbruch geschlossen werden soll
+        /// </summary>
+        public event EventHandler RequestCloseOnCancel;
 
         /// <summary>
         ///     Lädt die VM relevanten Daten
