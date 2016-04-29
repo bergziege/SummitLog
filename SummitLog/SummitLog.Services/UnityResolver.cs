@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Unity;
 
-namespace SummitLog.UI.Common
+namespace SummitLog.Services
 {
     /// <summary>
     ///     Erzeugt Objekte mittels einem Unity Container

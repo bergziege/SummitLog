@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Dtos\DbSettingsDto.cs" />
     <Compile Include="Exceptions\NodeInUseException.cs" />
+    <Compile Include="IGenericFactory.cs" />
     <Compile Include="Model\EntityWithId.cs" />
     <Compile Include="Model\EntityWithIdAndName.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Services\Impl\AreaService.cs" />
     <Compile Include="Services\Impl\CountryService.cs" />
     <Compile Include="Services\IVariationService.cs" />
+    <Compile Include="UnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -1,6 +1,3 @@
-using System;
-using System.ComponentModel;
-using System.Reflection;
 using Microsoft.Practices.Unity;
 using SummitLog.UI.DbSettings;
 using SummitLog.UI.DbSettings.ViewCommands;
@@ -62,7 +59,6 @@ namespace SummitLog
             container.RegisterType<LogEntryInputViewCommand>();
             container.RegisterType<SummitEditViewCommand>();
             container.RegisterType<RouteOnSummitEditViewCommand>();
-            container.RegisterType<IDbSettingsViewCommand,DbSettingsViewCommand>();
         }
 
         private static void SetupViewModels(IUnityContainer container)
@@ -79,7 +75,6 @@ namespace SummitLog
             container.RegisterType<IVariationItemViewModel, VariationItemViewModel>();
             container.RegisterType<ISummitEditViewModel, SummitEditViewModel>();
             container.RegisterType<IRouteOnSummitEditViewModel, RouteOnSummitEditViewModel>();
-            container.RegisterType<IDbSettingsViewModel, DbSettingsViewModel>();
         }
 
         private static void SetupViews(IUnityContainer container)
@@ -92,7 +87,17 @@ namespace SummitLog
             container.RegisterType<LogEntryInputView>();
             container.RegisterType<SummitEditView>();
             container.RegisterType<RouteOnSummitEditView>();
-            container.RegisterType<IDbSettingsView,DbSettingsView>();
+        }
+
+        /// <summary>
+        ///     Initialisiert grundlegende UI Elemente
+        /// </summary>
+        /// <param name="container"></param>
+        public static void InitBasics(IUnityContainer container)
+        {
+            container.RegisterType<IDbSettingsViewCommand, DbSettingsViewCommand>();
+            container.RegisterType<IDbSettingsViewModel, DbSettingsViewModel>();
+            container.RegisterType<IDbSettingsView, DbSettingsView>();
         }
     }
 }

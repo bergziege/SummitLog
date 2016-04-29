@@ -14,6 +14,7 @@ using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
 using SummitLog.Services.Services.Impl;
 using SummitLog.UI.Common;
+using SummitLog.UI.DbSettings;
 using SummitLog.UI.Main;
 using SummitLog.UI.Splash;
 using SummitLog.UI.Splash.ViewModels;
@@ -42,6 +43,8 @@ namespace SummitLog
             vm.Run(new Dictionary<string, Action>
             {
                 {"Setup Container", CreateContainer},
+                {"Setup Basic Services", AddBasicServicesToContainer},
+                {"Setup Basic UI", AddBasicUiToContainer},
                 {"Start Database", StartDatabase},
                 {"Setup Services", AddServicesToContainer},
                 {"Setup UI", AddUiToContainer},
@@ -50,16 +53,42 @@ namespace SummitLog
             splashscreen.Close();
         }
 
+        private void AddBasicUiToContainer()
+        {
+            UiBootloader.InitBasics(AppContext.Container);
+        }
+
+        private void AddBasicServicesToContainer()
+        {
+            ServicesBootloader.InitBasics(AppContext.Container);
+        }
+
         private void StartDatabase()
         {
-            if (!ServicesBootloader.IsDbAvailable())
+            IGenericFactory genericFactory = AppContext.Container.Resolve<IGenericFactory>();
+
+            IDbSettingsViewCommand dbSettingsViewCommand = genericFactory.Resolve<IDbSettingsViewCommand>();
+
+            if (!ServicesBootloader.IsDbAvailable(genericFactory))
             {
                 ISettingsService settingsService = new SettingsService(new IniFielDao());
                 DbSettingsDto loadDbSettings = settingsService.LoadDbSettings();
                 Process dbProcess = Process.Start(loadDbSettings.StartBat);
-                while (!ServicesBootloader.IsDbAvailable())
+                bool tryStartDatabase = true;
+                while (tryStartDatabase)
                 {
-                    Thread.Sleep(1000);
+                    int waitCounter = 0;
+                    while (!ServicesBootloader.IsDbAvailable(genericFactory))
+                    {
+                        Thread.Sleep(1000);
+                        waitCounter++;
+                    }
+                    if (waitCounter < 20)
+                    {
+                        tryStartDatabase = false;
+                    }
+                    dbSettingsViewCommand.Execute();
+                    /* [Summitlog-39] - TODO: Rückgabewert des Commands auswerten */
                 }
                 AppContext.Container.RegisterInstance(dbProcess);
             }
@@ -67,7 +96,6 @@ namespace SummitLog
 
         private void CreateContainer()
         {
-            Thread.Sleep(250);
             AppContext.Container = new UnityContainer();
             AppContext.Container.RegisterType<IGenericFactory, UnityResolver>(new ContainerControlledLifetimeManager());
             AppContext.Container.RegisterType<IWindowParentHelper, WindowParentHelper>(new ContainerControlledLifetimeManager());
@@ -75,20 +103,16 @@ namespace SummitLog
         
         private void AddServicesToContainer()
         {
-            Thread.Sleep(250);
-
             ServicesBootloader.Init(AppContext.Container);
         }
 
         private void AddUiToContainer()
         {
-            Thread.Sleep(250);
             UiBootloader.Init(AppContext.Container);
         }
 
         private void InitAndShowMainView()
         {
-            Thread.Sleep(250);
             MainView mainView = AppContext.Container.Resolve<MainView>();
             IMainViewModel mainViewModel = AppContext.Container.Resolve<IMainViewModel>();
             AppContext.Container.Resolve<IWindowParentHelper>().RegisterWindow(mainView);

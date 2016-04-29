@@ -1,4 +1,4 @@
-﻿namespace SummitLog.UI.Common
+﻿namespace SummitLog.Services
 {
     /// <summary>
     ///     Schnittstelle für Factories, die sich verschiedenster Container bedienen können um ihre AUfgabe zu lösen.

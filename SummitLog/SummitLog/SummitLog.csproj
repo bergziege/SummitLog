@@ -167,8 +167,6 @@
     <Compile Include="Helper\IWindowParentHelper.cs" />
     <Compile Include="Helper\WindowParentHelper.cs" />
     <Compile Include="UiBootloader.cs" />
-    <Compile Include="UI\Common\UnityResolver.cs" />
-    <Compile Include="UI\Common\IGenericFactory.cs" />
     <Compile Include="UI\Common\IItemWithNameViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameDesignViewModel.cs" />
     <Compile Include="UI\Common\ItemWithNameViewModel.cs" />

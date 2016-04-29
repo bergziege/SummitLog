@@ -15,10 +15,9 @@ namespace SummitLog.Services
     /// </summary>
     public static class ServicesBootloader
     {
-        public static bool IsDbAvailable()
+        public static bool IsDbAvailable(IGenericFactory genericFactory)
         {
-            ISettingsService settingsService = new SettingsService(new IniFielDao());
-            DbSettingsDto dbSettings = settingsService.LoadDbSettings();
+            DbSettingsDto dbSettings = genericFactory.Resolve<ISettingsService>().LoadDbSettings();
 
             GraphClient client = new GraphClient(new Uri(dbSettings.Url), dbSettings.User, dbSettings.Pwd);
             bool isDbAvailable = false;
@@ -39,17 +38,10 @@ namespace SummitLog.Services
         ///     Initialisiert den Bootloader
         /// </summary>
         /// <param name="container"></param>
-        /// <param name="dbUrl"></param>
-        /// <param name="dbUser"></param>
-        /// <param name="dbPassword"></param>
         /// <returns></returns>
         public static IUnityContainer Init(IUnityContainer container)
         {
-            /* TODO: Services usw. sollten eigentlich über den Containedr bezogen werden. 
-             * Dazu muss jedoch der Client bereits fertig sein, zu dem hier aber erst noch die Einstellungen über
-             * einen Service geladen werden müssen */
-            ISettingsService settingsService = new SettingsService(new IniFielDao());
-            DbSettingsDto dbSettings = settingsService.LoadDbSettings();
+            DbSettingsDto dbSettings = container.Resolve<ISettingsService>().LoadDbSettings();
 
             GraphClient client = new GraphClient(new Uri(dbSettings.Url), dbSettings.User, dbSettings.Pwd);
             client.Connect();
@@ -73,7 +65,6 @@ namespace SummitLog.Services
             container.RegisterType<ILogEntryService, LogEntryService>();
             container.RegisterType<IDifficultyLevelScaleService, DifficultyLevelScaleService>();
             container.RegisterType<IDifficultyLevelService, DifficultyLevelService>();
-            container.RegisterType<ISettingsService, SettingsService>();
         }
 
         private static void RegisterDaos(IUnityContainer container)
@@ -87,7 +78,16 @@ namespace SummitLog.Services
             container.RegisterType<IDifficultyLevelDao, DifficultyLevelDao>();
             container.RegisterType<IVariationDao, VariationDao>();
             container.RegisterType<ILogEntryDao, LogEntryDao>();
+        }
+
+        /// <summary>
+        /// Initialisiert grundlegende Services
+        /// </summary>
+        /// <param name="container"></param>
+        public static void InitBasics(IUnityContainer container)
+        {
             container.RegisterType<IIniFileDao, IniFielDao>();
+            container.RegisterType<ISettingsService, SettingsService>();
         }
     }
 }

@@ -122,6 +122,10 @@
     <Compile Include="UI\DbSettings\ViewCommands\DbSettingsViewCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SummitLog.Services\SummitLog.Services.csproj">
+      <Project>{a43cc9f7-0671-41e0-8314-7244d6b0adda}</Project>
+      <Name>SummitLog.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SummitLog\SummitLog.csproj">
       <Project>{822e9e7e-09db-49ef-bcee-a5ac9302caa4}</Project>
       <Name>SummitLog</Name>

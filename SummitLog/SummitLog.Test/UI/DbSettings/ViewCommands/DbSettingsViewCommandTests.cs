@@ -7,6 +7,7 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
+using SummitLog.Services;
 using SummitLog.UI.Common;
 using SummitLog.UI.DbSettings;
 using SummitLog.UI.DbSettings.ViewCommands;

@@ -1,5 +1,6 @@
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
 using Microsoft.Practices.Unity;
+using SummitLog.Services;
 
 namespace SummitLog.UI.Common
 {
