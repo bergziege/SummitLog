@@ -1,7 +1,8 @@
 ﻿using System;
-using DryIoc;
+using System.ComponentModel;
+using Microsoft.Practices.Unity;
 using Neo4jClient;
-using SummitLog.Services.Model;
+using SummitLog.Services.Dtos;
 using SummitLog.Services.Persistence;
 using SummitLog.Services.Persistence.Impl;
 using SummitLog.Services.Services;
@@ -14,15 +15,35 @@ namespace SummitLog.Services
     /// </summary>
     public static class ServicesBootloader
     {
+        public static bool IsDbAvailable(IGenericFactory genericFactory)
+        {
+            DbSettingsDto dbSettings = genericFactory.Resolve<ISettingsService>().LoadDbSettings();
+
+            GraphClient client = new GraphClient(new Uri(dbSettings.Url), dbSettings.User, dbSettings.Pwd);
+            bool isDbAvailable = false;
+            try
+            {
+                client.Connect();
+                isDbAvailable = true;
+                client.Dispose();
+            }
+            catch
+            {
+                // ignored
+            }
+            return isDbAvailable;
+        }
+
         /// <summary>
         ///     Initialisiert den Bootloader
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static Container Init(Container container)
+        public static IUnityContainer Init(IUnityContainer container)
         {
+            DbSettingsDto dbSettings = container.Resolve<ISettingsService>().LoadDbSettings();
 
-            GraphClient client = new GraphClient(new Uri("http://localhost:7474/db/data"), "neo4j", "extra");
+            GraphClient client = new GraphClient(new Uri(dbSettings.Url), dbSettings.User, dbSettings.Pwd);
             client.Connect();
 
             container.RegisterInstance(client);
@@ -33,30 +54,40 @@ namespace SummitLog.Services
             return container;
         }
 
-        private static void RegisterServices(Container container)
+        private static void RegisterServices(IUnityContainer container)
         {
-            container.Register<ICountryService, CountryService>();
-            container.Register<IAreaService, AreaService>();
-            container.Register<ISummitGroupService, SummitGroupService>();
-            container.Register<ISummitService, SummitService>();
-            container.Register<IRouteService, RouteService>();
-            container.Register<IVariationService, VariationService>();
-            container.Register<ILogEntryService, LogEntryService>();
-            container.Register<IDifficultyLevelScaleService, DifficultyLevelScaleService>();
-            container.Register<IDifficultyLevelService, DifficultyLevelService>();
+            container.RegisterType<ICountryService, CountryService>();
+            container.RegisterType<IAreaService, AreaService>();
+            container.RegisterType<ISummitGroupService, SummitGroupService>();
+            container.RegisterType<ISummitService, SummitService>();
+            container.RegisterType<IRouteService, RouteService>();
+            container.RegisterType<IVariationService, VariationService>();
+            container.RegisterType<ILogEntryService, LogEntryService>();
+            container.RegisterType<IDifficultyLevelScaleService, DifficultyLevelScaleService>();
+            container.RegisterType<IDifficultyLevelService, DifficultyLevelService>();
         }
 
-        private static void RegisterDaos(Container container)
+        private static void RegisterDaos(IUnityContainer container)
         {
-            container.Register<ICountryDao, CountryDao>();
-            container.Register<IAreaDao, AreaDao>();
-            container.Register<ISummitGroupDao, SummitGroupDao>();
-            container.Register<ISummitDao, SummitDao>();
-            container.Register<IRoutesDao, RouteDao>();
-            container.Register<IDifficultyLevelScaleDao, DifficultyLevelScaleDao>();
-            container.Register<IDifficultyLevelDao, DifficultyLevelDao>();
-            container.Register<IVariationDao, VariationDao>();
-            container.Register<ILogEntryDao, LogEntryDao>();
+            container.RegisterType<ICountryDao, CountryDao>();
+            container.RegisterType<IAreaDao, AreaDao>();
+            container.RegisterType<ISummitGroupDao, SummitGroupDao>();
+            container.RegisterType<ISummitDao, SummitDao>();
+            container.RegisterType<IRoutesDao, RouteDao>();
+            container.RegisterType<IDifficultyLevelScaleDao, DifficultyLevelScaleDao>();
+            container.RegisterType<IDifficultyLevelDao, DifficultyLevelDao>();
+            container.RegisterType<IVariationDao, VariationDao>();
+            container.RegisterType<ILogEntryDao, LogEntryDao>();
+        }
+
+        /// <summary>
+        /// Initialisiert grundlegende Services
+        /// </summary>
+        /// <param name="container"></param>
+        public static void InitBasics(IUnityContainer container)
+        {
+            container.RegisterType<IIniFileDao, IniFielDao>();
+            container.RegisterType<ISettingsService, SettingsService>();
         }
     }
 }

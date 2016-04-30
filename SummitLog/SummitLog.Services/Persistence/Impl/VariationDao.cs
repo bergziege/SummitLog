@@ -14,14 +14,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class VariationDao : BaseDao, IVariationDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public VariationDao(GraphClient graphClient) : base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Variationen einer Route
         /// </summary>
         /// <returns></returns>

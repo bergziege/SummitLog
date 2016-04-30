@@ -15,14 +15,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class SummitGroupDao : BaseDao, ISummitGroupDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public SummitGroupDao(GraphClient graphClient) : base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Gipfelgruppen einer Gegend
         /// </summary>
         /// <returns></returns>

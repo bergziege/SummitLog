@@ -13,14 +13,7 @@ namespace SummitLog.Services.Persistence.Impl
     /// </summary>
     public class LogEntryDao:BaseDao, ILogEntryDao
     {
-        /// <summary>
-        /// Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public LogEntryDao(GraphClient graphClient): base(graphClient)
-        {
-        }
-
+        
         /// <summary>
         ///     Liefert alle Logeinträge einer Variation
         /// </summary>

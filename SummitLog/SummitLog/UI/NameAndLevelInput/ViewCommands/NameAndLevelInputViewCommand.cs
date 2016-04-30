@@ -1,6 +1,8 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.Services;
 using SummitLog.Services.Model;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 
 namespace SummitLog.UI.NameAndLevelInput.ViewCommands
@@ -8,7 +10,7 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
     /// <summary>
     /// View Command um die Eingabemaske für Name und Schwierigkeitsgrad anzuzeigen
     /// </summary>
-    public class NameAndLevelInputViewCommand
+    public class NameAndLevelInputViewCommand : ViewCommandBase
     {
         /// <summary>
         /// Liefert den eingegebenen Namen
@@ -28,8 +30,8 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
             Name = null;
             DifficultyLevel = null;
 
-            NameAndLevelInputView view = AppContext.Container.Resolve<NameAndLevelInputView>();
-            INameAndLevelInputViewModel vm = AppContext.Container.Resolve<INameAndLevelInputViewModel>();
+            NameAndLevelInputView view = GenericFactory.Resolve<NameAndLevelInputView>();
+            INameAndLevelInputViewModel vm = GenericFactory.Resolve<INameAndLevelInputViewModel>();
             view.DataContext = vm;
 
             vm.RequestCloseAfterCancel += delegate { view.Close(); };
@@ -42,7 +44,7 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
 
             vm.LoadData();
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
         }
@@ -53,8 +55,8 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
             DifficultyLevel = level;
 
 
-            NameAndLevelInputView view = AppContext.Container.Resolve<NameAndLevelInputView>();
-            INameAndLevelInputViewModel vm = AppContext.Container.Resolve<INameAndLevelInputViewModel>();
+            NameAndLevelInputView view = GenericFactory.Resolve<NameAndLevelInputView>();
+            INameAndLevelInputViewModel vm = GenericFactory.Resolve<INameAndLevelInputViewModel>();
             view.DataContext = vm;
 
             vm.RequestCloseAfterCancel += delegate { view.Close(); };
@@ -69,9 +71,14 @@ namespace SummitLog.UI.NameAndLevelInput.ViewCommands
 
             vm.PresetValues(name, scale, level);
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public NameAndLevelInputViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
         }
     }
 }

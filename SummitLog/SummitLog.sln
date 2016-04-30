@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummitLog", "SummitLog\SummitLog.csproj", "{822E9E7E-09DB-49EF-BCEE-A5AC9302CAA4}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummitLog.Services.Test", "SummitLog.Services.Test\SummitLog.Services.Test.csproj", "{F95CAC90-9DE3-498D-828C-897AAF0CCC7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SummitLog.Test", "SummitLog.Test\SummitLog.Test.csproj", "{CB9AE3F2-E468-42A0-A4CB-25DDAD5A0429}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionStuff", "SolutionStuff", "{ECA03F05-419F-41E8-A8DA-91AF28897C9C}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

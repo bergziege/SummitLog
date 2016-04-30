@@ -23,13 +23,23 @@
                     Style="{StaticResource EditButtonStyle}" />
             <Button Command="{Binding Path=DeleteSelectedDifficultyLevelScaleCommand}"
                     Style="{StaticResource RemoveButtonStyle}" />
+            <Button Command="{Binding Path=SetSelectedAsDefaultCommand}"
+                    Style="{StaticResource SetDefaultButtonStyle}" />
         </StackPanel>
 
         <ListView ItemsSource="{Binding Path=DifficultyLevelScales}" Grid.Row="1"
-                  SelectedItem="{Binding Path=SelectedDifficultyLevelScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                  SelectedItem="{Binding Path=SelectedDifficultyLevelScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
-                <DataTemplate DataType="model:DifficultyLevelScale">
-                    <Label Content="{Binding Path=Name}" />
+                <DataTemplate DataType="local:IDifficultyLevelScaleItemViewModel">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding Path=Name}" />
+                        <TextBlock Style="{StaticResource DefaultScaleTextBlockStyle}" VerticalAlignment="Center" Grid.Column="1"
+                                   Visibility="{Binding Path=IsDefault, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

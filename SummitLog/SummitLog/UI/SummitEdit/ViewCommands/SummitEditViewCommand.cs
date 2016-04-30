@@ -1,12 +1,14 @@
 ﻿using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.Services;
 using SummitLog.Services.Model;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 using SummitLog.UI.NameInput;
 
 namespace SummitLog.UI.SummitEdit.ViewCommands
 {
-    public class SummitEditViewCommand
+    public class SummitEditViewCommand: ViewCommandBase
     {
         
         /// <summary>
@@ -15,8 +17,8 @@ namespace SummitLog.UI.SummitEdit.ViewCommands
         /// <returns></returns>
         public Summit Execute(Summit summitToEdit)
         {
-            SummitEditView view = AppContext.Container.Resolve<SummitEditView>();
-            ISummitEditViewModel vm = AppContext.Container.Resolve<ISummitEditViewModel>();
+            SummitEditView view = GenericFactory.Resolve<SummitEditView>();
+            ISummitEditViewModel vm = GenericFactory.Resolve<ISummitEditViewModel>();
             view.DataContext = vm;
             vm.Name = summitToEdit.Name;
             vm.SummitNumber = summitToEdit.SummitNumber;
@@ -31,11 +33,16 @@ namespace SummitLog.UI.SummitEdit.ViewCommands
                 summitToEdit.Rating = vm.Rating;
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
 
             return summitToEdit;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public SummitEditViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
         }
     }
 }

@@ -14,14 +14,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class DifficultyLevelDao:BaseDao, IDifficultyLevelDao
     {
         /// <summary>
-        /// Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public DifficultyLevelDao(GraphClient graphClient): base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Schwierigkeitsgrade einer Skala
         /// </summary>
         /// <returns></returns>

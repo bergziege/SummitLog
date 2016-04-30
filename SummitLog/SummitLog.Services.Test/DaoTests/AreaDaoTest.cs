@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Neo4jClient;
 using SummitLog.Services.Exceptions;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence;
@@ -12,32 +12,14 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class AreaDaoTest
+    public class AreaDaoTest : DbTestBase
     {
-        private GraphClient _graphClient;
-        private DbTestDataGenerator _dataGenerator;
-
-        [TestInitialize]
-        public void Init()
-        {
-            _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
-            _graphClient.Connect();
-            _graphClient.BeginTransaction();
-            _dataGenerator = new DbTestDataGenerator(_graphClient);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _graphClient.Transaction.Rollback();
-        }
-
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            Country country = _dataGenerator.CreateCountry();
-            AreaDao dao = new AreaDao(_graphClient);
-            Area created = _dataGenerator.CreateArea(country:country);
+            Country country = Container.Resolve<DbTestDataGenerator>().CreateCountry();
+            AreaDao dao = Container.Resolve<AreaDao>();
+            Area created = Container.Resolve<DbTestDataGenerator>().CreateArea(country: country);
 
             IEnumerable<Area> areasInCountry = dao.GetAllIn(country);
             Assert.AreEqual(1, areasInCountry.Count());
@@ -49,10 +31,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsInUseBySummitGroup()
         {
-            Area area = _dataGenerator.CreateArea();
-            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup(area: area);
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea();
+            SummitGroup summitGroup = Container.Resolve<DbTestDataGenerator>().CreateSummitGroup(area: area);
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
             bool isInUse = areaDao.IsInUse(area);
 
             Assert.IsTrue(isInUse);
@@ -61,10 +43,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsInUseByRoute()
         {
-            Area area = _dataGenerator.CreateArea();
-            Route route = _dataGenerator.CreateRouteInArea(area: area);
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea();
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInArea(area: area);
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
             bool isInUse = areaDao.IsInUse(area);
 
             Assert.IsTrue(isInUse);
@@ -73,11 +55,11 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsNotInUse()
         {
-            Area area = _dataGenerator.CreateArea();
-            Area areaWithRoutes = _dataGenerator.CreateArea();
-            Route route = _dataGenerator.CreateRouteInArea(area: areaWithRoutes);
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea();
+            Area areaWithRoutes = Container.Resolve<DbTestDataGenerator>().CreateArea();
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInArea(area: areaWithRoutes);
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
             bool isInUse = areaDao.IsInUse(area);
 
             Assert.IsFalse(isInUse);
@@ -86,34 +68,34 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteNotInUse()
         {
-            Country country = _dataGenerator.CreateCountry();
-            Area area = _dataGenerator.CreateArea(country:country);
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            Country country = Container.Resolve<DbTestDataGenerator>().CreateCountry();
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea(country: country);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
             areaDao.Delete(area);
 
-            Assert.AreEqual(0,areaDao.GetAllIn(country).Count);
+            Assert.AreEqual(0, areaDao.GetAllIn(country).Count);
         }
 
         [TestMethod]
         public void TestDeleteInUse()
         {
-            Area area = _dataGenerator.CreateArea();
-            Route route = _dataGenerator.CreateRouteInArea(area: area);
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea();
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInArea(area: area);
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
-            Action action = ()=>areaDao.Delete(area);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
+            Action action = () => areaDao.Delete(area);
             action.ShouldThrow<NodeInUseException>();
         }
 
         [TestMethod]
         public void TestUpdate()
         {
-            Country country = _dataGenerator.CreateCountry();
-            Area area = _dataGenerator.CreateArea(country:country, name:"oldname");
+            Country country = Container.Resolve<DbTestDataGenerator>().CreateCountry();
+            Area area = Container.Resolve<DbTestDataGenerator>().CreateArea(country: country, name: "oldname");
 
             area.Name = "newname";
 
-            IAreaDao areaDao = new AreaDao(_graphClient);
+            IAreaDao areaDao = Container.Resolve<AreaDao>();
             areaDao.Save(area);
 
             Assert.AreEqual("newname", areaDao.GetAllIn(country).First().Name);

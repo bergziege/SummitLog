@@ -1,6 +1,8 @@
 ﻿using System;
 using Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils;
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.Services;
+using SummitLog.UI.Common;
 using SummitLog.UI.Main;
 
 namespace SummitLog.UI.LogEntryInput.ViewCommands
@@ -8,7 +10,7 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
     /// <summary>
     /// Command zur Anzeige von <see cref="LogEntryInputView"/>
     /// </summary>
-    public class LogEntryInputViewCommand
+    public class LogEntryInputViewCommand: ViewCommandBase
     {
         /// <summary>
         /// Liefert den Memo Text
@@ -25,8 +27,8 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
         /// <returns></returns>
         public bool Execute()
         {
-            LogEntryInputView view = AppContext.Container.Resolve<LogEntryInputView>();
-            ILogEntryInputViewModel vm = AppContext.Container.Resolve<ILogEntryInputViewModel>();
+            LogEntryInputView view = GenericFactory.Resolve<LogEntryInputView>();
+            ILogEntryInputViewModel vm = GenericFactory.Resolve<ILogEntryInputViewModel>();
             view.DataContext = vm;
 
             bool closedAfterOk = false;
@@ -42,7 +44,7 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
                 view.Close();
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
 
@@ -61,8 +63,8 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
             Memo = memo;
             Date = date;
 
-            LogEntryInputView view = AppContext.Container.Resolve<LogEntryInputView>();
-            ILogEntryInputViewModel vm = AppContext.Container.Resolve<ILogEntryInputViewModel>();
+            LogEntryInputView view = GenericFactory.Resolve<LogEntryInputView>();
+            ILogEntryInputViewModel vm = GenericFactory.Resolve<ILogEntryInputViewModel>();
             view.DataContext = vm;
 
             vm.Memo = memo;
@@ -81,11 +83,16 @@ namespace SummitLog.UI.LogEntryInput.ViewCommands
                 view.Close();
             };
 
-            view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));
+            view.Owner = WindowParentHelper.GetWindowBySpecificType(typeof(MainView));
 
             view.ShowDialog();
 
             return closedAfterOk;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public LogEntryInputViewCommand(IGenericFactory genericFactory, IWindowParentHelper windowParentHelper) : base(genericFactory, windowParentHelper)
+        {
         }
     }
 }

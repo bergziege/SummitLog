@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssert;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -129,6 +130,52 @@ namespace SummitLog.Services.Test.ServiceTests
         {
             Action action = () => new DifficultyLevelScaleService(null).GetForDifficultyLevel(null);
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void TestSetAsDefault()
+        {
+            DifficultyLevelScale formerDefaultScale = new DifficultyLevelScale();
+            formerDefaultScale.SetAsDefault();
+            DifficultyLevelScale scaleToSetDefault = new DifficultyLevelScale();
+
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDao = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDao.Setup(x => x.Save(scaleToSetDefault));
+            difficultyLevelScaleDao.Setup(x => x.Save(formerDefaultScale));
+            difficultyLevelScaleDao.Setup(x => x.GetDefaultScale()).Returns(formerDefaultScale);
+
+            IDifficultyLevelScaleService service = new DifficultyLevelScaleService(difficultyLevelScaleDao.Object);
+            service.SetAsDefault(scaleToSetDefault);
+
+            formerDefaultScale.IsDefault.ShouldBeFalse();
+            scaleToSetDefault.IsDefault.ShouldBeTrue();
+            difficultyLevelScaleDao.Verify(x=>x.Save(formerDefaultScale), Times.Once);
+            difficultyLevelScaleDao.Verify(x=>x.Save(scaleToSetDefault), Times.Once);
+        }
+
+        [Test]
+        public void TestSetAsDefaultWithoutExisting()
+        {
+            
+            DifficultyLevelScale scaleToSetDefault = new DifficultyLevelScale();
+
+            Mock<IDifficultyLevelScaleDao> difficultyLevelScaleDao = new Mock<IDifficultyLevelScaleDao>();
+            difficultyLevelScaleDao.Setup(x => x.Save(scaleToSetDefault));
+            difficultyLevelScaleDao.Setup(x => x.GetDefaultScale()).Returns((DifficultyLevelScale) null);
+
+            IDifficultyLevelScaleService service = new DifficultyLevelScaleService(difficultyLevelScaleDao.Object);
+            service.SetAsDefault(scaleToSetDefault);
+
+            scaleToSetDefault.IsDefault.ShouldBeTrue();
+            difficultyLevelScaleDao.Verify(x=>x.Save(scaleToSetDefault), Times.Once);
+            difficultyLevelScaleDao.Verify(x=>x.Save(null), Times.Never);
+        }
+
+        [Test]
+        public void TestSetAsDefaultWithNull()
+        {
+            Action setNullAsDefault = ()=> new DifficultyLevelScaleService(null).SetAsDefault(null);
+            setNullAsDefault.ShouldThrow<ArgumentNullException>();
         }
     }
 }

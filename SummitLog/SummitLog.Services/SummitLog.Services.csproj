@@ -33,8 +33,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DryIoc, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\DryIoc.dll.2.1.2\lib\net45\DryIoc.dll</HintPath>
+    <Reference Include="INIFileParser, Version=2.2.4.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.2.2.4\lib\net20\INIFileParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Neo4jClient, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -64,7 +80,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dtos\DbSettingsDto.cs" />
     <Compile Include="Exceptions\NodeInUseException.cs" />
+    <Compile Include="IGenericFactory.cs" />
     <Compile Include="Model\EntityWithId.cs" />
     <Compile Include="Model\EntityWithIdAndName.cs" />
     <Compile Include="Model\LogEntry.cs" />
@@ -78,8 +96,10 @@
     <Compile Include="Model\Route.cs" />
     <Compile Include="Persistence\Enums\NodeLabels.cs" />
     <Compile Include="Persistence\Extensions\DbHelper.cs" />
+    <Compile Include="Persistence\IIniFileDao.cs" />
     <Compile Include="Persistence\ILogEntryDao.cs" />
     <Compile Include="Persistence\Impl\BaseDao.cs" />
+    <Compile Include="Persistence\Impl\IniFielDao.cs" />
     <Compile Include="Persistence\Impl\LogEntryDao.cs" />
     <Compile Include="Persistence\IVariationDao.cs" />
     <Compile Include="Persistence\IDifficultyLevelDao.cs" />
@@ -106,10 +126,12 @@
     <Compile Include="Services\Impl\DifficultyLevelScaleService.cs" />
     <Compile Include="Services\Impl\LogEntryService.cs" />
     <Compile Include="Services\Impl\RouteService.cs" />
+    <Compile Include="Services\Impl\SettingsService.cs" />
     <Compile Include="Services\Impl\SummitService.cs" />
     <Compile Include="Services\Impl\SummitGroupService.cs" />
     <Compile Include="Services\Impl\VariationService.cs" />
     <Compile Include="Services\IRouteService.cs" />
+    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\ISummitService.cs" />
     <Compile Include="Services\ISummitGroupService.cs" />
     <Compile Include="Services\IAreaService.cs" />
@@ -117,6 +139,7 @@
     <Compile Include="Services\Impl\AreaService.cs" />
     <Compile Include="Services\Impl\CountryService.cs" />
     <Compile Include="Services\IVariationService.cs" />
+    <Compile Include="UnityResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

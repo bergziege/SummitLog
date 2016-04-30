@@ -15,14 +15,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class CountryDao : BaseDao, ICountryDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public CountryDao(GraphClient graphClient) : base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle Länder
         /// </summary>
         /// <returns></returns>

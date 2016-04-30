@@ -14,14 +14,6 @@ namespace SummitLog.Services.Persistence.Impl
     public class DifficultyLevelScaleDao :BaseDao, IDifficultyLevelScaleDao
     {
         /// <summary>
-        ///     Erstellt eine neue Instanz des DAOs
-        /// </summary>
-        /// <param name="graphClient"></param>
-        public DifficultyLevelScaleDao(GraphClient graphClient): base(graphClient)
-        {
-        }
-
-        /// <summary>
         ///     Liefert alle DifficultyLevelScale
         /// </summary>
         /// <returns></returns>
@@ -79,7 +71,9 @@ namespace SummitLog.Services.Persistence.Impl
             if (difficultyLevelScale == null) throw new ArgumentNullException(nameof(difficultyLevelScale));
             GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
                 .Where((DifficultyLevelScale dls) => dls.Id == difficultyLevelScale.Id)
-                .Set("dls.Name = {name}").WithParam("name", difficultyLevelScale.Name)
+                .Set("dls.Name = {name}, dls.IsDefault = {isDefault}")
+                .WithParam("name", difficultyLevelScale.Name)
+                .WithParam("isDefault", difficultyLevelScale.IsDefault)
                 .ExecuteWithoutResults();
         }
 
@@ -92,6 +86,17 @@ namespace SummitLog.Services.Persistence.Impl
         {
             return GraphClient.Cypher.Match("".DifficultyLevelScale("dls").Has().DifficultyLevel("dl"))
                 .Where((DifficultyLevel dl) => dl.Id == difficultyLevel.Id)
+                .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
+        }
+
+        /// <summary>
+        ///     Liefert die Standardskala
+        /// </summary>
+        /// <returns></returns>
+        public DifficultyLevelScale GetDefaultScale()
+        {
+            return GraphClient.Cypher.Match("".DifficultyLevelScale("dls"))
+                .Where((DifficultyLevelScale dls) => dls.IsDefault == true)
                 .Return(dls => dls.As<DifficultyLevelScale>()).Results.FirstOrDefault();
         }
     }

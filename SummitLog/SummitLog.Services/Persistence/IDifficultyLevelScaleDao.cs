@@ -46,5 +46,11 @@ namespace SummitLog.Services.Persistence
         /// <param name="difficultyLevel"></param>
         /// <returns></returns>
         DifficultyLevelScale GetForDifficultyLevel(DifficultyLevel difficultyLevel);
+
+        /// <summary>
+        ///     Liefert die Standardskala
+        /// </summary>
+        /// <returns></returns>
+        DifficultyLevelScale GetDefaultScale();
     }
 }

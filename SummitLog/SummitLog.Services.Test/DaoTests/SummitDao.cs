@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Neo4jClient;
 using SummitLog.Services.Exceptions;
@@ -12,32 +13,15 @@ using SummitLog.Services.Persistence.Impl;
 namespace SummitLog.Services.Test.DaoTests
 {
     [TestClass]
-    public class SummitDaoTest
+    public class SummitDaoTest: DbTestBase
     {
-        private GraphClient _graphClient;
-        private DbTestDataGenerator _dataGenerator;
-
-        [TestInitialize]
-        public void Init()
-        {
-            _graphClient = new GraphClient(new Uri("http://localhost:7475/db/data"), "neo4j", "extra");
-            _graphClient.Connect();
-            _dataGenerator = new DbTestDataGenerator(_graphClient);
-            _graphClient.BeginTransaction();
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            _graphClient.Transaction.Rollback();
-        }
 
         [TestMethod]
         public void TestCreateAndGetAll()
         {
-            SummitGroup group = _dataGenerator.CreateSummitGroup();
-            ISummitDao summitDao = new SummitDao(_graphClient);
-            Summit created = _dataGenerator.CreateSummit(summitGroup: group, rating:4.5);
+            SummitGroup group = Container.Resolve<DbTestDataGenerator>().CreateSummitGroup();
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
+            Summit created = Container.Resolve<DbTestDataGenerator>().CreateSummit(summitGroup: group, rating:4.5);
 
             IList<Summit> summitsInGroup = summitDao.GetAllIn(group);
             summitsInGroup.Should().HaveCount(1);
@@ -51,10 +35,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsInUseByRoute()
         {
-            Summit summit = _dataGenerator.CreateSummit();
-            Route route = _dataGenerator.CreateRouteInSummit(summit: summit);
+            Summit summit = Container.Resolve<DbTestDataGenerator>().CreateSummit();
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInSummit(summit: summit);
             
-            ISummitDao summitDao = new SummitDao(_graphClient);
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
             bool isInUse = summitDao.IsInUse(summit);
 
             Assert.IsTrue(isInUse);
@@ -63,9 +47,9 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestIsNotInUse()
         {
-            Summit summit = _dataGenerator.CreateSummit();
+            Summit summit = Container.Resolve<DbTestDataGenerator>().CreateSummit();
 
-            ISummitDao summitDao = new SummitDao(_graphClient);
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
             bool isInUse = summitDao.IsInUse(summit);
 
             Assert.IsFalse(isInUse);
@@ -74,10 +58,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteUnused()
         {
-            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
-            Summit summit = _dataGenerator.CreateSummit(summitGroup:summitGroup);
+            SummitGroup summitGroup = Container.Resolve<DbTestDataGenerator>().CreateSummitGroup();
+            Summit summit = Container.Resolve<DbTestDataGenerator>().CreateSummit(summitGroup:summitGroup);
 
-            ISummitDao summitDao = new SummitDao(_graphClient);
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
             summitDao.Delete(summit);
 
             Assert.AreEqual(0, summitDao.GetAllIn(summitGroup).Count);
@@ -87,10 +71,10 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestDeleteUsed()
         {
-            Summit summit = _dataGenerator.CreateSummit();
-            Route route = _dataGenerator.CreateRouteInSummit(summit: summit);
+            Summit summit = Container.Resolve<DbTestDataGenerator>().CreateSummit();
+            Route route = Container.Resolve<DbTestDataGenerator>().CreateRouteInSummit(summit: summit);
 
-            ISummitDao summitDao = new SummitDao(_graphClient);
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
             Action action = ()=>summitDao.Delete(summit);
             action.ShouldThrow<NodeInUseException>();
         }
@@ -98,15 +82,15 @@ namespace SummitLog.Services.Test.DaoTests
         [TestMethod]
         public void TestUpdate()
         {
-            SummitGroup summitGroup = _dataGenerator.CreateSummitGroup();
-            Summit summit = _dataGenerator.CreateSummit(name:"oldname", summitNumber:"100C", summitGroup:summitGroup);
+            SummitGroup summitGroup = Container.Resolve<DbTestDataGenerator>().CreateSummitGroup();
+            Summit summit = Container.Resolve<DbTestDataGenerator>().CreateSummit(name:"oldname", summitNumber:"100C", summitGroup:summitGroup);
 
 
             summit.Name = "newname";
             summit.SummitNumber = "200A";
             summit.Rating = 2.3;
 
-            ISummitDao summitDao = new SummitDao(_graphClient);
+            ISummitDao summitDao = Container.Resolve<SummitDao>();
             summitDao.Save(summit);
 
             Summit savedSummit = summitDao.GetAllIn(summitGroup).First();

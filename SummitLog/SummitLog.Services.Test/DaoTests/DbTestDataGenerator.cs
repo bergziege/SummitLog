@@ -1,5 +1,4 @@
 ﻿using System;
-using Neo4jClient;
 using SummitLog.Services.Model;
 using SummitLog.Services.Persistence.Impl;
 
@@ -7,21 +6,38 @@ namespace SummitLog.Services.Test.DaoTests
 {
     public class DbTestDataGenerator
     {
-        private readonly GraphClient _graphClient;
+        private readonly AreaDao _areaDao;
+        private readonly CountryDao _countryDao;
+        private readonly DifficultyLevelDao _difficultyLevelDao;
+        private readonly DifficultyLevelScaleDao _difficultyLevelScaleDao;
+        private readonly RouteDao _routeDao;
+        private readonly SummitDao _summitDao;
+        private readonly SummitGroupDao _summitGroupDao;
+        private readonly VariationDao _variationDao;
+        private readonly LogEntryDao _logEntryDao;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        ///     Initializes a new instance of the <see cref="T:System.Object" /> class.
         /// </summary>
-        public DbTestDataGenerator(GraphClient graphClient)
+        public DbTestDataGenerator(CountryDao countryDao, AreaDao areaDao, SummitGroupDao summitGroupDao,
+            SummitDao summitDao, RouteDao routeDao, DifficultyLevelScaleDao difficultyLevelScaleDao,
+            DifficultyLevelDao difficultyLevelDao, VariationDao variationDao, LogEntryDao logEntryDao)
         {
-            _graphClient = graphClient;
+            _countryDao = countryDao;
+            _areaDao = areaDao;
+            _summitGroupDao = summitGroupDao;
+            _summitDao = summitDao;
+            _routeDao = routeDao;
+            _difficultyLevelScaleDao = difficultyLevelScaleDao;
+            _difficultyLevelDao = difficultyLevelDao;
+            _variationDao = variationDao;
+            _logEntryDao = logEntryDao;
         }
 
         public Country CreateCountry(string name = "Land")
         {
-            CountryDao dao = new CountryDao(_graphClient);
-            Country newCountry = new Country() { Name = name };
-            return dao.Create(newCountry);
+            Country newCountry = new Country {Name = name};
+            return _countryDao.Create(newCountry);
         }
 
         public Area CreateArea(string name = "Gebiet", Country country = null)
@@ -30,9 +46,8 @@ namespace SummitLog.Services.Test.DaoTests
             {
                 country = CreateCountry();
             }
-            AreaDao areaDao = new AreaDao(_graphClient);
-            Area newArea = new Area() { Name = name };
-            return areaDao.Create(country, newArea);
+            Area newArea = new Area {Name = name};
+            return _areaDao.Create(country, newArea);
         }
 
         public SummitGroup CreateSummitGroup(string name = "Gipfelgruppe", Area area = null)
@@ -41,20 +56,19 @@ namespace SummitLog.Services.Test.DaoTests
             {
                 area = CreateArea();
             }
-            SummitGroupDao summitGroupDao = new SummitGroupDao(_graphClient);
-            SummitGroup newSummitGroup = new SummitGroup() { Name = name };
-            return summitGroupDao.Create(area, newSummitGroup);
+            SummitGroup newSummitGroup = new SummitGroup {Name = name};
+            return _summitGroupDao.Create(area, newSummitGroup);
         }
 
-        public Summit CreateSummit(string name = "Gipfel", string summitNumber = "100A", double rating = 0, SummitGroup summitGroup = null)
+        public Summit CreateSummit(string name = "Gipfel", string summitNumber = "100A", double rating = 0,
+            SummitGroup summitGroup = null)
         {
             if (summitGroup == null)
             {
                 summitGroup = CreateSummitGroup();
             }
-            SummitDao summitDao = new SummitDao(_graphClient);
-            Summit newSummit = new Summit() { Name = name, SummitNumber = summitNumber, Rating = rating};
-            return summitDao.Create(summitGroup, newSummit);
+            Summit newSummit = new Summit {Name = name, SummitNumber = summitNumber, Rating = rating};
+            return _summitDao.Create(summitGroup, newSummit);
         }
 
         public Route CreateRouteInCountry(string name = "Route im Land", double rating = 3.5, Country country = null)
@@ -63,12 +77,12 @@ namespace SummitLog.Services.Test.DaoTests
             {
                 country = CreateCountry();
             }
-            return new RouteDao(_graphClient).CreateIn(country, GetRouteEntity(name, rating));
+            return _routeDao.CreateIn(country, GetRouteEntity(name, rating));
         }
 
         private static Route GetRouteEntity(string name, double rating)
         {
-            Route route = new Route() { Name = name, Rating = rating};
+            Route route = new Route {Name = name, Rating = rating};
             return route;
         }
 
@@ -78,16 +92,17 @@ namespace SummitLog.Services.Test.DaoTests
             {
                 area = CreateArea();
             }
-            return new RouteDao(_graphClient).CreateIn(area, GetRouteEntity(name, rating));
+            return _routeDao.CreateIn(area, GetRouteEntity(name, rating));
         }
 
-        public Route CreateRouteInSummitGroup(string name = "Route in Gipfelgruppe", double rating = 3.5, SummitGroup summitGroup = null)
+        public Route CreateRouteInSummitGroup(string name = "Route in Gipfelgruppe", double rating = 3.5,
+            SummitGroup summitGroup = null)
         {
             //if (summitGroup == null)
             //{
             //    summitGroup = CreateSummitGroup();
             //}
-            return new RouteDao(_graphClient).CreateIn(summitGroup, GetRouteEntity(name, rating));
+            return _routeDao.CreateIn(summitGroup, GetRouteEntity(name, rating));
         }
 
         public Route CreateRouteInSummit(string name = "Route auf Gipfel", double rating = 3.5, Summit summit = null)
@@ -96,24 +111,31 @@ namespace SummitLog.Services.Test.DaoTests
             //{
             //    summit = CreateSummit();
             //}
-            return new RouteDao(_graphClient).CreateIn(summit, GetRouteEntity(name, rating));
+            return _routeDao.CreateIn(summit, GetRouteEntity(name, rating));
         }
 
-        public DifficultyLevelScale CreateDifficultyLevelScale(string name = "Schwierigkeitsgradskala")
+        public DifficultyLevelScale CreateDifficultyLevelScale(string name = "Schwierigkeitsgradskala", bool isDefault = false)
         {
-            return new DifficultyLevelScaleDao(_graphClient).Create(new DifficultyLevelScale() { Name = name });
+            DifficultyLevelScale scale = new DifficultyLevelScale {Name = name};
+            if (isDefault)
+            {
+                scale.SetAsDefault();
+            }
+            return _difficultyLevelScaleDao.Create(scale);
         }
 
-        public DifficultyLevel CreateDifficultyLevel(string name = "Schwierigkeitsgrad", int score = 10, DifficultyLevelScale difficultyLevelScale = null)
+        public DifficultyLevel CreateDifficultyLevel(string name = "Schwierigkeitsgrad", int score = 10,
+            DifficultyLevelScale difficultyLevelScale = null)
         {
             if (difficultyLevelScale == null)
             {
                 difficultyLevelScale = CreateDifficultyLevelScale();
             }
-            return new DifficultyLevelDao(_graphClient).Create(difficultyLevelScale, new DifficultyLevel() { Name = name, Score = score });
+            return _difficultyLevelDao.Create(difficultyLevelScale, new DifficultyLevel {Name = name, Score = score});
         }
 
-        public Variation CreateVariation(DifficultyLevel difficultyLevel = null,Route route = null, string name = "Variation")
+        public Variation CreateVariation(DifficultyLevel difficultyLevel = null, Route route = null,
+            string name = "Variation")
         {
             if (difficultyLevel == null)
             {
@@ -123,10 +145,11 @@ namespace SummitLog.Services.Test.DaoTests
             {
                 route = CreateRouteInCountry();
             }
-            return new VariationDao(_graphClient).Create(new Variation() {Name = name}, route, difficultyLevel);
+            return _variationDao.Create(new Variation {Name = name}, route, difficultyLevel);
         }
 
-        public LogEntry CreateLogEntry(Variation variation = null, string memo = "Ich war hier", DateTime? logDate = null)
+        public LogEntry CreateLogEntry(Variation variation = null, string memo = "Ich war hier",
+            DateTime? logDate = null)
         {
             //if (variation == null)
             //{
@@ -134,11 +157,12 @@ namespace SummitLog.Services.Test.DaoTests
             //}
             if (!logDate.HasValue)
             {
-                logDate = new DateTime(2015,01,01);
+                logDate = new DateTime(2015, 01, 01);
             }
-            return new LogEntryDao(_graphClient).Create(variation, new LogEntry()
+            return _logEntryDao.Create(variation, new LogEntry
             {
-                DateTime = logDate.Value, Memo = memo
+                DateTime = logDate.Value,
+                Memo = memo
             });
         }
     }

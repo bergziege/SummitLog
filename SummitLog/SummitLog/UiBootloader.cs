@@ -1,4 +1,7 @@
-using DryIoc;
+using Microsoft.Practices.Unity;
+using SummitLog.UI.DbSettings;
+using SummitLog.UI.DbSettings.ViewCommands;
+using SummitLog.UI.DbSettings.ViewModels;
 using SummitLog.UI.DifficultyLevelManagement;
 using SummitLog.UI.DifficultyLevelManagement.ViewModels;
 using SummitLog.UI.DifficultyLevelScaleManagement;
@@ -18,6 +21,7 @@ using SummitLog.UI.NameAndScoreInput;
 using SummitLog.UI.NameAndScoreInput.ViewCommands;
 using SummitLog.UI.NameAndScoreInput.ViewModels;
 using SummitLog.UI.NameInput;
+using SummitLog.UI.NameInput.ViewCommands;
 using SummitLog.UI.NameInput.ViewModels;
 using SummitLog.UI.RouteOnSummitEdit;
 using SummitLog.UI.RouteOnSummitEdit.ViewCommands;
@@ -38,7 +42,7 @@ namespace SummitLog
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static Container Init(Container container)
+        public static IUnityContainer Init(IUnityContainer container)
         {
             SetupViews(container);
             SetupViewModels(container);
@@ -46,43 +50,54 @@ namespace SummitLog
             return container;
         }
 
-        private static void SetupViewCommands(Container container)
+        private static void SetupViewCommands(IUnityContainer container)
         {
-            container.Register<NameInputViewCommand>();
-            container.Register<NameAndScoreInputViewCommand>();
-            container.Register<DifficultyManagementViewCommand>();
-            container.Register<NameAndLevelInputViewCommand>();
-            container.Register<LogEntryInputViewCommand>();
-            container.Register<SummitEditViewCommand>();
-            container.Register<RouteOnSummitEditViewCommand>();
+            container.RegisterType<NameInputViewCommand>();
+            container.RegisterType<NameAndScoreInputViewCommand>();
+            container.RegisterType<DifficultyManagementViewCommand>();
+            container.RegisterType<NameAndLevelInputViewCommand>();
+            container.RegisterType<LogEntryInputViewCommand>();
+            container.RegisterType<SummitEditViewCommand>();
+            container.RegisterType<RouteOnSummitEditViewCommand>();
         }
 
-        private static void SetupViewModels(Container container)
+        private static void SetupViewModels(IUnityContainer container)
         {
-            container.Register<IMainViewModel, MainViewModel>();
-            container.Register<INameInputViewModel, NameInputViewModel>();
-            container.Register<IDifficultyLevelScaleManagementViewModel, DifficultyLevelScaleManagementViewModel>();
-            container.Register<IDifficultyLevelManagementViewModel, DifficultyLevelManagementViewModel>();
-            container.Register<INameAndScoreInputViewModel, NameAndScoreInputViewModel>();
-            container.Register<IDifficultyManagementViewModel, DifficultyManagementViewModel>();
-            container.Register<INameAndLevelInputViewModel, NameAndLevelInputViewModel>();
-            container.Register<ILogEntryInputViewModel, LogEntryInputViewModel>();
-            container.Register<ILogItemViewModel, LogItemViewModel>();
-            container.Register<IVariationItemViewModel, VariationItemViewModel>();
-            container.Register<ISummitEditViewModel, SummitEditViewModel>();
-            container.Register<IRouteOnSummitEditViewModel, RouteOnSummitEditViewModel>();
+            container.RegisterType<IMainViewModel, MainViewModel>();
+            container.RegisterType<INameInputViewModel, NameInputViewModel>();
+            container.RegisterType<IDifficultyLevelScaleManagementViewModel, DifficultyLevelScaleManagementViewModel>();
+            container.RegisterType<IDifficultyLevelManagementViewModel, DifficultyLevelManagementViewModel>();
+            container.RegisterType<INameAndScoreInputViewModel, NameAndScoreInputViewModel>();
+            container.RegisterType<IDifficultyManagementViewModel, DifficultyManagementViewModel>();
+            container.RegisterType<INameAndLevelInputViewModel, NameAndLevelInputViewModel>();
+            container.RegisterType<ILogEntryInputViewModel, LogEntryInputViewModel>();
+            container.RegisterType<ILogItemViewModel, LogItemViewModel>();
+            container.RegisterType<IVariationItemViewModel, VariationItemViewModel>();
+            container.RegisterType<ISummitEditViewModel, SummitEditViewModel>();
+            container.RegisterType<IRouteOnSummitEditViewModel, RouteOnSummitEditViewModel>();
         }
 
-        private static void SetupViews(Container container)
+        private static void SetupViews(IUnityContainer container)
         {
-            container.Register<MainView>();
-            container.Register<NameInputView>();
-            container.Register<NameAndScoreInputView>();
-            container.Register<DifficultyManagementView>();
-            container.Register<NameAndLevelInputView>();
-            container.Register<LogEntryInputView>();
-            container.Register<SummitEditView>();
-            container.Register<RouteOnSummitEditView>();
+            container.RegisterType<MainView>();
+            container.RegisterType<NameInputView>();
+            container.RegisterType<NameAndScoreInputView>();
+            container.RegisterType<DifficultyManagementView>();
+            container.RegisterType<NameAndLevelInputView>();
+            container.RegisterType<LogEntryInputView>();
+            container.RegisterType<SummitEditView>();
+            container.RegisterType<RouteOnSummitEditView>();
+        }
+
+        /// <summary>
+        ///     Initialisiert grundlegende UI Elemente
+        /// </summary>
+        /// <param name="container"></param>
+        public static void InitBasics(IUnityContainer container)
+        {
+            container.RegisterType<IDbSettingsViewCommand, DbSettingsViewCommand>();
+            container.RegisterType<IDbSettingsViewModel, DbSettingsViewModel>();
+            container.RegisterType<IDbSettingsView, DbSettingsView>();
         }
     }
 }

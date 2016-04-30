@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using SummitLog.UI.Common;
 
 namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils {
     /// <summary>
@@ -12,19 +13,9 @@ namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils {
     /// 
     ///   // Legt den Owner eines Fensters auf ein Fenster vom Typ MainView
     ///   view.Owner = WindowParentHelper.Instance.GetWindowBySpecificType(typeof(MainView));</code>
-    public class WindowParentHelper {
-        private static readonly WindowParentHelper instance = new WindowParentHelper();
+    public class WindowParentHelper : IWindowParentHelper
+    {
         private readonly IList<Window> _registeredWindows = new List<Window>();
-
-        static WindowParentHelper() {
-        }
-
-        private WindowParentHelper() {
-        }
-
-        public static WindowParentHelper Instance {
-            get { return instance; }
-        }
 
         /// <summary>
         ///   Liefert ein Fenster anhand eines Typen.
@@ -55,6 +46,11 @@ namespace Com.QueoFlow.TrackingtoolLogistik.Wpf.Utils {
                 window.Closed -= WindowClosed;
                 _registeredWindows.Remove(window);
             }
+        }
+
+        public void SetOwner<T>(IWindow window)
+        {
+            window.Owner = GetWindowBySpecificType(typeof(T));
         }
 
         private void WindowClosed(object sender, EventArgs e) {
