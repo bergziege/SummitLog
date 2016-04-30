@@ -68,8 +68,6 @@ namespace SummitLog
         {
             IGenericFactory genericFactory = AppContext.Container.Resolve<IGenericFactory>();
 
-            IDbSettingsViewCommand dbSettingsViewCommand = genericFactory.Resolve<IDbSettingsViewCommand>();
-
             if (!ServicesBootloader.IsDbAvailable(genericFactory))
             {
                 ISettingsService settingsService = new SettingsService(new IniFielDao());
@@ -77,11 +75,8 @@ namespace SummitLog
                 string startupBatchFile = loadDbSettings.StartBat;
                 while (!File.Exists(startupBatchFile))
                 {
-                    bool dialogResult = dbSettingsViewCommand.Execute();
-                    if(!dialogResult)
-                    {
-                        Environment.Exit(0);
-                    }
+                    ShowDbSettingsAndExitOnCancel();
+                    
                     loadDbSettings = settingsService.LoadDbSettings();
                     startupBatchFile = loadDbSettings.StartBat;
 
@@ -101,15 +96,24 @@ namespace SummitLog
                     }
                     catch (Exception e)
                     {
-                        bool dialogResult = dbSettingsViewCommand.Execute();
-                        if (!dialogResult)
-                        {
-                            Environment.Exit(0);
-                        }
+                        ShowDbSettingsAndExitOnCancel();
                     }
                 }
                 AppContext.Container.RegisterInstance(dbProcess);
 
+            }
+        }
+
+        private void ShowDbSettingsAndExitOnCancel()
+        {
+            IGenericFactory genericFactory = AppContext.Container.Resolve<IGenericFactory>();
+
+            IDbSettingsViewCommand dbSettingsViewCommand = genericFactory.Resolve<IDbSettingsViewCommand>();
+
+            bool dialogResult = dbSettingsViewCommand.Execute();
+            if (!dialogResult)
+            {
+                Environment.Exit(0);
             }
         }
 
