@@ -174,7 +174,8 @@
                     <Button Command="{Binding Path=RemoveSummitCommand}" Style="{StaticResource RemoveButtonStyle}" />
                 </StackPanel>
                 <ListView Grid.Column="1" ItemsSource="{Binding Path=SummitsInSelectedSummitGroup}"
-                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                          SelectedItem="{Binding Path=SelectedSummit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Grid.IsSharedSizeScope="True">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
                             <command:EventToCommand Command="{Binding Mode=OneWay, Path=EditSelectedSummitCommand}"
@@ -183,13 +184,18 @@
                     </i:Interaction.Triggers>
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="main:ISummitViewModel">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Converter={StaticResource SummitRatingToFormattedNameConverter}}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition SharedSizeGroup="rating"/>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Path=Rating, StringFormat={}{0}*}" Margin="0,0,5,0"
+                                           Visibility="{Binding Path=Rating, Converter={StaticResource StringContentToVisibilityConverter}}" Grid.Column="0"/>
+                                <TextBlock Text="{Binding Converter={StaticResource SummitRatingToFormattedNameConverter}, StringFormat={}{0}}" Grid.Column="1"/>
                                 <TextBlock Text="{Binding Path=SummitNumber, StringFormat={} ({0})}"
-                                           Visibility="{Binding Path=SummitNumber, Converter={StaticResource StringContentToVisibilityConverter}}" />
-                                <TextBlock Text="{Binding Path=Rating, StringFormat={} ({0}*)}"
-                                           Visibility="{Binding Path=Rating, Converter={StaticResource StringContentToVisibilityConverter}}" />
-                            </StackPanel>
+                                           Visibility="{Binding Path=SummitNumber, Converter={StaticResource StringContentToVisibilityConverter}}" Grid.Column="2"/>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
