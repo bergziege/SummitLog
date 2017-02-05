@@ -81,7 +81,12 @@ namespace SummitLog
                     startupBatchFile = loadDbSettings.StartBat;
 
                 }
-                Process dbProcess = Process.Start(startupBatchFile);
+                Process p = new Process();
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = "CMD.EXE";
+                psi.Arguments = "/K " + startupBatchFile;
+                p = Process.Start(psi);
+                //p.WaitForExit();
                 bool tryStartDatabase = true;
                 while (tryStartDatabase)
                 {
@@ -99,7 +104,7 @@ namespace SummitLog
                         ShowDbSettingsAndExitOnCancel();
                     }
                 }
-                AppContext.Container.RegisterInstance(dbProcess);
+                AppContext.Container.RegisterInstance(p);
 
             }
         }
